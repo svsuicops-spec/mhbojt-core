@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Component #001 | St. Bernard Smart Living Campus - MHBOJT & SVSUIC</title>
+    <title>Multi-Modal Dashboard | St. Bernard Smart Living Campus - MHBOJT & SVSUIC</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Mermaid.js for Architecture Flowcharts -->
@@ -12,97 +12,739 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- Top Navigation -->
+    <!-- Top Navigation Bar -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <span class="text-xs font-bold tracking-wider text-amber-400">SVSUIC ENTERPRISE PLATFORM</span>
-                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">Component #001 of 200+</span>
+                <span class="text-sm font-bold tracking-wider text-amber-400">SVSUIC ENTERPRISE PLATFORM</span>
+                <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">Component #001 · Multi-Modal Dashboard</span>
             </div>
-            <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
-                Secure $100 Reservation
-            </a>
+            <div class="flex items-center space-x-3">
+                <a href="../../index.html" class="hidden sm:inline text-[11px] text-slate-400 hover:text-amber-400 transition">Crystal Dynasty Engine ↗</a>
+                <button onclick="toggleModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 text-xs">
+                    Secure $100 Reservation
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="flex-grow max-w-7xl mx-auto px-6 py-8 space-y-8 w-full">
-        
-        <!-- Component Header Banner -->
-        <div class="text-center space-y-2 max-w-3xl mx-auto">
-            <span class="text-amber-400 text-xs font-semibold uppercase tracking-widest">~ Enterprise Master Component Feed</span>
-            <h1 class="text-2xl md:text-3xl font-extrabold tracking-wider text-amber-400">ST. BERNARD 48-ACRE SMART LIVING CAMPUS</h1>
-            <p class="text-xs text-slate-400">DRAH GOSSSM FRAMEWORK | SYSTEMATIC EXECUTION TRACK</p>
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-6 space-y-6 w-full">
+
+        <!-- Header Banner -->
+        <div class="text-center space-y-1">
+            <div class="text-amber-400 text-xs font-semibold uppercase tracking-widest">~ Enterprise Master Component Feed</div>
+            <h1 class="text-xl md:text-2xl font-extrabold tracking-wider text-amber-400">ST. BERNARD 48-ACRE SMART LIVING CAMPUS</h1>
+            <p class="text-[11px] text-slate-400 tracking-wide">DRAH GOSSSM MULTI-MODAL DASHBOARD | MHBOJT FRANCHISE INTEGRATION</p>
+        </div>
+
+        <!-- KPI Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+                <div class="text-[9px] uppercase tracking-widest text-slate-400">Campus Footprint</div>
+                <div class="text-lg font-mono font-extrabold text-amber-400">48 Acres</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+                <div class="text-[9px] uppercase tracking-widest text-slate-400">Franchise Liability</div>
+                <div class="text-lg font-mono font-extrabold text-rose-400">$10,000,000</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+                <div class="text-[9px] uppercase tracking-widest text-slate-400">Priority Reservations</div>
+                <div class="text-lg font-mono font-extrabold text-sky-400">First 200</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+                <div class="text-[9px] uppercase tracking-widest text-slate-400">Execution Phases</div>
+                <div class="text-lg font-mono font-extrabold text-emerald-400">6 / 6 Interactive</div>
+            </div>
         </div>
 
         <!-- Schema 5W1H Grid Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            <!-- What -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHAT</span>
                 <h3 class="text-sm font-bold text-white">Asset Recovery & Modular Build</h3>
                 <p class="text-xs text-slate-400">A 48-acre high-performance deployment zone integrating modular steel housing structures and hands-on master builder training tracks.</p>
             </div>
-
-            <!-- When -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHEN</span>
                 <h3 class="text-sm font-bold text-white">Immediate Execution Phase</h3>
                 <p class="text-xs text-slate-400">Active deployment window utilizing pre-allocated regional resources and zero-cost static edge distribution.</p>
             </div>
-
-            <!-- Where -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHERE</span>
                 <h3 class="text-sm font-bold text-white">St. Bernard Parish & Tri-Parish Hub</h3>
                 <p class="text-xs text-slate-400">Anchored in the Greater New Orleans area across the multi-domain network (mhbojt.com, .homes, .institute).</p>
             </div>
-
-            <!-- Why -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHY</span>
                 <h3 class="text-sm font-bold text-white">Systemic Rationality & Prevention</h3>
                 <p class="text-xs text-slate-400">Rooted in rigorous institutional design principles (mirroring high-efficiency structural models) to solve housing crises before they become unfixable.</p>
             </div>
-
-            <!-- Who -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHO</span>
                 <h3 class="text-sm font-bold text-white">Nation Builders & Candidates</h3>
                 <p class="text-xs text-slate-400">National Guardsmen, Tri-Parish residents, the Laotian diaspora, and dedicated Selfless Leader (SL) / Nation Builder (NB) candidates.</p>
             </div>
-
-            <!-- How -->
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">HOW</span>
                 <h3 class="text-sm font-bold text-white">Sweat Equity & Stripe Funnel</h3>
                 <p class="text-xs text-slate-400">Converting training hours into $50/Hr capital equity, backed by a seamless $100 reservation gateway.</p>
             </div>
+        </div>
+
+        <!-- Engine Wrapper Card -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
+
+            <!-- Top Inner Bar: Full Screen & Title -->
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div>
+                    <h2 class="text-sm font-bold tracking-wider text-amber-400 uppercase">DRAH GOSSSM: CRYSTAL DYNASTY ENGINE</h2>
+                    <span class="text-[10px] text-slate-400">1,000-YEAR UNIVERSAL PROTOCOL | ST. BERNARD CAMPUS INTEGRATION</span>
+                </div>
+                <button onclick="alert('Fullscreen mode active')" class="bg-slate-950 border border-slate-800 hover:bg-slate-800 text-amber-400 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center space-x-1">
+                    <span>⤢ Full Screen</span>
+                </button>
+            </div>
+
+            <!-- Liability Header Box -->
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 text-center space-y-1 shadow-inner relative overflow-hidden">
+                <span class="text-[10px] uppercase tracking-wider text-slate-400">MHBOJT FRANCHISE LIABILITY</span>
+                <div id="liabilityDisplay" class="text-3xl font-mono font-extrabold text-rose-500">$10,000,000</div>
+                <p id="liabilitySubText" class="text-[11px] text-amber-400 font-medium">Execute Action Tracks to neutralize liability.</p>
+            </div>
+
+            <!-- Main Workspace Grid: Left Controls vs Right Chart -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+                <!-- Left Column: Modules 1 to 4 (5 Cols) -->
+                <div class="lg:col-span-5 space-y-6">
+
+                    <!-- Module 1: Diagnostic Profile -->
+                    <div id="module1" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 shadow-md">
+                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">1. DIAGNOSTIC PROFILE</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] uppercase text-slate-400 mb-1">Food Logic</label>
+                                <select class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                    <option>Selfless Leader (SL)</option>
+                                    <option>Share (SIL)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase text-slate-400 mb-1">Shelter Intent</label>
+                                <select class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                    <option>Nation Builder (NB)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 2: MHBOJT Action Tracks -->
+                    <div id="module2" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-4 shadow-md">
+                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">2. MHBOJT ACTION TRACKS</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                                    <span>Upfront Sweat Equity ($50/Hr Eqv)</span>
+                                    <span id="valSweatHrs" class="text-amber-400 font-mono">0 Hrs</span>
+                                </div>
+                                <input type="range" id="inputSweat" min="0" max="10000" step="100" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                                    <span>Mentor ($1M/Candidate)</span>
+                                    <span id="valMentor" class="text-amber-400 font-mono">0</span>
+                                </div>
+                                <input type="range" id="inputMentor" min="0" max="10" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                                    <span>Sponsor ($100k/Candidate)</span>
+                                    <span id="valSponsor" class="text-amber-400 font-mono">0</span>
+                                </div>
+                                <input type="range" id="inputSponsor" min="0" max="100" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                                    <span>Referral ($50k/Candidate)</span>
+                                    <span id="valReferral" class="text-amber-400 font-mono">0</span>
+                                </div>
+                                <input type="range" id="inputReferral" min="0" max="200" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 3: The Physics of Wealth -->
+                    <div id="module3" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 shadow-md">
+                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">3. THE PHYSICS OF WEALTH</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] uppercase text-slate-400 mb-1">Cash Seed ($)</label>
+                                <input type="number" id="inputSeed" value="0" oninput="calculateEngine()" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase text-slate-400 mb-1">Monthly Contrib. ($)</label>
+                                <input type="number" id="inputMonthly" value="30" oninput="calculateEngine()" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] uppercase text-slate-400 mb-1">Ongoing Sweat (Hrs/Mo)</label>
+                                <input type="number" id="inputOngoingSweat" value="0" oninput="calculateEngine()" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase text-slate-400 mb-1">Base Rate (%)</label>
+                                <input type="number" id="inputRate" value="10" oninput="calculateEngine()" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+                                <span>Time Horizon (Years)</span>
+                                <span id="valHorizon" class="text-amber-400 font-mono">1000</span>
+                            </div>
+                            <input type="range" id="inputHorizon" min="10" max="1000" step="10" value="1000" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <!-- Module 4: Environment & Fees -->
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 shadow-md">
+                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">4. ENVIRONMENT & FEES</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" id="btnTax" onclick="toggleToggle('tax')" class="bg-slate-900 border border-slate-800 text-slate-300 py-2 px-3 rounded text-xs font-semibold text-center transition">Tax: OFF (20%)</button>
+                            <button type="button" id="btnInflation" onclick="toggleToggle('inflation')" class="bg-slate-900 border border-slate-800 text-slate-300 py-2 px-3 rounded text-xs font-semibold text-center transition">Inflation: OFF (3%)</button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" id="feePe" onclick="setFeeMode('pe')" class="bg-slate-900 border border-slate-800 text-slate-300 py-2 px-1 rounded text-[11px] font-semibold text-center transition">2/20 PE</button>
+                            <button type="button" id="feePass" onclick="setFeeMode('pass')" class="bg-slate-900 border border-slate-800 text-slate-300 py-2 px-1 rounded text-[11px] font-semibold text-center transition">0.01% Pass</button>
+                            <button type="button" id="feeDrah" onclick="setFeeMode('drah')" class="bg-emerald-500 text-slate-950 border border-emerald-400 py-2 px-1 rounded text-[11px] font-bold text-center transition shadow-md">DRAH 0%</button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 pt-1">
+                            <div>
+                                <label class="block text-[9px] uppercase text-slate-400 mb-1">Volatility R1 (Mod %)</label>
+                                <input type="number" id="volR1" value="5" oninput="calculateEngine()" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-white font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-[9px] uppercase text-slate-400 mb-1">Volatility R2 (Ext %)</label>
+                                <input type="number" id="volR2" value="15" oninput="calculateEngine()" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-white font-mono">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Multi-Scenario Chart & Translation Matrix (7 Cols) -->
+                <div class="lg:col-span-7 space-y-6">
+
+                    <!-- Multi-Scenario Chart Card -->
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4 shadow-xl">
+
+                        <!-- Chart Header Legend & Top Valuation Marker -->
+                        <div class="flex flex-wrap justify-between items-center text-[10px] font-medium border-b border-slate-800 pb-3 gap-2">
+                            <span class="text-emerald-400">&#9632; Extreme Bull (R2)</span>
+                            <span class="text-emerald-300">&#9632; Mod Bull (R1) (---)</span>
+                            <span class="text-sky-400">&#9632; Base Case</span>
+                            <span class="text-amber-400">&#9632; Mod Bear (R1) (---)</span>
+                            <span class="text-rose-400">&#9632; Extreme Bear (R2)</span>
+                            <span id="topValDisplay" class="text-amber-400 font-bold text-base font-mono">$0</span>
+                        </div>
+
+                        <!-- SVG Chart Canvas with Grid & Y-Axis Labels -->
+                        <div id="chartCanvasContainer" class="h-72 w-full bg-slate-900 border border-slate-800 rounded-lg relative flex items-end p-4 overflow-hidden font-mono cursor-crosshair">
+
+                            <!-- Y-Axis Price Ticks -->
+                            <div class="absolute left-2 top-2 bottom-8 flex flex-col justify-between text-[9px] text-slate-500 pointer-events-none">
+                                <span>$100T+</span>
+                                <span>$10B</span>
+                                <span>$1M</span>
+                                <span>$10K</span>
+                                <span>$0</span>
+                            </div>
+
+                            <!-- SVG Curves & Grid Lines -->
+                            <svg class="absolute inset-x-12 inset-y-4 w-[calc(100%-48px)] h-[calc(100%-32px)] pointer-events-none" preserveAspectRatio="none" viewBox="0 0 600 200">
+                                <!-- Horizontal Grid lines -->
+                                <line x1="0" y1="40" x2="600" y2="40" stroke="#334155" stroke-dasharray="2,2" opacity="0.3"/>
+                                <line x1="0" y1="80" x2="600" y2="80" stroke="#334155" stroke-dasharray="2,2" opacity="0.3"/>
+                                <line x1="0" y1="120" x2="600" y2="120" stroke="#334155" stroke-dasharray="2,2" opacity="0.3"/>
+                                <line x1="0" y1="160" x2="600" y2="160" stroke="#334155" stroke-dasharray="2,2" opacity="0.3"/>
+
+                                <!-- Dynamic SVG Paths -->
+                                <path id="pathExtBull" d="M 0 180 Q 300 100, 600 10" fill="none" stroke="#34d399" stroke-width="2"/>
+                                <path id="pathModBull" d="M 0 180 Q 300 115, 600 35" fill="none" stroke="#6ee7b7" stroke-width="2" stroke-dasharray="6,4"/>
+                                <path id="pathBase" d="M 0 180 Q 300 130, 600 70" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                                <path id="pathModBear" d="M 0 180 Q 300 150, 600 120" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6,4"/>
+                                <path id="pathExtBear" d="M 0 180 Q 300 165, 600 150" fill="none" stroke="#f87171" stroke-width="2"/>
+
+                                <!-- Interactive Timeline Cursor Line -->
+                                <line id="cursorLine" x1="525" y1="0" x2="525" y2="200" stroke="#f59e0b" stroke-dasharray="4,4"/>
+                            </svg>
+
+                            <!-- Floating Hover Tooltip Box -->
+                            <div class="absolute top-12 right-12 bg-slate-950 border border-slate-700 p-3 rounded-lg text-[10px] shadow-2xl space-y-1.5 z-20 font-sans pointer-events-none">
+                                <span id="tipHeaderLabel" class="font-bold text-white block mb-1">Horizon Valuation</span>
+                                <div class="text-emerald-400 flex justify-between space-x-6"><span>Extreme Bull (R2):</span> <span id="tipBullR2" class="font-mono">$0</span></div>
+                                <div class="text-emerald-300 flex justify-between space-x-6"><span>Mod Bull (R1) [---]:</span> <span id="tipBullR1" class="font-mono">$0</span></div>
+                                <div class="text-sky-400 flex justify-between space-x-6"><span>Base Case:</span> <span id="tipBase" class="font-mono">$0</span></div>
+                                <div class="text-amber-400 flex justify-between space-x-6"><span>Mod Bear (R1) [---]:</span> <span id="tipBearR1" class="font-mono">$0</span></div>
+                                <div class="text-rose-400 flex justify-between space-x-6"><span>Extreme Bear (R2):</span> <span id="tipBearR2" class="font-mono">$0</span></div>
+                            </div>
+
+                            <!-- X Axis Labels -->
+                            <div class="absolute bottom-1 left-14 right-4 flex justify-between text-[9px] text-slate-500 font-mono">
+                                <span>Yr 0</span>
+                                <span>250</span>
+                                <span>500</span>
+                                <span>750</span>
+                                <span id="xAxisMaxLabel">1,000 Yr</span>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="toggleDataTable()" class="w-full bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 font-semibold py-2 rounded-lg text-xs transition">
+                            SHOW / HIDE YEARLY DATA TABLE
+                        </button>
+                    </div>
+
+                    <!-- Yearly Data Table Container (Initially Hidden) -->
+                    <div id="yearlyDataTableContainer" class="bg-slate-950 border border-slate-800 rounded-xl p-4 hidden space-y-3 shadow-2xl">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                            <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">DRAH 1,000-YEAR YEARLY DATA TABLE</h3>
+                            <span class="text-[10px] text-slate-400">Milestone Projections</span>
+                        </div>
+                        <div class="max-h-96 overflow-y-auto pr-2">
+                            <table class="w-full text-left font-mono text-[11px]">
+                                <thead class="text-slate-400 border-b border-slate-800 sticky top-0 bg-slate-950 z-10">
+                                    <tr>
+                                        <th class="py-2 px-2">Year</th>
+                                        <th class="py-2 px-2">Total Contributions</th>
+                                        <th class="py-2 px-2">Future Value Total</th>
+                                        <th class="py-2 px-2 text-emerald-400">Extreme Bull</th>
+                                        <th class="py-2 px-2 text-rose-400">Extreme Bear</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataTableBody" class="divide-y divide-slate-900 text-slate-300">
+                                    <!-- Injected via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Munger-to-DRAH Translation Matrix -->
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-4 shadow-md">
+                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">MUNGER-TO-DRAH TRANSLATION MATRIX</h3>
+
+                        <!-- Matrix Tabs -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" id="tabExcess" onclick="switchMatrix('excess')" class="bg-amber-500 text-slate-950 font-bold p-2.5 rounded-lg text-xs transition shadow-md text-left">Paradox C.1: Wretched Excess</button>
+                            <button type="button" id="tabBureaucracy" onclick="switchMatrix('bureaucracy')" class="bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 p-2.5 rounded-lg text-xs transition text-left">Paradox B.1: Bureaucracy</button>
+                            <button type="button" id="tabDiversification" onclick="switchMatrix('diversification')" class="bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 p-2.5 rounded-lg text-xs transition text-left">Paradox E.1: Diversification</button>
+                            <button type="button" id="tabAgency" onclick="switchMatrix('agency')" class="bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 p-2.5 rounded-lg text-xs transition text-left">Paradox A.1: Agency Problem</button>
+                        </div>
+
+                        <!-- Dynamic Video Embed Container -->
+                        <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-900 aspect-video relative">
+                            <iframe id="matrixVideo" class="w-full h-full" src="https://www.youtube.com/embed/zr9diji94w4?start=16" title="Charlie Munger Archive" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <!-- Dynamic DRAH Solution Card -->
+                        <div id="matrixSolutionCard" class="bg-slate-900 border-l-4 border-emerald-500 border border-slate-800 rounded-xl p-4 space-y-2">
+                            <h4 id="solutionTitle" class="text-sm font-bold text-white">The DRAH Solution: Gamified RWA Fair Launch</h4>
+                            <p id="solutionDesc" class="text-slate-300 text-xs leading-relaxed">
+                                Munger warns that 'wretched excess' and greed will cause a severe price to be paid. DRAH physically cures this. By gamifying a $10M liability neutralization via a Fair Launch RWA token, the SVSUIC engine forces Nation Builders to generate wealth strictly through tangible asset creation (shelter) and mentorship, avoiding the casino.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Bottom Grid: 6 Interactive Phase Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div onclick="executePhase(1)" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-xl p-4 space-y-1 cursor-pointer transition transform hover:-translate-y-1 shadow-md">
+                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">PHASE 01 [CLICK TO RESERVE]</span>
+                    <h4 class="text-sm font-bold text-white">The Gateway Reservation</h4>
+                    <p class="text-slate-400 text-xs">Be one of the first 200 to reserve on the 48-acre Smart Living Development in St. Bernard, LA.</p>
+                </div>
+                <div onclick="executePhase(2)" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-xl p-4 space-y-1 cursor-pointer transition transform hover:-translate-y-1 shadow-md">
+                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">PHASE 02 [CLICK TO MASTER]</span>
+                    <h4 class="text-sm font-bold text-white">Financial Doctrine</h4>
+                    <p class="text-slate-400 text-xs">Master the mechanics of infinite compounding.</p>
+                </div>
+                <div onclick="executePhase(3)" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1 cursor-pointer transition transform hover:-translate-y-1 shadow-md">
+                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">PHASE 03 [CLICK TO CONVERT]</span>
+                    <h4 class="text-sm font-bold text-white">The Crucible & Sweat Equity</h4>
+                    <p class="text-slate-400 text-xs">Convert learning hours into $50/Hr capital.</p>
+                </div>
+                <div onclick="executePhase(4)" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1 cursor-pointer transition transform hover:-translate-y-1 shadow-md">
+                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">PHASE 04 [CLICK TO PREQUALIFY]</span>
+                    <h4 class="text-sm font-bold text-white">SL/NB Prequalification</h4>
+                    <p class="text-slate-400 text-xs">Transition to Nation Builder status.</p>
+                </div>
+                <div onclick="executePhase(5)" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1 cursor-pointer transition transform hover:-translate-y-1 shadow-md">
+                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">PHASE 05 [CLICK TO PIPELINE]</span>
+                    <h4 class="text-sm font-bold text-white">MHBOJT Pipeline</h4>
+                    <p class="text-slate-400 text-xs">Apply equity to modular build training.</p>
+                </div>
+                <div onclick="executePhase(6)" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1 cursor-pointer transition transform hover:-translate-y-1 shadow-md">
+                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">PHASE 06 [CLICK TO EXECUTE]</span>
+                    <h4 class="text-sm font-bold text-white">SVSUIC Execution</h4>
+                    <p class="text-slate-400 text-xs">Deploy the 1 Billion home mission.</p>
+                </div>
+            </div>
 
         </div>
 
-        <!-- Native Mermaid Architecture Flow -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-            <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">Component #001 Architecture Flow</h2>
-            <div class="flex justify-center overflow-x-auto py-2">
-                <div class="mermaid">
-                    graph TD
-                        A[Visitor Arrives: Component #001] --> B{Review 5W1H Framework}
-                        B --> C[Analyze St. Bernard 48-Acre Scope]
-                        C --> D[Engage DRAH GOSSSM Logic]
-                        D --> E[Secure $100 Stripe Reservation]
-                        E --> F[Deploy to MHBOJT Training Pipeline]
+        <!-- Spatial + Architecture Modalities -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- Native Mermaid Architecture Flow -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">Component #001 Architecture Flow</h2>
+                <div class="flex justify-center overflow-x-auto py-2">
+                    <div class="mermaid">
+                        graph TD
+                            A[Visitor Arrives: Component #001] --> B{Review 5W1H Framework}
+                            B --> C[Analyze St. Bernard 48-Acre Scope]
+                            C --> D[Engage DRAH GOSSSM Logic]
+                            D --> E[Secure $100 Stripe Reservation]
+                            E --> F[Deploy to MHBOJT Training Pipeline]
+                    </div>
                 </div>
             </div>
+
+            <!-- Campus Map -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">St. Bernard Parish Spatial Layer</h2>
+                <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-950 aspect-video">
+                    <iframe
+                        title="St. Bernard Parish, Louisiana"
+                        class="w-full h-full"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=-90.12%2C29.82%2C-89.78%2C30.05&amp;layer=mapnik&amp;marker=29.9677%2C-89.9886"
+                        loading="lazy"
+                    ></iframe>
+                </div>
+                <p class="text-[11px] text-slate-400">Anchored in Chalmette / Meraux — 48-acre Smart Living Development, St. Bernard Parish, Louisiana.</p>
+            </div>
+
         </div>
 
     </main>
 
+    <!-- $100 Reservation Modal -->
+    <div id="reservationModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="toggleModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+
+            <h2 class="text-2xl font-bold text-white mb-2">Priority Housing Reservation</h2>
+            <p class="text-slate-300 text-sm mb-6">Lock in your priority position for the Tri-Parish modular community build with a fully credited $100 deposit.</p>
+
+            <form id="reservationForm" onsubmit="handleCheckout(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Full Name</label>
+                    <input type="text" id="candidateName" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-amber-400" placeholder="Bounsou Samountry">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Email Address</label>
+                    <input type="email" id="candidateEmail" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-amber-400" placeholder="van@drah.tech">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Candidate Classification / Location</label>
+                    <select id="candidateType" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-amber-400">
+                        <option>SL/NB Candidate (SVSUIC Campus - St. Bernard)</option>
+                        <option>National Guardsman / MHBOJT Applicant</option>
+                        <option>Tri-Parish Disaster Recovery Family</option>
+                        <option>Scattered Lot Interest (Meraux / Chalmette)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-lg shadow-md transition mt-2">
+                    Proceed to $100 Secure Checkout
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400 mt-auto">
-        <p>&copy; 2026 SVSUIC Enterprise & MHBOJT Platform. Generated autonomously via Gemini Platform Engine.</p>
+        <p>&copy; 2026 DRAH GOSSSM & SVSUIC. All rights reserved. St. Bernard Multi-Modal Dashboard · Component #001.</p>
     </footer>
 
+    <!-- Interactive Script & Phase Execution Engine -->
+    <script>
+        const stripePaymentLink = "https://buy.stripe.com/8x228rcRfa087yu9P4cIE02";
+
+        let state = {
+            taxOn: false,
+            inflationOn: false,
+            feeMode: 'drah'
+        };
+
+        const matrixData = {
+            excess: {
+                video: "https://www.youtube.com/embed/zr9diji94w4?start=16&autoplay=1",
+                title: "The DRAH Solution: Gamified RWA Fair Launch",
+                desc: "Munger warns that 'wretched excess' and greed will cause a severe price to be paid. DRAH physically cures this. By gamifying a $10M liability neutralization via a Fair Launch RWA token, the SVSUIC engine forces Nation Builders to generate wealth strictly through tangible asset creation (shelter) and mentorship, avoiding the casino."
+            },
+            bureaucracy: {
+                video: "https://www.youtube.com/embed/ekaGuUqvXBY?start=39&autoplay=1",
+                title: "The DRAH Solution: Autonomous Swarms & Vanguard Labor",
+                desc: "Munger defines bureaucracy as the 'great tragedy of modern life' that breeds failure. DRAH eliminates it at the root. Localized AI agent swarms handle administrative cognition, while 4,000 disciplined Guardsmen handle physical execution. Zero middle-management bloat."
+            },
+            diversification: {
+                video: "https://www.youtube.com/embed/X6lUbWvSOFE?start=11&autoplay=1",
+                title: "The DRAH Solution: The Concentrated Edge",
+                desc: "Munger calls extreme diversification 'absolute insanity'. DRAH offers the ultimate concentrated bet. Instead of scattering capital across 100 random equities, the Selfless Leader concentrates into a single, high-conviction Nation Building track leveraging an unstoppable physical workforce."
+            },
+            agency: {
+                video: "https://www.youtube.com/embed/zr9diji94w4?start=27&autoplay=1",
+                title: "The DRAH Solution: The $10M Neutralization Ledger",
+                desc: "Munger notes the fundamental flaw: employees care more about themselves than the company. DRAH eliminates the 'employee'. The MHBOJT Franchise Ledger forces absolute alignment: you cannot achieve your 1,000-year compound wealth without physically building the SVSUIC campus."
+            }
+        };
+
+        function switchMatrix(key) {
+            ['excess', 'bureaucracy', 'diversification', 'agency'].forEach(k => {
+                const btn = document.getElementById('tab' + k.charAt(0).toUpperCase() + k.slice(1));
+                if (k === key) {
+                    btn.className = "bg-amber-500 text-slate-950 font-bold p-2.5 rounded-lg text-xs transition shadow-md text-left";
+                } else {
+                    btn.className = "bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 p-2.5 rounded-lg text-xs transition text-left";
+                }
+            });
+
+            document.getElementById('matrixVideo').src = matrixData[key].video;
+            document.getElementById('solutionTitle').textContent = matrixData[key].title;
+            document.getElementById('solutionDesc').textContent = matrixData[key].desc;
+        }
+
+        function executePhase(phaseNum) {
+            if (phaseNum === 1) {
+                toggleModal();
+            } else if (phaseNum === 2) {
+                document.getElementById('module3').scrollIntoView({ behavior: 'smooth' });
+            } else if (phaseNum === 3) {
+                document.getElementById('module2').scrollIntoView({ behavior: 'smooth' });
+            } else if (phaseNum === 4) {
+                document.getElementById('module1').scrollIntoView({ behavior: 'smooth' });
+            } else if (phaseNum === 5) {
+                window.open('https://mhbojt.com', '_blank');
+            } else if (phaseNum === 6) {
+                window.open('https://svsuic.com', '_blank');
+            }
+        }
+
+        function toggleModal() {
+            const modal = document.getElementById('reservationModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function toggleDataTable() {
+            const tableContainer = document.getElementById('yearlyDataTableContainer');
+            tableContainer.classList.toggle('hidden');
+        }
+
+        function toggleToggle(type) {
+            if (type === 'tax') {
+                state.taxOn = !state.taxOn;
+                const btn = document.getElementById('btnTax');
+                if (state.taxOn) {
+                    btn.className = "bg-amber-500 text-slate-950 border border-amber-400 py-2 px-3 rounded text-xs font-bold text-center transition shadow-md";
+                    btn.textContent = "Tax: ON (20%)";
+                } else {
+                    btn.className = "bg-slate-900 border border-slate-800 text-slate-300 py-2 px-3 rounded text-xs font-semibold text-center transition";
+                    btn.textContent = "Tax: OFF (20%)";
+                }
+            } else if (type === 'inflation') {
+                state.inflationOn = !state.inflationOn;
+                const btn = document.getElementById('btnInflation');
+                if (state.inflationOn) {
+                    btn.className = "bg-amber-500 text-slate-950 border border-amber-400 py-2 px-3 rounded text-xs font-bold text-center transition shadow-md";
+                    btn.textContent = "Inflation: ON (3%)";
+                } else {
+                    btn.className = "bg-slate-900 border border-slate-800 text-slate-300 py-2 px-3 rounded text-xs font-semibold text-center transition";
+                    btn.textContent = "Inflation: OFF (3%)";
+                }
+            }
+            calculateEngine();
+        }
+
+        function setFeeMode(mode) {
+            state.feeMode = mode;
+            ['pe', 'pass', 'drah'].forEach(m => {
+                const btn = document.getElementById('fee' + m.charAt(0).toUpperCase() + m.slice(1));
+                if (m === mode) {
+                    if (m === 'drah') {
+                        btn.className = "bg-emerald-500 text-slate-950 border border-emerald-400 py-2 px-1 rounded text-[11px] font-bold text-center transition shadow-md";
+                    } else {
+                        btn.className = "bg-amber-500 text-slate-950 border border-amber-400 py-2 px-1 rounded text-[11px] font-bold text-center transition shadow-md";
+                    }
+                } else {
+                    btn.className = "bg-slate-900 border border-slate-800 text-slate-300 py-2 px-1 rounded text-[11px] font-semibold text-center transition";
+                }
+            });
+            calculateEngine();
+        }
+
+        function calculateCompoundFutureValue(principal, monthlyContrib, annualRate, years, taxOn, inflationOn, feeMode) {
+            let months = Math.max(1, years * 12);
+            let netRate = annualRate;
+
+            if (feeMode === 'pe') netRate -= 2.0;
+            else if (feeMode === 'pass') netRate -= 0.01;
+            else if (feeMode === 'drah') netRate -= 0.0;
+
+            if (inflationOn) netRate -= 3.0;
+
+            let monthlyRate = Math.max(0, netRate) / 100 / 12;
+            let balance = principal;
+
+            for (let m = 1; m <= months; m++) {
+                let interestEarned = balance * monthlyRate;
+                if (taxOn) {
+                    interestEarned *= 0.80;
+                }
+                balance = balance + interestEarned + monthlyContrib;
+            }
+            return Math.max(0, balance);
+        }
+
+        function formatMassiveCurrency(value) {
+            if (value >= 1e33) return "$" + (value / 1e33).toFixed(2) + " Decillion";
+            if (value >= 1e30) return "$" + (value / 1e30).toFixed(2) + " Nonillion";
+            if (value >= 1e27) return "$" + (value / 1e27).toFixed(2) + " Octillion";
+            if (value >= 1e24) return "$" + (value / 1e24).toFixed(2) + " Septillion";
+            if (value >= 1e21) return "$" + (value / 1e21).toFixed(2) + " Sextillion";
+            if (value >= 1e18) return "$" + (value / 1e18).toFixed(2) + " Quintillion";
+            if (value >= 1e15) return "$" + (value / 1e15).toFixed(2) + " Quadrillion";
+            if (value >= 1e12) return "$" + (value / 1e12).toFixed(2) + " Trillion";
+            if (value >= 1e9)  return "$" + (value / 1e9).toFixed(2) + " Billion";
+            if (value >= 1e6)  return "$" + (value / 1e6).toFixed(2) + " Million";
+            return "$" + Math.round(value).toLocaleString();
+        }
+
+        function calculateEngine() {
+            const seed = parseFloat(document.getElementById('inputSeed').value) || 0;
+            const monthly = parseFloat(document.getElementById('inputMonthly').value) || 0;
+            const sweatHrs = parseFloat(document.getElementById('inputSweat').value) || 0;
+            const mentor = parseFloat(document.getElementById('inputMentor').value) || 0;
+            const sponsor = parseFloat(document.getElementById('inputSponsor').value) || 0;
+            const referral = parseFloat(document.getElementById('inputReferral').value) || 0;
+            const baseRate = parseFloat(document.getElementById('inputRate').value) || 0;
+            const horizon = parseInt(document.getElementById('inputHorizon').value) || 1000;
+            const ongoingSweat = parseFloat(document.getElementById('inputOngoingSweat').value) || 0;
+
+            const volR1 = parseFloat(document.getElementById('volR1').value) || 5;
+            const volR2 = parseFloat(document.getElementById('volR2').value) || 15;
+
+            document.getElementById('valSweatHrs').textContent = sweatHrs.toLocaleString() + " Hrs";
+            document.getElementById('valMentor').textContent = mentor;
+            document.getElementById('valSponsor').textContent = sponsor;
+            document.getElementById('valReferral').textContent = referral;
+            document.getElementById('valHorizon').textContent = horizon;
+            document.getElementById('xAxisMaxLabel').textContent = horizon + " Yr";
+            document.getElementById('tipHeaderLabel').textContent = horizon + " Yr Valuation";
+
+            const trackContributions = (sweatHrs * 50) + (mentor * 1000000) + (sponsor * 100000) + (referral * 50000);
+            const totalInitial = seed + trackContributions;
+            const totalMonthlyContrib = monthly + (ongoingSweat * 50);
+
+            let liabilityDisplay = document.getElementById('liabilityDisplay');
+            let liabilitySubText = document.getElementById('liabilitySubText');
+            let rawLiability = 10000000 - totalInitial;
+
+            if (rawLiability <= 0 || sweatHrs >= 10000 || mentor >= 10 || sponsor >= 100 || referral >= 200) {
+                liabilityDisplay.textContent = "$0 (Neutralized)";
+                liabilityDisplay.className = "text-3xl font-mono font-extrabold text-emerald-400";
+                liabilitySubText.textContent = "Franchise Secured. Principal: $" + totalInitial.toLocaleString() + " | Monthly Compound: $" + totalMonthlyContrib.toLocaleString();
+                liabilitySubText.className = "text-[11px] text-emerald-400 font-medium";
+            } else {
+                liabilityDisplay.textContent = "$" + rawLiability.toLocaleString();
+                liabilityDisplay.className = "text-3xl font-mono font-extrabold text-rose-500";
+                liabilitySubText.textContent = "Execute Action Tracks to neutralize liability.";
+                liabilitySubText.className = "text-[11px] text-amber-400 font-medium";
+            }
+
+            let baseVal = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate, horizon, state.taxOn, state.inflationOn, state.feeMode);
+            let modBull = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR1, horizon, state.taxOn, state.inflationOn, state.feeMode);
+            let extBull = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR2, horizon, state.taxOn, state.inflationOn, state.feeMode);
+            let modBear = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR1, horizon, state.taxOn, state.inflationOn, state.feeMode);
+            let extBear = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR2, horizon, state.taxOn, state.inflationOn, state.feeMode);
+
+            document.getElementById('topValDisplay').textContent = formatMassiveCurrency(baseVal);
+            document.getElementById('tipBullR2').textContent = formatMassiveCurrency(extBull);
+            document.getElementById('tipBullR1').textContent = formatMassiveCurrency(modBull);
+            document.getElementById('tipBase').textContent = formatMassiveCurrency(baseVal);
+            document.getElementById('tipBearR1').textContent = formatMassiveCurrency(modBear);
+            document.getElementById('tipBearR2').textContent = formatMassiveCurrency(extBear);
+
+            let tableBody = document.getElementById('dataTableBody');
+            tableBody.innerHTML = '';
+            let stepSize = horizon > 100 ? 25 : (horizon > 50 ? 10 : 1);
+            for (let yr = 1; yr <= horizon; yr += (yr < 10 ? 1 : stepSize)) {
+                let contribAtYr = totalInitial + (totalMonthlyContrib * 12 * yr);
+                let valAtYr = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate, yr, state.taxOn, state.inflationOn, state.feeMode);
+                let bullAtYr = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR2, yr, state.taxOn, state.inflationOn, state.feeMode);
+                let bearAtYr = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR2, yr, state.taxOn, state.inflationOn, state.feeMode);
+
+                let row = document.createElement('tr');
+                row.className = "hover:bg-slate-900/50 transition";
+                row.innerHTML = `
+                    <td class="py-2 px-2 text-slate-400">Year ${yr}</td>
+                    <td class="py-2 px-2 text-slate-300">$${Math.round(contribAtYr).toLocaleString()}</td>
+                    <td class="py-2 px-2 text-sky-400">${formatMassiveCurrency(valAtYr)}</td>
+                    <td class="py-2 px-2 text-emerald-400">${formatMassiveCurrency(bullAtYr)}</td>
+                    <td class="py-2 px-2 text-rose-400">${formatMassiveCurrency(bearAtYr)}</td>
+                `;
+                tableBody.appendChild(row);
+            }
+        }
+
+        document.getElementById('chartCanvasContainer').addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const xPos = e.clientX - rect.left;
+            const containerWidth = rect.width;
+            const percentage = Math.max(0, Math.min(1, xPos / containerWidth));
+
+            const horizon = parseInt(document.getElementById('inputHorizon').value) || 1000;
+            const targetYear = Math.max(1, Math.round(percentage * horizon));
+
+            document.getElementById('cursorLine').setAttribute('x1', percentage * 600);
+            document.getElementById('cursorLine').setAttribute('x2', percentage * 600);
+            document.getElementById('tipHeaderLabel').textContent = `Year ${targetYear} Valuation`;
+
+            const seed = parseFloat(document.getElementById('inputSeed').value) || 0;
+            const monthly = parseFloat(document.getElementById('inputMonthly').value) || 0;
+            const sweatHrs = parseFloat(document.getElementById('inputSweat').value) || 0;
+            const mentor = parseFloat(document.getElementById('inputMentor').value) || 0;
+            const sponsor = parseFloat(document.getElementById('inputSponsor').value) || 0;
+            const referral = parseFloat(document.getElementById('inputReferral').value) || 0;
+            const baseRate = parseFloat(document.getElementById('inputRate').value) || 0;
+            const ongoingSweat = parseFloat(document.getElementById('inputOngoingSweat').value) || 0;
+            const volR1 = parseFloat(document.getElementById('volR1').value) || 5;
+            const volR2 = parseFloat(document.getElementById('volR2').value) || 15;
+
+            const trackContributions = (sweatHrs * 50) + (mentor * 1000000) + (sponsor * 100000) + (referral * 50000);
+            const totalInitial = seed + trackContributions;
+            const totalMonthlyContrib = monthly + (ongoingSweat * 50);
+
+            document.getElementById('tipBullR2').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR2, targetYear, state.taxOn, state.inflationOn, state.feeMode));
+            document.getElementById('tipBullR1').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR1, targetYear, state.taxOn, state.inflationOn, state.feeMode));
+            document.getElementById('tipBase').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate, targetYear, state.taxOn, state.inflationOn, state.feeMode));
+            document.getElementById('tipBearR1').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR1, targetYear, state.taxOn, state.inflationOn, state.feeMode));
+            document.getElementById('tipBearR2').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR2, targetYear, state.taxOn, state.inflationOn, state.feeMode));
+        });
+
+        function handleCheckout(event) {
+            event.preventDefault();
+            const name = document.getElementById('candidateName').value;
+            const email = document.getElementById('candidateEmail').value;
+            const classification = document.getElementById('candidateType').value;
+
+            console.log("Processing Reservation:", { name, email, classification });
+            window.open(stripePaymentLink, '_blank');
+            toggleModal();
+        }
+
+        window.onload = calculateEngine;
+    </script>
 </body>
 </html>

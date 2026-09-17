@@ -19,22 +19,88 @@
             width: 100%;
             accent-color: #f59e0b;
         }
+        @keyframes doodleDraw {
+            from { stroke-dashoffset: 240; }
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes avatarPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
+            50% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+        }
+        .doodle-path {
+            stroke-dasharray: 240;
+            animation: doodleDraw 1.6s ease forwards;
+        }
+        .avatar-pulse {
+            animation: avatarPulse 1.6s ease-out infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
 
     <!-- Top Navigation -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center gap-3">
             <div class="flex items-center space-x-3">
                 <span class="text-xs font-bold tracking-wider text-amber-400">MHBOJT & SVSUIC PLATFORM</span>
                 <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">Autonomous Core</span>
             </div>
-            <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
-                Secure $100 Reservation
-            </a>
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <button type="button" id="adminToggle" onclick="toggleAdminPanel()" class="bg-slate-950 border border-slate-700 hover:border-amber-500/60 text-amber-400 font-bold px-3 py-2 rounded-lg transition text-xs">
+                    ⚙️ Admin Media Studio
+                </button>
+                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
+                    Secure $100 Reservation
+                </a>
+            </div>
         </div>
     </header>
+
+    <!-- On-Demand Admin Media Control Panel (hidden by default) -->
+    <section id="adminPanel" class="hidden border-b border-slate-800 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-6 py-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">On-Demand Media Control Panel</h2>
+                    <p class="text-[11px] text-slate-400">Ingest YouTube URLs or generate an AI avatar + doodle preview into the main media frame.</p>
+                </div>
+                <span id="adminStatus" class="text-[10px] text-slate-500">Studio idle</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
+                    <label for="youtubeUrl" class="block text-[10px] font-bold uppercase tracking-widest text-amber-400">YouTube Ingest (long or short form)</label>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=... or /shorts/..." class="flex-grow bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
+                        <button type="button" onclick="ingestYouTube()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition">
+                            Render in Frame
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="showNativeAudio()" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 text-slate-300 px-3 py-1.5 rounded text-[10px]">Native Audio</button>
+                        <button type="button" onclick="showDefaultAvatarSlot()" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 text-slate-300 px-3 py-1.5 rounded text-[10px]">Avatar Slot</button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
+                    <label for="platformSection" class="block text-[10px] font-bold uppercase tracking-widest text-amber-400">Platform Section → AI Avatar + Doodle</label>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <select id="platformSection" class="flex-grow bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                            <option value="1. Diagnostic Profile">1. Diagnostic Profile</option>
+                            <option value="2. MHBOJT Action Tracks" selected>2. MHBOJT Action Tracks</option>
+                            <option value="3. The Physics of Wealth">3. The Physics of Wealth</option>
+                            <option value="4. Environment &amp; Fees">4. Environment &amp; Fees</option>
+                            <option value="Munger-to-DRAH Translation Matrix">Munger-to-DRAH Translation Matrix</option>
+                        </select>
+                        <button type="button" onclick="generateSectionMedia()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition">
+                            Generate Preview
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-slate-500">Simulates avatar synthesis and doodle animation for the selected Crystal Dynasty module.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl mx-auto px-6 py-8 space-y-8 w-full">
@@ -49,21 +115,21 @@
         <!-- Multi-Modal Media & Pro/Con Hub -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-            <!-- Left Column: Interactive Dual-Host Pro/Con Audio/Video Player (7 Cols) -->
+            <!-- Left Column: Dynamic Media Display Frame (7 Cols) -->
             <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Pro & Con Media Brief</h2>
-                    <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">AI Synthesized</span>
+                    <h2 id="mediaTitle" class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Pro & Con Media Brief</h2>
+                    <span id="mediaModeBadge" class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">AI Synthesized</span>
                 </div>
 
                 <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
                     <div class="text-center space-y-1">
-                        <div class="text-sm font-bold text-white">Topic: DRAH GOSSSM & 200+ Component Scalability</div>
-                        <p class="text-xs text-slate-400">Watch the AI avatar frame and listen to dual hosts debate the mechanics, structural advantages, and implementation realities of autonomous institutional development.</p>
+                        <div id="mediaTopic" class="text-sm font-bold text-white">Topic: DRAH GOSSSM & 200+ Component Scalability</div>
+                        <p id="mediaCaption" class="text-xs text-slate-400">Watch the AI avatar frame and listen to dual hosts debate the mechanics, structural advantages, and implementation realities of autonomous institutional development.</p>
                     </div>
 
-                    <!-- AI Avatar Video Frame Slot -->
-                    <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-900 aspect-video relative">
+                    <!-- Dynamic Media Display Frame -->
+                    <div id="mediaContainer" class="rounded-xl overflow-hidden border border-slate-800 bg-slate-900 aspect-video relative">
                         <video
                             id="aiAvatarFrame"
                             class="w-full h-full object-cover"
@@ -77,12 +143,12 @@
                         </video>
                         <div id="aiAvatarSlot" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/85 pointer-events-none space-y-2 px-4 text-center">
                             <span class="text-[10px] font-bold uppercase tracking-widest text-amber-400">AI Avatar Video Frame</span>
-                            <p class="text-xs text-slate-400">Drop <span class="font-mono text-slate-300">/media/ai-avatar.mp4</span> here to activate the talking-head slot.</p>
+                            <p class="text-xs text-slate-400">Drop <span class="font-mono text-slate-300">/media/ai-avatar.mp4</span> here, or ingest a YouTube URL from Admin Media Studio.</p>
                         </div>
                     </div>
 
                     <!-- Native Audio Player -->
-                    <div class="space-y-2">
+                    <div id="audioDock" class="space-y-2">
                         <label for="dualHostAudio" class="block text-[10px] font-bold uppercase tracking-widest text-amber-400">Native Dual-Host Audio Player</label>
                         <audio id="dualHostAudio" class="w-full" controls preload="metadata">
                             <source src="/media/dual-host-brief.mp3" type="audio/mpeg">
@@ -149,15 +215,184 @@
     </footer>
 
     <script>
-        const avatar = document.getElementById('aiAvatarFrame');
-        const slot = document.getElementById('aiAvatarSlot');
-        if (avatar && slot) {
-            avatar.addEventListener('loadeddata', function () {
-                if (avatar.videoWidth > 0) slot.classList.add('hidden');
-            });
-            avatar.addEventListener('error', function () {
-                slot.classList.remove('hidden');
-            });
+        const sectionCopy = {
+            "1. Diagnostic Profile": {
+                caption: "Avatar walks Food Logic and Shelter Intent diagnostics for Selfless Leader / Nation Builder classification.",
+                doodle: "SL / NB"
+            },
+            "2. MHBOJT Action Tracks": {
+                caption: "Avatar maps sweat equity, mentor, sponsor, and referral tracks against the $10M liability ledger.",
+                doodle: "$50/HR"
+            },
+            "3. The Physics of Wealth": {
+                caption: "Avatar explains 1,000-year compounding, cash seed, and monthly contribution physics.",
+                doodle: "1,000 YR"
+            },
+            "4. Environment & Fees": {
+                caption: "Avatar compares 2/20 PE, 0.01% pass-through, and DRAH 0% fee regimes with tax/inflation toggles.",
+                doodle: "0% FEE"
+            },
+            "Munger-to-DRAH Translation Matrix": {
+                caption: "Avatar translates Munger paradoxes into DRAH physical-asset solutions for the SVSUIC campus.",
+                doodle: "DRAH"
+            }
+        };
+
+        function setStatus(text) {
+            const el = document.getElementById('adminStatus');
+            if (el) el.textContent = text;
+        }
+
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            const btn = document.getElementById('adminToggle');
+            const open = panel.classList.toggle('hidden') === false;
+            btn.className = open
+                ? "bg-amber-500 text-slate-950 font-bold px-3 py-2 rounded-lg transition text-xs"
+                : "bg-slate-950 border border-slate-700 hover:border-amber-500/60 text-amber-400 font-bold px-3 py-2 rounded-lg transition text-xs";
+            setStatus(open ? "Studio open" : "Studio idle");
+        }
+
+        function parseYouTubeId(url) {
+            if (!url) return null;
+            const patterns = [
+                /youtu\.be\/([A-Za-z0-9_-]{6,})/,
+                /youtube\.com\/shorts\/([A-Za-z0-9_-]{6,})/,
+                /youtube\.com\/embed\/([A-Za-z0-9_-]{6,})/,
+                /youtube\.com\/live\/([A-Za-z0-9_-]{6,})/,
+                /[?&]v=([A-Za-z0-9_-]{6,})/
+            ];
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            return null;
+        }
+
+        function ingestYouTube() {
+            const input = document.getElementById('youtubeUrl');
+            const id = parseYouTubeId((input.value || '').trim());
+            if (!id) {
+                setStatus("Invalid YouTube URL");
+                input.focus();
+                return;
+            }
+            localStorage.setItem('mhbojtYoutubeId', id);
+            localStorage.setItem('mhbojtYoutubeUrl', input.value.trim());
+            renderYouTube(id);
+        }
+
+        function renderYouTube(id) {
+            const frame = document.getElementById('mediaContainer');
+            document.getElementById('mediaTitle').textContent = "YouTube Media Frame";
+            document.getElementById('mediaModeBadge').textContent = "YouTube Ingest";
+            document.getElementById('mediaTopic').textContent = "Live YouTube render · ID " + id;
+            document.getElementById('mediaCaption').textContent = "Long-form and Shorts URLs resolve into this frame without leaving the enterprise shell.";
+            document.getElementById('audioDock').classList.add('hidden');
+            frame.innerHTML = '<iframe class="w-full h-full" src="https://www.youtube.com/embed/' + id + '?rel=0" title="YouTube media ingest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+            setStatus("YouTube rendered: " + id);
+        }
+
+        function showNativeAudio() {
+            const frame = document.getElementById('mediaContainer');
+            document.getElementById('mediaTitle').textContent = "Native HTML5 Audio Playback";
+            document.getElementById('mediaModeBadge').textContent = "Audio";
+            document.getElementById('mediaTopic').textContent = "Topic: DRAH GOSSSM Dual-Host Audio Brief";
+            document.getElementById('mediaCaption').textContent = "Native audio controls stay in-page. Drop /media/dual-host-brief.mp3 to enable the NotebookLM brief.";
+            document.getElementById('audioDock').classList.remove('hidden');
+            frame.innerHTML = `
+                <div class="w-full h-full flex flex-col items-center justify-center bg-slate-950 px-6 space-y-4 text-center">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-amber-400">HTML5 Audio Frame</span>
+                    <p class="text-xs text-slate-400 max-w-md">The native player below is the playback surface. This card stays mounted so operators can switch back from YouTube without losing the dual-host brief.</p>
+                    <audio class="w-full max-w-lg" controls preload="metadata">
+                        <source src="/media/dual-host-brief.mp3" type="audio/mpeg">
+                        <source src="/media/dual-host-brief.ogg" type="audio/ogg">
+                    </audio>
+                </div>`;
+            setStatus("Native audio frame active");
+        }
+
+        function showDefaultAvatarSlot() {
+            document.getElementById('mediaTitle').textContent = "Dual-Host Pro & Con Media Brief";
+            document.getElementById('mediaModeBadge').textContent = "AI Synthesized";
+            document.getElementById('mediaTopic').textContent = "Topic: DRAH GOSSSM & 200+ Component Scalability";
+            document.getElementById('mediaCaption').textContent = "Watch the AI avatar frame and listen to dual hosts debate the mechanics, structural advantages, and implementation realities of autonomous institutional development.";
+            document.getElementById('audioDock').classList.remove('hidden');
+            document.getElementById('mediaContainer').innerHTML = `
+                <video id="aiAvatarFrame" class="w-full h-full object-cover" controls playsinline preload="metadata" poster="/media/ai-avatar-poster.jpg">
+                    <source src="/media/ai-avatar.mp4" type="video/mp4">
+                    <source src="/media/ai-avatar.webm" type="video/webm">
+                </video>
+                <div id="aiAvatarSlot" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/85 pointer-events-none space-y-2 px-4 text-center">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-amber-400">AI Avatar Video Frame</span>
+                    <p class="text-xs text-slate-400">Drop <span class="font-mono text-slate-300">/media/ai-avatar.mp4</span> here, or ingest a YouTube URL from Admin Media Studio.</p>
+                </div>`;
+            bindAvatarSlot();
+            setStatus("Avatar slot restored");
+        }
+
+        function generateSectionMedia() {
+            const section = document.getElementById('platformSection').value;
+            const meta = sectionCopy[section] || { caption: "Generating avatar and doodle preview.", doodle: "DRAH" };
+            document.getElementById('mediaTitle').textContent = section;
+            document.getElementById('mediaModeBadge').textContent = "Generating…";
+            document.getElementById('mediaTopic').textContent = "AI Avatar + Doodle workflow · " + section;
+            document.getElementById('mediaCaption').textContent = "Synthesizing talking-head avatar and whiteboard doodle for this platform section…";
+            document.getElementById('audioDock').classList.add('hidden');
+            document.getElementById('mediaContainer').innerHTML = `
+                <div class="w-full h-full flex items-center justify-center bg-slate-950">
+                    <div class="text-center space-y-2">
+                        <div class="mx-auto w-16 h-16 rounded-full border-2 border-amber-400 avatar-pulse"></div>
+                        <p class="text-[10px] uppercase tracking-widest text-amber-400">Rendering avatar + doodle</p>
+                    </div>
+                </div>`;
+            setStatus("Generating preview for " + section);
+            setTimeout(function () {
+                renderAvatarPreview(section, meta);
+            }, 900);
+        }
+
+        function renderAvatarPreview(section, meta) {
+            document.getElementById('mediaModeBadge').textContent = "Avatar Preview";
+            document.getElementById('mediaCaption').textContent = meta.caption;
+            document.getElementById('mediaContainer').innerHTML = `
+                <div class="w-full h-full grid grid-cols-1 sm:grid-cols-2 bg-slate-950">
+                    <div class="flex flex-col items-center justify-center border-b sm:border-b-0 sm:border-r border-slate-800 p-6 space-y-3">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-amber-400 to-emerald-500 avatar-pulse flex items-center justify-center text-slate-950 font-extrabold text-lg">AI</div>
+                        <p class="text-[10px] uppercase tracking-widest text-amber-400">Simulated Avatar</p>
+                        <p class="text-xs text-slate-300 text-center">${section}</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-6 space-y-3">
+                        <svg viewBox="0 0 160 90" class="w-40 h-24">
+                            <rect x="4" y="4" width="152" height="82" rx="8" fill="none" stroke="#334155"></rect>
+                            <path class="doodle-path" d="M20 60 C40 20, 70 80, 90 35 S140 20, 145 50" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"></path>
+                        </svg>
+                        <p class="text-[10px] uppercase tracking-widest text-emerald-400">Doodle Animation</p>
+                        <p class="font-mono text-sm text-white">${meta.doodle}</p>
+                    </div>
+                </div>`;
+            setStatus("Preview ready: " + section);
+        }
+
+        function bindAvatarSlot() {
+            const avatar = document.getElementById('aiAvatarFrame');
+            const slot = document.getElementById('aiAvatarSlot');
+            if (avatar && slot) {
+                avatar.addEventListener('loadeddata', function () {
+                    if (avatar.videoWidth > 0) slot.classList.add('hidden');
+                });
+                avatar.addEventListener('error', function () {
+                    slot.classList.remove('hidden');
+                });
+            }
+        }
+
+        bindAvatarSlot();
+
+        const savedUrl = localStorage.getItem('mhbojtYoutubeUrl');
+        if (savedUrl) {
+            const input = document.getElementById('youtubeUrl');
+            if (input) input.value = savedUrl;
         }
     </script>
 </body>

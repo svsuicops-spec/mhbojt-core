@@ -15,6 +15,10 @@
         .mermaid .node:hover polygon {
             stroke: #f59e0b !important;
         }
+        audio {
+            width: 100%;
+            accent-color: #f59e0b;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
@@ -48,20 +52,44 @@
             <!-- Left Column: Interactive Dual-Host Pro/Con Audio/Video Player (7 Cols) -->
             <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Pro & Con Audio Brief</h2>
+                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Pro & Con Media Brief</h2>
                     <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">AI Synthesized</span>
                 </div>
-                
-                <!-- Audio Player Simulation Box -->
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4 text-center">
-                    <div class="text-sm font-bold text-white">Topic: DRAH GOSSSM & 200+ Component Scalability</div>
-                    <p class="text-xs text-slate-400">Listen to dual AI hosts debate the mechanics, structural advantages, and implementation realities of autonomous institutional development.</p>
-                    
-                    <!-- Simulated Audio Waveform / Controls -->
-                    <div class="flex items-center justify-center space-x-3 py-2">
-                        <button onclick="alert('Playing NotebookLM Synthesized Audio Overview...') " class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs shadow-lg transition flex items-center space-x-2">
-                            <span>▶ Play Discussion Brief</span>
-                        </button>
+
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
+                    <div class="text-center space-y-1">
+                        <div class="text-sm font-bold text-white">Topic: DRAH GOSSSM & 200+ Component Scalability</div>
+                        <p class="text-xs text-slate-400">Watch the AI avatar frame and listen to dual hosts debate the mechanics, structural advantages, and implementation realities of autonomous institutional development.</p>
+                    </div>
+
+                    <!-- AI Avatar Video Frame Slot -->
+                    <div class="rounded-xl overflow-hidden border border-slate-800 bg-slate-900 aspect-video relative">
+                        <video
+                            id="aiAvatarFrame"
+                            class="w-full h-full object-cover"
+                            controls
+                            playsinline
+                            preload="metadata"
+                            poster="/media/ai-avatar-poster.jpg"
+                        >
+                            <source src="/media/ai-avatar.mp4" type="video/mp4">
+                            <source src="/media/ai-avatar.webm" type="video/webm">
+                        </video>
+                        <div id="aiAvatarSlot" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/85 pointer-events-none space-y-2 px-4 text-center">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-amber-400">AI Avatar Video Frame</span>
+                            <p class="text-xs text-slate-400">Drop <span class="font-mono text-slate-300">/media/ai-avatar.mp4</span> here to activate the talking-head slot.</p>
+                        </div>
+                    </div>
+
+                    <!-- Native Audio Player -->
+                    <div class="space-y-2">
+                        <label for="dualHostAudio" class="block text-[10px] font-bold uppercase tracking-widest text-amber-400">Native Dual-Host Audio Player</label>
+                        <audio id="dualHostAudio" class="w-full" controls preload="metadata">
+                            <source src="/media/dual-host-brief.mp3" type="audio/mpeg">
+                            <source src="/media/dual-host-brief.ogg" type="audio/ogg">
+                            Your browser does not support the native audio player.
+                        </audio>
+                        <p class="text-[10px] text-slate-500">Place the NotebookLM brief at <span class="font-mono text-slate-400">/media/dual-host-brief.mp3</span> to enable playback.</p>
                     </div>
                 </div>
 
@@ -120,5 +148,17 @@
         <p>&copy; 2026 MHBOJT & SVSUIC Platform. Autonomous Multi-Modal Enterprise Engine.</p>
     </footer>
 
+    <script>
+        const avatar = document.getElementById('aiAvatarFrame');
+        const slot = document.getElementById('aiAvatarSlot');
+        if (avatar && slot) {
+            avatar.addEventListener('loadeddata', function () {
+                if (avatar.videoWidth > 0) slot.classList.add('hidden');
+            });
+            avatar.addEventListener('error', function () {
+                slot.classList.remove('hidden');
+            });
+        }
+    </script>
 </body>
 </html>

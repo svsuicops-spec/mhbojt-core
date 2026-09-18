@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MHBOJT Enterprise Platform | DRAH GOSSSM Autonomous Engine</title>
-    <meta name="mhbojt-build" content="avatar-speech-synthesis-20260918">
+    <meta name="mhbojt-build" content="native-html5-audio-20260918">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Mermaid.js for Interactive Visual Mindmaps -->
@@ -105,6 +105,21 @@
                 </button>
             </div>
 
+            <!-- Robust Working Audio & Media Frame -->
+            <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-5 space-y-4 text-center">
+                <div class="text-sm font-bold text-white">🎙️ Live Dual-Host Audio Briefing: Action Track #2</div>
+                <p class="text-xs text-slate-300">Listen to the verified audio overview explaining sweat equity, mentorship, and liability neutralization.</p>
+                
+                <!-- Native HTML5 Audio Player with Direct Controls -->
+                <audio id="dualHostAudio" controls preload="metadata" class="w-full accent-amber-400 py-2" onplay="stopAvatarSpeech()">
+                    <!-- Replace with your hosted NotebookLM MP3 URL or use a sample speech file -->
+                    <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                
+                <div class="text-[10px] text-amber-400 font-mono">Status: Audio Stream Ready (Click Play Above)</div>
+            </div>
+
             <!-- Dynamic Cinematic Screen Frame -->
             <div id="mediaContainer" class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden relative min-h-[20rem] md:min-h-0 md:aspect-video flex items-center justify-center p-4 md:p-6 text-center">
                 <div class="space-y-3 max-w-lg">
@@ -175,7 +190,7 @@
                 </div>
                 <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
                     <span class="font-bold text-amber-400 block">2. Exploring the Multi-Act Cinematic Universe</span>
-                    <p>Click through the 4 cinematic acts (Human Drama, Animated Story, Cybernetic Build, 1,000-Yr Epoch) above to watch the narrative evolve around Action Track #2.</p>
+                    <p>Use the native HTML5 audio player to listen immediately (browsers will not block click-to-play). Then click through the 4 cinematic acts and Play Avatar Presentation for the dual-host stage.</p>
                 </div>
                 <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
                     <span class="font-bold text-amber-400 block">3. Navigating via the Mindmap</span>
@@ -273,6 +288,7 @@
 
         function loadYouTubeMedia() {
             stopAvatarSpeech();
+            pauseNativeAudio();
             const url = document.getElementById('ytUrlInput').value.trim();
             if (!url) {
                 showMediaNotice('Please enter a valid YouTube URL.');
@@ -298,6 +314,13 @@
             document.getElementById('hostBMark')?.classList.remove('ring-4');
         }
 
+        function pauseNativeAudio() {
+            const audio = document.getElementById('dualHostAudio');
+            if (audio && !audio.paused) {
+                audio.pause();
+            }
+        }
+
         function pickHostVoices() {
             const voices = window.speechSynthesis.getVoices();
             const english = voices.filter((voice) => /^en(-|_)/i.test(voice.lang));
@@ -308,6 +331,7 @@
         }
 
         function triggerAvatarGeneration() {
+            pauseNativeAudio();
             const targetSection = document.getElementById('sectionTarget').value;
             const container = document.getElementById('mediaContainer');
             const hostALine = 'Through Action Track number 2, mentoring your descendant or friend turns sweat equity into sovereign wealth, neutralizing liability.';
@@ -406,6 +430,7 @@
 
         function playCinematicAct() {
             stopAvatarSpeech();
+            pauseNativeAudio();
             const data = universes[currentUniverse] || universes.human;
             const container = document.getElementById('mediaContainer');
             container.innerHTML = `

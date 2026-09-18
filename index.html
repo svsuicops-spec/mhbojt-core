@@ -14,12 +14,12 @@
 
     <!-- Top Navigation -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-md">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center w-full">
-            <div class="flex items-center space-x-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center w-full gap-3">
+            <div class="flex items-center gap-3 min-w-0">
                 <span class="text-sm font-extrabold tracking-wider text-amber-400">MHBOJT & SVSUIC PLATFORM</span>
-                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">Autonomous Core</span>
+                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap">Autonomous Core</span>
             </div>
-            <div class="flex items-center space-x-3">
+            <div class="flex flex-wrap items-center gap-2">
                 <button onclick="toggleAdminPanel()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-2 rounded-lg text-xs font-semibold transition">
                     ⚙️ Admin Media Studio
                 </button>
@@ -34,7 +34,7 @@
     </header>
 
     <!-- Main Content Container (Expanded Width) -->
-    <main class="flex-grow max-w-7xl mx-auto px-6 py-10 space-y-10 w-full">
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-10 w-full">
         
         <!-- Hero Banner -->
         <div class="text-center space-y-3 max-w-4xl mx-auto">
@@ -105,7 +105,7 @@
             </div>
 
             <!-- Dynamic Cinematic Screen Frame -->
-            <div id="mediaContainer" class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden relative aspect-video flex items-center justify-center p-6 text-center">
+            <div id="mediaContainer" class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden relative min-h-[20rem] md:min-h-0 md:aspect-video flex items-center justify-center p-4 md:p-6 text-center">
                 <div class="space-y-3 max-w-lg">
                     <span class="text-4xl" id="uniIcon">👥</span>
                     <h3 id="uniTitle" class="text-sm font-bold text-amber-400">Cinematic Act I: The Grounded Human Foundation</h3>
@@ -248,7 +248,7 @@
             const videoId = extractYouTubeId(url);
             if (videoId) {
                 const container = document.getElementById('mediaContainer');
-                container.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                container.innerHTML = `<iframe class="w-full h-full min-h-[12rem]" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
                 alert('YouTube media successfully ingested!');
             } else {
                 alert('Invalid YouTube URL format.');

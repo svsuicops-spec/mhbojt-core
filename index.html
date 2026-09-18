@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MHBOJT Enterprise Platform | DRAH GOSSSM Autonomous Engine</title>
+    <meta name="mhbojt-build" content="unified-avatar-player-20260918">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Mermaid.js for Interactive Visual Mindmaps -->
@@ -67,7 +68,7 @@
                         <option>Target: 3. The Physics of Wealth & Compounding</option>
                         <option>Target: 4. Munger-to-DRAH Translation Matrix</option>
                     </select>
-                    <button onclick="triggerAvatarGeneration()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded text-xs transition shadow-md">
+                    <button onclick="playAvatarPresentation()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded text-xs transition shadow-md">
                         Trigger Dual-Host / Doodle Animation Pipeline
                     </button>
                 </div>
@@ -110,9 +111,14 @@
                     <span class="text-4xl" id="uniIcon">👥</span>
                     <h3 id="uniTitle" class="text-sm font-bold text-amber-400">Cinematic Act I: The Grounded Human Foundation</h3>
                     <p id="uniDesc" class="text-xs text-slate-300">Experience how Action Track #2 allows a father to mentor his son into an SL/NB candidate, turning sweat equity into a multi-generational legacy in St. Bernard Parish.</p>
+                    <div class="flex flex-wrap items-center justify-center gap-2">
                     <button onclick="playCinematicAct()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
                         ▶ Play Cinematic Act (1-2 Min)
                     </button>
+                    <button onclick="playAvatarPresentation()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
+                        ▶ Play Avatar Presentation
+                    </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -280,7 +286,7 @@
             }
         }
 
-        function triggerAvatarGeneration() {
+        function playAvatarPresentation() {
             const targetSection = document.getElementById('sectionTarget').value;
             const container = document.getElementById('mediaContainer');
             container.innerHTML = `
@@ -308,11 +314,15 @@
                         </div>
                         <div class="flex justify-between items-center text-[10px] text-slate-300 gap-2">
                             <span class="text-amber-400 font-semibold">${targetSection}</span>
-                            <button onclick="triggerAvatarGeneration()" class="hover:text-amber-400 font-bold whitespace-nowrap">🔄 Replay Simulation</button>
+                            <button onclick="playAvatarPresentation()" class="hover:text-amber-400 font-bold whitespace-nowrap">🔄 Replay Simulation</button>
                         </div>
                     </div>
                 </div>
             `;
+        }
+
+        function triggerAvatarGeneration() {
+            playAvatarPresentation();
         }
 
         function playCinematicAct() {
@@ -352,9 +362,14 @@
                     <span class="text-4xl" id="uniIcon">${data.icon}</span>
                     <h3 id="uniTitle" class="text-sm font-bold text-amber-400">${data.title}</h3>
                     <p id="uniDesc" class="text-xs text-slate-300">${data.desc}</p>
+                    <div class="flex flex-wrap items-center justify-center gap-2">
                     <button onclick="playCinematicAct()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
                         ▶ Play Cinematic Act (1-2 Min)
                     </button>
+                    <button onclick="playAvatarPresentation()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
+                        ▶ Play Avatar Presentation
+                    </button>
+                    </div>
                 </div>
             `;
         }

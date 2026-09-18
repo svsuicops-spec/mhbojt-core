@@ -34,6 +34,19 @@
         .avatar-pulse {
             animation: avatarPulse 1.6s ease-out infinite;
         }
+        .universe-card.selected {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.4);
+        }
+        @keyframes filmGrain {
+            0% { opacity: 0.18; }
+            50% { opacity: 0.08; }
+            100% { opacity: 0.18; }
+        }
+        .universe-documentary { background: radial-gradient(circle at 20% 20%, #3f3f46 0%, #0f172a 70%); }
+        .universe-storybook { background: radial-gradient(circle at 80% 10%, #f59e0b33 0%, #1e1b4b 55%, #0f172a 100%); }
+        .universe-cybernetic { background: linear-gradient(135deg, #020617 0%, #064e3b 50%, #022c22 100%); }
+        .universe-scifi { background: radial-gradient(circle at 50% 0%, #38bdf833 0%, #1e1b4b 40%, #020617 100%); }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
@@ -126,6 +139,43 @@
                     <div class="text-center space-y-1">
                         <div id="mediaTopic" class="text-sm font-bold text-white">Topic: DRAH GOSSSM & 200+ Component Scalability</div>
                         <p id="mediaCaption" class="text-xs text-slate-400">Watch the AI avatar frame and listen to dual hosts debate the mechanics, structural advantages, and implementation realities of autonomous institutional development.</p>
+                    </div>
+
+                    <!-- Cinematic Universe Selector -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-[10px] font-bold uppercase tracking-widest text-amber-400">Cinematic Universe Selector</h3>
+                            <span class="text-[10px] text-slate-500">Action Track #2 · Crystal Dynasty</span>
+                        </div>
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                            <button type="button" data-universe="documentary" onclick="selectUniverse('documentary')" class="universe-card selected bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-3 text-left space-y-1 transition">
+                                <span class="block text-lg leading-none">🎥</span>
+                                <span class="block text-[10px] font-bold text-white">Human Documentary</span>
+                            </button>
+                            <button type="button" data-universe="storybook" onclick="selectUniverse('storybook')" class="universe-card bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-3 text-left space-y-1 transition">
+                                <span class="block text-lg leading-none">📖</span>
+                                <span class="block text-[10px] font-bold text-white">Animated Storybook / Cartoon</span>
+                            </button>
+                            <button type="button" data-universe="cybernetic" onclick="selectUniverse('cybernetic')" class="universe-card bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-3 text-left space-y-1 transition">
+                                <span class="block text-lg leading-none">🤖</span>
+                                <span class="block text-[10px] font-bold text-white">Cybernetic &amp; Robotic Core</span>
+                            </button>
+                            <button type="button" data-universe="scifi" onclick="selectUniverse('scifi')" class="universe-card bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-3 text-left space-y-1 transition">
+                                <span class="block text-lg leading-none">🚀</span>
+                                <span class="block text-[10px] font-bold text-white">Interstellar Sci-Fi</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cinematic Screen Frame -->
+                    <div id="cinematicScreen" class="rounded-xl overflow-hidden border border-slate-800 aspect-video relative universe-documentary">
+                        <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center space-y-3">
+                            <div id="cinematicIcon" class="text-5xl leading-none">🎥</div>
+                            <h3 id="cinematicTitle" class="text-lg font-extrabold tracking-wide text-white">Human Documentary</h3>
+                            <p id="cinematicLens" class="text-[10px] uppercase tracking-widest text-amber-400">Cinéma vérité · Action Track #2</p>
+                            <p id="cinematicNarrative" class="text-xs text-slate-200 max-w-lg leading-relaxed">Handheld cameras follow Guardsmen converting sweat-equity hours into $50/Hr capital. The Crystal Dynasty is not a myth here — it is a ledger of real people neutralizing a $10M franchise liability by building shelter.</p>
+                            <span id="cinematicPreview" class="text-[10px] font-mono text-emerald-400">PREVIEW: field interview · sweat-equity timecard · 48-acre site</span>
+                        </div>
                     </div>
 
                     <!-- Dynamic Media Display Frame -->
@@ -237,6 +287,57 @@
                 doodle: "DRAH"
             }
         };
+
+        const universes = {
+            documentary: {
+                icon: "🎥",
+                title: "Human Documentary",
+                lens: "Cinéma vérité · Action Track #2",
+                narrative: "Handheld cameras follow Guardsmen converting sweat-equity hours into $50/Hr capital. The Crystal Dynasty is not a myth here — it is a ledger of real people neutralizing a $10M franchise liability by building shelter.",
+                preview: "PREVIEW: field interview · sweat-equity timecard · 48-acre site",
+                frameClass: "universe-documentary"
+            },
+            storybook: {
+                icon: "📖",
+                title: "Animated Storybook / Cartoon",
+                lens: "Illustrated fable · Action Track #2",
+                narrative: "A Nation Builder opens a glowing storybook: each page is an MHBOJT action track — sweat, mentor, sponsor, referral. Crystal Dynasty appears as a castle grown from modular homes, compounding one illustrated hour at a time.",
+                preview: "PREVIEW: storyboard frames · talking animals of labor · golden hour-coins",
+                frameClass: "universe-storybook"
+            },
+            cybernetic: {
+                icon: "🤖",
+                title: "Cybernetic & Robotic Core",
+                lens: "Machine protocol · Action Track #2",
+                narrative: "Autonomous swarms execute Track #2 as deterministic code: sweat-equity ticks, mentor nodes, sponsor packets. Crystal Dynasty is the kernel — a 1,000-year runtime with DRAH 0% fees and zero bureaucratic overhead.",
+                preview: "PREVIEW: HUD ledger · servo crews · liability → $0 neutralized",
+                frameClass: "universe-cybernetic"
+            },
+            scifi: {
+                icon: "🚀",
+                title: "Interstellar Sci-Fi",
+                lens: "Deep-time opera · Action Track #2",
+                narrative: "From a 48-acre launchpad in St. Bernard, Track #2 fuels a 1,000-year Crystal Dynasty ark. Sweat equity is reaction mass; mentorship is navigation. The dynasty compounds across light-years of Nation-Builder colonies.",
+                preview: "PREVIEW: orbital campus · 1,000-year horizon · crystal-drive compounding",
+                frameClass: "universe-scifi"
+            }
+        };
+
+        function selectUniverse(key) {
+            const universe = universes[key];
+            if (!universe) return;
+            const screen = document.getElementById('cinematicScreen');
+            document.getElementById('cinematicIcon').textContent = universe.icon;
+            document.getElementById('cinematicTitle').textContent = universe.title;
+            document.getElementById('cinematicLens').textContent = universe.lens;
+            document.getElementById('cinematicNarrative').textContent = universe.narrative;
+            document.getElementById('cinematicPreview').textContent = universe.preview;
+            screen.className = "rounded-xl overflow-hidden border border-slate-800 aspect-video relative " + universe.frameClass;
+            document.querySelectorAll('.universe-card').forEach(function (card) {
+                card.classList.toggle('selected', card.getAttribute('data-universe') === key);
+            });
+            localStorage.setItem('mhbojtCinematicUniverse', key);
+        }
 
         function setStatus(text) {
             const el = document.getElementById('adminStatus');
@@ -394,6 +495,9 @@
             const input = document.getElementById('youtubeUrl');
             if (input) input.value = savedUrl;
         }
+
+        const savedUniverse = localStorage.getItem('mhbojtCinematicUniverse') || 'documentary';
+        selectUniverse(savedUniverse);
     </script>
 </body>
 </html>

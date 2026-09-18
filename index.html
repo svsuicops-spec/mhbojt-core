@@ -9,229 +9,120 @@
     <!-- Mermaid.js for Interactive Visual Mindmaps -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });</script>
-    <style>
-        .mermaid .node { cursor: pointer; }
-        .mermaid .node:hover rect,
-        .mermaid .node:hover polygon {
-            stroke: #f59e0b !important;
-        }
-        audio {
-            width: 100%;
-            accent-color: #f59e0b;
-        }
-        @keyframes doodleDraw {
-            from { stroke-dashoffset: 240; }
-            to { stroke-dashoffset: 0; }
-        }
-        @keyframes avatarPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
-            50% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
-        }
-        .doodle-path {
-            stroke-dasharray: 240;
-            animation: doodleDraw 1.6s ease forwards;
-        }
-        .avatar-pulse {
-            animation: avatarPulse 1.6s ease-out infinite;
-        }
-        .universe-card.selected {
-            border-color: #f59e0b;
-            box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.4);
-        }
-        @keyframes filmGrain {
-            0% { opacity: 0.18; }
-            50% { opacity: 0.08; }
-            100% { opacity: 0.18; }
-        }
-        .universe-documentary { background: radial-gradient(circle at 20% 20%, #3f3f46 0%, #0f172a 70%); }
-        .universe-storybook { background: radial-gradient(circle at 80% 10%, #f59e0b33 0%, #1e1b4b 55%, #0f172a 100%); }
-        .universe-cybernetic { background: linear-gradient(135deg, #020617 0%, #064e3b 50%, #022c22 100%); }
-        .universe-scifi { background: radial-gradient(circle at 50% 0%, #38bdf833 0%, #1e1b4b 40%, #020617 100%); }
-    </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
 
     <!-- Top Navigation -->
-    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center gap-3">
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center w-full">
             <div class="flex items-center space-x-3">
-                <span class="text-xs font-bold tracking-wider text-amber-400">MHBOJT & SVSUIC PLATFORM</span>
+                <span class="text-sm font-extrabold tracking-wider text-amber-400">MHBOJT & SVSUIC PLATFORM</span>
                 <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">Autonomous Core</span>
             </div>
-            <div class="flex items-center space-x-2 sm:space-x-3">
-                <button type="button" id="adminToggle" onclick="toggleAdminPanel()" class="bg-slate-950 border border-slate-700 hover:border-amber-500/60 text-amber-400 font-bold px-3 py-2 rounded-lg transition text-xs">
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleAdminPanel()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 px-3 py-2 rounded-lg text-xs font-semibold transition">
                     ⚙️ Admin Media Studio
                 </button>
-                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
+                <button onclick="toggleTutorialModal()" class="bg-slate-800 hover:bg-slate-700 text-sky-400 border border-sky-500/30 px-3 py-2 rounded-lg text-xs font-semibold transition">
+                    📖 Feature Tutorials
+                </button>
+                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-5 py-2 rounded-lg shadow-lg transition text-xs">
                     Secure $100 Reservation
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- On-Demand Admin Media Control Panel (hidden by default) -->
-    <section id="adminPanel" class="hidden border-b border-slate-800 bg-slate-950">
-        <div class="max-w-7xl mx-auto px-6 py-5 space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">On-Demand Media Control Panel</h2>
-                    <p class="text-[11px] text-slate-400">Ingest YouTube URLs or generate an AI avatar + doodle preview into the main media frame.</p>
-                </div>
-                <span id="adminStatus" class="text-[10px] text-slate-500">Studio idle</span>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
-                    <label for="youtubeUrl" class="block text-[10px] font-bold uppercase tracking-widest text-amber-400">YouTube Ingest (long or short form)</label>
-                    <div class="flex flex-col sm:flex-row gap-2">
-                        <input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=... or /shorts/..." class="flex-grow bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
-                        <button type="button" onclick="ingestYouTube()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition">
-                            Render in Frame
-                        </button>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button type="button" onclick="showNativeAudio()" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 text-slate-300 px-3 py-1.5 rounded text-[10px]">Native Audio</button>
-                        <button type="button" onclick="showDefaultAvatarSlot()" class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 text-slate-300 px-3 py-1.5 rounded text-[10px]">Avatar Slot</button>
-                    </div>
-                </div>
-
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
-                    <label for="platformSection" class="block text-[10px] font-bold uppercase tracking-widest text-amber-400">Platform Section → AI Avatar + Doodle</label>
-                    <div class="flex flex-col sm:flex-row gap-2">
-                        <select id="platformSection" class="flex-grow bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
-                            <option value="1. Diagnostic Profile">1. Diagnostic Profile</option>
-                            <option value="2. MHBOJT Action Tracks" selected>2. MHBOJT Action Tracks</option>
-                            <option value="3. The Physics of Wealth">3. The Physics of Wealth</option>
-                            <option value="4. Environment &amp; Fees">4. Environment &amp; Fees</option>
-                            <option value="Munger-to-DRAH Translation Matrix">Munger-to-DRAH Translation Matrix</option>
-                        </select>
-                        <button type="button" onclick="generateSectionMedia()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition">
-                            Generate Preview
-                        </button>
-                    </div>
-                    <p class="text-[10px] text-slate-500">Simulates avatar synthesis and doodle animation for the selected Crystal Dynasty module.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content Container -->
-    <main class="flex-grow max-w-7xl mx-auto px-6 py-8 space-y-8 w-full">
+    <!-- Main Content Container (Expanded Width) -->
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-10 space-y-10 w-full">
         
         <!-- Hero Banner -->
-        <div class="text-center space-y-2 max-w-3xl mx-auto">
+        <div class="text-center space-y-3 max-w-4xl mx-auto">
             <span class="text-amber-400 text-xs font-semibold uppercase tracking-widest">~ Autonomous Multi-Modal Enterprise Engine</span>
-            <h1 class="text-3xl md:text-4xl font-extrabold tracking-wider text-amber-400">READ, LISTEN, & ENGAGE</h1>
-            <p class="text-xs text-slate-400">Explore 200+ components through live visual mindmaps, dual-host audio discussions, and systematic execution tracks.</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-wider text-amber-400">READ, LISTEN, & ENGAGE</h1>
+            <p class="text-sm text-slate-300">Explore 200+ components through live visual mindmaps, multi-act cinematic universes, AI avatars, and systematic execution tracks.</p>
         </div>
 
-        <!-- Multi-Modal Media & Pro/Con Hub -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Admin Media-On-Demand Control Panel (Collapsible) -->
+        <div id="adminPanel" class="hidden bg-slate-900 border border-amber-500/40 rounded-2xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">⚙️ On-Demand Media Studio (Admin Control)</h2>
+                <button onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- YouTube Ingestion Tool -->
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+                    <span class="text-[10px] font-bold text-amber-400 uppercase">1. Ingest YouTube Media (Long/Short)</span>
+                    <input type="text" id="ytUrlInput" placeholder="Paste YouTube URL (e.g., https://youtu.be/...)" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
+                    <button onclick="loadYouTubeMedia()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold py-2 rounded text-xs transition">
+                        Extract & Embed Video / Audio
+                    </button>
+                </div>
+                <!-- Avatar / Prompt Template Generator for Section Focus -->
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+                    <span class="text-[10px] font-bold text-amber-400 uppercase">2. Generate Avatar / Animation Script</span>
+                    <select id="sectionTarget" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                        <option>Target: 2. MHBOJT Action Tracks (Sweat Equity & Mentors)</option>
+                        <option>Target: 1. Diagnostic Profile & Food Logic</option>
+                        <option>Target: 3. The Physics of Wealth & Compounding</option>
+                        <option>Target: 4. Munger-to-DRAH Translation Matrix</option>
+                    </select>
+                    <button onclick="triggerAvatarGeneration()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded text-xs transition shadow-md">
+                        Trigger Dual-Host / Doodle Animation Pipeline
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multi-Verse Cinematic Universe Selector -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
+            <div class="flex flex-wrap justify-between items-center border-b border-slate-800 pb-3 gap-2">
+                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">🎬 Multi-Act Cinematic Universe Selector</h2>
+                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">Switch Narrative Act</span>
+            </div>
             
-            <!-- Left Column: Dynamic Media Display Frame (7 Cols) -->
-            <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <h2 id="mediaTitle" class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Pro & Con Media Brief</h2>
-                    <span id="mediaModeBadge" class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">AI Synthesized</span>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <button onclick="switchUniverse('human')" class="bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 p-3 rounded-xl text-left transition space-y-1">
+                    <span class="text-sm">👥</span>
+                    <div class="text-xs font-bold text-white">Act I: Human Drama</div>
+                    <p class="text-[10px] text-slate-400">St. Bernard family documentary.</p>
+                </button>
+                <button onclick="switchUniverse('cartoon')" class="bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 p-3 rounded-xl text-left transition space-y-1">
+                    <span class="text-sm">🎨</span>
+                    <div class="text-xs font-bold text-white">Act II: Animated Story</div>
+                    <p class="text-[10px] text-slate-400">Pixar-style wealth compounding.</p>
+                </button>
+                <button onclick="switchUniverse('robot')" class="bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 p-3 rounded-xl text-left transition space-y-1">
+                    <span class="text-sm">🤖</span>
+                    <div class="text-xs font-bold text-white">Act III: Cybernetic Build</div>
+                    <p class="text-[10px] text-slate-400">Autonomous pre-fab robotics.</p>
+                </button>
+                <button onclick="switchUniverse('alien')" class="bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-200 p-3 rounded-xl text-left transition space-y-1">
+                    <span class="text-sm">👽</span>
+                    <div class="text-xs font-bold text-white">Act IV: 1,000-Yr Epoch</div>
+                    <p class="text-[10px] text-slate-400">Interstellar sovereign ark.</p>
+                </button>
+            </div>
+
+            <!-- Dynamic Cinematic Screen Frame -->
+            <div id="mediaContainer" class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden relative aspect-video flex items-center justify-center p-6 text-center">
+                <div class="space-y-3 max-w-lg">
+                    <span class="text-4xl" id="uniIcon">👥</span>
+                    <h3 id="uniTitle" class="text-sm font-bold text-amber-400">Cinematic Act I: The Grounded Human Foundation</h3>
+                    <p id="uniDesc" class="text-xs text-slate-300">Experience how Action Track #2 allows a father to mentor his son into an SL/NB candidate, turning sweat equity into a multi-generational legacy in St. Bernard Parish.</p>
+                    <button onclick="alert('Playing Cinematic Act Sequence...')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
+                        ▶ Play Cinematic Act (1-2 Min)
+                    </button>
                 </div>
+            </div>
+        </div>
 
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4">
-                    <div class="text-center space-y-1">
-                        <div id="mediaTopic" class="text-sm font-bold text-white">Topic: DRAH GOSSSM & 200+ Component Scalability</div>
-                        <p id="mediaCaption" class="text-xs text-slate-400">Watch the AI avatar frame and listen to dual hosts debate the mechanics, structural advantages, and implementation realities of autonomous institutional development.</p>
-                    </div>
-
-                    <!-- Multi-Act Cinematic Engine -->
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center gap-2">
-                            <h3 class="text-[10px] font-bold uppercase tracking-widest text-amber-400">Multi-Act Cinematic Engine</h3>
-                            <span class="text-[10px] text-slate-500">DRAH GOSSSM · 4-Act Progression</span>
-                        </div>
-                        <p class="text-[10px] text-slate-400">Thesis locked: Action Track #2 · sweat equity at $50/Hr · neutralize the $10M liability.</p>
-                        <div class="grid grid-cols-4 gap-1">
-                            <div data-act-rail="documentary" class="h-1 rounded-full bg-amber-500"></div>
-                            <div data-act-rail="storybook" class="h-1 rounded-full bg-slate-800"></div>
-                            <div data-act-rail="cybernetic" class="h-1 rounded-full bg-slate-800"></div>
-                            <div data-act-rail="scifi" class="h-1 rounded-full bg-slate-800"></div>
-                        </div>
-                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                            <button type="button" data-universe="documentary" onclick="selectUniverse('documentary')" class="universe-card selected bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-3 text-left space-y-1 transition">
-                                <span class="block text-[9px] uppercase tracking-widest text-amber-400">Act I</span>
-                                <span class="block text-lg leading-none">🎥</span>
-                                <span class="block text-[10px] font-bold text-white">The Human Foundation</span>
-                                <span class="block text-[9px] text-slate-500">Human Documentary</span>
-                            </button>
-                            <button type="button" data-universe="storybook" onclick="selectUniverse('storybook')" class="universe-card bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-3 text-left space-y-1 transition">
-                                <span class="block text-[9px] uppercase tracking-widest text-amber-400">Act II</span>
-                                <span class="block text-lg leading-none">📖</span>
-                                <span class="block text-[10px] font-bold text-white">The Animated Family Blueprint</span>
-                                <span class="block text-[9px] text-slate-500">Storybook / Cartoon</span>
-                            </button>
-                            <button type="button" data-universe="cybernetic" onclick="selectUniverse('cybernetic')" class="universe-card bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-3 text-left space-y-1 transition">
-                                <span class="block text-[9px] uppercase tracking-widest text-amber-400">Act III</span>
-                                <span class="block text-lg leading-none">🤖</span>
-                                <span class="block text-[10px] font-bold text-white">The Cybernetic Build</span>
-                                <span class="block text-[9px] text-slate-500">Cybernetic &amp; Robotic</span>
-                            </button>
-                            <button type="button" data-universe="scifi" onclick="selectUniverse('scifi')" class="universe-card bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-3 text-left space-y-1 transition">
-                                <span class="block text-[9px] uppercase tracking-widest text-amber-400">Act IV</span>
-                                <span class="block text-lg leading-none">🚀</span>
-                                <span class="block text-[10px] font-bold text-white">The 1,000-Year Dynasty Chronicle</span>
-                                <span class="block text-[9px] text-slate-500">Interstellar Sci-Fi</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Cinematic Screen Frame -->
-                    <div id="cinematicScreen" class="rounded-xl overflow-hidden border border-slate-800 aspect-video relative universe-documentary">
-                        <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center space-y-3">
-                            <span id="cinematicAct" class="text-[10px] font-bold uppercase tracking-widest text-amber-400">Act I of IV</span>
-                            <div id="cinematicIcon" class="text-5xl leading-none">🎥</div>
-                            <h3 id="cinematicTitle" class="text-lg font-extrabold tracking-wide text-white">The Human Foundation</h3>
-                            <p id="cinematicLens" class="text-[10px] uppercase tracking-widest text-sky-300">Genre: Human Documentary</p>
-                            <p id="cinematicNarrative" class="text-xs text-slate-200 max-w-lg leading-relaxed">Handheld cameras follow Guardsmen converting sweat-equity hours into $50/Hr capital on Action Track #2. The Crystal Dynasty begins as a human ledger: neutralize the $10M franchise liability by physically building shelter.</p>
-                            <span id="cinematicPreview" class="text-[10px] font-mono text-emerald-400">PREVIEW: field interview · sweat-equity timecard · $10M → $0</span>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <button type="button" onclick="stepAct(-1)" class="text-[10px] text-slate-400 hover:text-amber-400 transition">← Previous Act</button>
-                        <span id="cinematicProgress" class="text-[10px] font-mono text-slate-500">1 / 4</span>
-                        <button type="button" onclick="stepAct(1)" class="text-[10px] text-slate-400 hover:text-amber-400 transition">Next Act →</button>
-                    </div>
-
-                    <!-- Dynamic Media Display Frame -->
-                    <div id="mediaContainer" class="rounded-xl overflow-hidden border border-slate-800 bg-slate-900 aspect-video relative">
-                        <video
-                            id="aiAvatarFrame"
-                            class="w-full h-full object-cover"
-                            controls
-                            playsinline
-                            preload="metadata"
-                            poster="/media/ai-avatar-poster.jpg"
-                        >
-                            <source src="/media/ai-avatar.mp4" type="video/mp4">
-                            <source src="/media/ai-avatar.webm" type="video/webm">
-                        </video>
-                        <div id="aiAvatarSlot" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/85 pointer-events-none space-y-2 px-4 text-center">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-amber-400">AI Avatar Video Frame</span>
-                            <p class="text-xs text-slate-400">Drop <span class="font-mono text-slate-300">/media/ai-avatar.mp4</span> here, or ingest a YouTube URL from Admin Media Studio.</p>
-                        </div>
-                    </div>
-
-                    <!-- Native Audio Player -->
-                    <div id="audioDock" class="space-y-2">
-                        <label for="dualHostAudio" class="block text-[10px] font-bold uppercase tracking-widest text-amber-400">Native Dual-Host Audio Player</label>
-                        <audio id="dualHostAudio" class="w-full" controls preload="metadata">
-                            <source src="/media/dual-host-brief.mp3" type="audio/mpeg">
-                            <source src="/media/dual-host-brief.ogg" type="audio/ogg">
-                            Your browser does not support the native audio player.
-                        </audio>
-                        <p class="text-[10px] text-slate-500">Place the NotebookLM brief at <span class="font-mono text-slate-400">/media/dual-host-brief.mp3</span> to enable playback.</p>
-                    </div>
-                </div>
-
-                <!-- Pro & Con Breakdown Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <!-- Two-Column Grid: Pro/Con & Mindmap -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <!-- Left: Pro & Con Cards -->
+            <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">Platform Architectural Tradeoffs</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-slate-950 border border-emerald-500/30 rounded-xl p-4 space-y-2">
                         <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">PRO: Systemic Efficiency</span>
                         <p class="text-xs text-slate-400">Eliminates third-party software overhead, standardizes 200+ components under one roof, and guarantees deterministic execution.</p>
@@ -243,305 +134,178 @@
                 </div>
             </div>
 
-            <!-- Right Column: Interactive Mermaid Mindmap Navigator (5 Cols) -->
-            <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
+            <!-- Right: Interactive Mermaid Mindmap -->
+            <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
                 <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">Visual Architecture Mindmap</h2>
-                <p class="text-[11px] text-slate-400">Click a live node to open that feed component instantly:</p>
+                <p class="text-[11px] text-slate-400">Click core nodes below to jump directly to live operational sub-feeds:</p>
                 <div class="flex justify-center overflow-x-auto py-2 bg-slate-950 rounded-xl border border-slate-800 p-3">
                     <div class="mermaid">
                         graph TD
                             Root[MHBOJT Core Engine] --> Comms[200+ Components]
                             Comms --> Track1[St. Bernard Campus]
-                            Comms --> Track2[National Guard]
+                            Comms --> Track2[National Guard Housing]
                             Comms --> Track3[Laotian Diaspora]
                             Root --> Audio[Dual-Host Audio Hub]
-                            click Track1 href "/feed/st-bernard/" "Component #001 St. Bernard Campus"
-                            click Track2 href "/feed/national-guard/" "Component #002 National Guard"
+
+                            click Track1 "/feed/st-bernard/" "Open St. Bernard Component #001"
+                            click Track2 "/feed/national-guard/" "Open National Guard Component #002"
                     </div>
                 </div>
-                <div class="flex flex-wrap gap-2 pt-1">
-                    <a href="/feed/st-bernard/" class="text-[10px] bg-slate-950 border border-slate-800 hover:border-amber-500/50 text-amber-400 px-2 py-1 rounded transition">#001 St. Bernard Campus</a>
-                    <a href="/feed/national-guard/" class="text-[10px] bg-slate-950 border border-slate-800 hover:border-amber-500/50 text-amber-400 px-2 py-1 rounded transition">#002 National Guard</a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- 1-Click Prompt & Instant Implementation Bar -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-            <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">Instant Component Generator Prompt</h2>
-            <div class="flex flex-col md:flex-row gap-3">
-                <input type="text" placeholder="Enter component topic or prompt (e.g., 'Generate Component #002: Tri-Parish Housing Feed')..." class="flex-grow bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
-                <button onclick="alert('Component generation schema triggered via Gemini pipeline!')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-lg text-xs transition shadow-md">
-                    Generate & Deploy
-                </button>
             </div>
         </div>
 
     </main>
+
+    <!-- Built-In Feature Tutorial Modal -->
+    <div id="tutorialModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleTutorialModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+            <h2 class="text-lg font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">📖 Platform Feature Tutorial & Walkthrough</h2>
+            
+            <div class="space-y-3 text-xs text-slate-300">
+                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+                    <span class="font-bold text-amber-400 block">1. Using the Admin Media Studio</span>
+                    <p>Click "⚙️ Admin Media Studio" in the top bar. You can paste any YouTube URL to instantly embed video/audio, or select a section (like Action Track #2) to trigger avatar generation.</p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+                    <span class="font-bold text-amber-400 block">2. Exploring the Multi-Act Cinematic Universe</span>
+                    <p>Click through the 4 cinematic acts (Human Drama, Animated Story, Cybernetic Build, 1,000-Yr Epoch) above to watch the narrative evolve around Action Track #2.</p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+                    <span class="font-bold text-amber-400 block">3. Navigating via the Mindmap</span>
+                    <p>Click on the Mermaid mindmap nodes on the right to jump directly into specific campaign feeds like St. Bernard and National Guard housing.</p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+                    <span class="font-bold text-amber-400 block">4. Securing $100 Reservations</span>
+                    <p>Click the gold reservation button in the header at any time to open the secure Stripe checkout modal and lock in your position.</p>
+                </div>
+            </div>
+            
+            <button onclick="toggleTutorialModal()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-lg text-xs transition">
+                Got It, Let's Explore!
+            </button>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400 mt-auto">
         <p>&copy; 2026 MHBOJT & SVSUIC Platform. Autonomous Multi-Modal Enterprise Engine.</p>
     </footer>
 
+    <!-- Interactive Script Controller -->
     <script>
-        const sectionCopy = {
-            "1. Diagnostic Profile": {
-                caption: "Avatar walks Food Logic and Shelter Intent diagnostics for Selfless Leader / Nation Builder classification.",
-                doodle: "SL / NB"
-            },
-            "2. MHBOJT Action Tracks": {
-                caption: "Avatar maps sweat equity, mentor, sponsor, and referral tracks against the $10M liability ledger.",
-                doodle: "$50/HR"
-            },
-            "3. The Physics of Wealth": {
-                caption: "Avatar explains 1,000-year compounding, cash seed, and monthly contribution physics.",
-                doodle: "1,000 YR"
-            },
-            "4. Environment & Fees": {
-                caption: "Avatar compares 2/20 PE, 0.01% pass-through, and DRAH 0% fee regimes with tax/inflation toggles.",
-                doodle: "0% FEE"
-            },
-            "Munger-to-DRAH Translation Matrix": {
-                caption: "Avatar translates Munger paradoxes into DRAH physical-asset solutions for the SVSUIC campus.",
-                doodle: "DRAH"
-            }
-        };
-
-        const actOrder = ["documentary", "storybook", "cybernetic", "scifi"];
-
         const universes = {
-            documentary: {
-                icon: "🎥",
-                act: "Act I of IV",
-                progress: "1 / 4",
-                title: "The Human Foundation",
-                lens: "Genre: Human Documentary",
-                narrative: "Handheld cameras follow Guardsmen converting sweat-equity hours into $50/Hr capital on Action Track #2. The Crystal Dynasty begins as a human ledger: neutralize the $10M franchise liability by physically building shelter.",
-                preview: "PREVIEW: field interview · sweat-equity timecard · $10M → $0",
-                frameClass: "universe-documentary"
+            human: {
+                icon: '👥',
+                title: 'Cinematic Act I: The Grounded Human Foundation',
+                desc: 'Real-world documentary exploring family housing recovery in St. Bernard Parish through Action Track #2.'
             },
-            storybook: {
-                icon: "📖",
-                act: "Act II of IV",
-                progress: "2 / 4",
-                title: "The Animated Family Blueprint",
-                lens: "Genre: Animated Storybook / Cartoon",
-                narrative: "A family storybook opens on Action Track #2: sweat, mentor, sponsor, referral. Each illustrated hour is $50 of equity. The Crystal Dynasty is a house drawn into being as the $10M liability is colored down to zero.",
-                preview: "PREVIEW: family blueprint · hour-coins · $10M liability erased",
-                frameClass: "universe-storybook"
+            cartoon: {
+                icon: '🎨',
+                title: 'Cinematic Act II: Animated Storybook',
+                desc: 'Vibrant, Pixar-style visual journey explaining sweat equity and multi-generational compounding for families.'
             },
-            cybernetic: {
-                icon: "🤖",
-                act: "Act III of IV",
-                progress: "3 / 4",
-                title: "The Cybernetic Build",
-                lens: "Genre: Cybernetic & Robotic Core",
-                narrative: "Servo crews compile Action Track #2 as protocol. Sweat-equity ticks write the $10M neutralization. Crystal Dynasty is the runtime kernel: DRAH 0% fees, no bureaucracy, only deterministic Nation-Builder output.",
-                preview: "PREVIEW: HUD ledger · robotic crews · liability checksum $0",
-                frameClass: "universe-cybernetic"
+            robot: {
+                icon: '🤖',
+                title: 'Cinematic Act III: Cybernetic Build Core',
+                desc: 'Sleek, futuristic automated pre-fab robotics ensuring zero-error volumetric assembly across Tri-Parish nodes.'
             },
-            scifi: {
-                icon: "🚀",
-                act: "Act IV of IV",
-                progress: "4 / 4",
-                title: "The 1,000-Year Dynasty Chronicle",
-                lens: "Genre: Interstellar Sci-Fi",
-                narrative: "From the 48-acre St. Bernard pad, Action Track #2 is the launch burn. Sweat equity is reaction mass; the $10M liability is the gravity well escaped. Crystal Dynasty chronicles 1,000 years of compounding Nation-Builder colonies.",
-                preview: "PREVIEW: 1,000-year chronicle · crystal-drive · $10M well escaped",
-                frameClass: "universe-scifi"
+            alien: {
+                icon: '👽',
+                title: 'Cinematic Act IV: 1,000-Year Sovereign Epoch',
+                desc: 'An interstellar perspective framing the DRAH GOSSSM protocol as a permanent multi-generational trust ark.'
             }
         };
-
-        function selectUniverse(key) {
-            const universe = universes[key];
-            if (!universe) return;
-            const screen = document.getElementById('cinematicScreen');
-            document.getElementById('cinematicAct').textContent = universe.act;
-            document.getElementById('cinematicIcon').textContent = universe.icon;
-            document.getElementById('cinematicTitle').textContent = universe.title;
-            document.getElementById('cinematicLens').textContent = universe.lens;
-            document.getElementById('cinematicNarrative').textContent = universe.narrative;
-            document.getElementById('cinematicPreview').textContent = universe.preview;
-            document.getElementById('cinematicProgress').textContent = universe.progress;
-            screen.className = "rounded-xl overflow-hidden border border-slate-800 aspect-video relative " + universe.frameClass;
-            document.querySelectorAll('.universe-card').forEach(function (card) {
-                card.classList.toggle('selected', card.getAttribute('data-universe') === key);
-            });
-            document.querySelectorAll('[data-act-rail]').forEach(function (rail) {
-                rail.className = rail.getAttribute('data-act-rail') === key || actOrder.indexOf(rail.getAttribute('data-act-rail')) <= actOrder.indexOf(key)
-                    ? "h-1 rounded-full bg-amber-500"
-                    : "h-1 rounded-full bg-slate-800";
-            });
-            localStorage.setItem('mhbojtCinematicUniverse', key);
-        }
-
-        function stepAct(delta) {
-            const current = localStorage.getItem('mhbojtCinematicUniverse') || 'documentary';
-            const idx = Math.max(0, Math.min(actOrder.length - 1, actOrder.indexOf(current) + delta));
-            selectUniverse(actOrder[idx]);
-        }
-
-        function setStatus(text) {
-            const el = document.getElementById('adminStatus');
-            if (el) el.textContent = text;
-        }
 
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
-            const btn = document.getElementById('adminToggle');
-            const open = panel.classList.toggle('hidden') === false;
-            btn.className = open
-                ? "bg-amber-500 text-slate-950 font-bold px-3 py-2 rounded-lg transition text-xs"
-                : "bg-slate-950 border border-slate-700 hover:border-amber-500/60 text-amber-400 font-bold px-3 py-2 rounded-lg transition text-xs";
-            setStatus(open ? "Studio open" : "Studio idle");
+            panel.classList.toggle('hidden');
         }
 
-        function parseYouTubeId(url) {
-            if (!url) return null;
-            const patterns = [
-                /youtu\.be\/([A-Za-z0-9_-]{6,})/,
-                /youtube\.com\/shorts\/([A-Za-z0-9_-]{6,})/,
-                /youtube\.com\/embed\/([A-Za-z0-9_-]{6,})/,
-                /youtube\.com\/live\/([A-Za-z0-9_-]{6,})/,
-                /[?&]v=([A-Za-z0-9_-]{6,})/
-            ];
-            for (const pattern of patterns) {
-                const match = url.match(pattern);
-                if (match) return match[1];
+        function toggleTutorialModal() {
+            const modal = document.getElementById('tutorialModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function extractYouTubeId(url) {
+            if (!url) return '';
+            const shorts = url.match(/youtube\.com\/shorts\/([^?&/]+)/);
+            if (shorts) return shorts[1];
+            if (url.includes('youtu.be/')) {
+                return url.split('youtu.be/')[1].split('?')[0].split('/')[0];
             }
-            return null;
+            if (url.includes('watch?v=')) {
+                return url.split('watch?v=')[1].split('&')[0];
+            }
+            const embed = url.match(/youtube\.com\/embed\/([^?&/]+)/);
+            if (embed) return embed[1];
+            return '';
         }
 
-        function ingestYouTube() {
-            const input = document.getElementById('youtubeUrl');
-            const id = parseYouTubeId((input.value || '').trim());
-            if (!id) {
-                setStatus("Invalid YouTube URL");
-                input.focus();
+        function loadYouTubeMedia() {
+            const url = document.getElementById('ytUrlInput').value.trim();
+            if (!url) return alert('Please enter a valid YouTube URL.');
+            const videoId = extractYouTubeId(url);
+            if (videoId) {
+                const container = document.getElementById('mediaContainer');
+                container.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                alert('YouTube media successfully ingested!');
+            } else {
+                alert('Invalid YouTube URL format.');
+            }
+        }
+
+        function triggerAvatarGeneration() {
+            const targetSection = document.getElementById('sectionTarget').value;
+            const container = document.getElementById('mediaContainer');
+            container.innerHTML = `
+                <div class="text-center p-6 space-y-3 animate-pulse">
+                    <span class="text-3xl">🎬🤖</span>
+                    <div class="text-xs font-bold text-amber-400">Rendering Avatar Briefing for ${targetSection}...</div>
+                    <p class="text-[11px] text-slate-400 max-w-sm">Generating AI avatar presentation and whiteboard animation overlays.</p>
+                </div>
+            `;
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full bg-slate-900 p-6 text-center space-y-3">
+                        <div class="text-amber-400 font-extrabold text-xs uppercase tracking-wider">✨ Avatar Briefing Ready</div>
+                        <p class="text-xs text-slate-200">Dual AI hosts are presenting the exact mechanics of <strong class="text-amber-400">${targetSection}</strong>.</p>
+                        <button onclick="alert('Playing avatar walkthrough for ${targetSection}')" class="bg-amber-500 text-slate-950 font-bold px-5 py-2 rounded text-xs mt-2">▶ Play Avatar Presentation</button>
+                    </div>
+                `;
+            }, 1500);
+        }
+
+        function renderUniverseFrame(type) {
+            const data = universes[type] || universes.human;
+            const container = document.getElementById('mediaContainer');
+            container.innerHTML = `
+                <div class="space-y-3 max-w-lg">
+                    <span class="text-4xl" id="uniIcon">${data.icon}</span>
+                    <h3 id="uniTitle" class="text-sm font-bold text-amber-400">${data.title}</h3>
+                    <p id="uniDesc" class="text-xs text-slate-300">${data.desc}</p>
+                    <button onclick="alert('Playing Cinematic Act Sequence...')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
+                        ▶ Play Cinematic Act (1-2 Min)
+                    </button>
+                </div>
+            `;
+        }
+
+        function switchUniverse(type) {
+            const data = universes[type] || universes.human;
+            const icon = document.getElementById('uniIcon');
+            const title = document.getElementById('uniTitle');
+            const desc = document.getElementById('uniDesc');
+
+            if (!icon || !title || !desc) {
+                renderUniverseFrame(type);
                 return;
             }
-            localStorage.setItem('mhbojtYoutubeId', id);
-            localStorage.setItem('mhbojtYoutubeUrl', input.value.trim());
-            renderYouTube(id);
+
+            icon.textContent = data.icon;
+            title.textContent = data.title;
+            desc.textContent = data.desc;
         }
-
-        function renderYouTube(id) {
-            const frame = document.getElementById('mediaContainer');
-            document.getElementById('mediaTitle').textContent = "YouTube Media Frame";
-            document.getElementById('mediaModeBadge').textContent = "YouTube Ingest";
-            document.getElementById('mediaTopic').textContent = "Live YouTube render · ID " + id;
-            document.getElementById('mediaCaption').textContent = "Long-form and Shorts URLs resolve into this frame without leaving the enterprise shell.";
-            document.getElementById('audioDock').classList.add('hidden');
-            frame.innerHTML = '<iframe class="w-full h-full" src="https://www.youtube.com/embed/' + id + '?rel=0" title="YouTube media ingest" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-            setStatus("YouTube rendered: " + id);
-        }
-
-        function showNativeAudio() {
-            const frame = document.getElementById('mediaContainer');
-            document.getElementById('mediaTitle').textContent = "Native HTML5 Audio Playback";
-            document.getElementById('mediaModeBadge').textContent = "Audio";
-            document.getElementById('mediaTopic').textContent = "Topic: DRAH GOSSSM Dual-Host Audio Brief";
-            document.getElementById('mediaCaption').textContent = "Native audio controls stay in-page. Drop /media/dual-host-brief.mp3 to enable the NotebookLM brief.";
-            document.getElementById('audioDock').classList.remove('hidden');
-            frame.innerHTML = `
-                <div class="w-full h-full flex flex-col items-center justify-center bg-slate-950 px-6 space-y-4 text-center">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-amber-400">HTML5 Audio Frame</span>
-                    <p class="text-xs text-slate-400 max-w-md">The native player below is the playback surface. This card stays mounted so operators can switch back from YouTube without losing the dual-host brief.</p>
-                    <audio class="w-full max-w-lg" controls preload="metadata">
-                        <source src="/media/dual-host-brief.mp3" type="audio/mpeg">
-                        <source src="/media/dual-host-brief.ogg" type="audio/ogg">
-                    </audio>
-                </div>`;
-            setStatus("Native audio frame active");
-        }
-
-        function showDefaultAvatarSlot() {
-            document.getElementById('mediaTitle').textContent = "Dual-Host Pro & Con Media Brief";
-            document.getElementById('mediaModeBadge').textContent = "AI Synthesized";
-            document.getElementById('mediaTopic').textContent = "Topic: DRAH GOSSSM & 200+ Component Scalability";
-            document.getElementById('mediaCaption').textContent = "Watch the AI avatar frame and listen to dual hosts debate the mechanics, structural advantages, and implementation realities of autonomous institutional development.";
-            document.getElementById('audioDock').classList.remove('hidden');
-            document.getElementById('mediaContainer').innerHTML = `
-                <video id="aiAvatarFrame" class="w-full h-full object-cover" controls playsinline preload="metadata" poster="/media/ai-avatar-poster.jpg">
-                    <source src="/media/ai-avatar.mp4" type="video/mp4">
-                    <source src="/media/ai-avatar.webm" type="video/webm">
-                </video>
-                <div id="aiAvatarSlot" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/85 pointer-events-none space-y-2 px-4 text-center">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-amber-400">AI Avatar Video Frame</span>
-                    <p class="text-xs text-slate-400">Drop <span class="font-mono text-slate-300">/media/ai-avatar.mp4</span> here, or ingest a YouTube URL from Admin Media Studio.</p>
-                </div>`;
-            bindAvatarSlot();
-            setStatus("Avatar slot restored");
-        }
-
-        function generateSectionMedia() {
-            const section = document.getElementById('platformSection').value;
-            const meta = sectionCopy[section] || { caption: "Generating avatar and doodle preview.", doodle: "DRAH" };
-            document.getElementById('mediaTitle').textContent = section;
-            document.getElementById('mediaModeBadge').textContent = "Generating…";
-            document.getElementById('mediaTopic').textContent = "AI Avatar + Doodle workflow · " + section;
-            document.getElementById('mediaCaption').textContent = "Synthesizing talking-head avatar and whiteboard doodle for this platform section…";
-            document.getElementById('audioDock').classList.add('hidden');
-            document.getElementById('mediaContainer').innerHTML = `
-                <div class="w-full h-full flex items-center justify-center bg-slate-950">
-                    <div class="text-center space-y-2">
-                        <div class="mx-auto w-16 h-16 rounded-full border-2 border-amber-400 avatar-pulse"></div>
-                        <p class="text-[10px] uppercase tracking-widest text-amber-400">Rendering avatar + doodle</p>
-                    </div>
-                </div>`;
-            setStatus("Generating preview for " + section);
-            setTimeout(function () {
-                renderAvatarPreview(section, meta);
-            }, 900);
-        }
-
-        function renderAvatarPreview(section, meta) {
-            document.getElementById('mediaModeBadge').textContent = "Avatar Preview";
-            document.getElementById('mediaCaption').textContent = meta.caption;
-            document.getElementById('mediaContainer').innerHTML = `
-                <div class="w-full h-full grid grid-cols-1 sm:grid-cols-2 bg-slate-950">
-                    <div class="flex flex-col items-center justify-center border-b sm:border-b-0 sm:border-r border-slate-800 p-6 space-y-3">
-                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-amber-400 to-emerald-500 avatar-pulse flex items-center justify-center text-slate-950 font-extrabold text-lg">AI</div>
-                        <p class="text-[10px] uppercase tracking-widest text-amber-400">Simulated Avatar</p>
-                        <p class="text-xs text-slate-300 text-center">${section}</p>
-                    </div>
-                    <div class="flex flex-col items-center justify-center p-6 space-y-3">
-                        <svg viewBox="0 0 160 90" class="w-40 h-24">
-                            <rect x="4" y="4" width="152" height="82" rx="8" fill="none" stroke="#334155"></rect>
-                            <path class="doodle-path" d="M20 60 C40 20, 70 80, 90 35 S140 20, 145 50" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"></path>
-                        </svg>
-                        <p class="text-[10px] uppercase tracking-widest text-emerald-400">Doodle Animation</p>
-                        <p class="font-mono text-sm text-white">${meta.doodle}</p>
-                    </div>
-                </div>`;
-            setStatus("Preview ready: " + section);
-        }
-
-        function bindAvatarSlot() {
-            const avatar = document.getElementById('aiAvatarFrame');
-            const slot = document.getElementById('aiAvatarSlot');
-            if (avatar && slot) {
-                avatar.addEventListener('loadeddata', function () {
-                    if (avatar.videoWidth > 0) slot.classList.add('hidden');
-                });
-                avatar.addEventListener('error', function () {
-                    slot.classList.remove('hidden');
-                });
-            }
-        }
-
-        bindAvatarSlot();
-
-        const savedUrl = localStorage.getItem('mhbojtYoutubeUrl');
-        if (savedUrl) {
-            const input = document.getElementById('youtubeUrl');
-            if (input) input.value = savedUrl;
-        }
-
-        const savedUniverse = localStorage.getItem('mhbojtCinematicUniverse') || 'documentary';
-        selectUniverse(savedUniverse);
     </script>
 </body>
 </html>

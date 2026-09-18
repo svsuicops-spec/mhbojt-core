@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MHBOJT Enterprise Platform | DRAH GOSSSM Autonomous Engine</title>
-    <meta name="mhbojt-build" content="unified-avatar-player-20260918">
+    <meta name="mhbojt-build" content="avatar-speech-synthesis-20260918">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Mermaid.js for Interactive Visual Mindmaps -->
@@ -272,6 +272,7 @@
         }
 
         function loadYouTubeMedia() {
+            stopAvatarSpeech();
             const url = document.getElementById('ytUrlInput').value.trim();
             if (!url) {
                 showMediaNotice('Please enter a valid YouTube URL.');
@@ -286,25 +287,48 @@
             }
         }
 
-        function playAvatarPresentation() {
+        let avatarSpeechToken = 0;
+
+        function stopAvatarSpeech() {
+            avatarSpeechToken += 1;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            document.getElementById('hostAMark')?.classList.remove('ring-4');
+            document.getElementById('hostBMark')?.classList.remove('ring-4');
+        }
+
+        function pickHostVoices() {
+            const voices = window.speechSynthesis.getVoices();
+            const english = voices.filter((voice) => /^en(-|_)/i.test(voice.lang));
+            const pool = english.length ? english : voices;
+            const hostA = pool.find((voice) => /male|david|daniel|alex|fred|george|google uk english male/i.test(voice.name)) || pool[0] || null;
+            const hostB = pool.find((voice) => /female|samantha|victoria|karen|zira|moira|google us english female/i.test(voice.name)) || pool[1] || pool[0] || null;
+            return { hostA, hostB };
+        }
+
+        function triggerAvatarGeneration() {
             const targetSection = document.getElementById('sectionTarget').value;
             const container = document.getElementById('mediaContainer');
+            const hostALine = 'Through Action Track number 2, mentoring your descendant or friend turns sweat equity into sovereign wealth, neutralizing liability.';
+            const hostBLine = `Confirmed. Dual hosts are now walking the exact mechanics of ${targetSection} so families can execute with certainty under the DRAH GOSSSM protocol.`;
+
             container.innerHTML = `
                 <div class="flex flex-col justify-between h-full bg-slate-950 p-4 rounded-xl border border-amber-500/40 text-left relative overflow-hidden w-full">
                     <div class="flex justify-between items-center z-10">
-                        <span class="text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-2 py-0.5 rounded font-mono">🟢 LIVE AVATAR SIMULATION</span>
-                        <span class="text-[10px] text-slate-400 font-mono">0:45 / 2:30</span>
+                        <span class="text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-2 py-0.5 rounded font-mono">🟢 LIVE AVATAR SIMULATION · 🔊 AUDIO</span>
+                        <button type="button" onclick="stopAvatarSpeech()" class="text-[10px] text-slate-400 hover:text-amber-400 font-mono">Mute</button>
                     </div>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:space-x-6 my-auto z-10 py-4">
                         <div class="text-center space-y-1">
-                            <div class="w-14 h-14 bg-slate-800 border-2 border-amber-400 rounded-full flex items-center justify-center mx-auto text-xl shadow-lg">👨‍💼</div>
+                            <div id="hostAMark" class="w-14 h-14 bg-slate-800 border-2 border-amber-400 rounded-full flex items-center justify-center mx-auto text-xl shadow-lg transition">👨‍💼</div>
                             <span class="text-[9px] text-amber-400 font-bold block">Host A</span>
                         </div>
-                        <div class="text-xs text-slate-300 italic max-w-xs bg-slate-900/90 p-3 rounded-xl border border-slate-800 shadow-md">
-                            "Through Action Track #2, mentoring your descendant or friend turns sweat equity into sovereign wealth, neutralizing liability..."
+                        <div id="avatarQuote" class="text-xs text-slate-300 italic max-w-xs bg-slate-900/90 p-3 rounded-xl border border-slate-800 shadow-md">
+                            "${hostALine}"
                         </div>
                         <div class="text-center space-y-1">
-                            <div class="w-14 h-14 bg-slate-800 border-2 border-sky-400 rounded-full flex items-center justify-center mx-auto text-xl shadow-lg">👩‍💼</div>
+                            <div id="hostBMark" class="w-14 h-14 bg-slate-800 border-2 border-sky-400 rounded-full flex items-center justify-center mx-auto text-xl shadow-lg transition">👩‍💼</div>
                             <span class="text-[9px] text-sky-400 font-bold block">Host B</span>
                         </div>
                     </div>
@@ -314,18 +338,74 @@
                         </div>
                         <div class="flex justify-between items-center text-[10px] text-slate-300 gap-2">
                             <span class="text-amber-400 font-semibold">${targetSection}</span>
-                            <button onclick="playAvatarPresentation()" class="hover:text-amber-400 font-bold whitespace-nowrap">🔄 Replay Simulation</button>
+                            <button onclick="triggerAvatarGeneration()" class="hover:text-amber-400 font-bold whitespace-nowrap">🔄 Replay Simulation</button>
                         </div>
                     </div>
                 </div>
             `;
+
+            if (!('speechSynthesis' in window)) return;
+
+            window.speechSynthesis.cancel();
+            const token = ++avatarSpeechToken;
+            let started = false;
+
+            const speak = () => {
+                if (token !== avatarSpeechToken || started) return;
+                started = true;
+                const { hostA, hostB } = pickHostVoices();
+
+                const utterA = new SpeechSynthesisUtterance(hostALine);
+                utterA.rate = 0.96;
+                utterA.pitch = 0.85;
+                utterA.lang = (hostA && hostA.lang) || 'en-US';
+                if (hostA) utterA.voice = hostA;
+
+                const utterB = new SpeechSynthesisUtterance(hostBLine);
+                utterB.rate = 1.02;
+                utterB.pitch = 1.18;
+                utterB.lang = (hostB && hostB.lang) || 'en-US';
+                if (hostB) utterB.voice = hostB;
+
+                utterA.onstart = () => {
+                    if (token !== avatarSpeechToken) return;
+                    const quote = document.getElementById('avatarQuote');
+                    if (quote) quote.textContent = `"${hostALine}"`;
+                    document.getElementById('hostAMark')?.classList.add('ring-4', 'ring-amber-400/60');
+                    document.getElementById('hostBMark')?.classList.remove('ring-4', 'ring-sky-400/60');
+                };
+                utterA.onend = () => {
+                    if (token !== avatarSpeechToken) return;
+                    document.getElementById('hostAMark')?.classList.remove('ring-4', 'ring-amber-400/60');
+                    window.speechSynthesis.speak(utterB);
+                };
+                utterB.onstart = () => {
+                    if (token !== avatarSpeechToken) return;
+                    const quote = document.getElementById('avatarQuote');
+                    if (quote) quote.textContent = `"${hostBLine}"`;
+                    document.getElementById('hostBMark')?.classList.add('ring-4', 'ring-sky-400/60');
+                };
+                utterB.onend = () => {
+                    document.getElementById('hostBMark')?.classList.remove('ring-4', 'ring-sky-400/60');
+                };
+
+                window.speechSynthesis.speak(utterA);
+            };
+
+            if (window.speechSynthesis.getVoices().length) {
+                speak();
+            } else {
+                window.speechSynthesis.addEventListener('voiceschanged', speak, { once: true });
+                setTimeout(speak, 500);
+            }
         }
 
-        function triggerAvatarGeneration() {
-            playAvatarPresentation();
+        function playAvatarPresentation() {
+            triggerAvatarGeneration();
         }
 
         function playCinematicAct() {
+            stopAvatarSpeech();
             const data = universes[currentUniverse] || universes.human;
             const container = document.getElementById('mediaContainer');
             container.innerHTML = `
@@ -375,6 +455,7 @@
         }
 
         function switchUniverse(type) {
+            stopAvatarSpeech();
             currentUniverse = universes[type] ? type : 'human';
             renderUniverseFrame(currentUniverse);
         }

@@ -33,7 +33,7 @@
         </div>
     </header>
 
-    <!-- Main Content Container (Expanded Width) -->
+    <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-10 w-full">
         
         <!-- Hero Banner -->
@@ -110,7 +110,7 @@
                     <span class="text-4xl" id="uniIcon">👥</span>
                     <h3 id="uniTitle" class="text-sm font-bold text-amber-400">Cinematic Act I: The Grounded Human Foundation</h3>
                     <p id="uniDesc" class="text-xs text-slate-300">Experience how Action Track #2 allows a father to mentor his son into an SL/NB candidate, turning sweat equity into a multi-generational legacy in St. Bernard Parish.</p>
-                    <button onclick="alert('Playing Cinematic Act Sequence...')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
+                    <button onclick="playCinematicAct()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
                         ▶ Play Cinematic Act (1-2 Min)
                     </button>
                 </div>
@@ -198,24 +198,34 @@
             human: {
                 icon: '👥',
                 title: 'Cinematic Act I: The Grounded Human Foundation',
-                desc: 'Real-world documentary exploring family housing recovery in St. Bernard Parish through Action Track #2.'
+                desc: 'Real-world documentary exploring family housing recovery in St. Bernard Parish through Action Track #2.',
+                playTitle: 'St. Bernard Tri-Parish Sovereign Build',
+                playCopy: 'Cinematic narrative showcasing multi-generational empowerment, modular manufacturing, and legacy anchoring.'
             },
             cartoon: {
                 icon: '🎨',
                 title: 'Cinematic Act II: Animated Storybook',
-                desc: 'Vibrant, Pixar-style visual journey explaining sweat equity and multi-generational compounding for families.'
+                desc: 'Vibrant, Pixar-style visual journey explaining sweat equity and multi-generational compounding for families.',
+                playTitle: 'Animated Compounding Storybook',
+                playCopy: 'A Pixar-style visual journey of Action Track #2: sweat equity turning into multi-generational sovereign wealth.'
             },
             robot: {
                 icon: '🤖',
                 title: 'Cinematic Act III: Cybernetic Build Core',
-                desc: 'Sleek, futuristic automated pre-fab robotics ensuring zero-error volumetric assembly across Tri-Parish nodes.'
+                desc: 'Sleek, futuristic automated pre-fab robotics ensuring zero-error volumetric assembly across Tri-Parish nodes.',
+                playTitle: 'Autonomous Pre-Fab Robotics Core',
+                playCopy: 'Zero-error volumetric assembly across Tri-Parish nodes, executed by the cybernetic build protocol.'
             },
             alien: {
                 icon: '👽',
                 title: 'Cinematic Act IV: 1,000-Year Sovereign Epoch',
-                desc: 'An interstellar perspective framing the DRAH GOSSSM protocol as a permanent multi-generational trust ark.'
+                desc: 'An interstellar perspective framing the DRAH GOSSSM protocol as a permanent multi-generational trust ark.',
+                playTitle: '1,000-Year Sovereign Epoch',
+                playCopy: 'An interstellar framing of DRAH GOSSSM as a permanent multi-generational trust ark.'
             }
         };
+
+        let currentUniverse = 'human';
 
         function toggleAdminPanel() {
             const panel = document.getElementById('adminPanel');
@@ -242,16 +252,31 @@
             return '';
         }
 
+        function showMediaNotice(message) {
+            const container = document.getElementById('mediaContainer');
+            container.innerHTML = `
+                <div class="space-y-3 max-w-lg">
+                    <span class="text-3xl">⚠️</span>
+                    <p class="text-xs text-amber-400 font-semibold">${message}</p>
+                    <button onclick="switchUniverse(currentUniverse)" class="bg-slate-800 hover:bg-slate-700 text-slate-100 font-bold px-5 py-2 rounded-lg text-xs transition">
+                        Return to Cinematic Act
+                    </button>
+                </div>
+            `;
+        }
+
         function loadYouTubeMedia() {
             const url = document.getElementById('ytUrlInput').value.trim();
-            if (!url) return alert('Please enter a valid YouTube URL.');
+            if (!url) {
+                showMediaNotice('Please enter a valid YouTube URL.');
+                return;
+            }
             const videoId = extractYouTubeId(url);
             if (videoId) {
                 const container = document.getElementById('mediaContainer');
                 container.innerHTML = `<iframe class="w-full h-full min-h-[12rem]" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                alert('YouTube media successfully ingested!');
             } else {
-                alert('Invalid YouTube URL format.');
+                showMediaNotice('Invalid YouTube URL format.');
             }
         }
 
@@ -259,21 +284,64 @@
             const targetSection = document.getElementById('sectionTarget').value;
             const container = document.getElementById('mediaContainer');
             container.innerHTML = `
-                <div class="text-center p-6 space-y-3 animate-pulse">
-                    <span class="text-3xl">🎬🤖</span>
-                    <div class="text-xs font-bold text-amber-400">Rendering Avatar Briefing for ${targetSection}...</div>
-                    <p class="text-[11px] text-slate-400 max-w-sm">Generating AI avatar presentation and whiteboard animation overlays.</p>
+                <div class="flex flex-col justify-between h-full bg-slate-950 p-4 rounded-xl border border-amber-500/40 text-left relative overflow-hidden w-full">
+                    <div class="flex justify-between items-center z-10">
+                        <span class="text-[10px] bg-amber-500/20 text-amber-400 border border-amber-500/40 px-2 py-0.5 rounded font-mono">🟢 LIVE AVATAR SIMULATION</span>
+                        <span class="text-[10px] text-slate-400 font-mono">0:45 / 2:30</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:space-x-6 my-auto z-10 py-4">
+                        <div class="text-center space-y-1">
+                            <div class="w-14 h-14 bg-slate-800 border-2 border-amber-400 rounded-full flex items-center justify-center mx-auto text-xl shadow-lg">👨‍💼</div>
+                            <span class="text-[9px] text-amber-400 font-bold block">Host A</span>
+                        </div>
+                        <div class="text-xs text-slate-300 italic max-w-xs bg-slate-900/90 p-3 rounded-xl border border-slate-800 shadow-md">
+                            "Through Action Track #2, mentoring your descendant or friend turns sweat equity into sovereign wealth, neutralizing liability..."
+                        </div>
+                        <div class="text-center space-y-1">
+                            <div class="w-14 h-14 bg-slate-800 border-2 border-sky-400 rounded-full flex items-center justify-center mx-auto text-xl shadow-lg">👩‍💼</div>
+                            <span class="text-[9px] text-sky-400 font-bold block">Host B</span>
+                        </div>
+                    </div>
+                    <div class="space-y-2 z-10 bg-slate-900/90 p-3 rounded-lg border border-slate-800">
+                        <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-amber-400 h-full w-1/3"></div>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] text-slate-300 gap-2">
+                            <span class="text-amber-400 font-semibold">${targetSection}</span>
+                            <button onclick="triggerAvatarGeneration()" class="hover:text-amber-400 font-bold whitespace-nowrap">🔄 Replay Simulation</button>
+                        </div>
+                    </div>
                 </div>
             `;
-            setTimeout(() => {
-                container.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full bg-slate-900 p-6 text-center space-y-3">
-                        <div class="text-amber-400 font-extrabold text-xs uppercase tracking-wider">✨ Avatar Briefing Ready</div>
-                        <p class="text-xs text-slate-200">Dual AI hosts are presenting the exact mechanics of <strong class="text-amber-400">${targetSection}</strong>.</p>
-                        <button onclick="alert('Playing avatar walkthrough for ${targetSection}')" class="bg-amber-500 text-slate-950 font-bold px-5 py-2 rounded text-xs mt-2">▶ Play Avatar Presentation</button>
+        }
+
+        function playCinematicAct() {
+            const data = universes[currentUniverse] || universes.human;
+            const container = document.getElementById('mediaContainer');
+            container.innerHTML = `
+                <div class="flex flex-col justify-between h-full bg-slate-950 p-4 rounded-xl border border-sky-500/40 text-left relative overflow-hidden w-full">
+                    <div class="flex justify-between items-center z-10">
+                        <span class="text-[10px] bg-sky-500/20 text-sky-400 border border-sky-500/40 px-2 py-0.5 rounded font-mono">🎬 CINEMATIC ACT STREAM</span>
+                        <span class="text-[10px] text-slate-400 font-mono">1:15 / 2:00</span>
                     </div>
-                `;
-            }, 1500);
+                    <div class="flex items-center justify-center my-auto z-10 py-4">
+                        <div class="text-center space-y-2">
+                            <div class="text-3xl animate-bounce">${data.icon === '👥' ? '🏛️✨' : data.icon}</div>
+                            <div class="text-xs font-bold text-white">${data.playTitle}</div>
+                            <p class="text-[11px] text-slate-400 max-w-sm">${data.playCopy}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 z-10 bg-slate-900/90 p-3 rounded-lg border border-slate-800">
+                        <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-sky-400 h-full w-2/3"></div>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] text-slate-300">
+                            <span class="text-sky-400 font-semibold">Now Playing: ${data.title}</span>
+                            <button onclick="switchUniverse(currentUniverse)" class="hover:text-sky-400 font-bold">◀ Reset Act</button>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         function renderUniverseFrame(type) {
@@ -284,7 +352,7 @@
                     <span class="text-4xl" id="uniIcon">${data.icon}</span>
                     <h3 id="uniTitle" class="text-sm font-bold text-amber-400">${data.title}</h3>
                     <p id="uniDesc" class="text-xs text-slate-300">${data.desc}</p>
-                    <button onclick="alert('Playing Cinematic Act Sequence...')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
+                    <button onclick="playCinematicAct()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs transition shadow-lg">
                         ▶ Play Cinematic Act (1-2 Min)
                     </button>
                 </div>
@@ -292,19 +360,8 @@
         }
 
         function switchUniverse(type) {
-            const data = universes[type] || universes.human;
-            const icon = document.getElementById('uniIcon');
-            const title = document.getElementById('uniTitle');
-            const desc = document.getElementById('uniDesc');
-
-            if (!icon || !title || !desc) {
-                renderUniverseFrame(type);
-                return;
-            }
-
-            icon.textContent = data.icon;
-            title.textContent = data.title;
-            desc.textContent = data.desc;
+            currentUniverse = universes[type] ? type : 'human';
+            renderUniverseFrame(currentUniverse);
         }
     </script>
 </body>

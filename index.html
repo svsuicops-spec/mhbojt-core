@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MHBOJT Enterprise Platform | DRAH GOSSSM Autonomous Engine</title>
-    <meta name="mhbojt-build" content="admin-voice-selector-20260918">
+    <meta name="mhbojt-build" content="dynasty-exchange-rate-20260918">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Mermaid.js for Interactive Visual Mindmaps -->
@@ -63,6 +63,7 @@
                 <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
                     <span class="text-[10px] font-bold text-amber-400 uppercase">2. Generate Avatar / Animation Script</span>
                     <select id="sectionTarget" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                        <option selected>Target: 5. Dynasty Exchange Rate ($50/Hr Sweat Equity)</option>
                         <option>Target: 2. MHBOJT Action Tracks (Sweat Equity & Mentors)</option>
                         <option>Target: 1. Diagnostic Profile & Food Logic</option>
                         <option>Target: 3. The Physics of Wealth & Compounding</option>
@@ -486,14 +487,45 @@
             };
         }
 
+        const avatarScripts = {
+            'Target: 5. Dynasty Exchange Rate ($50/Hr Sweat Equity)': {
+                hostA: 'The Dynasty Exchange Rate is fifty dollars per hour of verified sweat equity. Mentoring a descendant converts labor hours into credited capital and systematically neutralizes a ten million dollar liability.',
+                hostB: 'Confirmed. At fifty dollars per hour, the Crystal Dynasty engine compounds Action Track number 2 into multi-generational housing equity under the DRAH GOSSSM protocol.'
+            },
+            'Target: 2. MHBOJT Action Tracks (Sweat Equity & Mentors)': {
+                hostA: 'Through Action Track number 2, mentoring your descendant or friend turns sweat equity into sovereign wealth, neutralizing liability.',
+                hostB: 'Confirmed. Dual hosts are now walking the exact mechanics of Action Track number 2 so families can execute with certainty under the DRAH GOSSSM protocol.'
+            },
+            'Target: 1. Diagnostic Profile & Food Logic': {
+                hostA: 'The diagnostic profile and food logic set the household baseline so Action Track number 2 can convert hours into credited equity without waste.',
+                hostB: 'Confirmed. Once the profile is locked, dual hosts route the family into the Dynasty Exchange Rate at fifty dollars per hour.'
+            },
+            'Target: 3. The Physics of Wealth & Compounding': {
+                hostA: 'The physics of wealth is compounding: fifty dollars per hour of sweat equity stacked across generations until the liability is extinguished.',
+                hostB: 'Confirmed. Compounding at the Dynasty Exchange Rate turns mentoring hours into a permanent housing ark.'
+            },
+            'Target: 4. Munger-to-DRAH Translation Matrix': {
+                hostA: 'The Munger-to-DRAH translation matrix converts inversion and incentive into executable Action Track number 2 mechanics.',
+                hostB: 'Confirmed. Dual hosts map that matrix onto the Dynasty Exchange Rate so sweat equity credits remain deterministic.'
+            }
+        };
+
+        function scriptForTarget(targetSection) {
+            return avatarScripts[targetSection] || {
+                hostA: 'Through Action Track number 2, mentoring your descendant or friend turns sweat equity into sovereign wealth, neutralizing liability.',
+                hostB: `Confirmed. Dual hosts are now walking the exact mechanics of ${targetSection} so families can execute with certainty under the DRAH GOSSSM protocol.`
+            };
+        }
+
         function triggerAvatarGeneration() {
             pauseNativeAudio();
             const targetSection = document.getElementById('sectionTarget').value;
             const container = document.getElementById('mediaContainer');
             const hostAProfile = getHostProfile('A');
             const hostBProfile = getHostProfile('B');
-            const hostALine = 'Through Action Track number 2, mentoring your descendant or friend turns sweat equity into sovereign wealth, neutralizing liability.';
-            const hostBLine = `Confirmed. Dual hosts are now walking the exact mechanics of ${targetSection} so families can execute with certainty under the DRAH GOSSSM protocol.`;
+            const lines = scriptForTarget(targetSection);
+            const hostALine = lines.hostA;
+            const hostBLine = lines.hostB;
 
             container.innerHTML = `
                 <div class="flex flex-col justify-between h-full bg-slate-950 p-4 rounded-xl border border-amber-500/40 text-left relative overflow-hidden w-full">

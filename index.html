@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MHBOJT Enterprise Platform | DRAH GOSSSM Autonomous Engine</title>
-    <meta name="mhbojt-build" content="dynasty-exchange-rate-20260918">
+    <meta name="mhbojt-build" content="notebooklm-dynasty-engine-20260919">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Mermaid.js for Interactive Visual Mindmaps -->
@@ -143,19 +143,15 @@
                 </button>
             </div>
 
-            <!-- Robust Working Audio & Media Frame -->
+            <!-- NotebookLM Audio Overview Player -->
             <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-5 space-y-4 text-center">
-                <div class="text-sm font-bold text-white">🎙️ Live Dual-Host Audio Briefing: Action Track #2</div>
-                <p class="text-xs text-slate-300">Listen to the verified audio overview explaining sweat equity, mentorship, and liability neutralization.</p>
-                
-                <!-- Native HTML5 Audio Player with Direct Controls -->
+                <div class="text-sm font-bold text-white">🎙️ NotebookLM Audio Overview</div>
+                <p class="text-xs text-slate-300">Listen to the hosted DRAH GOSSSM overview covering sweat equity, mentorship, and $10M liability neutralization.</p>
                 <audio id="dualHostAudio" controls preload="metadata" class="w-full accent-amber-400 py-2" onplay="stopAvatarSpeech()">
-                    <!-- Replace with your hosted NotebookLM MP3 URL or use a sample speech file -->
-                    <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                    <source src="drah-overview.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
-                
-                <div class="text-[10px] text-amber-400 font-mono">Status: Audio Stream Ready (Click Play Above)</div>
+                <div class="text-[10px] text-amber-400 font-mono">Status: NotebookLM Stream Ready · drah-overview.mp3</div>
             </div>
 
             <!-- Dynamic Cinematic Screen Frame -->
@@ -175,6 +171,52 @@
                 </div>
             </div>
         </div>
+
+        <!-- Dynasty & Action Tracks Calculation Engine -->
+        <section id="dynastyEngine" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5">
+            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-3">
+                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">⚙️ Dynasty &amp; Action Tracks Calculation Engine</h2>
+                <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">Phase 2 &amp; 3 Execution</span>
+            </div>
+
+            <div class="bg-slate-950 border border-rose-500/30 rounded-xl p-5 text-center space-y-2">
+                <span class="text-[10px] uppercase tracking-wider text-slate-400">Apprentice Liability</span>
+                <div id="liabilityDisplay" class="text-3xl md:text-4xl font-mono font-extrabold text-rose-500">$10,000,000</div>
+                <p id="liabilitySubText" class="text-[11px] text-amber-400 font-medium">Execute Action Tracks to neutralize liability.</p>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="liabilityBar" class="bg-amber-400 h-full w-0 transition-all duration-300"></div>
+                </div>
+                <p id="creditedDisplay" class="text-[11px] text-slate-400 font-mono">Credited capital: $0 · Dynasty Exchange Rate $50/Hr</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">Phase 2 — Upfront Sweat Equity</h3>
+                    <div class="flex justify-between text-[10px] text-slate-400">
+                        <span>Verified hours at $50/Hr</span>
+                        <span id="valSweatHrs" class="text-amber-400 font-mono">0 Hrs</span>
+                    </div>
+                    <input type="range" id="inputSweat" min="0" max="10000" step="100" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
+                    <p id="sweatCredit" class="text-[11px] text-slate-400">Sweat credit: $0</p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+                    <h3 class="text-xs font-bold text-sky-400 uppercase tracking-wider border-b border-slate-800 pb-2">Phase 3 — Mentor Candidates</h3>
+                    <div class="flex justify-between text-[10px] text-slate-400">
+                        <span>SL/NB mentees at $1M each</span>
+                        <span id="valMentor" class="text-sky-400 font-mono">0</span>
+                    </div>
+                    <input type="range" id="inputMentor" min="0" max="10" value="0" oninput="calculateEngine()" class="w-full accent-sky-400 bg-slate-900 cursor-pointer">
+                    <p id="mentorCredit" class="text-[11px] text-slate-400">Mentor credit: $0</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-slate-950 border border-amber-500/30 rounded-xl p-4">
+                <p class="text-xs text-slate-300">Lock a refundable $100 reservation once the $10M apprentice liability is on a neutralization path.</p>
+                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="inline-flex justify-center bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-5 py-2.5 rounded-lg shadow-lg transition text-xs whitespace-nowrap">
+                    Secure $100 Refundable Reservation
+                </a>
+            </div>
+        </section>
 
         <!-- Two-Column Grid: Pro/Con & Mindmap -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -228,7 +270,11 @@
                 </div>
                 <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
                     <span class="font-bold text-amber-400 block">2. Exploring the Multi-Act Cinematic Universe</span>
-                    <p>Use the native HTML5 audio player to listen immediately (browsers will not block click-to-play). Then click through the 4 cinematic acts and Play Avatar Presentation for the dual-host stage.</p>
+                    <p>Press play on the NotebookLM Audio Overview (drah-overview.mp3). Then click through the 4 cinematic acts and Play Avatar Presentation for the dual-host stage.</p>
+                </div>
+                <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+                    <span class="font-bold text-amber-400 block">2b. Dynasty Calculation Engine</span>
+                    <p>Use the Phase 2 sweat-equity slider and Phase 3 mentor slider to drive the $10M apprentice liability to $0, then lock a refundable $100 reservation.</p>
                 </div>
                 <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
                     <span class="font-bold text-amber-400 block">3. Navigating via the Mindmap</span>
@@ -669,6 +715,41 @@
             currentUniverse = universes[type] ? type : 'human';
             renderUniverseFrame(currentUniverse);
         }
+
+        function calculateEngine() {
+            const sweatHrs = parseFloat(document.getElementById('inputSweat').value) || 0;
+            const mentor = parseFloat(document.getElementById('inputMentor').value) || 0;
+            const sweatValue = sweatHrs * 50;
+            const mentorValue = mentor * 1000000;
+            const credited = sweatValue + mentorValue;
+            const remaining = Math.max(0, 10000000 - credited);
+            const neutralized = remaining <= 0 || sweatHrs >= 10000 || mentor >= 10;
+
+            document.getElementById('valSweatHrs').textContent = sweatHrs.toLocaleString() + ' Hrs';
+            document.getElementById('valMentor').textContent = String(mentor);
+            document.getElementById('sweatCredit').textContent = 'Sweat credit: $' + sweatValue.toLocaleString();
+            document.getElementById('mentorCredit').textContent = 'Mentor credit: $' + mentorValue.toLocaleString();
+            document.getElementById('creditedDisplay').textContent = 'Credited capital: $' + credited.toLocaleString() + ' · Dynasty Exchange Rate $50/Hr';
+            document.getElementById('liabilityBar').style.width = Math.min(100, (credited / 10000000) * 100) + '%';
+
+            const liabilityDisplay = document.getElementById('liabilityDisplay');
+            const liabilitySubText = document.getElementById('liabilitySubText');
+            if (neutralized) {
+                liabilityDisplay.textContent = '$0 (Neutralized)';
+                liabilityDisplay.className = 'text-3xl md:text-4xl font-mono font-extrabold text-emerald-400';
+                liabilitySubText.textContent = 'Franchise path secured. $10M apprentice liability neutralized.';
+                liabilitySubText.className = 'text-[11px] text-emerald-400 font-medium';
+                document.getElementById('liabilityBar').className = 'bg-emerald-400 h-full transition-all duration-300';
+            } else {
+                liabilityDisplay.textContent = '$' + remaining.toLocaleString();
+                liabilityDisplay.className = 'text-3xl md:text-4xl font-mono font-extrabold text-rose-500';
+                liabilitySubText.textContent = 'Execute Action Tracks to neutralize liability.';
+                liabilitySubText.className = 'text-[11px] text-amber-400 font-medium';
+                document.getElementById('liabilityBar').className = 'bg-amber-400 h-full transition-all duration-300';
+            }
+        }
+
+        calculateEngine();
 
         function initVoiceSelector() {
             populateVoiceOptions();

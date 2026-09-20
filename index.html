@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine</title>
-    <meta name="mhbojt-build" content="notebooklm-render-medium-20260920">
+    <meta name="mhbojt-build" content="switch-video-source-20260920">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -675,6 +675,44 @@
             renderSelectedNotebookMedium(id);
         }
 
+        const videoSources = {
+            munger: {
+                label: 'Charlie Munger',
+                type: 'youtube',
+                id: 'zr9diji94w4',
+                title: 'Charlie Munger Archive',
+                note: 'Wretched excess thesis · Daily Journal archive'
+            },
+            stbernard: {
+                label: 'St. Bernard Site Feed',
+                type: 'feed',
+                src: '/feed/st-bernard/',
+                title: 'St. Bernard Smart Living Campus · Component #001',
+                note: '48-acre campus site feed'
+            },
+            nationalguard: {
+                label: 'National Guard Campaign',
+                type: 'feed',
+                src: '/feed/national-guard/',
+                title: 'National Guard Housing Campaign · Component #002',
+                note: 'Guardsmen housing campaign feed'
+            }
+        };
+
+        function switchVideoSource(key) {
+            const source = videoSources[key] || videoSources.munger;
+            const frame = document.getElementById('overviewVideoFrame');
+            const select = document.getElementById('videoSourceSelect');
+            const note = document.getElementById('videoSourceNote');
+            if (select && videoSources[key]) select.value = key;
+            if (note) note.textContent = source.note || source.title;
+            if (!frame) return;
+            frame.title = source.title;
+            frame.src = source.type === 'youtube'
+                ? 'https://www.youtube.com/embed/' + source.id + '?rel=0'
+                : source.src;
+        }
+
         function applyNotebookMedium(medium, youtubeId) {
             const select = document.getElementById('notebookMedium');
             if (select && medium) select.value = medium;
@@ -691,7 +729,7 @@
             const badge = document.getElementById('mediaMediumBadge');
             if (!container) return;
 
-            const videoId = youtubeId || 'zr9diji94w4';
+            const videoId = youtubeId || videoSources.munger.id;
             const frames = {
                 audio: {
                     caption: '🎙️ NotebookLM Dual-Host Overview',
@@ -704,8 +742,19 @@
                 video: {
                     caption: '🎬 NotebookLM Video Overview',
                     badge: 'Video Overview',
-                    html: `<div class="aspect-video w-full overflow-hidden rounded-lg border border-slate-800 bg-black">
-                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?rel=0" title="NotebookLM Video Overview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    html: `<div class="space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-amber-400" for="videoSourceSelect">Multi-video source</label>
+                            <select id="videoSourceSelect" onchange="switchVideoSource(this.value)" class="min-w-[14rem] bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <option value="munger">Charlie Munger</option>
+                                <option value="stbernard">St. Bernard Site Feed</option>
+                                <option value="nationalguard">National Guard Campaign</option>
+                            </select>
+                        </div>
+                        <p id="videoSourceNote" class="text-[10px] text-slate-400">${videoSources.munger.note}</p>
+                        <div class="aspect-video w-full overflow-hidden rounded-lg border border-slate-800 bg-black">
+                            <iframe id="overviewVideoFrame" class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?rel=0" title="Charlie Munger Archive" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                     </div>`
                 },
                 slides: {

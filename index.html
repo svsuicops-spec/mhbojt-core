@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine</title>
-    <meta name="mhbojt-build" content="notebooklm-medium-selector-20260920">
+    <meta name="mhbojt-build" content="notebooklm-render-medium-20260920">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -63,7 +63,7 @@
                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
                         <label class="block text-[10px] font-bold text-amber-400 uppercase tracking-widest" for="notebookMedium">NotebookLM Medium Selector</label>
                         <p class="text-[11px] text-slate-400">Switch the central NotebookLM display between Audio Overview, Video Overview, Slide Deck, Mind Map, and Reports.</p>
-                        <select id="notebookMedium" onchange="applyNotebookMedium(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                        <select id="notebookMedium" onchange="renderSelectedNotebookMedium()" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
                             <option value="audio">Audio Overview</option>
                             <option value="video">Video Overview</option>
                             <option value="slides">Slide Deck</option>
@@ -672,14 +672,20 @@
             if (!id) return;
             const select = document.getElementById('notebookMedium');
             if (select) select.value = 'video';
-            applyNotebookMedium('video', id);
+            renderSelectedNotebookMedium(id);
         }
 
         function applyNotebookMedium(medium, youtubeId) {
+            const select = document.getElementById('notebookMedium');
+            if (select && medium) select.value = medium;
+            renderSelectedNotebookMedium(youtubeId);
+        }
+
+        function renderSelectedNotebookMedium(youtubeId) {
             if (typeof stopDualHostDiscussion === 'function') stopDualHostDiscussion();
             pauseOverviewAudio();
             const select = document.getElementById('notebookMedium');
-            if (select && select.value !== medium) select.value = medium;
+            const medium = (select && select.value) || 'audio';
             const container = document.getElementById('mediaContainer');
             const caption = document.getElementById('mediaCaption');
             const badge = document.getElementById('mediaMediumBadge');

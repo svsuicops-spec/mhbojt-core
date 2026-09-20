@@ -49,7 +49,7 @@
 
             <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-4 space-y-3 text-center">
                 <div class="text-xs font-bold text-white">🎙️ NotebookLM Audio Overview</div>
-                <audio id="dualHostAudio" controls preload="metadata" class="w-full accent-amber-400">
+                <audio id="dualHostAudio" controls preload="metadata" class="w-full accent-amber-400" onplay="if (window.speechSynthesis) speechSynthesis.cancel()">
                     <source src="drah-overview.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>

@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine</title>
-    <meta name="mhbojt-build" content="notebooklm-dual-host-mp3-20260920">
+    <meta name="mhbojt-build" content="notebooklm-medium-selector-20260920">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });</script>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
 
@@ -17,9 +19,14 @@
                 <span class="text-sm font-bold tracking-wider text-amber-400">DRAH GOSSSM: Crystal Dynasty</span>
                 <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap">6 / 6 phases interactive</span>
             </div>
-            <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
-                Secure $100 Reservation
-            </a>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" onclick="toggleAdminPanel()" class="bg-slate-950 border border-amber-500/30 hover:bg-slate-800 text-amber-400 font-semibold px-3 py-2 rounded-lg text-xs transition">
+                    ⚙️ Admin Media Studio
+                </button>
+                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
+                    Secure $100 Reservation
+                </a>
+            </div>
         </div>
     </header>
 
@@ -47,12 +54,42 @@
                 </button>
             </div>
 
-            <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-4 space-y-3 text-center">
-                <div class="text-xs font-bold text-white">🎙️ NotebookLM Dual-Host Overview</div>
-                <audio id="dualHostAudio" src="drah-dual-host-overview.mp3" controls preload="metadata" class="w-full accent-amber-400" onplay="stopDualHostDiscussion()">
-                    <source src="drah-dual-host-overview.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+            <div id="adminPanel" class="hidden bg-slate-950 border border-amber-500/40 rounded-xl p-4 space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest">⚙️ Admin Media Studio · Control Center</h3>
+                    <button type="button" onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-lg font-bold leading-none">&times;</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
+                        <label class="block text-[10px] font-bold text-amber-400 uppercase tracking-widest" for="notebookMedium">NotebookLM Medium Selector</label>
+                        <p class="text-[11px] text-slate-400">Switch the central NotebookLM display between Audio Overview, Video Overview, Slide Deck, Mind Map, and Reports.</p>
+                        <select id="notebookMedium" onchange="applyNotebookMedium(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                            <option value="audio">Audio Overview</option>
+                            <option value="video">Video Overview</option>
+                            <option value="slides">Slide Deck</option>
+                            <option value="mindmap">Mind Map</option>
+                            <option value="reports">Reports</option>
+                        </select>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
+                        <label class="block text-[10px] font-bold text-amber-400 uppercase tracking-widest" for="ytUrlInput">Optional YouTube ingest</label>
+                        <input type="text" id="ytUrlInput" placeholder="Paste YouTube URL" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
+                        <button type="button" onclick="loadStudioYouTube()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold py-2 rounded text-xs transition">Extract & Embed into Video Overview</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-4 space-y-3">
+                <div class="flex flex-wrap justify-between items-center gap-2">
+                    <div id="mediaCaption" class="text-xs font-bold text-white">🎙️ NotebookLM Dual-Host Overview</div>
+                    <span id="mediaMediumBadge" class="text-[9px] font-mono text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">Audio Overview</span>
+                </div>
+                <div id="mediaContainer" class="w-full min-h-[7rem]">
+                    <audio id="dualHostAudio" src="drah-dual-host-overview.mp3" controls preload="metadata" class="w-full accent-amber-400" onplay="stopDualHostDiscussion()">
+                        <source src="drah-dual-host-overview.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
             </div>
 
             <!-- Liability Header Box -->
@@ -561,6 +598,163 @@
             const node = document.documentElement;
             if (node.requestFullscreen) node.requestFullscreen();
             else if (node.webkitRequestFullscreen) node.webkitRequestFullscreen();
+        }
+
+        function toggleAdminPanel() {
+            document.getElementById('adminPanel').classList.toggle('hidden');
+        }
+
+        let notebookSlideIndex = 0;
+        const notebookSlides = [
+            { title: 'Crystal Dynasty Protocol', body: 'A 1,000-year compounding engine that converts verified MHBOJT action into sovereign capital and neutralizing the $10M apprentice liability.' },
+            { title: 'Action Track Ledger', body: 'Sweat equity at $50/Hr, Mentor at $1M per candidate, Sponsor at $100k, and Referral at $50k. Each track is a different path to the same neutralization.' },
+            { title: 'Operational Rigor', body: 'Credits only land after verification. Mentors walk candidates through Action Track #2. Sponsors underwrite follow-through. Referrals must convert.' },
+            { title: 'NotebookLM Brief', body: 'Use Audio Overview for the dual-host walkthrough, Video Overview for the cinematic thesis, Mind Map for architecture, and Reports for live ledger numbers.' }
+        ];
+
+        function pauseOverviewAudio() {
+            const audio = document.getElementById('dualHostAudio');
+            if (audio && !audio.paused) audio.pause();
+        }
+
+        function notebookReportHtml() {
+            const liability = document.getElementById('liabilityDisplay')?.textContent || '$10,000,000';
+            const sweat = document.getElementById('valSweatHrs')?.textContent || '0 Hrs';
+            const mentor = document.getElementById('valMentor')?.textContent || '0';
+            const sponsor = document.getElementById('valSponsor')?.textContent || '0';
+            const referral = document.getElementById('valReferral')?.textContent || '0';
+            const topVal = document.getElementById('topValDisplay')?.textContent || '$0';
+            return `
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-3">
+                        <div class="text-[9px] uppercase tracking-widest text-slate-400">Franchise Liability</div>
+                        <div class="text-lg font-mono font-extrabold text-rose-400">${liability}</div>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-3">
+                        <div class="text-[9px] uppercase tracking-widest text-slate-400">1,000-Yr Base Valuation</div>
+                        <div class="text-lg font-mono font-extrabold text-amber-400">${topVal}</div>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 space-y-1">
+                        <div>Sweat Equity: <span class="text-amber-400 font-mono">${sweat}</span></div>
+                        <div>Mentor candidates: <span class="text-amber-400 font-mono">${mentor}</span></div>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 space-y-1">
+                        <div>Sponsor candidates: <span class="text-amber-400 font-mono">${sponsor}</span></div>
+                        <div>Referral conversions: <span class="text-amber-400 font-mono">${referral}</span></div>
+                    </div>
+                </div>`;
+        }
+
+        function renderNotebookSlide() {
+            const stage = document.getElementById('notebookSlideStage');
+            const counter = document.getElementById('notebookSlideCounter');
+            if (!stage) return;
+            const slide = notebookSlides[notebookSlideIndex];
+            stage.innerHTML = `<div class="text-[9px] uppercase tracking-widest text-amber-400 mb-1">Slide ${notebookSlideIndex + 1} / ${notebookSlides.length}</div>
+                <h4 class="text-sm font-bold text-white mb-2">${slide.title}</h4>
+                <p class="text-[11px] text-slate-300 leading-relaxed">${slide.body}</p>`;
+            if (counter) counter.textContent = `${notebookSlideIndex + 1} / ${notebookSlides.length}`;
+        }
+
+        function notebookSlide(delta) {
+            notebookSlideIndex = (notebookSlideIndex + delta + notebookSlides.length) % notebookSlides.length;
+            renderNotebookSlide();
+        }
+
+        function extractYouTubeId(url) {
+            const match = (url || '').match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/);
+            return match ? match[1] : null;
+        }
+
+        function loadStudioYouTube() {
+            const url = document.getElementById('ytUrlInput')?.value.trim();
+            const id = extractYouTubeId(url);
+            if (!id) return;
+            const select = document.getElementById('notebookMedium');
+            if (select) select.value = 'video';
+            applyNotebookMedium('video', id);
+        }
+
+        function applyNotebookMedium(medium, youtubeId) {
+            if (typeof stopDualHostDiscussion === 'function') stopDualHostDiscussion();
+            pauseOverviewAudio();
+            const select = document.getElementById('notebookMedium');
+            if (select && select.value !== medium) select.value = medium;
+            const container = document.getElementById('mediaContainer');
+            const caption = document.getElementById('mediaCaption');
+            const badge = document.getElementById('mediaMediumBadge');
+            if (!container) return;
+
+            const videoId = youtubeId || 'zr9diji94w4';
+            const frames = {
+                audio: {
+                    caption: '🎙️ NotebookLM Dual-Host Overview',
+                    badge: 'Audio Overview',
+                    html: `<audio id="dualHostAudio" src="drah-dual-host-overview.mp3" controls preload="metadata" class="w-full accent-amber-400" onplay="stopDualHostDiscussion()">
+                        <source src="drah-dual-host-overview.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>`
+                },
+                video: {
+                    caption: '🎬 NotebookLM Video Overview',
+                    badge: 'Video Overview',
+                    html: `<div class="aspect-video w-full overflow-hidden rounded-lg border border-slate-800 bg-black">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?rel=0" title="NotebookLM Video Overview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>`
+                },
+                slides: {
+                    caption: '🗂️ NotebookLM Slide Deck',
+                    badge: 'Slide Deck',
+                    html: `<div class="bg-slate-900 border border-slate-800 rounded-lg p-4 space-y-3 text-left">
+                        <div id="notebookSlideStage"></div>
+                        <div class="flex items-center justify-between gap-2">
+                            <button type="button" onclick="notebookSlide(-1)" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]">◀ Prev</button>
+                            <span id="notebookSlideCounter" class="text-[10px] font-mono text-slate-400">1 / 4</span>
+                            <button type="button" onclick="notebookSlide(1)" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]">Next ▶</button>
+                        </div>
+                    </div>`
+                },
+                mindmap: {
+                    caption: '🧠 NotebookLM Mind Map',
+                    badge: 'Mind Map',
+                    html: `<div class="bg-slate-900 border border-slate-800 rounded-lg p-3 overflow-x-auto">
+                        <div class="mermaid">
+graph TD
+    Root[Crystal Dynasty Engine]
+    Root --> Audio[Audio Overview]
+    Root --> Video[Video Overview]
+    Root --> Slides[Slide Deck]
+    Root --> Map[Mind Map]
+    Root --> Reports[Reports]
+    Root --> Tracks[Action Tracks]
+    Tracks --> Sweat[Sweat $50/Hr]
+    Tracks --> Mentor[Mentor $1M]
+    Tracks --> Sponsor[Sponsor $100k]
+    Tracks --> Referral[Referral $50k]
+    click Sweat "/#module2" "Open Action Tracks"
+    click Mentor "/#module2" "Open Action Tracks"
+                        </div>
+                    </div>`
+                },
+                reports: {
+                    caption: '📊 NotebookLM Reports',
+                    badge: 'Reports',
+                    html: notebookReportHtml()
+                }
+            };
+
+            const frame = frames[medium] || frames.audio;
+            if (caption) caption.textContent = frame.caption;
+            if (badge) badge.textContent = frame.badge;
+            container.innerHTML = frame.html;
+            if (medium === 'slides') {
+                notebookSlideIndex = 0;
+                renderNotebookSlide();
+            }
+            if (medium === 'mindmap' && window.mermaid) {
+                const node = container.querySelector('.mermaid');
+                if (node) mermaid.run({ nodes: [node] });
+            }
         }
 
         function switchMatrix(key) {

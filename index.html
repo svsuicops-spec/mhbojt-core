@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine</title>
-    <meta name="mhbojt-build" content="crystal-dynasty-explainers-20260920">
+    <meta name="mhbojt-build" content="dual-host-discussions-20260920">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -49,7 +49,7 @@
 
             <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-4 space-y-3 text-center">
                 <div class="text-xs font-bold text-white">🎙️ NotebookLM Audio Overview</div>
-                <audio id="dualHostAudio" controls preload="metadata" class="w-full accent-amber-400" onplay="if (window.speechSynthesis) speechSynthesis.cancel()">
+                <audio id="dualHostAudio" controls preload="metadata" class="w-full accent-amber-400" onplay="stopDualHostDiscussion()">
                     <source src="drah-overview.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
@@ -98,7 +98,7 @@
                                     <span id="valSweatHrs" class="text-amber-400 font-mono">0 Hrs</span>
                                 </div>
                                 <input type="range" id="inputSweat" min="0" max="10000" step="100" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
-                                <button type="button" onclick="listenExplainer('sweat')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Listen Explainer</button>
+                                <button type="button" data-track="sweat" onclick="playDualHostDiscussion('sweat')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Dual-Host Discussion</button>
                             </div>
                             <div class="space-y-2">
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
@@ -106,7 +106,7 @@
                                     <span id="valMentor" class="text-amber-400 font-mono">0</span>
                                 </div>
                                 <input type="range" id="inputMentor" min="0" max="10" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
-                                <button type="button" onclick="listenExplainer('mentor')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Listen Explainer</button>
+                                <button type="button" data-track="mentor" onclick="playDualHostDiscussion('mentor')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Dual-Host Discussion</button>
                             </div>
                             <div class="space-y-2">
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
@@ -114,7 +114,7 @@
                                     <span id="valSponsor" class="text-amber-400 font-mono">0</span>
                                 </div>
                                 <input type="range" id="inputSponsor" min="0" max="100" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
-                                <button type="button" onclick="listenExplainer('sponsor')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Listen Explainer</button>
+                                <button type="button" data-track="sponsor" onclick="playDualHostDiscussion('sponsor')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Dual-Host Discussion</button>
                             </div>
                             <div class="space-y-2">
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
@@ -122,8 +122,15 @@
                                     <span id="valReferral" class="text-amber-400 font-mono">0</span>
                                 </div>
                                 <input type="range" id="inputReferral" min="0" max="200" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
-                                <button type="button" onclick="listenExplainer('referral')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Listen Explainer</button>
+                                <button type="button" data-track="referral" onclick="playDualHostDiscussion('referral')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Dual-Host Discussion</button>
                             </div>
+                        </div>
+                        <div id="dualHostStage" class="hidden rounded-lg border border-amber-500/30 bg-slate-900 p-2.5 space-y-1.5">
+                            <div class="flex justify-between items-center gap-2">
+                                <span id="dualHostBadge" class="text-[9px] font-bold uppercase tracking-widest text-amber-400">Host A</span>
+                                <button type="button" onclick="stopDualHostDiscussion()" class="text-[9px] text-slate-400 hover:text-amber-400 font-semibold">Stop</button>
+                            </div>
+                            <p id="dualHostCaption" class="text-[10px] text-slate-300 leading-relaxed"></p>
                         </div>
                     </div>
 
@@ -419,24 +426,125 @@
             }
         };
 
-        const trackExplainers = {
-            sweat: "Action Track sweat equity credits fifty dollars per hour of verified labor. Move this slider to convert training hours into capital that reduces the ten million dollar apprentice liability.",
-            mentor: "The mentor track credits one million dollars per Selfless Leader or Nation Builder candidate you bring through Action Track number 2. Ten mentees fully neutralize the ten million dollar liability.",
-            sponsor: "The sponsor track credits one hundred thousand dollars per candidate you underwrite. Sponsorship scales the pipeline without requiring your own sweat hours.",
-            referral: "The referral track credits fifty thousand dollars per qualified introduction. Referrals compound the Dynasty Exchange Rate by expanding the mentee and sponsor funnel."
+        const dualHostDiscussions = {
+            sweat: [
+                { host: 'A', text: "Let's weigh sweat equity. Every verified hour credits fifty dollars toward the ten million dollar apprentice liability. Ten thousand hours can fully neutralize the ledger, and unlike a paycheck those hours compound inside the one thousand year Dynasty protocol." },
+                { host: 'B', text: "Hold on. Ten thousand hours is years of operational grind, not a slider trick. The ledger only credits verified MHBOJT labor. Miss a verification window and that fifty dollars never lands." },
+                { host: 'A', text: "The upside is still unmatched for someone who can show up: you convert training time into sovereign capital without writing a check." },
+                { host: 'B', text: "Only if you stay in the pipeline. The pro is real wealth conversion. The con is relentless commitment. Sweat equity is a crucible, not a shortcut." }
+            ],
+            mentor: [
+                { host: 'A', text: "The mentor track is the biggest financial upside on the board. One Selfless Leader or Nation Builder candidate credits one million dollars. Ten mentees fully neutralize the ten million dollar liability." },
+                { host: 'B', text: "That million is not a signature bonus. You have to walk them through Action Track number 2. If they stall, you do not get the credit. Mentorship is operational rigor with a person's future on the line." },
+                { host: 'A', text: "Compared with fifty dollars an hour of sweat, one completed mentee is the equivalent of twenty thousand verified hours. That is why families treat mentoring as the Dynasty accelerator." },
+                { host: 'B', text: "Agreed on the math, and that is exactly why the con matters. You are betting your ledger on someone else's follow-through. The upside is one million. The cost is uncompromising commitment to get them across the finish line." }
+            ],
+            sponsor: [
+                { host: 'A', text: "Sponsorship credits one hundred thousand dollars per candidate you underwrite. You can scale the pipeline without grinding your own sweat hours, and one hundred sponsored candidates neutralize the full ten million." },
+                { host: 'B', text: "You are not buying a sticker. Sponsorship means you own underwriting risk. If the candidate drops, the operational burden and the reputation hit stay with you." },
+                { host: 'A', text: "The pro is speed. Capital plus a qualified candidate can move the liability faster than a decade of hourly labor." },
+                { host: 'B', text: "Speed on paper. You still have to source, underwrite, and keep those candidates inside the MHBOJT track. The upside is leverage. The con is that you are on the hook until they execute." }
+            ],
+            referral: [
+                { host: 'A', text: "Referrals credit fifty thousand dollars per qualified introduction and compound the Dynasty Exchange Rate by expanding the mentee and sponsor funnel. Two hundred referrals fully neutralize the liability." },
+                { host: 'B', text: "Qualified is the word. A casual name-drop does not credit. The introduction has to convert into the pipeline, or the ledger stays at zero." },
+                { host: 'A', text: "The upside is network leverage. You turn relationships into Dynasty capital instead of trading more of your own hours." },
+                { host: 'B', text: "Network leverage still spends reputation. Bad referrals burn standing and stall the funnel. The pro is fifty thousand per conversion. The con is disciplined, high-integrity introductions, every time." }
+            ]
         };
 
-        function listenExplainer(track) {
-            const text = trackExplainers[track];
-            if (!text || !('speechSynthesis' in window)) return;
+        let dualHostToken = 0;
+
+        function pickHostVoices() {
+            const voices = ('speechSynthesis' in window) ? window.speechSynthesis.getVoices() : [];
+            const english = voices.filter((voice) => /^en(-|_)/i.test(voice.lang));
+            const pool = english.length ? english : voices;
+            const hostA = pool.find((voice) => /male|david|daniel|alex|fred|george|google uk english male/i.test(voice.name)) || pool[0] || null;
+            const hostB = pool.find((voice) => voice !== hostA && /female|samantha|victoria|karen|zira|moira|google us english female/i.test(voice.name)) || pool.find((voice) => voice !== hostA) || pool[0] || null;
+            return { hostA, hostB };
+        }
+
+        function stopDualHostDiscussion() {
+            dualHostToken += 1;
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            const stage = document.getElementById('dualHostStage');
+            const badge = document.getElementById('dualHostBadge');
+            const caption = document.getElementById('dualHostCaption');
+            if (stage) stage.classList.add('hidden');
+            if (badge) {
+                badge.textContent = 'Host A';
+                badge.className = 'text-[9px] font-bold uppercase tracking-widest text-amber-400';
+            }
+            if (caption) caption.textContent = '';
+            document.querySelectorAll('#module2 button[data-track]').forEach((btn) => {
+                btn.textContent = '▶ Dual-Host Discussion';
+            });
+        }
+
+        function showDualHostLine(line) {
+            const stage = document.getElementById('dualHostStage');
+            const badge = document.getElementById('dualHostBadge');
+            const caption = document.getElementById('dualHostCaption');
+            if (stage) stage.classList.remove('hidden');
+            if (caption) caption.textContent = line.text;
+            if (badge) {
+                const isA = line.host === 'A';
+                badge.textContent = isA ? 'Host A · Upside' : 'Host B · Rigor';
+                badge.className = isA
+                    ? 'text-[9px] font-bold uppercase tracking-widest text-amber-400'
+                    : 'text-[9px] font-bold uppercase tracking-widest text-sky-400';
+            }
+        }
+
+        function playDualHostDiscussion(track) {
+            const lines = dualHostDiscussions[track];
+            if (!lines || !('speechSynthesis' in window)) return;
+
             const audio = document.getElementById('dualHostAudio');
             if (audio && !audio.paused) audio.pause();
-            window.speechSynthesis.cancel();
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.rate = 0.96;
-            utter.pitch = 1.0;
-            utter.lang = 'en-US';
-            window.speechSynthesis.speak(utter);
+
+            stopDualHostDiscussion();
+            const token = ++dualHostToken;
+            let started = false;
+
+            document.querySelectorAll('#module2 button[data-track]').forEach((btn) => {
+                btn.textContent = btn.getAttribute('data-track') === track ? '⏸ Dual-Host Playing' : '▶ Dual-Host Discussion';
+            });
+            showDualHostLine(lines[0]);
+
+            const speakQueue = () => {
+                if (token !== dualHostToken || started) return;
+                started = true;
+                const { hostA, hostB } = pickHostVoices();
+                const speakAt = (index) => {
+                    if (token !== dualHostToken || index >= lines.length) {
+                        if (token === dualHostToken) stopDualHostDiscussion();
+                        return;
+                    }
+                    const line = lines[index];
+                    const utter = new SpeechSynthesisUtterance(line.text);
+                    const voice = line.host === 'A' ? hostA : hostB;
+                    utter.rate = line.host === 'A' ? 0.96 : 1.02;
+                    utter.pitch = line.host === 'A' ? 0.85 : 1.18;
+                    utter.lang = (voice && voice.lang) || 'en-US';
+                    if (voice) utter.voice = voice;
+                    utter.onstart = () => {
+                        if (token !== dualHostToken) return;
+                        showDualHostLine(line);
+                    };
+                    utter.onend = () => speakAt(index + 1);
+                    utter.onerror = () => speakAt(index + 1);
+                    window.speechSynthesis.speak(utter);
+                };
+                speakAt(0);
+            };
+
+            if (window.speechSynthesis.getVoices().length) {
+                speakQueue();
+            } else {
+                window.speechSynthesis.addEventListener('voiceschanged', speakQueue, { once: true });
+                setTimeout(speakQueue, 400);
+            }
         }
 
         function enterFullScreen() {
@@ -688,7 +796,15 @@
             toggleModal();
         }
 
-        window.onload = calculateEngine;
+        window.onload = function () {
+            calculateEngine();
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+                window.speechSynthesis.onvoiceschanged = function () {
+                    window.speechSynthesis.getVoices();
+                };
+            }
+        };
     </script>
 </body>
 </html>

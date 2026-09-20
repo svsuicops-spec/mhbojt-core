@@ -464,6 +464,12 @@
             return { hostA, hostB };
         }
 
+        function resetDualHostButtons() {
+            document.querySelectorAll('#module2 button[data-track]').forEach((btn) => {
+                btn.textContent = '▶ Dual-Host Discussion';
+            });
+        }
+
         function stopDualHostDiscussion() {
             dualHostToken += 1;
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
@@ -476,9 +482,12 @@
                 badge.className = 'text-[9px] font-bold uppercase tracking-widest text-amber-400';
             }
             if (caption) caption.textContent = '';
-            document.querySelectorAll('#module2 button[data-track]').forEach((btn) => {
-                btn.textContent = '▶ Dual-Host Discussion';
-            });
+            resetDualHostButtons();
+        }
+
+        function finishDualHostDiscussion() {
+            dualHostToken += 1;
+            resetDualHostButtons();
         }
 
         function showDualHostLine(line) {
@@ -518,7 +527,7 @@
                 const { hostA, hostB } = pickHostVoices();
                 const speakAt = (index) => {
                     if (token !== dualHostToken || index >= lines.length) {
-                        if (token === dualHostToken) stopDualHostDiscussion();
+                        if (token === dualHostToken) finishDualHostDiscussion();
                         return;
                     }
                     const line = lines[index];

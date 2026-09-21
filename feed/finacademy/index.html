@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial by Design LMS | HOMES IN HOURS?! - FinAcademy</title>
-    <meta name="mhbojt-build" content="financial-by-design-lms-20260921">
+    <meta name="mhbojt-build" content="restore-briefings-feed-20260921">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });</script>
@@ -42,7 +42,7 @@
                 <div>
                     <span class="text-amber-400 text-[10px] font-semibold uppercase tracking-widest">~ Financial by Design · finacademy.mhbojt.institute</span>
                     <h1 id="viewHeading" class="text-2xl font-extrabold tracking-wider text-amber-400">BRIEFINGS</h1>
-                    <p id="viewSubhead" class="text-xs text-slate-400">HOMES IN HOURS?! video feed, interactive quiz cards, and score engine.</p>
+                    <p id="viewSubhead" class="text-xs text-slate-400">30,000-foot SL/NB briefings, Crystal Dynasty bridge, then HOMES IN HOURS?! LMS.</p>
                 </div>
                 <div id="academyView" class="space-y-6"></div>
             </main>
@@ -61,7 +61,7 @@
         let profileState = { food: 'Selfless Leader (SL)', shelter: 'Nation Builder (NB)' };
 
         const academyNav = [
-            { id: 'briefings', label: 'Briefings', sub: 'HOMES IN HOURS?! LMS feed' },
+            { id: 'briefings', label: 'Briefings', sub: '30,000-foot SL/NB briefings + HOMES IN HOURS?! LMS' },
             { id: 'courses', label: 'Courses', sub: '12 migrated training labs' },
             { id: 'citadel', label: 'The Citadel', sub: 'St. Bernard + Jackson Barracks' },
             { id: 'dynasty', label: 'Dynasty', sub: 'Crystal Dynasty engine' },
@@ -187,6 +187,75 @@
             </div>`;
         }
 
+        function classicBriefingsHtml() {
+            return `<section id="classicBriefings" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+                    <div class="flex flex-wrap justify-between items-start gap-3 border-b border-slate-800 pb-3">
+                        <div>
+                            <div class="text-[9px] uppercase tracking-widest text-amber-400">Legacy Feed · Restored Briefings</div>
+                            <h2 class="text-sm font-bold tracking-wider text-amber-400 uppercase">30,000-Foot Strategic Briefings</h2>
+                            <p class="text-[11px] text-slate-400 mt-1 max-w-2xl">Long-horizon community wealth and resilience doctrine for incoming Selfless Leaders (SL) and Nation Builders (NB), restored from the classic 5W1H feed.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3 text-[11px]">
+                            <a href="${platformUrl('/feed/st-bernard/')}" class="text-amber-400 hover:text-amber-300">#001 Campus ↗</a>
+                            <a href="${platformUrl('/feed/national-guard/')}" class="text-amber-400 hover:text-amber-300">#002 Guard ↗</a>
+                            <a href="${platformUrl('/drah_crystal_dynasty1.html')}" class="text-amber-400 hover:text-amber-300">NotebookLM ↗</a>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <article class="bg-slate-950 border border-amber-500/30 rounded-xl p-5 space-y-3">
+                            <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">Selfless Leader (SL)</span>
+                            <h3 class="text-sm font-bold text-white">Need · Goals · Objectives</h3>
+                            <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside">
+                                <li><span class="text-slate-200 font-semibold">Need:</span> convert surplus time into parish-level shelter instead of paper speculation.</li>
+                                <li><span class="text-slate-200 font-semibold">Goal:</span> neutralize the $10M apprentice liability through $50/Hr sweat, $1M mentors, and verified labs.</li>
+                                <li><span class="text-slate-200 font-semibold">Objective:</span> lock Food Logic as SL, finish this brief, then run Crystal Dynasty Action Tracks.</li>
+                            </ul>
+                        </article>
+                        <article class="bg-slate-950 border border-sky-500/30 rounded-xl p-5 space-y-3">
+                            <span class="text-[10px] font-bold text-sky-400 uppercase tracking-widest">Nation Builder (NB)</span>
+                            <h3 class="text-sm font-bold text-white">Need · Goals · Objectives</h3>
+                            <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside">
+                                <li><span class="text-slate-200 font-semibold">Need:</span> a 1,000-year compounding map so housing and franchise capital stay inside the community.</li>
+                                <li><span class="text-slate-200 font-semibold">Goal:</span> stand the St. Bernard citadel and Jackson Barracks pipeline as living resilience proof.</li>
+                                <li><span class="text-slate-200 font-semibold">Objective:</span> lock Shelter Intent as NB, complete FinAcademy labs, then reserve with the $100 gateway.</li>
+                            </ul>
+                        </article>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        ${[['WHAT','Community Wealth Protocol','Restored Briefings Feed framing MHBOJT as long-horizon community wealth: modular shelter, sweat equity, and a franchise ledger.'],
+                           ['WHEN','1,000-Year Horizon, Immediate Intake','Candidates enter now. Compounding is modeled to 1,000 years so SL/NB decisions outlive a single grant cycle.'],
+                           ['WHERE','Citadel + Institute','St. Bernard 48 acres, Jackson Barracks, and this academy host — one map from brief to calculator.'],
+                           ['WHY','Resilience Before Speculation','Housing crises become unfixable when talent leaves the parish. Briefings keep SL/NB on tangible assets.'],
+                           ['WHO','Incoming SL & NB Candidates','Selfless Leaders, Nation Builders, Guardsmen, sponsors, and referral partners on the $10M training contract.'],
+                           ['HOW','Brief → NotebookLM → Dynasty','Read 5W1H, listen to the dual-host overview, then open Crystal Dynasty and neutralize remaining liability.']].map((card) =>
+                            `<article class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-2"><span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${card[0]}</span><h3 class="text-sm font-bold text-white">${card[1]}</h3><p class="text-xs text-slate-400">${card[2]}</p></article>`
+                        ).join('')}
+                    </div>
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3">
+                        <div class="flex flex-wrap justify-between items-center gap-2">
+                            <div>
+                                <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest">NotebookLM Dual-Host Brief</h3>
+                                <p class="text-[11px] text-slate-400">Crystal Dynasty + Sentinel Perpetuity sources. Audio Overview is the default output.</p>
+                            </div>
+                            <a href="${platformUrl('/drah_crystal_dynasty1.html')}" class="text-[11px] text-amber-400 hover:text-amber-300">Open 11-medium suite ↗</a>
+                        </div>
+                        <audio id="briefingDualHostAudio" src="${AUDIO_SRC}" controls preload="metadata" class="w-full accent-amber-400">
+                            <source src="${AUDIO_SRC}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <div id="dynastyBridge" class="bg-amber-500/10 border border-amber-500/40 rounded-xl p-5 space-y-2">
+                        <div class="text-[9px] uppercase tracking-widest text-amber-400">Dynasty Integration Line</div>
+                        <h3 class="text-sm font-bold text-white">From the 30,000-foot brief → run your own numbers</h3>
+                        <p class="text-xs text-slate-300">The briefings name the need, goals, and objectives. Crystal Dynasty converts them into Action Tracks against the $10M franchise liability.</p>
+                        <div class="flex flex-wrap gap-3 pt-1">
+                            <button type="button" onclick="switchAcademyView('dynasty')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Open Crystal Dynasty Engine →</button>
+                            <a href="${platformUrl('/#dynasty')}" class="bg-slate-900 border border-amber-500/40 hover:border-amber-400 text-amber-400 font-bold px-4 py-2 rounded-lg text-xs">Homepage #dynasty ↗</a>
+                        </div>
+                    </div>
+                </section>`;
+        }
+
         function lmsFeedHtml() {
             const cards = quizQuestions.map((q, i) => `
                 <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="${i}">
@@ -241,7 +310,7 @@
 
         const academyViews = {
             briefings() {
-                return lmsFeedHtml();
+                return classicBriefingsHtml() + lmsFeedHtml();
             },
             courses() {
                 return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -292,12 +361,12 @@
                 </div>`;
             },
             dynasty() {
-                const src = platformUrl('/');
+                const src = platformUrl('/#dynasty');
                 return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
                     <div class="flex flex-wrap justify-between items-center gap-2">
                         <div>
                             <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Crystal Dynasty Engine</h2>
-                            <p class="text-xs text-slate-400">Live $10M liability ledger, Action Track sliders, and 1,000-year compounding.</p>
+                            <p class="text-xs text-slate-400">Live $10M liability ledger, Action Track sliders, and 1,000-year compounding. Briefings above the engine stay on the homepage feed.</p>
                         </div>
                         <a href="${src}" target="_blank" class="text-[11px] text-amber-400 hover:text-amber-300">Open full engine ↗</a>
                     </div>

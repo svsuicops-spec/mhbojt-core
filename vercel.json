@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "finacademy.mhbojt.institute"
+        }
+      ],
+      "destination": "/feed/finacademy/"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "finacademy.mhbojt.institute"
+        }
+      ],
+      "destination": "/feed/finacademy/:path*"
+    }
+  ]
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Component #003 | FinAcademy Curriculum - MHBOJT Institute</title>
-    <meta name="mhbojt-build" content="finacademy-curriculum-20260921">
+    <meta name="mhbojt-build" content="finacademy-notebooklm-replit-20260921">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: true, theme: 'dark', securityLevel: 'loose' });</script>
@@ -12,13 +12,13 @@
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
 
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center space-x-3">
-                <a href="../../index.html" class="text-xs font-bold tracking-wider text-amber-400 hover:text-amber-300 transition">MHBOJT & SVSUIC PLATFORM</a>
+                <a href="/" class="text-xs font-bold tracking-wider text-amber-400 hover:text-amber-300 transition">MHBOJT & SVSUIC PLATFORM</a>
                 <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">Component #003 of 200+</span>
             </div>
             <div class="flex items-center space-x-3">
-                <a href="../national-guard/" class="hidden sm:inline text-[11px] text-slate-400 hover:text-amber-400 transition">Component #002 ↗</a>
+                <a href="/feed/national-guard/" class="hidden sm:inline text-[11px] text-slate-400 hover:text-amber-400 transition">Component #002 ↗</a>
                 <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
                     Secure $100 Reservation
                 </a>
@@ -31,13 +31,13 @@
         <div class="text-center space-y-2 max-w-3xl mx-auto">
             <span class="text-amber-400 text-xs font-semibold uppercase tracking-widest">~ finacademy.mhbojt.institute</span>
             <h1 class="text-2xl md:text-3xl font-extrabold tracking-wider text-amber-400">FINACADEMY CURRICULUM</h1>
-            <p class="text-xs text-slate-400">SOVEREIGN CAPITAL TRACK | DRAH GOSSSM × MHBOJT INSTITUTE</p>
+            <p class="text-xs text-slate-400">NOTEBOOKLM MEDIUM SELECTOR · REPLIT TRAINING MODULES MIGRATED FROM THE BUILD LAB</p>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
-                <div class="text-[9px] uppercase tracking-widest text-slate-400">Curriculum Modules</div>
-                <div class="text-lg font-mono font-extrabold text-amber-400">6 Tracks</div>
+                <div class="text-[9px] uppercase tracking-widest text-slate-400">Training Modules</div>
+                <div class="text-lg font-mono font-extrabold text-amber-400">12 Labs</div>
             </div>
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
                 <div class="text-[9px] uppercase tracking-widest text-slate-400">Sweat Equity Rate</div>
@@ -53,130 +53,131 @@
             </div>
         </div>
 
+        <div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-5 shadow-xl space-y-4">
+            <div class="flex flex-wrap justify-between items-center gap-3 border-b border-slate-800 pb-3">
+                <div>
+                    <label class="block text-[10px] font-bold text-amber-400 uppercase tracking-widest" for="notebookMedium">NotebookLM Medium Selector</label>
+                    <p class="text-[11px] text-slate-400 mt-1">Switch the academy studio between Audio Overview, Video Overview, Slide Deck, Mind Map, and Reports.</p>
+                </div>
+                <select id="notebookMedium" onchange="renderSelectedNotebookMedium()" class="min-w-[14rem] bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                    <option value="audio">Audio Overview</option>
+                    <option value="video">Video Overview</option>
+                    <option value="slides">Slide Deck</option>
+                    <option value="mindmap">Mind Map</option>
+                    <option value="reports">Reports</option>
+                </select>
+            </div>
+            <div class="flex flex-wrap justify-between items-center gap-2">
+                <div id="mediaCaption" class="text-xs font-bold text-white">🎙️ NotebookLM Dual-Host Overview</div>
+                <span id="mediaMediumBadge" class="text-[9px] font-mono text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">Audio Overview</span>
+            </div>
+            <div id="mediaContainer" class="w-full min-h-[7rem]">
+                <audio id="dualHostAudio" src="/drah-dual-host-overview.mp3" controls preload="metadata" class="w-full accent-amber-400">
+                    <source src="/drah-dual-host-overview.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHAT</span>
-                <h3 class="text-sm font-bold text-white">Executable Finance Curriculum</h3>
-                <p class="text-xs text-slate-400">A six-module academy that turns Crystal Dynasty Action Tracks into sequenced lessons: sweat equity, mentorship, sponsorship, referrals, compounding, and neutralization.</p>
+                <h3 class="text-sm font-bold text-white">FinAcademy + Replit Build Lab</h3>
+                <p class="text-xs text-slate-400">Six sovereign-capital lessons and six Replit builder labs migrated off the Replit host into this institute feed.</p>
             </div>
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHEN</span>
                 <h3 class="text-sm font-bold text-white">Immediate Intake Cycle</h3>
-                <p class="text-xs text-slate-400">Open now. Candidates lock a $100 reservation, then progress module-by-module against the live $10M apprentice liability ledger.</p>
+                <p class="text-xs text-slate-400">Open now. Complete a lab, verify the artifact, then lock the $100 Stripe reservation against the $10M ledger.</p>
             </div>
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHERE</span>
-                <h3 class="text-sm font-bold text-white">MHBOJT Institute + Campus</h3>
-                <p class="text-xs text-slate-400">Hosted at finacademy.mhbojt.institute and executed on the St. Bernard 48-acre Smart Living campus with dual-host remote briefings.</p>
+                <h3 class="text-sm font-bold text-white">finacademy.mhbojt.institute</h3>
+                <p class="text-xs text-slate-400">Taught here, executed on the St. Bernard campus, and shipped through GitHub → Vercel instead of a Replit subdomain.</p>
             </div>
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHY</span>
-                <h3 class="text-sm font-bold text-white">Ledger Literacy, Not Theory</h3>
-                <p class="text-xs text-slate-400">Families need a finance school that maps every hour and mentee to sovereign capital — not abstract classroom credits that never touch the Dynasty engine.</p>
+                <h3 class="text-sm font-bold text-white">Ledger Literacy + Ship Discipline</h3>
+                <p class="text-xs text-slate-400">Finance modules map hours to capital. Replit modules map those same hours to a live component the Dynasty engine can show.</p>
             </div>
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">WHO</span>
                 <h3 class="text-sm font-bold text-white">SL / NB Candidates & Mentors</h3>
-                <p class="text-xs text-slate-400">Selfless Leaders, Nation Builders, Guardsmen converting service hours, sponsors underwriting candidates, and referral partners expanding the funnel.</p>
+                <p class="text-xs text-slate-400">Selfless Leaders, Nation Builders, Guardsmen, sponsors, and referral partners who will both compute and publish.</p>
             </div>
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 shadow-md">
                 <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">HOW</span>
-                <h3 class="text-sm font-bold text-white">Modules, Verification, Reservation</h3>
-                <p class="text-xs text-slate-400">Complete each track, verify hours or conversions, then compound inside the 1,000-year protocol after the $100 Stripe gateway.</p>
-            </div>
-        </div>
-
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-            <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">Six-Module Curriculum Template</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1">
-                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Module 01</span>
-                    <h3 class="text-sm font-bold text-white">Diagnostic Profile</h3>
-                    <p class="text-xs text-slate-400">Food Logic (Selfless Leader / Share) and Shelter Intent (Nation Builder). Candidates locate themselves on the ledger before any capital is credited.</p>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1">
-                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Module 02</span>
-                    <h3 class="text-sm font-bold text-white">Sweat Equity Lab — $50 / Hr</h3>
-                    <p class="text-xs text-slate-400">Convert verified MHBOJT labor into capital. 10,000 hours can neutralize the $10M apprentice liability. Missed verification earns nothing.</p>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1">
-                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Module 03</span>
-                    <h3 class="text-sm font-bold text-white">Mentor Pipeline — $1M / Candidate</h3>
-                    <p class="text-xs text-slate-400">Walk a descendant or peer through Action Track #2. Ten completed mentees fully neutralize. Mentorship is operational rigor, not a signature bonus.</p>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1">
-                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Module 04</span>
-                    <h3 class="text-sm font-bold text-white">Sponsor Underwriting — $100k</h3>
-                    <p class="text-xs text-slate-400">Scale the pipeline without grinding every hour yourself. One hundred sponsored candidates neutralize $10M — you stay on the hook until they execute.</p>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1">
-                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Module 05</span>
-                    <h3 class="text-sm font-bold text-white">Referral Compounding — $50k</h3>
-                    <p class="text-xs text-slate-400">Qualified introductions expand the mentee and sponsor funnel. Two hundred conversions neutralize. Casual name-drops do not credit.</p>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-1">
-                    <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Module 06</span>
-                    <h3 class="text-sm font-bold text-white">Physics of Wealth — 1,000 Years</h3>
-                    <p class="text-xs text-slate-400">Seed, monthly contribution, Dynasty Exchange Rate, tax/inflation/fee toggles, and the compounding chart that turns neutralized liability into sovereign capital.</p>
-                </div>
+                <h3 class="text-sm font-bold text-white">Select · Lab · Verify · Reserve</h3>
+                <p class="text-xs text-slate-400">Pick a module, run the lab, mark it complete, then compound inside Crystal Dynasty after the $100 gateway.</p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Academy Brief</h2>
-                    <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">NotebookLM Style</span>
-                </div>
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-4 text-center">
-                    <div class="text-sm font-bold text-white">Topic: Why FinAcademy Maps Every Lesson to the $10M Ledger</div>
-                    <p class="text-xs text-slate-400">Host A argues the financial upside of sequenced Action Tracks. Host B answers with the operational rigor required to earn each credit.</p>
-                    <button type="button" onclick="playAcademyBrief()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-full text-xs shadow-lg transition">
-                        ▶ Play Curriculum Brief
-                    </button>
-                    <p id="academyBriefCaption" class="hidden text-[11px] text-slate-300 leading-relaxed text-left"></p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-950 border border-emerald-500/30 rounded-xl p-4 space-y-2">
-                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">PRO: Executable Literacy</span>
-                        <p class="text-xs text-slate-400">Every module ends on a slider, a verified hour, or a converted candidate — the same numbers that drive the Crystal Dynasty engine.</p>
+            <div class="lg:col-span-7 space-y-6">
+                <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-2">
+                        <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Sovereign Capital Track</h2>
+                        <span class="text-[10px] text-slate-400">Migrated Crystal Dynasty lessons</span>
                     </div>
-                    <div class="bg-slate-950 border border-rose-500/30 rounded-xl p-4 space-y-2">
-                        <span class="text-[10px] font-bold text-rose-400 uppercase tracking-widest">CON: Verification Discipline</span>
-                        <p class="text-xs text-slate-400">Credits never land on attendance alone. Incomplete mentees, unverified hours, and unqualified referrals keep the liability at $10M.</p>
+                    <div id="capitalTrack" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </section>
+
+                <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-2">
+                        <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Replit Builder Track</h2>
+                        <span class="text-[10px] text-slate-400">Migrated from the Replit training host</span>
                     </div>
-                </div>
+                    <div id="replitTrack" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </section>
             </div>
 
-            <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">Component #003 Architecture Flow</h2>
-                <div class="flex justify-center overflow-x-auto py-2 bg-slate-950 rounded-xl border border-slate-800 p-3">
-                    <div class="mermaid">
-                        graph TD
-                            A[Candidate Arrives] --> B{Review 5W1H}
-                            B --> C[Diagnostic Profile]
-                            C --> D[Action Track Modules]
-                            D --> E[Verify Hours or Conversions]
-                            E --> F[$100 Reservation]
-                            F --> G[1,000-Year Compounding]
-                            click C "../../index.html" "Open Crystal Dynasty Engine"
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                        <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Active Lab</h2>
+                        <span id="labProgress" class="text-[10px] font-mono text-amber-400">0 / 12 complete</span>
+                    </div>
+                    <div id="labStage" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+                        <p class="text-xs text-slate-400">Select a training module to open the migrated Replit lesson.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="playAcademyBrief()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-full text-xs shadow-lg transition">▶ Play Curriculum Brief</button>
+                        <button type="button" id="completeLabBtn" onclick="completeActiveLab()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-full text-xs transition">Mark Lab Complete</button>
+                    </div>
+                    <p id="academyBriefCaption" class="hidden text-[11px] text-slate-300 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">Component #003 Architecture Flow</h2>
+                    <div class="flex justify-center overflow-x-auto py-2 bg-slate-950 rounded-xl border border-slate-800 p-3">
+                        <div class="mermaid">
+                            graph TD
+                                A[Candidate Arrives] --> B{Review 5W1H}
+                                B --> C[NotebookLM Medium Selector]
+                                C --> D[Capital + Replit Labs]
+                                D --> E[Verify Artifact]
+                                E --> F[$100 Reservation]
+                                F --> G[Crystal Dynasty Engine]
+                                click C "#notebookMedium" "Open Medium Selector"
+                                click G "/" "Open Crystal Dynasty Engine"
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a href="../st-bernard/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-1 transition">
+            <a href="/feed/st-bernard/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-1 transition">
                 <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">Previous Component</span>
                 <h3 class="text-sm font-bold text-white">#001 St. Bernard 48-Acre Campus</h3>
                 <p class="text-xs text-slate-400">Smart Living development, 5W1H campus scope, and modular build reservation track.</p>
             </a>
-            <a href="../national-guard/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-1 transition">
+            <a href="/feed/national-guard/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-1 transition">
                 <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">Previous Component</span>
                 <h3 class="text-sm font-bold text-white">#002 National Guard Campaign</h3>
                 <p class="text-xs text-slate-400">Jackson Barracks pipeline, Guardsmen conversion, and Tri-Parish placement campaign.</p>
             </a>
-            <a href="../../index.html" class="md:col-span-2 bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-1 transition">
+            <a href="/" class="md:col-span-2 bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-1 transition">
                 <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider block">Platform Core</span>
                 <h3 class="text-sm font-bold text-white">Open Crystal Dynasty Engine</h3>
                 <p class="text-xs text-slate-400">Run the sliders, dual-host discussions, and $10M neutralization ledger that this curriculum teaches.</p>
@@ -190,9 +191,114 @@
     </footer>
 
     <script>
+        const AUDIO_SRC = '/drah-dual-host-overview.mp3';
+        const PROGRESS_KEY = 'finacademy-lab-progress';
+        let activeLabId = null;
+
+        const capitalModules = [
+            { id: 'cap-01', code: 'CAP-01', title: 'Diagnostic Profile', credit: 'Orientation', objective: 'Locate Food Logic (SL / Share) and Shelter Intent (NB) before any capital is credited.', lab: 'Open Crystal Dynasty Module 1. Record your diagnostic pair. No hours credit until the profile is saved.', verify: 'Diagnostic pair is selected and visible on the Dynasty landing.' },
+            { id: 'cap-02', code: 'CAP-02', title: 'Sweat Equity Lab — $50 / Hr', credit: '$50 / Hr', objective: 'Convert verified MHBOJT labor into capital. 10,000 hours can neutralize $10M.', lab: 'Log a supervised hour block. Move the sweat slider only after a mentor signs the timesheet.', verify: 'Sweat hours on the ledger match the signed timesheet.' },
+            { id: 'cap-03', code: 'CAP-03', title: 'Mentor Pipeline — $1M / Candidate', credit: '$1M / mentee', objective: 'Walk a descendant or peer through Action Track #2. Ten completed mentees neutralize.', lab: 'Assign one mentee, run CAP-02 with them, and file the completion note.', verify: 'Mentee has a completed Action Track #2 artifact.' },
+            { id: 'cap-04', code: 'CAP-04', title: 'Sponsor Underwriting — $100k', credit: '$100k / candidate', objective: 'Scale the pipeline without grinding every hour yourself. You stay on the hook until they execute.', lab: 'Underwrite one candidate’s $100 reservation and schedule their first lab.', verify: 'Sponsored candidate is reserved and has an assigned mentor.' },
+            { id: 'cap-05', code: 'CAP-05', title: 'Referral Compounding — $50k', credit: '$50k / conversion', objective: 'Qualified introductions expand the mentee and sponsor funnel. Casual name-drops do not credit.', lab: 'Submit one converted referral with Stripe receipt and diagnostic pair.', verify: 'Referral converted and appears on the ledger.' },
+            { id: 'cap-06', code: 'CAP-06', title: 'Physics of Wealth — 1,000 Years', credit: 'Compounding', objective: 'Seed, monthly contribution, Dynasty Exchange Rate, and the neutralization chart.', lab: 'Set seed, monthly, horizon, and fee mode on Crystal Dynasty. Screenshot the chart.', verify: 'Chart and yearly table match the inputs you recorded.' }
+        ];
+
+        const replitModules = [
+            { id: 'rep-01', code: 'REP-01', title: 'Replit Workspace & First Repl', credit: 'Builder lab', objective: 'Stand up the original FinAcademy workspace: files, packages, and a running preview.', lab: 'Create a static HTML repl, add Tailwind CDN, and paste the Component #003 shell. Confirm the preview renders.', verify: 'Live Replit preview shows the FinAcademy header and Stripe button.' },
+            { id: 'rep-02', code: 'REP-02', title: 'Static Feed Component', credit: 'Builder lab', objective: 'Build a 5W1H feed page that matches #001 / #002 so it can leave Replit for GitHub.', lab: 'Author six 5W1H cards and a mermaid flow with securityLevel loose. Export the HTML.', verify: 'HTML is valid, mermaid click targets resolve, and the page matches the institute theme.' },
+            { id: 'rep-03', code: 'REP-03', title: 'NotebookLM Media Studio', credit: 'Builder lab', objective: 'Wire the Medium Selector to renderSelectedNotebookMedium().', lab: 'Add the Audio / Video / Slides / Mind Map / Reports dropdown and swap #mediaContainer on change.', verify: 'Each of the five media options paints a distinct studio frame.' },
+            { id: 'rep-04', code: 'REP-04', title: 'Stripe $100 Gateway', credit: 'Builder lab', objective: 'Bind the live reservation link used across MHBOJT.', lab: 'Point every CTA at https://buy.stripe.com/8x228rcRfa087yu9P4cIE02 and test the new-tab checkout.', verify: 'Stripe checkout opens from header and lab CTAs.' },
+            { id: 'rep-05', code: 'REP-05', title: 'GitHub + Vercel Ship', credit: 'Builder lab', objective: 'Migrate the Replit file to mhbojt-core at feed/finacademy/index.html.', lab: 'Commit, open a PR to main, squash-merge, hard-refresh the institute host.', verify: 'Production HTML contains mhbojt-build finacademy-notebooklm-replit-20260921.' },
+            { id: 'rep-06', code: 'REP-06', title: 'Capstone: Publish Component #003', credit: 'Builder lab', objective: 'Ship the academy so candidates no longer depend on a Replit subdomain.', lab: 'Confirm /feed/finacademy/ and finacademy.mhbojt.institute serve this template. Link #001, #002, and Crystal Dynasty.', verify: 'All three navigation targets resolve and the Medium Selector still works on production.' }
+        ];
+
+        const allModules = capitalModules.concat(replitModules);
+
+        const notebookSlides = [
+            { title: 'FinAcademy Protocol', body: 'Twelve labs. Six map hours to the $10M ledger. Six migrate the Replit build path onto mhbojt.institute.' },
+            { title: 'NotebookLM Medium Selector', body: 'Audio Overview for the dual-host walkthrough, Video Overview for site feeds, Slide Deck for doctrine, Mind Map for architecture, Reports for completion counts.' },
+            { title: 'Replit Migration', body: 'Workspace, feed HTML, media studio, Stripe, GitHub/Vercel, and the capstone that retires the Replit host.' },
+            { title: 'Verification Discipline', body: 'Credits never land on attendance. A lab is complete only when the artifact, receipt, or production build is visible.' }
+        ];
+        let notebookSlideIndex = 0;
+
+        const videoSources = {
+            munger: { label: 'Charlie Munger', type: 'youtube', id: 'zr9diji94w4', title: 'Charlie Munger Archive', note: 'Wretched excess thesis · Daily Journal archive' },
+            stbernard: { label: 'St. Bernard Site Feed', type: 'feed', src: '/feed/st-bernard/', title: 'St. Bernard Smart Living Campus · Component #001', note: '48-acre campus site feed' },
+            nationalguard: { label: 'National Guard Campaign', type: 'feed', src: '/feed/national-guard/', title: 'National Guard Housing Campaign · Component #002', note: 'Guardsmen housing campaign feed' }
+        };
+
+        function loadProgress() {
+            try {
+                return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '[]');
+            } catch (err) {
+                return [];
+            }
+        }
+
+        function saveProgress(ids) {
+            localStorage.setItem(PROGRESS_KEY, JSON.stringify(ids));
+        }
+
+        function isComplete(id) {
+            return loadProgress().indexOf(id) !== -1;
+        }
+
+        function renderTrack(elId, modules) {
+            const root = document.getElementById(elId);
+            if (!root) return;
+            root.innerHTML = modules.map((mod) => {
+                const done = isComplete(mod.id);
+                const active = activeLabId === mod.id;
+                return `<button type="button" data-lab="${mod.id}" onclick="openLab('${mod.id}')" class="text-left bg-slate-950 border ${active ? 'border-amber-400' : 'border-slate-800'} hover:border-amber-500/50 rounded-xl p-4 space-y-1 transition">
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${mod.code}</span>
+                        <span class="text-[9px] font-mono ${done ? 'text-emerald-400' : 'text-slate-500'}">${done ? 'COMPLETE' : mod.credit}</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-white">${mod.title}</h3>
+                </button>`;
+            }).join('');
+        }
+
+        function renderTracks() {
+            renderTrack('capitalTrack', capitalModules);
+            renderTrack('replitTrack', replitModules);
+            const done = loadProgress().length;
+            const progress = document.getElementById('labProgress');
+            if (progress) progress.textContent = done + ' / 12 complete';
+        }
+
+        function openLab(id) {
+            const mod = allModules.find((item) => item.id === id);
+            if (!mod) return;
+            activeLabId = id;
+            const stage = document.getElementById('labStage');
+            stage.innerHTML = `<span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${mod.code}</span>
+                <h3 class="text-sm font-bold text-white">${mod.title}</h3>
+                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Objective.</span> ${mod.objective}</p>
+                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Lab.</span> ${mod.lab}</p>
+                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Verify.</span> ${mod.verify}</p>`;
+            renderTracks();
+        }
+
+        function completeActiveLab() {
+            if (!activeLabId) {
+                openLab('rep-01');
+                return;
+            }
+            const ids = loadProgress();
+            if (ids.indexOf(activeLabId) === -1) ids.push(activeLabId);
+            saveProgress(ids);
+            renderTracks();
+            if (document.getElementById('notebookMedium')?.value === 'reports') {
+                renderSelectedNotebookMedium();
+            }
+        }
+
         function playAcademyBrief() {
             const caption = document.getElementById('academyBriefCaption');
-            const text = "Host A: FinAcademy sequences the Crystal Dynasty ledger so every lesson becomes capital. Sweat credits fifty dollars an hour. Mentors credit one million per completed candidate. Host B: Only if verification holds. Ten thousand unverified hours are still a ten million dollar liability. The curriculum is a crucible, not a certificate mill.";
+            const text = "Host A: FinAcademy now carries the NotebookLM Medium Selector and the Replit training modules that used to live on a throwaway host. Every lesson still posts to the ten million dollar ledger. Host B: Only if verification holds. A Replit preview is not a production ship. Mark the lab complete after the artifact is visible on mhbojt.institute.";
             if (caption) {
                 caption.textContent = text;
                 caption.classList.remove('hidden');
@@ -204,6 +310,165 @@
             utter.lang = 'en-US';
             window.speechSynthesis.speak(utter);
         }
+
+        function pauseOverviewAudio() {
+            const audio = document.getElementById('dualHostAudio');
+            if (audio && !audio.paused) audio.pause();
+        }
+
+        function notebookReportHtml() {
+            const done = loadProgress().length;
+            const capitalDone = capitalModules.filter((mod) => isComplete(mod.id)).length;
+            const replitDone = replitModules.filter((mod) => isComplete(mod.id)).length;
+            return `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+                <div class="bg-slate-900 border border-slate-800 rounded-lg p-3">
+                    <div class="text-[9px] uppercase tracking-widest text-slate-400">Labs Complete</div>
+                    <div class="text-lg font-mono font-extrabold text-amber-400">${done} / 12</div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-lg p-3">
+                    <div class="text-[9px] uppercase tracking-widest text-slate-400">Franchise Liability</div>
+                    <div class="text-lg font-mono font-extrabold text-rose-400">$10,000,000</div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 space-y-1">
+                    <div>Sovereign Capital: <span class="text-amber-400 font-mono">${capitalDone} / 6</span></div>
+                    <div>Replit Builder: <span class="text-amber-400 font-mono">${replitDone} / 6</span></div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 space-y-1">
+                    <div>Gateway: <span class="text-emerald-400 font-mono">$100 Stripe</span></div>
+                    <div>Host: <span class="text-amber-400 font-mono">finacademy.mhbojt.institute</span></div>
+                </div>
+            </div>`;
+        }
+
+        function renderNotebookSlide() {
+            const stage = document.getElementById('notebookSlideStage');
+            const counter = document.getElementById('notebookSlideCounter');
+            if (!stage) return;
+            const slide = notebookSlides[notebookSlideIndex];
+            stage.innerHTML = `<div class="text-[9px] uppercase tracking-widest text-amber-400 mb-1">Slide ${notebookSlideIndex + 1} / ${notebookSlides.length}</div>
+                <h4 class="text-sm font-bold text-white mb-2">${slide.title}</h4>
+                <p class="text-[11px] text-slate-300 leading-relaxed">${slide.body}</p>`;
+            if (counter) counter.textContent = `${notebookSlideIndex + 1} / ${notebookSlides.length}`;
+        }
+
+        function notebookSlide(delta) {
+            notebookSlideIndex = (notebookSlideIndex + delta + notebookSlides.length) % notebookSlides.length;
+            renderNotebookSlide();
+        }
+
+        function switchVideoSource(key) {
+            const source = videoSources[key] || videoSources.munger;
+            const frame = document.getElementById('overviewVideoFrame');
+            const select = document.getElementById('videoSourceSelect');
+            const note = document.getElementById('videoSourceNote');
+            if (select && videoSources[key]) select.value = key;
+            if (note) note.textContent = source.note || source.title;
+            if (!frame) return;
+            frame.title = source.title;
+            frame.src = source.type === 'youtube'
+                ? 'https://www.youtube.com/embed/' + source.id + '?rel=0'
+                : source.src;
+        }
+
+        function applyNotebookMedium(medium, youtubeId) {
+            const select = document.getElementById('notebookMedium');
+            if (select && medium) select.value = medium;
+            renderSelectedNotebookMedium(youtubeId);
+        }
+
+        function renderSelectedNotebookMedium(youtubeId) {
+            pauseOverviewAudio();
+            const select = document.getElementById('notebookMedium');
+            const medium = (select && select.value) || 'audio';
+            const container = document.getElementById('mediaContainer');
+            const caption = document.getElementById('mediaCaption');
+            const badge = document.getElementById('mediaMediumBadge');
+            if (!container) return;
+
+            const videoId = youtubeId || videoSources.munger.id;
+            const frames = {
+                audio: {
+                    caption: '🎙️ NotebookLM Dual-Host Overview',
+                    badge: 'Audio Overview',
+                    html: `<audio id="dualHostAudio" src="${AUDIO_SRC}" controls preload="metadata" class="w-full accent-amber-400">
+                        <source src="${AUDIO_SRC}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>`
+                },
+                video: {
+                    caption: '🎬 NotebookLM Video Overview',
+                    badge: 'Video Overview',
+                    html: `<div class="space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-amber-400" for="videoSourceSelect">Multi-video source</label>
+                            <select id="videoSourceSelect" onchange="switchVideoSource(this.value)" class="min-w-[14rem] bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <option value="munger">Charlie Munger</option>
+                                <option value="stbernard">St. Bernard Site Feed</option>
+                                <option value="nationalguard">National Guard Campaign</option>
+                            </select>
+                        </div>
+                        <p id="videoSourceNote" class="text-[10px] text-slate-400">${videoSources.munger.note}</p>
+                        <div class="aspect-video w-full overflow-hidden rounded-lg border border-slate-800 bg-black">
+                            <iframe id="overviewVideoFrame" class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?rel=0" title="Charlie Munger Archive" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>`
+                },
+                slides: {
+                    caption: '🗂️ NotebookLM Slide Deck',
+                    badge: 'Slide Deck',
+                    html: `<div class="bg-slate-950 border border-slate-800 rounded-lg p-4 space-y-3 text-left">
+                        <div id="notebookSlideStage"></div>
+                        <div class="flex items-center justify-between gap-2">
+                            <button type="button" onclick="notebookSlide(-1)" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]">◀ Prev</button>
+                            <span id="notebookSlideCounter" class="text-[10px] font-mono text-slate-400">1 / 4</span>
+                            <button type="button" onclick="notebookSlide(1)" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]">Next ▶</button>
+                        </div>
+                    </div>`
+                },
+                mindmap: {
+                    caption: '🧠 NotebookLM Mind Map',
+                    badge: 'Mind Map',
+                    html: `<div class="bg-slate-950 border border-slate-800 rounded-lg p-3 overflow-x-auto">
+                        <div class="mermaid">
+graph TD
+    Root[FinAcademy Curriculum]
+    Root --> Audio[Audio Overview]
+    Root --> Video[Video Overview]
+    Root --> Slides[Slide Deck]
+    Root --> Map[Mind Map]
+    Root --> Reports[Reports]
+    Root --> Capital[Sovereign Capital]
+    Root --> Replit[Replit Builder]
+    Capital --> Sweat[Sweat $50/Hr]
+    Replit --> Ship[GitHub + Vercel]
+    click Sweat "/" "Open Crystal Dynasty Engine"
+    click Ship "/feed/finacademy/" "Stay on FinAcademy"
+                        </div>
+                    </div>`
+                },
+                reports: {
+                    caption: '📊 NotebookLM Reports',
+                    badge: 'Reports',
+                    html: notebookReportHtml()
+                }
+            };
+
+            const frame = frames[medium] || frames.audio;
+            if (caption) caption.textContent = frame.caption;
+            if (badge) badge.textContent = frame.badge;
+            container.innerHTML = frame.html;
+            if (medium === 'slides') {
+                notebookSlideIndex = 0;
+                renderNotebookSlide();
+            }
+            if (medium === 'mindmap' && window.mermaid) {
+                const node = container.querySelector('.mermaid');
+                if (node) mermaid.run({ nodes: [node] });
+            }
+        }
+
+        renderTracks();
+        openLab('rep-01');
     </script>
 
 </body>

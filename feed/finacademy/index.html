@@ -415,7 +415,7 @@ graph TD
             activeLabId = id;
             const stage = document.getElementById('labStage');
             if (!stage) {
-                switchAcademyView('courses');
+                if (currentView !== 'courses') switchAcademyView('courses');
                 return;
             }
             stage.innerHTML = `<span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${mod.code}</span>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine · NotebookLM Plugin</title>
-    <meta name="mhbojt-build" content="notebooklm-plugin-widget-20260921">
+    <meta name="mhbojt-build" content="notebooklm-11-mediums-20260921">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -24,6 +24,13 @@
             </button>
         </div>
     </header>
+
+    <div id="onboardingBanner" class="hidden bg-amber-500 text-slate-950">
+        <div class="max-w-7xl mx-auto px-6 py-2 flex flex-wrap justify-between items-center gap-2 text-xs font-semibold">
+            <span id="onboardingBannerText">Welcome, candidate.</span>
+            <button type="button" onclick="openOnboarding()" class="underline">Edit diagnostic</button>
+        </div>
+    </div>
 
     <!-- Main Container -->
     <main class="flex-grow max-w-7xl mx-auto px-6 py-6 space-y-6 w-full">
@@ -68,14 +75,14 @@
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[10px] uppercase text-slate-400 mb-1">Food Logic</label>
-                                <select class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <select id="foodLogic" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
                                     <option>Selfless Leader (SL)</option>
                                     <option>Share (SIL)</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-[10px] uppercase text-slate-400 mb-1">Shelter Intent</label>
-                                <select class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <select id="shelterIntent" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
                                     <option>Nation Builder (NB)</option>
                                 </select>
                             </div>
@@ -185,7 +192,7 @@
                             <div class="flex flex-wrap justify-between items-center gap-2">
                                 <div>
                                     <div class="text-[9px] uppercase tracking-widest text-amber-400">NotebookLM Multi-Format Plugin</div>
-                                    <p class="text-[11px] text-slate-400">Interface tray · sits beside the compounding chart. Query Crystal Dynasty or Sentinel Perpetuity, then render Audio / Video / Slides / Reports / Mind Map.</p>
+                                    <p class="text-[11px] text-slate-400">11-item NotebookLM suite. Audio Overview is the default. Selecting a format updates this frame instantly.</p>
                                 </div>
                                 <span id="notebookSourceBadge" class="text-[9px] font-mono text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">💎 Crystal Dynasty Engine</span>
                             </div>
@@ -200,11 +207,17 @@
                                 <div>
                                     <label class="block text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-1" for="notebookMedium">Format selector</label>
                                     <select id="notebookMedium" onchange="renderSelectedNotebookMedium()" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
-                                        <option value="audio">🔊 Audio Overview</option>
-                                        <option value="video">🎥 Video Overview</option>
-                                        <option value="slides">📊 Slide Deck</option>
-                                        <option value="reports">📊 Reports</option>
-                                        <option value="mindmap">🧠 Interactive Mind Map</option>
+                                        <option value="audio" selected>Audio Overview (Default)</option>
+                                        <option value="slides">Slide Deck</option>
+                                        <option value="video">Video Overview</option>
+                                        <option value="mindmap">Mind Map</option>
+                                        <option value="reports">Reports</option>
+                                        <option value="flashcards">Flashcards</option>
+                                        <option value="quiz">Quiz</option>
+                                        <option value="infographic">Infographic</option>
+                                        <option value="artifact">Create Artifact Icon</option>
+                                        <option value="datatable">Data Table</option>
+                                        <option value="interactive">Interactive Report</option>
                                     </select>
                                 </div>
                             </div>
@@ -376,6 +389,43 @@
 
         </div>
     </main>
+
+    <div id="onboardingGate" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden items-center justify-center z-[60] p-4">
+        <div class="bg-slate-900 border border-amber-500/50 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5">
+            <div class="text-[9px] uppercase tracking-widest text-amber-400">Introductory Onboarding Gate</div>
+            <h2 class="text-2xl font-extrabold text-white leading-tight">Are you a Selfless Leader (SL) or Nation Builder (NB)?</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-3 text-sm cursor-pointer">
+                    <input type="radio" name="onboardRole" value="Selfless Leader (SL)" class="accent-amber-400" checked>
+                    <span>Selfless Leader (SL)</span>
+                </label>
+                <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-3 text-sm cursor-pointer">
+                    <input type="radio" name="onboardRole" value="Nation Builder (NB)" class="accent-amber-400">
+                    <span>Nation Builder (NB)</span>
+                </label>
+            </div>
+            <p class="text-sm text-slate-300">Do you like to help others and victims by referring, sponsoring, mentoring, or learning the trade yourself to uplift your community?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
+                    <input type="radio" name="onboardHelp" value="referring" class="accent-amber-400" checked>
+                    <span>Referring ($50k)</span>
+                </label>
+                <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
+                    <input type="radio" name="onboardHelp" value="sponsoring" class="accent-amber-400">
+                    <span>Sponsoring ($100k)</span>
+                </label>
+                <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
+                    <input type="radio" name="onboardHelp" value="mentoring" class="accent-amber-400">
+                    <span>Mentoring ($1M)</span>
+                </label>
+                <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
+                    <input type="radio" name="onboardHelp" value="learning the trade" class="accent-amber-400">
+                    <span>Learning the trade ($50/Hr)</span>
+                </label>
+            </div>
+            <button type="button" onclick="completeOnboarding()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3 rounded-lg">Enter Crystal Dynasty</button>
+        </div>
+    </div>
 
     <!-- $100 Reservation Modal -->
     <div id="reservationModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
@@ -763,6 +813,86 @@
             renderNotebookSlide();
         }
 
+        const flashcards = [
+            { front: 'Sweat Equity', back: '$50 / Hr. 10,000 verified hours neutralize $10M.' },
+            { front: 'Mentor Track', back: '$1M per completed mentee. Ten mentees neutralize.' },
+            { front: 'Sponsor Track', back: '$100k per underwritten candidate.' },
+            { front: 'Referral Track', back: '$50k per converted introduction with a Stripe receipt.' },
+            { front: 'Sentinel Perpetuity', back: 'Exit & franchise hand-off. The ledger outlives the apprentice.' }
+        ];
+        let flashIndex = 0;
+        const pluginQuiz = [
+            { prompt: 'Sweat equity conversion rate?', choices: ['$15/Hr', '$50/Hr', '$100/Hr'], answer: '$50/Hr' },
+            { prompt: 'Apprentice liability target?', choices: ['$1M', '$10M', '$100M'], answer: '$10M' },
+            { prompt: 'Mentor credit per candidate?', choices: ['$50k', '$100k', '$1M'], answer: '$1M' },
+            { prompt: 'Gateway reservation?', choices: ['$10', '$100', '$1,000'], answer: '$100' }
+        ];
+
+        function openOnboarding() {
+            const gate = document.getElementById('onboardingGate');
+            gate.classList.remove('hidden');
+            gate.classList.add('flex');
+        }
+        function hideOnboarding() {
+            const gate = document.getElementById('onboardingGate');
+            gate.classList.add('hidden');
+            gate.classList.remove('flex');
+        }
+        function paintOnboardingBanner(state) {
+            const banner = document.getElementById('onboardingBanner');
+            const text = document.getElementById('onboardingBannerText');
+            if (!state) { banner.classList.add('hidden'); return; }
+            banner.classList.remove('hidden');
+            text.textContent = 'Welcome, ' + state.role + ' · uplifting the community by ' + state.help + '.';
+            const food = document.getElementById('foodLogic');
+            if (food && state.role.indexOf('Selfless') === 0) food.value = 'Selfless Leader (SL)';
+        }
+        function completeOnboarding() {
+            const role = document.querySelector('input[name="onboardRole"]:checked')?.value || 'Selfless Leader (SL)';
+            const help = document.querySelector('input[name="onboardHelp"]:checked')?.value || 'learning the trade';
+            const state = { role, help, at: Date.now() };
+            try { localStorage.setItem('mhbojt-onboarding', JSON.stringify(state)); } catch (err) {}
+            paintOnboardingBanner(state);
+            hideOnboarding();
+        }
+        function loadOnboarding() {
+            try { return JSON.parse(localStorage.getItem('mhbojt-onboarding') || 'null'); }
+            catch (err) { return null; }
+        }
+
+        function flipFlashcard() {
+            const back = document.getElementById('flashBack');
+            if (back) back.classList.toggle('hidden');
+        }
+        function stepFlashcard(delta) {
+            flashIndex = (flashIndex + delta + flashcards.length) % flashcards.length;
+            const card = flashcards[flashIndex];
+            const front = document.getElementById('flashFront');
+            const back = document.getElementById('flashBack');
+            const counter = document.getElementById('flashCounter');
+            if (front) front.textContent = card.front;
+            if (back) { back.textContent = card.back; back.classList.add('hidden'); }
+            if (counter) counter.textContent = (flashIndex + 1) + ' / ' + flashcards.length;
+        }
+        function scorePluginQuiz() {
+            let correct = 0;
+            pluginQuiz.forEach((q, i) => {
+                const picked = document.querySelector('input[name="pquiz-' + i + '"]:checked');
+                if (picked && picked.value === q.answer) correct += 1;
+            });
+            const out = document.getElementById('pluginQuizScore');
+            if (out) {
+                out.classList.remove('hidden');
+                out.textContent = correct + ' / ' + pluginQuiz.length + ' · ' + Math.round((correct / pluginQuiz.length) * 100) + '%';
+            }
+        }
+        function previewArtifact() {
+            const title = document.getElementById('artifactTitle')?.value.trim() || 'Untitled artifact';
+            const kind = document.getElementById('artifactKind')?.value || 'icon';
+            const preview = document.getElementById('artifactPreview');
+            if (preview) preview.innerHTML = `<div class="text-3xl">${kind}</div><h3 class="text-sm font-bold text-white mt-2">${title}</h3><p class="text-[11px] text-slate-400">Artifact staged for the 200+ enterprise feed. Ship via GitHub PR.</p>`;
+        }
+
         function switchVideoSource(key) {
             const source = videoSources[key] || videoSources.munger;
             const frame = document.getElementById('overviewVideoFrame');
@@ -859,6 +989,72 @@ graph TD
     click Campus "/feed/st-bernard/" "Open St. Bernard"
     click Academy "/feed/finacademy/" "Open FinAcademy"
                     </div></div>`
+                },
+                flashcards: {
+                    caption: '🃏 NotebookLM Flashcards',
+                    badge: 'Flashcards',
+                    html: `<div class="bg-slate-950 border border-slate-800 rounded-lg p-4 space-y-3 text-center">
+                        <div id="flashFront" class="text-sm font-bold text-white">${flashcards[0].front}</div>
+                        <div id="flashBack" class="hidden text-xs text-amber-400">${flashcards[0].back}</div>
+                        <div class="flex justify-center gap-2">
+                            <button type="button" onclick="stepFlashcard(-1)" class="bg-slate-800 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]">◀</button>
+                            <button type="button" onclick="flipFlashcard()" class="bg-amber-500 text-slate-950 font-bold px-3 py-1.5 rounded text-[10px]">Flip</button>
+                            <button type="button" onclick="stepFlashcard(1)" class="bg-slate-800 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]">▶</button>
+                        </div>
+                        <div id="flashCounter" class="text-[10px] font-mono text-slate-500">1 / ${flashcards.length}</div>
+                    </div>`
+                },
+                quiz: {
+                    caption: '📝 NotebookLM Quiz',
+                    badge: 'Quiz',
+                    html: `<div class="space-y-3 text-left">${pluginQuiz.map((q, i) => `<article class="bg-slate-950 border border-slate-800 rounded-lg p-3 space-y-2"><h4 class="text-xs font-bold text-white">${i + 1}. ${q.prompt}</h4><div class="flex flex-wrap gap-2">${q.choices.map((c) => `<label class="text-[11px] text-slate-300 flex items-center gap-1"><input type="radio" name="pquiz-${i}" value="${c}" class="accent-amber-400"> ${c}</label>`).join('')}</div></article>`).join('')}<button type="button" onclick="scorePluginQuiz()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 rounded text-xs">SUBMIT &amp; CALCULATE SCORE</button><div id="pluginQuizScore" class="hidden text-center text-lg font-mono font-extrabold text-amber-400"></div></div>`
+                },
+                infographic: {
+                    caption: '📈 NotebookLM Infographic',
+                    badge: 'Infographic',
+                    html: `<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                        <div class="bg-slate-950 border border-slate-800 rounded-lg p-3"><div class="text-[9px] uppercase text-slate-400">Sweat</div><div class="text-lg font-mono text-amber-400">$50/Hr</div></div>
+                        <div class="bg-slate-950 border border-slate-800 rounded-lg p-3"><div class="text-[9px] uppercase text-slate-400">Mentor</div><div class="text-lg font-mono text-amber-400">$1M</div></div>
+                        <div class="bg-slate-950 border border-slate-800 rounded-lg p-3"><div class="text-[9px] uppercase text-slate-400">Sponsor</div><div class="text-lg font-mono text-sky-400">$100k</div></div>
+                        <div class="bg-slate-950 border border-slate-800 rounded-lg p-3"><div class="text-[9px] uppercase text-slate-400">Referral</div><div class="text-lg font-mono text-emerald-400">$50k</div></div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-2">Hours + mentees + sponsors + referrals → neutralize $10M → Sentinel Perpetuity hand-off.</p>`
+                },
+                artifact: {
+                    caption: '✨ Create Artifact Icon',
+                    badge: 'Create Artifact Icon',
+                    html: `<div class="space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input id="artifactTitle" placeholder="Artifact title" class="bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                            <select id="artifactKind" class="bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                                <option value="💎">💎 Crystal</option>
+                                <option value="♾️">♾️ Sentinel</option>
+                                <option value="🏠">🏠 Citadel</option>
+                                <option value="🎓">🎓 Academy</option>
+                            </select>
+                        </div>
+                        <button type="button" onclick="previewArtifact()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-2 rounded text-xs">Generate Artifact</button>
+                        <div id="artifactPreview" class="bg-slate-950 border border-slate-800 rounded-lg p-4 text-xs text-slate-400">Artifact output appears here.</div>
+                    </div>`
+                },
+                datatable: {
+                    caption: '📑 NotebookLM Data Table',
+                    badge: 'Data Table',
+                    html: `<div class="overflow-x-auto"><table class="w-full text-left font-mono text-[11px]">
+                        <thead class="text-slate-400 border-b border-slate-800"><tr><th class="py-2 px-2">Track</th><th class="py-2 px-2">Rate</th><th class="py-2 px-2">To neutralize $10M</th></tr></thead>
+                        <tbody class="text-slate-300 divide-y divide-slate-900">
+                            <tr><td class="py-2 px-2">Sweat</td><td class="py-2 px-2 text-amber-400">$50/Hr</td><td class="py-2 px-2">10,000 hrs</td></tr>
+                            <tr><td class="py-2 px-2">Mentor</td><td class="py-2 px-2 text-amber-400">$1M</td><td class="py-2 px-2">10 mentees</td></tr>
+                            <tr><td class="py-2 px-2">Sponsor</td><td class="py-2 px-2 text-sky-400">$100k</td><td class="py-2 px-2">100 candidates</td></tr>
+                            <tr><td class="py-2 px-2">Referral</td><td class="py-2 px-2 text-emerald-400">$50k</td><td class="py-2 px-2">200 conversions</td></tr>
+                        </tbody>
+                    </table></div>`
+                },
+                interactive: {
+                    caption: '🛰️ Interactive Report',
+                    badge: 'Interactive Report',
+                    html: `${notebookReportHtml()}
+                    <button type="button" onclick="document.getElementById('inputSweat')?.scrollIntoView({behavior:'smooth'})" class="mt-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded text-xs">Adjust Action Track sliders</button>`
                 }
             };
             const frame = frames[medium] || frames.audio;
@@ -878,6 +1074,9 @@ graph TD
         window.onload = function () {
             calculateEngine();
             renderSelectedNotebookMedium();
+            const saved = loadOnboarding();
+            if (saved) paintOnboardingBanner(saved);
+            else openOnboarding();
         };
     </script>
 </body>

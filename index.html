@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine</title>
-    <meta name="mhbojt-build" content="switch-video-source-20260920">
+    <meta name="mhbojt-build" content="unified-platform-sidebar-20260921">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -14,13 +14,15 @@
 
     <!-- Top Navigation Bar -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3">
+        <div class="px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3">
             <div class="flex items-center gap-3 min-w-0">
+                <button type="button" onclick="toggleAcademySidebar()" class="lg:hidden bg-slate-800 border border-slate-700 text-amber-400 text-[10px] font-bold px-2 py-1 rounded">☰ Menu</button>
                 <span class="text-sm font-bold tracking-wider text-amber-400">DRAH GOSSSM: Crystal Dynasty</span>
-                <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap">6 / 6 phases interactive</span>
+                <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap">Unified Platform</span>
             </div>
             <div class="flex flex-wrap items-center gap-2">
-                <button type="button" onclick="toggleAdminPanel()" class="bg-slate-950 border border-amber-500/30 hover:bg-slate-800 text-amber-400 font-semibold px-3 py-2 rounded-lg text-xs transition">
+                <span id="activeViewLabel" class="hidden sm:inline text-[11px] text-slate-400">Dynasty</span>
+                <button type="button" onclick="switchAcademyView('dynasty'); document.getElementById('adminPanel')?.classList.remove('hidden');" class="bg-slate-950 border border-amber-500/30 hover:bg-slate-800 text-amber-400 font-semibold px-3 py-2 rounded-lg text-xs transition">
                     ⚙️ Admin Media Studio
                 </button>
                 <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
@@ -30,8 +32,25 @@
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="flex-grow max-w-7xl mx-auto px-6 py-6 space-y-6 w-full">
+    <div class="flex flex-1 min-h-0">
+        <aside id="academySidebar" class="hidden lg:flex w-64 shrink-0 flex-col bg-slate-900 border-r border-slate-800 sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto z-40">
+            <div class="px-4 pt-5 pb-3 border-b border-slate-800">
+                <div class="text-[9px] uppercase tracking-widest text-amber-400">Platform Sidebar</div>
+                <div class="text-sm font-bold text-white">MHBOJT Nav</div>
+                <p class="text-[10px] text-slate-400 mt-1">mhbojt.com · all domains</p>
+            </div>
+            <nav id="academyNav" class="p-3 space-y-1"></nav>
+        </aside>
+
+        <div class="flex-1 flex flex-col min-w-0">
+            <div class="px-4 md:px-8 pt-5">
+                <span class="text-amber-400 text-[10px] font-semibold uppercase tracking-widest">~ Unified MHBOJT Platform</span>
+                <h1 id="viewHeading" class="text-xl md:text-2xl font-extrabold tracking-wider text-amber-400">DYNASTY</h1>
+                <p id="viewSubhead" class="text-xs text-slate-400">Crystal Dynasty calculator, NotebookLM studio, and $10M ledger.</p>
+            </div>
+            <div id="platformView" class="hidden px-4 md:px-8 py-6 space-y-6 w-full max-w-7xl mx-auto"></div>
+            <!-- Main Container: calculator stays mounted so switchAcademyView cannot wipe engine state -->
+            <main id="dynastyPane" class="flex-grow max-w-7xl mx-auto px-6 py-6 space-y-6 w-full">
         
         <!-- Header Banner -->
         <div class="text-center space-y-1">
@@ -391,6 +410,11 @@
 
         </div>
     </main>
+            <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400 mt-auto">
+                <p>&copy; 2026 DRAH GOSSSM & SVSUIC. Unified platform · Crystal Dynasty Engine.</p>
+            </footer>
+        </div>
+    </div>
 
     <!-- $100 Reservation Modal -->
     <div id="reservationModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
@@ -425,14 +449,197 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400 mt-auto">
-        <p>&copy; 2026 DRAH GOSSSM & SVSUIC. All rights reserved. Self-hosted local environment.</p>
-    </footer>
-
     <!-- Interactive Script & Phase Execution Engine -->
     <script>
         const stripePaymentLink = "https://buy.stripe.com/8x228rcRfa087yu9P4cIE02";
+        let currentView = 'dynasty';
+
+        const academyNav = [
+            { id: 'briefings', label: 'Briefings', sub: 'NotebookLM dual-host studio' },
+            { id: 'courses', label: 'Courses', sub: 'FinAcademy curriculum labs' },
+            { id: 'citadel', label: 'The Citadel', sub: 'St. Bernard + Jackson Barracks' },
+            { id: 'dynasty', label: 'Dynasty', sub: 'Crystal Dynasty calculator' },
+            { id: 'blueprint', label: 'Blueprint', sub: '5W1H + architecture flow' },
+            { id: 'walkthrough', label: 'Walkthrough', sub: 'Select · Lab · Verify · Reserve' },
+            { id: 'dashboard', label: 'Dashboard', sub: 'Live liability KPIs' },
+            { id: 'factory', label: 'Course Factory', sub: 'Compose the next feed module' },
+            { id: 'profile', label: 'Profile', sub: 'SL / NB diagnostic pair' },
+            { id: 'admin', label: 'Admin Panel', sub: 'Media studio controls' }
+        ];
+
+        function navButtonClass(id) {
+            return currentView === id
+                ? 'w-full text-left px-3 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs transition'
+                : 'w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-amber-400 text-xs transition';
+        }
+
+        function renderAcademyNav() {
+            const nav = document.getElementById('academyNav');
+            if (!nav) return;
+            nav.innerHTML = academyNav.map((item) =>
+                `<button type="button" data-view="${item.id}" onclick="switchAcademyView('${item.id}')" class="${navButtonClass(item.id)}">
+                    <div>${item.label}</div>
+                    <div class="${currentView === item.id ? 'text-slate-800' : 'text-slate-500'} text-[10px] font-normal">${item.sub}</div>
+                </button>`
+            ).join('');
+        }
+
+        function toggleAcademySidebar() {
+            const side = document.getElementById('academySidebar');
+            side.classList.toggle('hidden');
+            side.classList.toggle('flex');
+            side.classList.toggle('fixed');
+            side.classList.toggle('inset-y-0');
+            side.classList.toggle('left-0');
+        }
+
+        function platformViewHtml(view) {
+            if (view === 'briefings') {
+                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Briefings</h2>
+                    <p class="text-xs text-slate-400">The NotebookLM Medium Selector and dual-host overview live on the Dynasty pane so the calculator and studio stay in one engine. Open Dynasty to switch Audio, Video, Slides, Mind Map, and Reports, then play an Action Track discussion.</p>
+                    <button type="button" onclick="switchAcademyView('dynasty')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-full text-xs">Open Dynasty Studio</button>
+                </div>`;
+            }
+            if (view === 'courses') {
+                return `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="/feed/finacademy/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-2 transition">
+                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Component #003</span>
+                        <h3 class="text-sm font-bold text-white">FinAcademy Curriculum</h3>
+                        <p class="text-xs text-slate-400">Twelve labs: sovereign capital tracks plus migrated Replit builder modules, hosted at finacademy.mhbojt.institute.</p>
+                    </a>
+                    <button type="button" onclick="switchAcademyView('dynasty')" class="text-left bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-2 transition">
+                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Engine</span>
+                        <h3 class="text-sm font-bold text-white">Action Track Calculator</h3>
+                        <p class="text-xs text-slate-400">Sweat $50/Hr, Mentor $1M, Sponsor $100k, Referral $50k — the same numbers the academy teaches.</p>
+                    </button>
+                </div>`;
+            }
+            if (view === 'citadel') {
+                return `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="/feed/st-bernard/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-2 transition">
+                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Component #001</span>
+                        <h3 class="text-sm font-bold text-white">St. Bernard 48-Acre Citadel</h3>
+                        <p class="text-xs text-slate-400">Smart Living campus and modular steel housing that FinAcademy credits against the $10M liability.</p>
+                    </a>
+                    <a href="/feed/national-guard/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-2 transition">
+                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Component #002</span>
+                        <h3 class="text-sm font-bold text-white">Jackson Barracks Gate</h3>
+                        <p class="text-xs text-slate-400">National Guard pipeline converting service hours into Tri-Parish housing equity.</p>
+                    </a>
+                </div>`;
+            }
+            if (view === 'blueprint') {
+                return `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    ${[['WHAT','Unified MHBOJT Platform','Sidebar + Crystal Dynasty calculator + NotebookLM Medium Selector + Stripe $100 gateway.'],
+                       ['WHEN','Immediate intake','Run the numbers, complete a lab, then lock the reservation.'],
+                       ['WHERE','mhbojt.com and institute hosts','Homepage engine here. FinAcademy labs at /feed/finacademy/.'],
+                       ['WHY','One chrome for every domain','Candidates should not relearn navigation between calculator and academy.'],
+                       ['WHO','SL / NB candidates','Selfless Leaders, Nation Builders, Guardsmen, sponsors, referrals.'],
+                       ['HOW','switchAcademyView','Sidebar paints the pane. Dynasty keeps the calculator mounted so state survives.']].map((card) =>
+                        `<div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2"><span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${card[0]}</span><h3 class="text-sm font-bold text-white">${card[1]}</h3><p class="text-xs text-slate-400">${card[2]}</p></div>`
+                    ).join('')}
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                    <div class="mermaid">
+graph TD
+    A[Candidate Arrives] --> B[Sidebar switchAcademyView]
+    B --> C[Dynasty Calculator]
+    B --> D[FinAcademy Courses]
+    C --> E[$10M Ledger]
+    D --> E
+    E --> F[$100 Stripe Reservation]
+    click C "#dynasty" "Stay on Dynasty"
+    click D "/feed/finacademy/" "Open FinAcademy"
+                    </div>
+                </div>`;
+            }
+            if (view === 'walkthrough') {
+                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 text-xs text-slate-300">
+                    <ol class="space-y-2 list-decimal list-inside">
+                        <li>Open <button type="button" onclick="switchAcademyView('profile')" class="text-amber-400 underline">Profile</button> and lock Food Logic / Shelter Intent.</li>
+                        <li>Run the calculator on <button type="button" onclick="switchAcademyView('dynasty')" class="text-amber-400 underline">Dynasty</button> and switch the NotebookLM Medium Selector.</li>
+                        <li>Walk campus via <button type="button" onclick="switchAcademyView('citadel')" class="text-amber-400 underline">The Citadel</button> and labs via <button type="button" onclick="switchAcademyView('courses')" class="text-amber-400 underline">Courses</button>.</li>
+                        <li>Reserve with the Stripe $100 button in the header.</li>
+                    </ol>
+                </div>`;
+            }
+            if (view === 'dashboard') {
+                const liability = document.getElementById('liabilityDisplay')?.textContent || '$10,000,000';
+                const topVal = document.getElementById('topValDisplay')?.textContent || '$0';
+                const sweat = document.getElementById('valSweatHrs')?.textContent || '0 Hrs';
+                return `<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Liability</div><div class="text-lg font-mono font-extrabold text-rose-400">${liability}</div></div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">1,000-Yr Value</div><div class="text-lg font-mono font-extrabold text-amber-400">${topVal}</div></div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Sweat</div><div class="text-lg font-mono font-extrabold text-sky-400">${sweat}</div></div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Gateway</div><div class="text-lg font-mono font-extrabold text-emerald-400">$100</div></div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">${typeof notebookReportHtml === 'function' ? notebookReportHtml() : ''}</div>`;
+            }
+            if (view === 'factory') {
+                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Course Factory</h2>
+                    <p class="text-xs text-slate-400">Compose the next feed module. Preview stays local until a GitHub PR ships it.</p>
+                    <input id="factoryTitle" placeholder="Module title" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    <textarea id="factoryVerify" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">Credits only after the production artifact is visible.</textarea>
+                    <button type="button" onclick="previewFactoryModule()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Preview Module Card</button>
+                    <div id="factoryPreview" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-400">Factory output appears here.</div>
+                </div>`;
+            }
+            if (view === 'profile') {
+                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 max-w-xl">
+                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Candidate Profile</h2>
+                    <p class="text-xs text-slate-400">Same diagnostic pair as Module 1 on the Dynasty calculator.</p>
+                    <button type="button" onclick="switchAcademyView('dynasty'); document.getElementById('module1')?.scrollIntoView({behavior:'smooth'});" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Edit on Dynasty Module 1</button>
+                </div>`;
+            }
+            if (view === 'admin') {
+                return `<div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-6 space-y-3">
+                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Admin Media Studio</h2>
+                    <p class="text-xs text-slate-400">Medium Selector, YouTube ingest, and the dual-host player stay mounted on Dynasty so admin changes hit the live studio.</p>
+                    <button type="button" onclick="switchAcademyView('dynasty'); toggleAdminPanel();" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Open Admin on Dynasty</button>
+                </div>`;
+            }
+            return '';
+        }
+
+        function switchAcademyView(view) {
+            const item = academyNav.find((nav) => nav.id === view) || academyNav.find((nav) => nav.id === 'dynasty');
+            currentView = item.id;
+            document.getElementById('viewHeading').textContent = item.label.toUpperCase();
+            document.getElementById('viewSubhead').textContent = item.sub;
+            const label = document.getElementById('activeViewLabel');
+            if (label) label.textContent = item.label;
+            const dynastyPane = document.getElementById('dynastyPane');
+            const platformView = document.getElementById('platformView');
+            const showDynasty = item.id === 'dynasty';
+            if (dynastyPane) dynastyPane.classList.toggle('hidden', !showDynasty);
+            if (platformView) {
+                platformView.classList.toggle('hidden', showDynasty);
+                if (!showDynasty) platformView.innerHTML = platformViewHtml(item.id);
+            }
+            renderAcademyNav();
+            history.replaceState(null, '', '#' + item.id);
+            if (window.matchMedia('(max-width: 1023px)').matches) {
+                const side = document.getElementById('academySidebar');
+                side.classList.add('hidden');
+                side.classList.remove('flex', 'fixed', 'inset-y-0', 'left-0');
+            }
+            if (item.id === 'blueprint' && window.mermaid) {
+                const node = document.querySelector('#platformView .mermaid');
+                if (node) mermaid.run({ nodes: [node] });
+            }
+            if (showDynasty && typeof calculateEngine === 'function') {
+                try { calculateEngine(); } catch (err) {}
+            }
+        }
+
+        function previewFactoryModule() {
+            const title = document.getElementById('factoryTitle')?.value.trim() || 'Untitled module';
+            const verify = document.getElementById('factoryVerify')?.value.trim() || 'Verify on production.';
+            const preview = document.getElementById('factoryPreview');
+            if (preview) preview.innerHTML = `<h3 class="text-sm font-bold text-white">${title}</h3><p class="text-xs text-slate-400 mt-1">${verify}</p>`;
+        }
 
         let state = {
             taxOn: false,
@@ -696,6 +903,13 @@
                 src: '/feed/national-guard/',
                 title: 'National Guard Housing Campaign · Component #002',
                 note: 'Guardsmen housing campaign feed'
+            },
+            finacademy: {
+                label: 'FinAcademy Curriculum',
+                type: 'feed',
+                src: '/feed/finacademy/',
+                title: 'FinAcademy Curriculum · Component #003',
+                note: 'NotebookLM labs and Replit builder track'
             }
         };
 
@@ -749,6 +963,7 @@
                                 <option value="munger">Charlie Munger</option>
                                 <option value="stbernard">St. Bernard Site Feed</option>
                                 <option value="nationalguard">National Guard Campaign</option>
+                                <option value="finacademy">FinAcademy Curriculum</option>
                             </select>
                         </div>
                         <p id="videoSourceNote" class="text-[10px] text-slate-400">${videoSources.munger.note}</p>
@@ -828,14 +1043,15 @@ graph TD
         }
 
         function executePhase(phaseNum) {
+            if (currentView !== 'dynasty') switchAcademyView('dynasty');
             if (phaseNum === 1) {
                 toggleModal();
             } else if (phaseNum === 2) {
-                document.getElementById('module3').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('module3')?.scrollIntoView({ behavior: 'smooth' });
             } else if (phaseNum === 3) {
-                document.getElementById('module2').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('module2')?.scrollIntoView({ behavior: 'smooth' });
             } else if (phaseNum === 4) {
-                document.getElementById('module1').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('module1')?.scrollIntoView({ behavior: 'smooth' });
             } else if (phaseNum === 5) {
                 window.open('https://mhbojt.com', '_blank');
             } else if (phaseNum === 6) {
@@ -1056,6 +1272,9 @@ graph TD
         }
 
         window.onload = function () {
+            renderAcademyNav();
+            const initial = (location.hash || '#dynasty').replace('#', '');
+            switchAcademyView(initial);
             calculateEngine();
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.getVoices();

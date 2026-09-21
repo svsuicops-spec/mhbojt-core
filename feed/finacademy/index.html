@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Component #003 | FinAcademy Curriculum - MHBOJT Institute</title>
-    <meta name="mhbojt-build" content="finacademy-sidebar-nav-20260921">
+    <title>Financial by Design LMS | HOMES IN HOURS?! - FinAcademy</title>
+    <meta name="mhbojt-build" content="financial-by-design-lms-20260921">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });</script>
@@ -15,8 +15,8 @@
         <div class="px-4 md:px-6 py-3 flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center space-x-3">
                 <button type="button" onclick="toggleAcademySidebar()" class="lg:hidden bg-slate-800 border border-slate-700 text-amber-400 text-[10px] font-bold px-2 py-1 rounded">☰ Menu</button>
-                <a href="/" class="text-xs font-bold tracking-wider text-amber-400 hover:text-amber-300 transition">MHBOJT & SVSUIC PLATFORM</a>
-                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">Component #003 of 200+</span>
+                <a href="/" class="text-xs font-bold tracking-wider text-amber-400 hover:text-amber-300 transition">FINANCIAL BY DESIGN LMS</a>
+                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">HOMES IN HOURS?!</span>
             </div>
             <div class="flex items-center space-x-3">
                 <span id="activeViewLabel" class="hidden sm:inline text-[11px] text-slate-400">Briefings</span>
@@ -40,9 +40,9 @@
         <div class="flex-1 flex flex-col min-w-0">
             <main class="flex-grow px-4 md:px-8 py-6 space-y-6 w-full max-w-6xl mx-auto">
                 <div>
-                    <span class="text-amber-400 text-[10px] font-semibold uppercase tracking-widest">~ finacademy.mhbojt.institute</span>
+                    <span class="text-amber-400 text-[10px] font-semibold uppercase tracking-widest">~ Financial by Design · finacademy.mhbojt.institute</span>
                     <h1 id="viewHeading" class="text-2xl font-extrabold tracking-wider text-amber-400">BRIEFINGS</h1>
-                    <p id="viewSubhead" class="text-xs text-slate-400">NotebookLM dual-host studio and Medium Selector.</p>
+                    <p id="viewSubhead" class="text-xs text-slate-400">HOMES IN HOURS?! video feed, interactive quiz cards, and score engine.</p>
                 </div>
                 <div id="academyView" class="space-y-6"></div>
             </main>
@@ -61,7 +61,7 @@
         let profileState = { food: 'Selfless Leader (SL)', shelter: 'Nation Builder (NB)' };
 
         const academyNav = [
-            { id: 'briefings', label: 'Briefings', sub: 'NotebookLM dual-host studio' },
+            { id: 'briefings', label: 'Briefings', sub: 'HOMES IN HOURS?! LMS feed' },
             { id: 'courses', label: 'Courses', sub: '12 migrated training labs' },
             { id: 'citadel', label: 'The Citadel', sub: 'St. Bernard + Jackson Barracks' },
             { id: 'dynasty', label: 'Dynasty', sub: 'Crystal Dynasty engine' },
@@ -87,7 +87,7 @@
             { id: 'rep-02', code: 'REP-02', title: 'Static Feed Component', credit: 'Builder lab', objective: 'Build a 5W1H feed page that matches #001 / #002 so it can leave Replit for GitHub.', lab: 'Author six 5W1H cards and a mermaid flow with securityLevel loose. Export the HTML.', verify: 'HTML is valid, mermaid click targets resolve, and the page matches the institute theme.' },
             { id: 'rep-03', code: 'REP-03', title: 'NotebookLM Media Studio', credit: 'Builder lab', objective: 'Wire the Medium Selector to renderSelectedNotebookMedium().', lab: 'Use Briefings or Admin Panel to swap Audio / Video / Slides / Mind Map / Reports.', verify: 'Each of the five media options paints a distinct studio frame.' },
             { id: 'rep-04', code: 'REP-04', title: 'Stripe $100 Gateway', credit: 'Builder lab', objective: 'Bind the live reservation link used across MHBOJT.', lab: 'Point every CTA at the Stripe payment link and test the new-tab checkout.', verify: 'Stripe checkout opens from header and lab CTAs.' },
-            { id: 'rep-05', code: 'REP-05', title: 'GitHub + Vercel Ship', credit: 'Builder lab', objective: 'Migrate the Replit file to mhbojt-core at feed/finacademy/index.html.', lab: 'Commit, open a PR to main, squash-merge, hard-refresh the institute host.', verify: 'Production HTML contains mhbojt-build finacademy-sidebar-nav-20260921.' },
+            { id: 'rep-05', code: 'REP-05', title: 'GitHub + Vercel Ship', credit: 'Builder lab', objective: 'Migrate the Replit file to mhbojt-core at feed/finacademy/index.html.', lab: 'Commit, open a PR to main, squash-merge, hard-refresh the institute host.', verify: 'Production HTML contains mhbojt-build financial-by-design-lms-20260921.' },
             { id: 'rep-06', code: 'REP-06', title: 'Capstone: Publish Component #003', credit: 'Builder lab', objective: 'Ship the academy so candidates no longer depend on a Replit subdomain.', lab: 'Confirm /feed/finacademy/ and finacademy.mhbojt.institute serve this template.', verify: 'Sidebar switchAcademyView works on production and Dynasty still opens the engine.' }
         ];
 
@@ -102,10 +102,24 @@
         let notebookSlideIndex = 0;
 
         const videoSources = {
+            homes: { label: 'HOMES IN HOURS?!', type: 'youtube', id: 'wCzS2FZoB-I', title: 'HOMES IN HOURS?!', note: 'Financial by Design featured video feed' },
             munger: { label: 'Charlie Munger', type: 'youtube', id: 'zr9diji94w4', title: 'Charlie Munger Archive', note: 'Wretched excess thesis · Daily Journal archive' },
             stbernard: { label: 'St. Bernard Site Feed', type: 'feed', src: '/feed/st-bernard/', title: 'St. Bernard Smart Living Campus · Component #001', note: '48-acre campus site feed' },
             nationalguard: { label: 'National Guard Campaign', type: 'feed', src: '/feed/national-guard/', title: 'National Guard Housing Campaign · Component #002', note: 'Guardsmen housing campaign feed' }
         };
+
+        const quizQuestions = [
+            { prompt: 'What is the MHBOJT sweat-equity conversion rate?', choices: ['$15 / Hr', '$25 / Hr', '$50 / Hr', '$100 / Hr'], answer: '$50 / Hr' },
+            { prompt: 'What franchise liability must an apprentice neutralize?', choices: ['$100,000', '$1,000,000', '$10,000,000', '$100,000,000'], answer: '$10,000,000' },
+            { prompt: 'How much capital does one completed mentee credit?', choices: ['$50k', '$100k', '$1M', '$10M'], answer: '$1M' },
+            { prompt: 'How much does one sponsor candidate credit?', choices: ['$10k', '$50k', '$100k', '$1M'], answer: '$100k' },
+            { prompt: 'How much does one converted referral credit?', choices: ['$5k', '$25k', '$50k', '$100k'], answer: '$50k' },
+            { prompt: 'How large is the St. Bernard Smart Living campus?', choices: ['4.8 acres', '12 acres', '48 acres', '480 acres'], answer: '48 acres' },
+            { prompt: 'What is the Stripe gateway reservation?', choices: ['$10', '$50', '$100', '$1,000'], answer: '$100' },
+            { prompt: 'How many verified sweat hours fully neutralize the $10M ledger at $50/Hr?', choices: ['2,000 hrs', '5,000 hrs', '10,000 hrs', '20,000 hrs'], answer: '10,000 hrs' },
+            { prompt: 'Food Logic in Module 1 is which diagnostic pair?', choices: ['Buyer / Seller', 'Selfless Leader (SL) / Share (SIL)', 'Debt / Equity', 'Bull / Bear'], answer: 'Selfless Leader (SL) / Share (SIL)' },
+            { prompt: 'Shelter Intent in Module 1 is locked to which classification?', choices: ['Landlord', 'Nation Builder (NB)', 'Speculator', 'Tenant'], answer: 'Nation Builder (NB)' }
+        ];
 
         function platformUrl(path) {
             if ((location.hostname || '').indexOf('finacademy.') === 0) {
@@ -173,15 +187,61 @@
             </div>`;
         }
 
-        const academyViews = {
-            briefings() {
-                return `${mediaStudioHtml()}
+        function lmsFeedHtml() {
+            const cards = quizQuestions.map((q, i) => `
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="${i}">
+                    <div class="flex justify-between items-start gap-2">
+                        <h3 class="text-sm font-bold text-white">${i + 1}. ${q.prompt}</h3>
+                        <span class="text-[9px] font-mono text-slate-500 shrink-0">Q${String(i + 1).padStart(2, '0')}</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${q.choices.map((choice) => `
+                            <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer">
+                                <input type="radio" name="quiz-${i}" value="${choice}" class="accent-amber-400">
+                                <span>${choice}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </article>`).join('');
+            return `<article class="bg-slate-900 border border-amber-500/40 rounded-2xl p-5 shadow-xl space-y-4">
+                    <div class="flex flex-wrap justify-between items-center gap-2">
+                        <div>
+                            <div class="text-[9px] uppercase tracking-widest text-amber-400">Financial by Design · Main Feed</div>
+                            <h2 class="text-lg font-extrabold tracking-wider text-white">HOMES IN HOURS?!</h2>
+                            <p class="text-xs text-slate-400 mt-1">Legacy LMS video feed. Modular / 3D-printed construction speed is the physical proof behind the $50/Hr sweat track.</p>
+                        </div>
+                        <span class="text-[9px] font-mono text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">VIDEO FEED</span>
+                    </div>
+                    <div class="aspect-video w-full overflow-hidden rounded-xl border border-slate-800 bg-black">
+                        <iframe id="homesInHoursFrame" class="w-full h-full" src="https://www.youtube.com/embed/${videoSources.homes.id}?rel=0" title="HOMES IN HOURS?!" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Watch the feed, then answer the module quiz. Credits still require verification on the live ledger.</p>
+                </article>
+                <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-2">
+                        <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Interactive Quiz Cards</h2>
+                        <span class="text-[10px] text-slate-400">${quizQuestions.length} questions · Financial by Design LMS</span>
+                    </div>
+                    <div id="quizDeck" class="space-y-3">${cards}</div>
+                    <button type="button" id="submitQuizBtn" onclick="calculateQuizScore()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold tracking-widest px-4 py-3 rounded-lg text-sm shadow-lg">SUBMIT &amp; CALCULATE SCORE</button>
+                    <div id="quizScore" class="hidden bg-slate-950 border border-amber-500/40 rounded-xl p-4 text-center space-y-1">
+                        <div class="text-[9px] uppercase tracking-widest text-slate-400">LMS Score</div>
+                        <div id="quizScoreValue" class="text-3xl font-mono font-extrabold text-amber-400">0 / ${quizQuestions.length}</div>
+                        <p id="quizScoreNote" class="text-xs text-slate-400"></p>
+                    </div>
+                </section>
+                ${mediaStudioHtml()}
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
                     <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Academy Brief</h2>
                     <p class="text-xs text-slate-400">Host A argues the financial upside of sequenced Action Tracks. Host B answers with the operational rigor required to earn each credit.</p>
                     <button type="button" onclick="playAcademyBrief()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-full text-xs">▶ Play Curriculum Brief</button>
                     <p id="academyBriefCaption" class="hidden text-[11px] text-slate-300 leading-relaxed"></p>
                 </div>`;
+        }
+
+        const academyViews = {
+            briefings() {
+                return lmsFeedHtml();
             },
             courses() {
                 return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -437,6 +497,32 @@ graph TD
             renderTracks();
         }
 
+        function calculateQuizScore() {
+            let correct = 0;
+            let answered = 0;
+            quizQuestions.forEach((q, i) => {
+                const picked = document.querySelector('input[name="quiz-' + i + '"]:checked');
+                if (picked) answered += 1;
+                if (picked && picked.value === q.answer) correct += 1;
+            });
+            const total = quizQuestions.length;
+            const pct = Math.round((correct / total) * 100);
+            const box = document.getElementById('quizScore');
+            const value = document.getElementById('quizScoreValue');
+            const note = document.getElementById('quizScoreNote');
+            if (box) box.classList.remove('hidden');
+            if (value) value.textContent = correct + ' / ' + total + ' · ' + pct + '%';
+            if (note) {
+                note.textContent = answered < total
+                    ? 'Answered ' + answered + ' of ' + total + '. Unanswered cards count as incorrect.'
+                    : (pct === 100
+                        ? 'Perfect. Reserve the $100 gateway and run the Dynasty sliders.'
+                        : 'Review the Action Track ledger, then resubmit.');
+            }
+            try { localStorage.setItem('finacademy-lms-score', JSON.stringify({ correct, total, pct, at: Date.now() })); } catch (err) {}
+            box?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
         function playAcademyBrief() {
             const caption = document.getElementById('academyBriefCaption');
             const text = "Host A: The extracted sidebar is the academy operating system. Briefings, Courses, The Citadel, Dynasty, Blueprint, Walkthrough, Dashboard, Course Factory, Profile, and Admin Panel all render through switchAcademyView. Host B: Only if the candidate actually switches views and verifies. A sidebar click is not a completed lab.";
@@ -552,6 +638,7 @@ graph TD
                         <div class="flex flex-wrap items-center justify-between gap-2">
                             <label class="text-[10px] font-bold uppercase tracking-widest text-amber-400" for="videoSourceSelect">Multi-video source</label>
                             <select id="videoSourceSelect" onchange="switchVideoSource(this.value)" class="min-w-[14rem] bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <option value="homes">HOMES IN HOURS?!</option>
                                 <option value="munger">Charlie Munger</option>
                                 <option value="stbernard">St. Bernard Site Feed</option>
                                 <option value="nationalguard">National Guard Campaign</option>

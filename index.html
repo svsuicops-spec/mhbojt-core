@@ -4,53 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine</title>
-    <meta name="mhbojt-build" content="restore-academy-views-20260921">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });</script>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
 
     <!-- Top Navigation Bar -->
     <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
-        <div class="px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3">
-            <div class="flex items-center gap-3 min-w-0">
-                <button type="button" onclick="toggleAcademySidebar()" class="lg:hidden bg-slate-800 border border-slate-700 text-amber-400 text-[10px] font-bold px-2 py-1 rounded">☰ Menu</button>
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
                 <span class="text-sm font-bold tracking-wider text-amber-400">DRAH GOSSSM: Crystal Dynasty</span>
-                <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap">Unified Platform</span>
+                <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">6 / 6 phases interactive</span>
             </div>
-            <div class="flex flex-wrap items-center gap-2">
-                <span id="activeViewLabel" class="hidden sm:inline text-[11px] text-slate-400">Dynasty</span>
-                <button type="button" onclick="switchAcademyView('dynasty'); document.getElementById('adminPanel')?.classList.remove('hidden');" class="bg-slate-950 border border-amber-500/30 hover:bg-slate-800 text-amber-400 font-semibold px-3 py-2 rounded-lg text-xs transition">
-                    ⚙️ Admin Media Studio
-                </button>
-                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
-                    Secure $100 Reservation
-                </a>
-            </div>
+            <button onclick="toggleModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 text-xs">
+                Secure $100 Reservation
+            </button>
         </div>
     </header>
 
-    <div class="flex flex-1 min-h-0">
-        <aside id="academySidebar" class="hidden lg:flex w-64 shrink-0 flex-col bg-slate-900 border-r border-slate-800 sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto z-40">
-            <div class="px-4 pt-5 pb-3 border-b border-slate-800">
-                <div class="text-[9px] uppercase tracking-widest text-amber-400">Platform Sidebar</div>
-                <div class="text-sm font-bold text-white">MHBOJT Nav</div>
-                <p class="text-[10px] text-slate-400 mt-1">mhbojt.com · all domains</p>
-            </div>
-            <nav id="academyNav" class="p-3 space-y-1"></nav>
-        </aside>
-
-        <div class="flex-1 flex flex-col min-w-0">
-            <div class="px-4 md:px-8 pt-5">
-                <span class="text-amber-400 text-[10px] font-semibold uppercase tracking-widest">~ Unified MHBOJT Platform</span>
-                <h1 id="viewHeading" class="text-xl md:text-2xl font-extrabold tracking-wider text-amber-400">DYNASTY</h1>
-                <p id="viewSubhead" class="text-xs text-slate-400">Crystal Dynasty calculator, NotebookLM studio, and $10M ledger.</p>
-            </div>
-            <div id="platformView" class="hidden flex-grow px-4 md:px-8 py-6 space-y-6 w-full max-w-7xl mx-auto"></div>
-            <!-- Main Container: calculator stays mounted so switchAcademyView cannot wipe engine state -->
-            <main id="dynastyPane" class="flex-grow max-w-7xl mx-auto px-6 py-6 space-y-6 w-full">
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-6 space-y-6 w-full">
         
         <!-- Header Banner -->
         <div class="text-center space-y-1">
@@ -68,47 +41,9 @@
                     <h2 class="text-sm font-bold tracking-wider text-amber-400 uppercase">DRAH GOSSSM: CRYSTAL DYNASTY ENGINE</h2>
                     <span class="text-[10px] text-slate-400">1,000-YEAR UNIVERSAL PROTOCOL | MHBOJT FRANCHISE INTEGRATION</span>
                 </div>
-                <button onclick="enterFullScreen()" class="bg-slate-950 border border-slate-800 hover:bg-slate-800 text-amber-400 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center space-x-1">
+                <button onclick="alert('Fullscreen mode active')" class="bg-slate-950 border border-slate-800 hover:bg-slate-800 text-amber-400 font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center space-x-1">
                     <span>⤢ Full Screen</span>
                 </button>
-            </div>
-
-            <div id="adminPanel" class="hidden bg-slate-950 border border-amber-500/40 rounded-xl p-4 space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest">⚙️ Admin Media Studio · Control Center</h3>
-                    <button type="button" onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-lg font-bold leading-none">&times;</button>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
-                        <label class="block text-[10px] font-bold text-amber-400 uppercase tracking-widest" for="notebookMedium">NotebookLM Medium Selector</label>
-                        <p class="text-[11px] text-slate-400">Switch the central NotebookLM display between Audio Overview, Video Overview, Slide Deck, Mind Map, and Reports.</p>
-                        <select id="notebookMedium" onchange="renderSelectedNotebookMedium()" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
-                            <option value="audio">Audio Overview</option>
-                            <option value="video">Video Overview</option>
-                            <option value="slides">Slide Deck</option>
-                            <option value="mindmap">Mind Map</option>
-                            <option value="reports">Reports</option>
-                        </select>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
-                        <label class="block text-[10px] font-bold text-amber-400 uppercase tracking-widest" for="ytUrlInput">Optional YouTube ingest</label>
-                        <input type="text" id="ytUrlInput" placeholder="Paste YouTube URL" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
-                        <button type="button" onclick="loadStudioYouTube()" class="w-full bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold py-2 rounded text-xs transition">Extract & Embed into Video Overview</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-4 space-y-3">
-                <div class="flex flex-wrap justify-between items-center gap-2">
-                    <div id="mediaCaption" class="text-xs font-bold text-white">🎙️ NotebookLM Dual-Host Overview</div>
-                    <span id="mediaMediumBadge" class="text-[9px] font-mono text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">Audio Overview</span>
-                </div>
-                <div id="mediaContainer" class="w-full min-h-[7rem]">
-                    <audio id="dualHostAudio" src="drah-dual-host-overview.mp3" controls preload="metadata" class="w-full accent-amber-400" onplay="stopDualHostDiscussion()">
-                        <source src="drah-dual-host-overview.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                </div>
             </div>
 
             <!-- Liability Header Box -->
@@ -130,14 +65,14 @@
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[10px] uppercase text-slate-400 mb-1">Food Logic</label>
-                                <select id="foodLogic" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <select class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
                                     <option>Selfless Leader (SL)</option>
                                     <option>Share (SIL)</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-[10px] uppercase text-slate-400 mb-1">Shelter Intent</label>
-                                <select id="shelterIntent" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <select class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
                                     <option>Nation Builder (NB)</option>
                                 </select>
                             </div>
@@ -147,46 +82,35 @@
                     <!-- Module 2: MHBOJT Action Tracks -->
                     <div id="module2" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-4 shadow-md">
                         <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">2. MHBOJT ACTION TRACKS</h3>
-                        <div class="space-y-4">
-                            <div class="space-y-2">
+                        <div class="space-y-3">
+                            <div>
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
                                     <span>Upfront Sweat Equity ($50/Hr Eqv)</span>
                                     <span id="valSweatHrs" class="text-amber-400 font-mono">0 Hrs</span>
                                 </div>
                                 <input type="range" id="inputSweat" min="0" max="10000" step="100" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
-                                <button type="button" data-track="sweat" onclick="playDualHostDiscussion('sweat')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Dual-Host Discussion</button>
                             </div>
-                            <div class="space-y-2">
+                            <div>
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
                                     <span>Mentor ($1M/Candidate)</span>
                                     <span id="valMentor" class="text-amber-400 font-mono">0</span>
                                 </div>
                                 <input type="range" id="inputMentor" min="0" max="10" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
-                                <button type="button" data-track="mentor" onclick="playDualHostDiscussion('mentor')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Dual-Host Discussion</button>
                             </div>
-                            <div class="space-y-2">
+                            <div>
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
                                     <span>Sponsor ($100k/Candidate)</span>
                                     <span id="valSponsor" class="text-amber-400 font-mono">0</span>
                                 </div>
                                 <input type="range" id="inputSponsor" min="0" max="100" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
-                                <button type="button" data-track="sponsor" onclick="playDualHostDiscussion('sponsor')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Dual-Host Discussion</button>
                             </div>
-                            <div class="space-y-2">
+                            <div>
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
                                     <span>Referral ($50k/Candidate)</span>
                                     <span id="valReferral" class="text-amber-400 font-mono">0</span>
                                 </div>
                                 <input type="range" id="inputReferral" min="0" max="200" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
-                                <button type="button" data-track="referral" onclick="playDualHostDiscussion('referral')" class="w-full bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-amber-400 font-semibold py-1.5 rounded text-[10px] transition">▶ Dual-Host Discussion</button>
                             </div>
-                        </div>
-                        <div id="dualHostStage" class="hidden rounded-lg border border-amber-500/30 bg-slate-900 p-2.5 space-y-1.5">
-                            <div class="flex justify-between items-center gap-2">
-                                <span id="dualHostBadge" class="text-[9px] font-bold uppercase tracking-widest text-amber-400">Host A</span>
-                                <button type="button" onclick="stopDualHostDiscussion()" class="text-[9px] text-slate-400 hover:text-amber-400 font-semibold">Stop</button>
-                            </div>
-                            <p id="dualHostCaption" class="text-[10px] text-slate-300 leading-relaxed"></p>
                         </div>
                     </div>
 
@@ -410,11 +334,6 @@
 
         </div>
     </main>
-            <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400 mt-auto">
-                <p>&copy; 2026 DRAH GOSSSM & SVSUIC. Unified platform · Crystal Dynasty Engine.</p>
-            </footer>
-        </div>
-    </div>
 
     <!-- $100 Reservation Modal -->
     <div id="reservationModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
@@ -449,343 +368,14 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400 mt-auto">
+        <p>&copy; 2026 DRAH GOSSSM & SVSUIC. All rights reserved. Self-hosted local environment.</p>
+    </footer>
+
     <!-- Interactive Script & Phase Execution Engine -->
     <script>
-        const stripePaymentLink = "https://buy.stripe.com/8x228rcRfa087yu9P4cIE02";
-        let currentView = 'dynasty';
-
-        const academyNav = [
-            { id: 'briefings', label: 'Briefings', sub: 'NotebookLM dual-host studio' },
-            { id: 'courses', label: 'Courses', sub: 'FinAcademy curriculum labs' },
-            { id: 'citadel', label: 'The Citadel', sub: 'St. Bernard + Jackson Barracks' },
-            { id: 'dynasty', label: 'Dynasty', sub: 'Crystal Dynasty calculator' },
-            { id: 'blueprint', label: 'Blueprint', sub: '5W1H + architecture flow' },
-            { id: 'walkthrough', label: 'Walkthrough', sub: 'Select · Lab · Verify · Reserve' },
-            { id: 'dashboard', label: 'Dashboard', sub: 'Live liability KPIs' },
-            { id: 'factory', label: 'Course Factory', sub: 'Compose the next feed module' },
-            { id: 'profile', label: 'Profile', sub: 'SL / NB diagnostic pair' },
-            { id: 'admin', label: 'Admin Panel', sub: 'Media studio controls' }
-        ];
-
-        function navButtonClass(id) {
-            return currentView === id
-                ? 'w-full text-left px-3 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs transition'
-                : 'w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-amber-400 text-xs transition';
-        }
-
-        function renderAcademyNav() {
-            const nav = document.getElementById('academyNav');
-            if (!nav) return;
-            nav.innerHTML = academyNav.map((item) =>
-                `<button type="button" data-view="${item.id}" onclick="switchAcademyView('${item.id}')" class="${navButtonClass(item.id)}">
-                    <div>${item.label}</div>
-                    <div class="${currentView === item.id ? 'text-slate-800' : 'text-slate-500'} text-[10px] font-normal">${item.sub}</div>
-                </button>`
-            ).join('');
-        }
-
-        function toggleAcademySidebar() {
-            const side = document.getElementById('academySidebar');
-            side.classList.toggle('hidden');
-            side.classList.toggle('flex');
-            side.classList.toggle('fixed');
-            side.classList.toggle('inset-y-0');
-            side.classList.toggle('left-0');
-        }
-
-        const PROGRESS_KEY = 'finacademy-lab-progress';
-        let activeLabId = null;
-        const capitalModules = [
-            { id: 'cap-01', code: 'CAP-01', title: 'Diagnostic Profile', credit: 'Orientation', objective: 'Locate Food Logic (SL / Share) and Shelter Intent (NB) before any capital is credited.', lab: 'Open Profile or Dynasty Module 1. Record your diagnostic pair.', verify: 'Diagnostic pair is selected on Profile and Module 1.' },
-            { id: 'cap-02', code: 'CAP-02', title: 'Sweat Equity Lab — $50 / Hr', credit: '$50 / Hr', objective: 'Convert verified MHBOJT labor into capital. 10,000 hours can neutralize $10M.', lab: 'Move the Dynasty sweat slider only after a mentor signs the timesheet.', verify: 'Sweat hours on the ledger match the signed timesheet.' },
-            { id: 'cap-03', code: 'CAP-03', title: 'Mentor Pipeline — $1M / Candidate', credit: '$1M / mentee', objective: 'Walk a descendant or peer through Action Track #2. Ten completed mentees neutralize.', lab: 'Assign one mentee and file the completion note.', verify: 'Mentee has a completed Action Track #2 artifact.' },
-            { id: 'cap-04', code: 'CAP-04', title: 'Sponsor Underwriting — $100k', credit: '$100k / candidate', objective: 'Scale the pipeline without grinding every hour yourself.', lab: 'Underwrite one candidate’s $100 reservation.', verify: 'Sponsored candidate is reserved and has an assigned mentor.' },
-            { id: 'cap-05', code: 'CAP-05', title: 'Referral Compounding — $50k', credit: '$50k / conversion', objective: 'Qualified introductions expand the mentee and sponsor funnel.', lab: 'Submit one converted referral with Stripe receipt.', verify: 'Referral converted and appears on the ledger.' },
-            { id: 'cap-06', code: 'CAP-06', title: 'Physics of Wealth — 1,000 Years', credit: 'Compounding', objective: 'Seed, monthly contribution, and the neutralization chart.', lab: 'Set seed, monthly, horizon, and fee mode on Dynasty.', verify: 'Chart and yearly table match the inputs you recorded.' }
-        ];
-        const replitModules = [
-            { id: 'rep-01', code: 'REP-01', title: 'Replit Workspace & First Repl', credit: 'Builder lab', objective: 'Stand up the original FinAcademy workspace.', lab: 'Create a static HTML repl with the Component #003 shell.', verify: 'Preview shows the FinAcademy header and Stripe button.' },
-            { id: 'rep-02', code: 'REP-02', title: 'Static Feed Component', credit: 'Builder lab', objective: 'Build a 5W1H feed page that matches #001 / #002.', lab: 'Author six 5W1H cards and a mermaid flow.', verify: 'HTML is valid and mermaid click targets resolve.' },
-            { id: 'rep-03', code: 'REP-03', title: 'NotebookLM Media Studio', credit: 'Builder lab', objective: 'Wire the Medium Selector to renderSelectedNotebookMedium().', lab: 'Use Briefings to swap Audio / Video / Slides / Mind Map / Reports.', verify: 'Each of the five media options paints a distinct studio frame.' },
-            { id: 'rep-04', code: 'REP-04', title: 'Stripe $100 Gateway', credit: 'Builder lab', objective: 'Bind the live reservation link used across MHBOJT.', lab: 'Test the header Stripe CTA.', verify: 'Stripe checkout opens from header and lab CTAs.' },
-            { id: 'rep-05', code: 'REP-05', title: 'GitHub + Vercel Ship', credit: 'Builder lab', objective: 'Ship mhbojt-core to production.', lab: 'Commit, PR, squash-merge, hard-refresh.', verify: 'Production HTML contains restore-academy-views-20260921.' },
-            { id: 'rep-06', code: 'REP-06', title: 'Capstone: Publish Component #003', credit: 'Builder lab', objective: 'Confirm FinAcademy and homepage share the sidebar.', lab: 'Open /feed/finacademy/ and mhbojt.com side by side.', verify: 'switchAcademyView works on both hosts.' }
-        ];
-        const allModules = capitalModules.concat(replitModules);
-        function loadProgress() {
-            try { return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '[]'); }
-            catch (err) { return []; }
-        }
-        function saveProgress(ids) { localStorage.setItem(PROGRESS_KEY, JSON.stringify(ids)); }
-        function isComplete(id) { return loadProgress().indexOf(id) !== -1; }
-
-        function platformViewHtml(view) {
-            if (view === 'courses') {
-                return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    <div class="lg:col-span-7 space-y-6">
-                        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-2">
-                                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Sovereign Capital Track</h2>
-                                <span class="text-[10px] text-slate-400">Original Crystal Dynasty lessons</span>
-                            </div>
-                            <div id="capitalTrack" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-                        </section>
-                        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-2">
-                                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Replit Builder Track</h2>
-                                <span class="text-[10px] text-slate-400">Restored from the academy labs</span>
-                            </div>
-                            <div id="replitTrack" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-                        </section>
-                    </div>
-                    <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                            <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Active Lab</h2>
-                            <span id="labProgress" class="text-[10px] font-mono text-amber-400">0 / 12 complete</span>
-                        </div>
-                        <div id="labStage" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
-                            <p class="text-xs text-slate-400">Select a training module.</p>
-                        </div>
-                        <button type="button" id="completeLabBtn" onclick="completeActiveLab()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-full text-xs">Mark Lab Complete</button>
-                        <a href="/feed/finacademy/" class="block text-[11px] text-amber-400 hover:text-amber-300">Open FinAcademy host ↗</a>
-                    </div>
-                </div>`;
-            }
-            if (view === 'citadel') {
-                return `<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Campus Footprint</div><div class="text-lg font-mono font-extrabold text-amber-400">48 Acres</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Priority Reservations</div><div class="text-lg font-mono font-extrabold text-sky-400">First 200</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Gateway Deposit</div><div class="text-lg font-mono font-extrabold text-emerald-400">$100</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Sweat Equity Rate</div><div class="text-lg font-mono font-extrabold text-amber-400">$50 / Hr</div></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="space-y-3">
-                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Component #001 · St. Bernard Citadel</h3>
-                        <div class="aspect-video overflow-hidden rounded-xl border border-slate-800 bg-black">
-                            <iframe class="w-full h-full" src="/feed/st-bernard/" title="St. Bernard Smart Living Campus"></iframe>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Component #002 · Jackson Barracks</h3>
-                        <div class="aspect-video overflow-hidden rounded-xl border border-slate-800 bg-black">
-                            <iframe class="w-full h-full" src="/feed/national-guard/" title="National Guard Campaign"></iframe>
-                        </div>
-                    </div>
-                </div>`;
-            }
-            if (view === 'blueprint') {
-                return `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    ${[['WHAT','Asset Recovery & Modular Build','48-acre Smart Living citadel plus the Crystal Dynasty ledger.'],
-                       ['WHEN','Immediate Execution Phase','Run numbers, complete labs, lock the $100 reservation.'],
-                       ['WHERE','mhbojt.com · finacademy.mhbojt.institute','Homepage engine and academy labs share this sidebar.'],
-                       ['WHY','Systemic Rationality','Hours and mentees must hit a physical campus and a live calculator.'],
-                       ['WHO','Nation Builders & Candidates','Guardsmen, Tri-Parish families, SL / NB candidates.'],
-                       ['HOW','Sweat Equity & Stripe Funnel','$50/Hr credits compound after the $100 gateway.']].map((card) =>
-                        `<div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2"><span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${card[0]}</span><h3 class="text-sm font-bold text-white">${card[1]}</h3><p class="text-xs text-slate-400">${card[2]}</p></div>`
-                    ).join('')}
-                </div>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-                    <div class="mermaid">
-graph TD
-    A[Candidate Arrives] --> B[Sidebar switchAcademyView]
-    B --> C[Briefings NotebookLM]
-    B --> D[Dynasty Calculator]
-    B --> E[Courses 12 Labs]
-    B --> F[The Citadel]
-    D --> G[$10M Ledger]
-    E --> G
-    G --> H[$100 Stripe Reservation]
-    click D "#dynasty" "Stay on Dynasty"
-    click E "#courses" "Open Courses"
-    click F "/feed/st-bernard/" "Open St. Bernard"
-                    </div>
-                </div>`;
-            }
-            if (view === 'walkthrough') {
-                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 text-xs text-slate-300">
-                    <ol class="space-y-2 list-decimal list-inside">
-                        <li>Open <button type="button" onclick="switchAcademyView('profile')" class="text-amber-400 underline">Profile</button> and lock Food Logic / Shelter Intent.</li>
-                        <li>Play dual-host Action Track discussions on <button type="button" onclick="switchAcademyView('briefings')" class="text-amber-400 underline">Briefings</button> and switch the NotebookLM Medium Selector.</li>
-                        <li>Move Dynasty sliders, then complete a lab in <button type="button" onclick="switchAcademyView('courses')" class="text-amber-400 underline">Courses</button>.</li>
-                        <li>Inspect campus via <button type="button" onclick="switchAcademyView('citadel')" class="text-amber-400 underline">The Citadel</button>.</li>
-                        <li>Reserve with the Stripe $100 button in the header.</li>
-                    </ol>
-                    <button type="button" onclick="playDualHostDiscussion('sweat')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-full text-xs">▶ Play Sweat Brief</button>
-                </div>`;
-            }
-            if (view === 'dashboard') {
-                const liability = document.getElementById('liabilityDisplay')?.textContent || '$10,000,000';
-                const topVal = document.getElementById('topValDisplay')?.textContent || '$0';
-                const sweat = document.getElementById('valSweatHrs')?.textContent || '0 Hrs';
-                const mentor = document.getElementById('valMentor')?.textContent || '0';
-                const done = loadProgress().length;
-                return `<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Liability</div><div class="text-lg font-mono font-extrabold text-rose-400">${liability}</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">1,000-Yr Value</div><div class="text-lg font-mono font-extrabold text-amber-400">${topVal}</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Sweat</div><div class="text-lg font-mono font-extrabold text-sky-400">${sweat}</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Labs</div><div class="text-lg font-mono font-extrabold text-amber-400">${done} / 12</div></div>
-                </div>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">${typeof notebookReportHtml === 'function' ? notebookReportHtml() : `<div class="text-xs text-slate-400">Mentors: ${mentor}</div>`}</div>
-                <button type="button" onclick="switchAcademyView('dynasty')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Adjust Calculator</button>`;
-            }
-            if (view === 'factory') {
-                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Course Factory</h2>
-                    <p class="text-xs text-slate-400">Compose the next feed module the same way the Replit labs were authored: title, track, verification.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <input id="factoryTitle" placeholder="Module title" class="bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
-                        <select id="factoryTrack" class="bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
-                            <option value="capital">Sovereign Capital</option>
-                            <option value="replit">Replit Builder</option>
-                            <option value="citadel">Citadel Field</option>
-                        </select>
-                    </div>
-                    <textarea id="factoryVerify" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">Credits only after the production artifact is visible.</textarea>
-                    <button type="button" onclick="previewFactoryModule()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Preview Module Card</button>
-                    <div id="factoryPreview" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-400">Factory output appears here.</div>
-                </div>`;
-            }
-            if (view === 'profile') {
-                const food = document.getElementById('foodLogic')?.value || 'Selfless Leader (SL)';
-                const shelter = document.getElementById('shelterIntent')?.value || 'Nation Builder (NB)';
-                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 max-w-xl">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Candidate Profile</h2>
-                    <p class="text-xs text-slate-400">Original Dynasty Module 1 diagnostic pair. Saving writes through to the calculator.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-[10px] uppercase text-slate-400 mb-1">Food Logic</label>
-                            <select id="profileFood" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
-                                <option>Selfless Leader (SL)</option>
-                                <option>Share (SIL)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-[10px] uppercase text-slate-400 mb-1">Shelter Intent</label>
-                            <select id="profileShelter" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
-                                <option>Nation Builder (NB)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button type="button" onclick="saveProfile()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Save Diagnostic Pair</button>
-                    <p id="profileStatus" class="text-[11px] text-slate-400">Current: ${food} · ${shelter}</p>
-                </div>`;
-            }
-            return '';
-        }
-
-        function renderTrack(elId, modules) {
-            const root = document.getElementById(elId);
-            if (!root) return;
-            root.innerHTML = modules.map((mod) => {
-                const done = isComplete(mod.id);
-                const active = activeLabId === mod.id;
-                return `<button type="button" data-lab="${mod.id}" onclick="openLab('${mod.id}')" class="text-left bg-slate-950 border ${active ? 'border-amber-400' : 'border-slate-800'} hover:border-amber-500/50 rounded-xl p-4 space-y-1 transition">
-                    <div class="flex justify-between items-center gap-2">
-                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${mod.code}</span>
-                        <span class="text-[9px] font-mono ${done ? 'text-emerald-400' : 'text-slate-500'}">${done ? 'COMPLETE' : mod.credit}</span>
-                    </div>
-                    <h3 class="text-sm font-bold text-white">${mod.title}</h3>
-                </button>`;
-            }).join('');
-        }
-        function renderTracks() {
-            renderTrack('capitalTrack', capitalModules);
-            renderTrack('replitTrack', replitModules);
-            const progress = document.getElementById('labProgress');
-            if (progress) progress.textContent = loadProgress().length + ' / 12 complete';
-        }
-        function openLab(id) {
-            const mod = allModules.find((item) => item.id === id);
-            if (!mod) return;
-            activeLabId = id;
-            const stage = document.getElementById('labStage');
-            if (!stage) {
-                if (currentView !== 'courses') switchAcademyView('courses');
-                return;
-            }
-            stage.innerHTML = `<span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${mod.code}</span>
-                <h3 class="text-sm font-bold text-white">${mod.title}</h3>
-                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Objective.</span> ${mod.objective}</p>
-                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Lab.</span> ${mod.lab}</p>
-                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Verify.</span> ${mod.verify}</p>`;
-            renderTracks();
-        }
-        function completeActiveLab() {
-            if (!activeLabId) { openLab('rep-01'); return; }
-            const ids = loadProgress();
-            if (ids.indexOf(activeLabId) === -1) ids.push(activeLabId);
-            saveProgress(ids);
-            renderTracks();
-        }
-        function saveProfile() {
-            const food = document.getElementById('profileFood')?.value;
-            const shelter = document.getElementById('profileShelter')?.value;
-            const foodLogic = document.getElementById('foodLogic');
-            const shelterIntent = document.getElementById('shelterIntent');
-            if (food && foodLogic) foodLogic.value = food;
-            if (shelter && shelterIntent) shelterIntent.value = shelter;
-            const status = document.getElementById('profileStatus');
-            if (status) status.textContent = 'Saved: ' + (food || foodLogic?.value) + ' · ' + (shelter || shelterIntent?.value);
-        }
-
-        function switchAcademyView(view) {
-            const item = academyNav.find((nav) => nav.id === view) || academyNav.find((nav) => nav.id === 'dynasty');
-            currentView = item.id;
-            document.getElementById('viewHeading').textContent = item.label.toUpperCase();
-            document.getElementById('viewSubhead').textContent = item.sub;
-            const label = document.getElementById('activeViewLabel');
-            if (label) label.textContent = item.label;
-            const dynastyPane = document.getElementById('dynastyPane');
-            const platformView = document.getElementById('platformView');
-            const showEngine = item.id === 'dynasty' || item.id === 'briefings' || item.id === 'admin';
-            if (dynastyPane) dynastyPane.classList.toggle('hidden', !showEngine);
-            if (platformView) {
-                platformView.classList.toggle('hidden', showEngine);
-                if (!showEngine) platformView.innerHTML = platformViewHtml(item.id);
-            }
-            renderAcademyNav();
-            history.replaceState(null, '', '#' + item.id);
-            if (window.matchMedia('(max-width: 1023px)').matches) {
-                const side = document.getElementById('academySidebar');
-                side.classList.add('hidden');
-                side.classList.remove('flex', 'fixed', 'inset-y-0', 'left-0');
-            }
-            if (item.id === 'blueprint' && window.mermaid) {
-                const node = document.querySelector('#platformView .mermaid');
-                if (node) mermaid.run({ nodes: [node] });
-            }
-            if (item.id === 'courses') {
-                renderTracks();
-                openLab(activeLabId || 'rep-01');
-            }
-            if (item.id === 'profile') {
-                const food = document.getElementById('profileFood');
-                const shelter = document.getElementById('profileShelter');
-                if (food && document.getElementById('foodLogic')) food.value = document.getElementById('foodLogic').value;
-                if (shelter && document.getElementById('shelterIntent')) shelter.value = document.getElementById('shelterIntent').value;
-            }
-            if (item.id === 'admin') {
-                document.getElementById('adminPanel')?.classList.remove('hidden');
-                document.getElementById('adminPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                document.getElementById('adminPanel')?.classList.add('hidden');
-            }
-            if (item.id === 'briefings') {
-                document.getElementById('mediaContainer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            if (showEngine && typeof calculateEngine === 'function') {
-                try { calculateEngine(); } catch (err) {}
-            }
-        }
-
-        function previewFactoryModule() {
-            const title = document.getElementById('factoryTitle')?.value.trim() || 'Untitled module';
-            const verify = document.getElementById('factoryVerify')?.value.trim() || 'Verify on production.';
-            const track = document.getElementById('factoryTrack');
-            const trackLabel = track?.options[track.selectedIndex]?.text || 'Track';
-            const preview = document.getElementById('factoryPreview');
-            if (preview) preview.innerHTML = `<span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${trackLabel}</span><h3 class="text-sm font-bold text-white mt-1">${title}</h3><p class="text-xs text-slate-400 mt-1">${verify}</p>`;
-        }
+        const stripePaymentLink = "https://buy.stripe.com/cNifZh3gFc8g8Cy4uKcIE01";
 
         let state = {
             taxOn: false,
@@ -816,363 +406,6 @@ graph TD
             }
         };
 
-        const dualHostDiscussions = {
-            sweat: [
-                { host: 'A', text: "Let's weigh sweat equity. Every verified hour credits fifty dollars toward the ten million dollar apprentice liability. Ten thousand hours can fully neutralize the ledger, and unlike a paycheck those hours compound inside the one thousand year Dynasty protocol." },
-                { host: 'B', text: "Hold on. Ten thousand hours is years of operational grind, not a slider trick. The ledger only credits verified MHBOJT labor. Miss a verification window and that fifty dollars never lands." },
-                { host: 'A', text: "The upside is still unmatched for someone who can show up: you convert training time into sovereign capital without writing a check." },
-                { host: 'B', text: "Only if you stay in the pipeline. The pro is real wealth conversion. The con is relentless commitment. Sweat equity is a crucible, not a shortcut." }
-            ],
-            mentor: [
-                { host: 'A', text: "The mentor track is the biggest financial upside on the board. One Selfless Leader or Nation Builder candidate credits one million dollars. Ten mentees fully neutralize the ten million dollar liability." },
-                { host: 'B', text: "That million is not a signature bonus. You have to walk them through Action Track number 2. If they stall, you do not get the credit. Mentorship is operational rigor with a person's future on the line." },
-                { host: 'A', text: "Compared with fifty dollars an hour of sweat, one completed mentee is the equivalent of twenty thousand verified hours. That is why families treat mentoring as the Dynasty accelerator." },
-                { host: 'B', text: "Agreed on the math, and that is exactly why the con matters. You are betting your ledger on someone else's follow-through. The upside is one million. The cost is uncompromising commitment to get them across the finish line." }
-            ],
-            sponsor: [
-                { host: 'A', text: "Sponsorship credits one hundred thousand dollars per candidate you underwrite. You can scale the pipeline without grinding your own sweat hours, and one hundred sponsored candidates neutralize the full ten million." },
-                { host: 'B', text: "You are not buying a sticker. Sponsorship means you own underwriting risk. If the candidate drops, the operational burden and the reputation hit stay with you." },
-                { host: 'A', text: "The pro is speed. Capital plus a qualified candidate can move the liability faster than a decade of hourly labor." },
-                { host: 'B', text: "Speed on paper. You still have to source, underwrite, and keep those candidates inside the MHBOJT track. The upside is leverage. The con is that you are on the hook until they execute." }
-            ],
-            referral: [
-                { host: 'A', text: "Referrals credit fifty thousand dollars per qualified introduction and compound the Dynasty Exchange Rate by expanding the mentee and sponsor funnel. Two hundred referrals fully neutralize the liability." },
-                { host: 'B', text: "Qualified is the word. A casual name-drop does not credit. The introduction has to convert into the pipeline, or the ledger stays at zero." },
-                { host: 'A', text: "The upside is network leverage. You turn relationships into Dynasty capital instead of trading more of your own hours." },
-                { host: 'B', text: "Network leverage still spends reputation. Bad referrals burn standing and stall the funnel. The pro is fifty thousand per conversion. The con is disciplined, high-integrity introductions, every time." }
-            ]
-        };
-
-        let dualHostToken = 0;
-
-        function pickHostVoices() {
-            const voices = ('speechSynthesis' in window) ? window.speechSynthesis.getVoices() : [];
-            const english = voices.filter((voice) => /^en(-|_)/i.test(voice.lang));
-            const pool = english.length ? english : voices;
-            const hostA = pool.find((voice) => /male|david|daniel|alex|fred|george|google uk english male/i.test(voice.name)) || pool[0] || null;
-            const hostB = pool.find((voice) => voice !== hostA && /female|samantha|victoria|karen|zira|moira|google us english female/i.test(voice.name)) || pool.find((voice) => voice !== hostA) || pool[0] || null;
-            return { hostA, hostB };
-        }
-
-        function resetDualHostButtons() {
-            document.querySelectorAll('#module2 button[data-track]').forEach((btn) => {
-                btn.textContent = '▶ Dual-Host Discussion';
-            });
-        }
-
-        function stopDualHostDiscussion() {
-            dualHostToken += 1;
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-            const stage = document.getElementById('dualHostStage');
-            const badge = document.getElementById('dualHostBadge');
-            const caption = document.getElementById('dualHostCaption');
-            if (stage) stage.classList.add('hidden');
-            if (badge) {
-                badge.textContent = 'Host A';
-                badge.className = 'text-[9px] font-bold uppercase tracking-widest text-amber-400';
-            }
-            if (caption) caption.textContent = '';
-            resetDualHostButtons();
-        }
-
-        function finishDualHostDiscussion() {
-            dualHostToken += 1;
-            resetDualHostButtons();
-        }
-
-        function showDualHostLine(line) {
-            const stage = document.getElementById('dualHostStage');
-            const badge = document.getElementById('dualHostBadge');
-            const caption = document.getElementById('dualHostCaption');
-            if (stage) stage.classList.remove('hidden');
-            if (caption) caption.textContent = line.text;
-            if (badge) {
-                const isA = line.host === 'A';
-                badge.textContent = isA ? 'Host A · Upside' : 'Host B · Rigor';
-                badge.className = isA
-                    ? 'text-[9px] font-bold uppercase tracking-widest text-amber-400'
-                    : 'text-[9px] font-bold uppercase tracking-widest text-sky-400';
-            }
-        }
-
-        function playDualHostDiscussion(track) {
-            const lines = dualHostDiscussions[track];
-            if (!lines || !('speechSynthesis' in window)) return;
-
-            const audio = document.getElementById('dualHostAudio');
-            if (audio && !audio.paused) audio.pause();
-
-            stopDualHostDiscussion();
-            const token = ++dualHostToken;
-            let started = false;
-
-            document.querySelectorAll('#module2 button[data-track]').forEach((btn) => {
-                btn.textContent = btn.getAttribute('data-track') === track ? '⏸ Dual-Host Playing' : '▶ Dual-Host Discussion';
-            });
-            showDualHostLine(lines[0]);
-
-            const speakQueue = () => {
-                if (token !== dualHostToken || started) return;
-                started = true;
-                const { hostA, hostB } = pickHostVoices();
-                const speakAt = (index) => {
-                    if (token !== dualHostToken || index >= lines.length) {
-                        if (token === dualHostToken) finishDualHostDiscussion();
-                        return;
-                    }
-                    const line = lines[index];
-                    showDualHostLine(line);
-                    const utter = new SpeechSynthesisUtterance(line.text);
-                    const voice = line.host === 'A' ? hostA : hostB;
-                    utter.rate = line.host === 'A' ? 0.96 : 1.02;
-                    utter.pitch = line.host === 'A' ? 0.85 : 1.18;
-                    utter.lang = (voice && voice.lang) || 'en-US';
-                    if (voice) utter.voice = voice;
-                    utter.onstart = () => {
-                        if (token !== dualHostToken) return;
-                        showDualHostLine(line);
-                    };
-                    utter.onend = () => speakAt(index + 1);
-                    utter.onerror = () => speakAt(index + 1);
-                    window.speechSynthesis.speak(utter);
-                };
-                speakAt(0);
-            };
-
-            if (window.speechSynthesis.getVoices().length) {
-                speakQueue();
-            } else {
-                window.speechSynthesis.addEventListener('voiceschanged', speakQueue, { once: true });
-                setTimeout(speakQueue, 400);
-            }
-        }
-
-        function enterFullScreen() {
-            const node = document.documentElement;
-            if (node.requestFullscreen) node.requestFullscreen();
-            else if (node.webkitRequestFullscreen) node.webkitRequestFullscreen();
-        }
-
-        function toggleAdminPanel() {
-            document.getElementById('adminPanel').classList.toggle('hidden');
-        }
-
-        let notebookSlideIndex = 0;
-        const notebookSlides = [
-            { title: 'Crystal Dynasty Protocol', body: 'A 1,000-year compounding engine that converts verified MHBOJT action into sovereign capital and neutralizing the $10M apprentice liability.' },
-            { title: 'Action Track Ledger', body: 'Sweat equity at $50/Hr, Mentor at $1M per candidate, Sponsor at $100k, and Referral at $50k. Each track is a different path to the same neutralization.' },
-            { title: 'Operational Rigor', body: 'Credits only land after verification. Mentors walk candidates through Action Track #2. Sponsors underwrite follow-through. Referrals must convert.' },
-            { title: 'NotebookLM Brief', body: 'Use Audio Overview for the dual-host walkthrough, Video Overview for the cinematic thesis, Mind Map for architecture, and Reports for live ledger numbers.' }
-        ];
-
-        function pauseOverviewAudio() {
-            const audio = document.getElementById('dualHostAudio');
-            if (audio && !audio.paused) audio.pause();
-        }
-
-        function notebookReportHtml() {
-            const liability = document.getElementById('liabilityDisplay')?.textContent || '$10,000,000';
-            const sweat = document.getElementById('valSweatHrs')?.textContent || '0 Hrs';
-            const mentor = document.getElementById('valMentor')?.textContent || '0';
-            const sponsor = document.getElementById('valSponsor')?.textContent || '0';
-            const referral = document.getElementById('valReferral')?.textContent || '0';
-            const topVal = document.getElementById('topValDisplay')?.textContent || '$0';
-            return `
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-3">
-                        <div class="text-[9px] uppercase tracking-widest text-slate-400">Franchise Liability</div>
-                        <div class="text-lg font-mono font-extrabold text-rose-400">${liability}</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-3">
-                        <div class="text-[9px] uppercase tracking-widest text-slate-400">1,000-Yr Base Valuation</div>
-                        <div class="text-lg font-mono font-extrabold text-amber-400">${topVal}</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 space-y-1">
-                        <div>Sweat Equity: <span class="text-amber-400 font-mono">${sweat}</span></div>
-                        <div>Mentor candidates: <span class="text-amber-400 font-mono">${mentor}</span></div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 space-y-1">
-                        <div>Sponsor candidates: <span class="text-amber-400 font-mono">${sponsor}</span></div>
-                        <div>Referral conversions: <span class="text-amber-400 font-mono">${referral}</span></div>
-                    </div>
-                </div>`;
-        }
-
-        function renderNotebookSlide() {
-            const stage = document.getElementById('notebookSlideStage');
-            const counter = document.getElementById('notebookSlideCounter');
-            if (!stage) return;
-            const slide = notebookSlides[notebookSlideIndex];
-            stage.innerHTML = `<div class="text-[9px] uppercase tracking-widest text-amber-400 mb-1">Slide ${notebookSlideIndex + 1} / ${notebookSlides.length}</div>
-                <h4 class="text-sm font-bold text-white mb-2">${slide.title}</h4>
-                <p class="text-[11px] text-slate-300 leading-relaxed">${slide.body}</p>`;
-            if (counter) counter.textContent = `${notebookSlideIndex + 1} / ${notebookSlides.length}`;
-        }
-
-        function notebookSlide(delta) {
-            notebookSlideIndex = (notebookSlideIndex + delta + notebookSlides.length) % notebookSlides.length;
-            renderNotebookSlide();
-        }
-
-        function extractYouTubeId(url) {
-            const match = (url || '').match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/);
-            return match ? match[1] : null;
-        }
-
-        function loadStudioYouTube() {
-            const url = document.getElementById('ytUrlInput')?.value.trim();
-            const id = extractYouTubeId(url);
-            if (!id) return;
-            const select = document.getElementById('notebookMedium');
-            if (select) select.value = 'video';
-            renderSelectedNotebookMedium(id);
-        }
-
-        const videoSources = {
-            munger: {
-                label: 'Charlie Munger',
-                type: 'youtube',
-                id: 'zr9diji94w4',
-                title: 'Charlie Munger Archive',
-                note: 'Wretched excess thesis · Daily Journal archive'
-            },
-            stbernard: {
-                label: 'St. Bernard Site Feed',
-                type: 'feed',
-                src: '/feed/st-bernard/',
-                title: 'St. Bernard Smart Living Campus · Component #001',
-                note: '48-acre campus site feed'
-            },
-            nationalguard: {
-                label: 'National Guard Campaign',
-                type: 'feed',
-                src: '/feed/national-guard/',
-                title: 'National Guard Housing Campaign · Component #002',
-                note: 'Guardsmen housing campaign feed'
-            },
-            finacademy: {
-                label: 'FinAcademy Curriculum',
-                type: 'feed',
-                src: '/feed/finacademy/',
-                title: 'FinAcademy Curriculum · Component #003',
-                note: 'NotebookLM labs and Replit builder track'
-            }
-        };
-
-        function switchVideoSource(key) {
-            const source = videoSources[key] || videoSources.munger;
-            const frame = document.getElementById('overviewVideoFrame');
-            const select = document.getElementById('videoSourceSelect');
-            const note = document.getElementById('videoSourceNote');
-            if (select && videoSources[key]) select.value = key;
-            if (note) note.textContent = source.note || source.title;
-            if (!frame) return;
-            frame.title = source.title;
-            frame.src = source.type === 'youtube'
-                ? 'https://www.youtube.com/embed/' + source.id + '?rel=0'
-                : source.src;
-        }
-
-        function applyNotebookMedium(medium, youtubeId) {
-            const select = document.getElementById('notebookMedium');
-            if (select && medium) select.value = medium;
-            renderSelectedNotebookMedium(youtubeId);
-        }
-
-        function renderSelectedNotebookMedium(youtubeId) {
-            if (typeof stopDualHostDiscussion === 'function') stopDualHostDiscussion();
-            pauseOverviewAudio();
-            const select = document.getElementById('notebookMedium');
-            const medium = (select && select.value) || 'audio';
-            const container = document.getElementById('mediaContainer');
-            const caption = document.getElementById('mediaCaption');
-            const badge = document.getElementById('mediaMediumBadge');
-            if (!container) return;
-
-            const videoId = youtubeId || videoSources.munger.id;
-            const frames = {
-                audio: {
-                    caption: '🎙️ NotebookLM Dual-Host Overview',
-                    badge: 'Audio Overview',
-                    html: `<audio id="dualHostAudio" src="drah-dual-host-overview.mp3" controls preload="metadata" class="w-full accent-amber-400" onplay="stopDualHostDiscussion()">
-                        <source src="drah-dual-host-overview.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>`
-                },
-                video: {
-                    caption: '🎬 NotebookLM Video Overview',
-                    badge: 'Video Overview',
-                    html: `<div class="space-y-3">
-                        <div class="flex flex-wrap items-center justify-between gap-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-amber-400" for="videoSourceSelect">Multi-video source</label>
-                            <select id="videoSourceSelect" onchange="switchVideoSource(this.value)" class="min-w-[14rem] bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
-                                <option value="munger">Charlie Munger</option>
-                                <option value="stbernard">St. Bernard Site Feed</option>
-                                <option value="nationalguard">National Guard Campaign</option>
-                                <option value="finacademy">FinAcademy Curriculum</option>
-                            </select>
-                        </div>
-                        <p id="videoSourceNote" class="text-[10px] text-slate-400">${videoSources.munger.note}</p>
-                        <div class="aspect-video w-full overflow-hidden rounded-lg border border-slate-800 bg-black">
-                            <iframe id="overviewVideoFrame" class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?rel=0" title="Charlie Munger Archive" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                    </div>`
-                },
-                slides: {
-                    caption: '🗂️ NotebookLM Slide Deck',
-                    badge: 'Slide Deck',
-                    html: `<div class="bg-slate-900 border border-slate-800 rounded-lg p-4 space-y-3 text-left">
-                        <div id="notebookSlideStage"></div>
-                        <div class="flex items-center justify-between gap-2">
-                            <button type="button" onclick="notebookSlide(-1)" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]">◀ Prev</button>
-                            <span id="notebookSlideCounter" class="text-[10px] font-mono text-slate-400">1 / 4</span>
-                            <button type="button" onclick="notebookSlide(1)" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]">Next ▶</button>
-                        </div>
-                    </div>`
-                },
-                mindmap: {
-                    caption: '🧠 NotebookLM Mind Map',
-                    badge: 'Mind Map',
-                    html: `<div class="bg-slate-900 border border-slate-800 rounded-lg p-3 overflow-x-auto">
-                        <div class="mermaid">
-graph TD
-    Root[Crystal Dynasty Engine]
-    Root --> Audio[Audio Overview]
-    Root --> Video[Video Overview]
-    Root --> Slides[Slide Deck]
-    Root --> Map[Mind Map]
-    Root --> Reports[Reports]
-    Root --> Tracks[Action Tracks]
-    Tracks --> Sweat[Sweat $50/Hr]
-    Tracks --> Mentor[Mentor $1M]
-    Tracks --> Sponsor[Sponsor $100k]
-    Tracks --> Referral[Referral $50k]
-    click Sweat "/#module2" "Open Action Tracks"
-    click Mentor "/#module2" "Open Action Tracks"
-                        </div>
-                    </div>`
-                },
-                reports: {
-                    caption: '📊 NotebookLM Reports',
-                    badge: 'Reports',
-                    html: notebookReportHtml()
-                }
-            };
-
-            const frame = frames[medium] || frames.audio;
-            if (caption) caption.textContent = frame.caption;
-            if (badge) badge.textContent = frame.badge;
-            container.innerHTML = frame.html;
-            if (medium === 'slides') {
-                notebookSlideIndex = 0;
-                renderNotebookSlide();
-            }
-            if (medium === 'mindmap' && window.mermaid) {
-                const node = container.querySelector('.mermaid');
-                if (node) mermaid.run({ nodes: [node] });
-            }
-        }
-
         function switchMatrix(key) {
             ['excess', 'bureaucracy', 'diversification', 'agency'].forEach(k => {
                 const btn = document.getElementById('tab' + k.charAt(0).toUpperCase() + k.slice(1));
@@ -1189,15 +422,14 @@ graph TD
         }
 
         function executePhase(phaseNum) {
-            if (currentView !== 'dynasty') switchAcademyView('dynasty');
             if (phaseNum === 1) {
                 toggleModal();
             } else if (phaseNum === 2) {
-                document.getElementById('module3')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('module3').scrollIntoView({ behavior: 'smooth' });
             } else if (phaseNum === 3) {
-                document.getElementById('module2')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('module2').scrollIntoView({ behavior: 'smooth' });
             } else if (phaseNum === 4) {
-                document.getElementById('module1')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('module1').scrollIntoView({ behavior: 'smooth' });
             } else if (phaseNum === 5) {
                 window.open('https://mhbojt.com', '_blank');
             } else if (phaseNum === 6) {
@@ -1417,23 +649,7 @@ graph TD
             toggleModal();
         }
 
-        window.addEventListener('hashchange', function () {
-            const view = (location.hash || '#dynasty').replace('#', '');
-            if (view && view !== currentView) switchAcademyView(view);
-        });
-
-        window.onload = function () {
-            renderAcademyNav();
-            const initial = (location.hash || '#dynasty').replace('#', '');
-            switchAcademyView(initial);
-            calculateEngine();
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.getVoices();
-                window.speechSynthesis.onvoiceschanged = function () {
-                    window.speechSynthesis.getVoices();
-                };
-            }
-        };
+        window.onload = calculateEngine;
     </script>
 </body>
 </html>

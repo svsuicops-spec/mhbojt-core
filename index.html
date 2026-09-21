@@ -767,6 +767,8 @@ graph TD
             if (item.id === 'admin') {
                 document.getElementById('adminPanel')?.classList.remove('hidden');
                 document.getElementById('adminPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                document.getElementById('adminPanel')?.classList.add('hidden');
             }
             if (item.id === 'briefings') {
                 document.getElementById('mediaContainer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine</title>
-    <meta name="mhbojt-build" content="restore-briefings-feed-20260921">
+    <meta name="mhbojt-build" content="quiz-sweat-200000-20260921">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -17,6 +17,7 @@
                 <span class="text-sm font-bold tracking-wider text-amber-400">DRAH GOSSSM: Crystal Dynasty</span>
                 <span class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">6 / 6 phases interactive</span>
                 <a href="#briefings" class="text-[11px] text-amber-400 hover:text-amber-300">Briefings</a>
+                <a href="#quiz" class="text-[11px] text-amber-400 hover:text-amber-300">Quiz</a>
                 <a href="#dynasty" class="text-[11px] text-amber-400 hover:text-amber-300">Dynasty</a>
                 <a href="/drah_crystal_dynasty1.html" class="text-[11px] text-amber-400 hover:text-amber-300">NotebookLM Plugin ↗</a>
             </div>
@@ -128,6 +129,119 @@
                     <a href="#dynasty" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Open Crystal Dynasty Engine ↓</a>
                     <a href="/drah_crystal_dynasty1.html" class="bg-slate-900 border border-amber-500/40 hover:border-amber-400 text-amber-400 font-bold px-4 py-2 rounded-lg text-xs">Continue in NotebookLM ↗</a>
                 </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4 scroll-mt-24">
+            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-3">
+                <div>
+                    <div class="text-[9px] uppercase tracking-widest text-amber-400">Financial by Design · Interactive Quiz</div>
+                    <h2 class="text-sm font-bold tracking-wider text-amber-400 uppercase">Doctrine Quiz Cards</h2>
+                    <p class="text-[11px] text-slate-400 mt-1">Answer the ledger before you run Crystal Dynasty. Card #8 is sweat-equity hours: $10,000,000 / $50 = 200,000 Hours.</p>
+                </div>
+                <span class="text-[10px] text-slate-400">10 questions</span>
+            </div>
+            <div id="quizDeck" class="space-y-3">
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="0">
+                    <h3 class="text-sm font-bold text-white">1. What is the MHBOJT sweat-equity conversion rate?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-0" value="$15 / Hr" class="accent-amber-400"> $15 / Hr</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-0" value="$25 / Hr" class="accent-amber-400"> $25 / Hr</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-0" value="$50 / Hr" class="accent-amber-400"> $50 / Hr</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-0" value="$100 / Hr" class="accent-amber-400"> $100 / Hr</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="1">
+                    <h3 class="text-sm font-bold text-white">2. What franchise liability must an apprentice neutralize?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-1" value="$100,000" class="accent-amber-400"> $100,000</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-1" value="$1,000,000" class="accent-amber-400"> $1,000,000</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-1" value="$10,000,000" class="accent-amber-400"> $10,000,000</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-1" value="$100,000,000" class="accent-amber-400"> $100,000,000</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="2">
+                    <h3 class="text-sm font-bold text-white">3. How much capital does one completed mentee credit?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-2" value="$50k" class="accent-amber-400"> $50k</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-2" value="$100k" class="accent-amber-400"> $100k</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-2" value="$1M" class="accent-amber-400"> $1M</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-2" value="$10M" class="accent-amber-400"> $10M</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="3">
+                    <h3 class="text-sm font-bold text-white">4. How much does one sponsor candidate credit?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-3" value="$10k" class="accent-amber-400"> $10k</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-3" value="$50k" class="accent-amber-400"> $50k</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-3" value="$100k" class="accent-amber-400"> $100k</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-3" value="$1M" class="accent-amber-400"> $1M</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="4">
+                    <h3 class="text-sm font-bold text-white">5. How much does one converted referral credit?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-4" value="$5k" class="accent-amber-400"> $5k</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-4" value="$25k" class="accent-amber-400"> $25k</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-4" value="$50k" class="accent-amber-400"> $50k</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-4" value="$100k" class="accent-amber-400"> $100k</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="5">
+                    <h3 class="text-sm font-bold text-white">6. How large is the St. Bernard Smart Living campus?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-5" value="4.8 acres" class="accent-amber-400"> 4.8 acres</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-5" value="12 acres" class="accent-amber-400"> 12 acres</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-5" value="48 acres" class="accent-amber-400"> 48 acres</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-5" value="480 acres" class="accent-amber-400"> 480 acres</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="6">
+                    <h3 class="text-sm font-bold text-white">7. What is the Stripe gateway reservation?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-6" value="$10" class="accent-amber-400"> $10</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-6" value="$50" class="accent-amber-400"> $50</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-6" value="$100" class="accent-amber-400"> $100</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-6" value="$1,000" class="accent-amber-400"> $1,000</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-amber-500/40 rounded-xl p-4 space-y-3" data-quiz="7" id="quizCard8">
+                    <div class="flex justify-between items-start gap-2">
+                        <h3 class="text-sm font-bold text-white">8. How many verified sweat hours fully neutralize the $10,000,000 apprentice liability at $50 per hour?</h3>
+                        <span class="text-[9px] font-mono text-amber-400 shrink-0">Q08</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400">$10,000,000 / $50 per hour = 200,000 Hours of sweat equity.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-7" value="2,000 Hours" class="accent-amber-400"> 2,000 Hours</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-7" value="10,000 Hours" class="accent-amber-400"> 10,000 Hours</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-7" value="20,000 Hours" class="accent-amber-400"> 20,000 Hours</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-amber-500/40 hover:border-amber-400 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-7" value="200,000 Hours" class="accent-amber-400"> 200,000 Hours</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="8">
+                    <h3 class="text-sm font-bold text-white">9. Food Logic in Module 1 is which diagnostic pair?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-8" value="Buyer / Seller" class="accent-amber-400"> Buyer / Seller</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-8" value="Selfless Leader (SL) / Share (SIL)" class="accent-amber-400"> Selfless Leader (SL) / Share (SIL)</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-8" value="Debt / Equity" class="accent-amber-400"> Debt / Equity</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-8" value="Bull / Bear" class="accent-amber-400"> Bull / Bear</label>
+                    </div>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="9">
+                    <h3 class="text-sm font-bold text-white">10. Shelter Intent in Module 1 is locked to which classification?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-9" value="Landlord" class="accent-amber-400"> Landlord</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-9" value="Nation Builder (NB)" class="accent-amber-400"> Nation Builder (NB)</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-9" value="Speculator" class="accent-amber-400"> Speculator</label>
+                        <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer"><input type="radio" name="quiz-9" value="Tenant" class="accent-amber-400"> Tenant</label>
+                    </div>
+                </article>
+            </div>
+            <button type="button" id="submitQuizBtn" onclick="calculateQuizScore()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold tracking-widest px-4 py-3 rounded-lg text-sm shadow-lg">SUBMIT &amp; CALCULATE SCORE</button>
+            <div id="quizScore" class="hidden bg-slate-950 border border-amber-500/40 rounded-xl p-4 text-center space-y-1">
+                <div class="text-[9px] uppercase tracking-widest text-slate-400">LMS Score</div>
+                <div id="quizScoreValue" class="text-3xl font-mono font-extrabold text-amber-400">0 / 10</div>
+                <p id="quizScoreNote" class="text-xs text-slate-400"></p>
             </div>
         </section>
 
@@ -475,6 +589,44 @@
     <!-- Interactive Script & Phase Execution Engine -->
     <script>
         const stripePaymentLink = "https://buy.stripe.com/8x228rcRfa087yu9P4cIE02";
+
+        const quizAnswers = [
+            '$50 / Hr',
+            '$10,000,000',
+            '$1M',
+            '$100k',
+            '$50k',
+            '48 acres',
+            '$100',
+            '200,000 Hours',
+            'Selfless Leader (SL) / Share (SIL)',
+            'Nation Builder (NB)'
+        ];
+
+        function calculateQuizScore() {
+            let correct = 0;
+            let answered = 0;
+            quizAnswers.forEach((answer, i) => {
+                const picked = document.querySelector('input[name="quiz-' + i + '"]:checked');
+                if (picked) answered += 1;
+                if (picked && picked.value === answer) correct += 1;
+            });
+            const total = quizAnswers.length;
+            const pct = Math.round((correct / total) * 100);
+            const box = document.getElementById('quizScore');
+            const value = document.getElementById('quizScoreValue');
+            const note = document.getElementById('quizScoreNote');
+            if (box) box.classList.remove('hidden');
+            if (value) value.textContent = correct + ' / ' + total + ' · ' + pct + '%';
+            if (note) {
+                note.textContent = answered < total
+                    ? 'Answered ' + answered + ' of ' + total + '. Unanswered cards count as incorrect. Card #8 is 200,000 Hours ($10,000,000 / $50).'
+                    : (pct === 100
+                        ? 'Perfect. $10,000,000 / $50 = 200,000 Hours. Reserve the $100 gateway and run the Dynasty sliders.'
+                        : 'Review the Action Track ledger. Sweat neutralization is 200,000 Hours, then resubmit.');
+            }
+            if (box) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
 
         let state = {
             taxOn: false,

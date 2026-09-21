@@ -1,24 +1,24 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
+      "src": "/",
       "has": [
         {
           "type": "host",
           "value": "finacademy.mhbojt.institute"
         }
       ],
-      "destination": "/feed/finacademy/"
+      "dest": "/feed/finacademy/index.html"
     },
     {
-      "source": "/:path*",
+      "src": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "finacademy.mhbojt.institute"
         }
       ],
-      "destination": "/feed/finacademy/:path*"
+      "dest": "/feed/finacademy/$1"
     }
   ]
 }

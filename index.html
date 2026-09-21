@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine</title>
-    <meta name="mhbojt-build" content="unified-platform-sidebar-20260921">
+    <meta name="mhbojt-build" content="restore-academy-views-20260921">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -48,7 +48,7 @@
                 <h1 id="viewHeading" class="text-xl md:text-2xl font-extrabold tracking-wider text-amber-400">DYNASTY</h1>
                 <p id="viewSubhead" class="text-xs text-slate-400">Crystal Dynasty calculator, NotebookLM studio, and $10M ledger.</p>
             </div>
-            <div id="platformView" class="hidden px-4 md:px-8 py-6 space-y-6 w-full max-w-7xl mx-auto"></div>
+            <div id="platformView" class="hidden flex-grow px-4 md:px-8 py-6 space-y-6 w-full max-w-7xl mx-auto"></div>
             <!-- Main Container: calculator stays mounted so switchAcademyView cannot wipe engine state -->
             <main id="dynastyPane" class="flex-grow max-w-7xl mx-auto px-6 py-6 space-y-6 w-full">
         
@@ -130,14 +130,14 @@
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[10px] uppercase text-slate-400 mb-1">Food Logic</label>
-                                <select class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <select id="foodLogic" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
                                     <option>Selfless Leader (SL)</option>
                                     <option>Share (SIL)</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-[10px] uppercase text-slate-400 mb-1">Shelter Intent</label>
-                                <select class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+                                <select id="shelterIntent" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
                                     <option>Nation Builder (NB)</option>
                                 </select>
                             </div>
@@ -493,50 +493,94 @@
             side.classList.toggle('left-0');
         }
 
+        const PROGRESS_KEY = 'finacademy-lab-progress';
+        let activeLabId = null;
+        const capitalModules = [
+            { id: 'cap-01', code: 'CAP-01', title: 'Diagnostic Profile', credit: 'Orientation', objective: 'Locate Food Logic (SL / Share) and Shelter Intent (NB) before any capital is credited.', lab: 'Open Profile or Dynasty Module 1. Record your diagnostic pair.', verify: 'Diagnostic pair is selected on Profile and Module 1.' },
+            { id: 'cap-02', code: 'CAP-02', title: 'Sweat Equity Lab — $50 / Hr', credit: '$50 / Hr', objective: 'Convert verified MHBOJT labor into capital. 10,000 hours can neutralize $10M.', lab: 'Move the Dynasty sweat slider only after a mentor signs the timesheet.', verify: 'Sweat hours on the ledger match the signed timesheet.' },
+            { id: 'cap-03', code: 'CAP-03', title: 'Mentor Pipeline — $1M / Candidate', credit: '$1M / mentee', objective: 'Walk a descendant or peer through Action Track #2. Ten completed mentees neutralize.', lab: 'Assign one mentee and file the completion note.', verify: 'Mentee has a completed Action Track #2 artifact.' },
+            { id: 'cap-04', code: 'CAP-04', title: 'Sponsor Underwriting — $100k', credit: '$100k / candidate', objective: 'Scale the pipeline without grinding every hour yourself.', lab: 'Underwrite one candidate’s $100 reservation.', verify: 'Sponsored candidate is reserved and has an assigned mentor.' },
+            { id: 'cap-05', code: 'CAP-05', title: 'Referral Compounding — $50k', credit: '$50k / conversion', objective: 'Qualified introductions expand the mentee and sponsor funnel.', lab: 'Submit one converted referral with Stripe receipt.', verify: 'Referral converted and appears on the ledger.' },
+            { id: 'cap-06', code: 'CAP-06', title: 'Physics of Wealth — 1,000 Years', credit: 'Compounding', objective: 'Seed, monthly contribution, and the neutralization chart.', lab: 'Set seed, monthly, horizon, and fee mode on Dynasty.', verify: 'Chart and yearly table match the inputs you recorded.' }
+        ];
+        const replitModules = [
+            { id: 'rep-01', code: 'REP-01', title: 'Replit Workspace & First Repl', credit: 'Builder lab', objective: 'Stand up the original FinAcademy workspace.', lab: 'Create a static HTML repl with the Component #003 shell.', verify: 'Preview shows the FinAcademy header and Stripe button.' },
+            { id: 'rep-02', code: 'REP-02', title: 'Static Feed Component', credit: 'Builder lab', objective: 'Build a 5W1H feed page that matches #001 / #002.', lab: 'Author six 5W1H cards and a mermaid flow.', verify: 'HTML is valid and mermaid click targets resolve.' },
+            { id: 'rep-03', code: 'REP-03', title: 'NotebookLM Media Studio', credit: 'Builder lab', objective: 'Wire the Medium Selector to renderSelectedNotebookMedium().', lab: 'Use Briefings to swap Audio / Video / Slides / Mind Map / Reports.', verify: 'Each of the five media options paints a distinct studio frame.' },
+            { id: 'rep-04', code: 'REP-04', title: 'Stripe $100 Gateway', credit: 'Builder lab', objective: 'Bind the live reservation link used across MHBOJT.', lab: 'Test the header Stripe CTA.', verify: 'Stripe checkout opens from header and lab CTAs.' },
+            { id: 'rep-05', code: 'REP-05', title: 'GitHub + Vercel Ship', credit: 'Builder lab', objective: 'Ship mhbojt-core to production.', lab: 'Commit, PR, squash-merge, hard-refresh.', verify: 'Production HTML contains restore-academy-views-20260921.' },
+            { id: 'rep-06', code: 'REP-06', title: 'Capstone: Publish Component #003', credit: 'Builder lab', objective: 'Confirm FinAcademy and homepage share the sidebar.', lab: 'Open /feed/finacademy/ and mhbojt.com side by side.', verify: 'switchAcademyView works on both hosts.' }
+        ];
+        const allModules = capitalModules.concat(replitModules);
+        function loadProgress() {
+            try { return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '[]'); }
+            catch (err) { return []; }
+        }
+        function saveProgress(ids) { localStorage.setItem(PROGRESS_KEY, JSON.stringify(ids)); }
+        function isComplete(id) { return loadProgress().indexOf(id) !== -1; }
+
         function platformViewHtml(view) {
-            if (view === 'briefings') {
-                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Briefings</h2>
-                    <p class="text-xs text-slate-400">The NotebookLM Medium Selector and dual-host overview live on the Dynasty pane so the calculator and studio stay in one engine. Open Dynasty to switch Audio, Video, Slides, Mind Map, and Reports, then play an Action Track discussion.</p>
-                    <button type="button" onclick="switchAcademyView('dynasty')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-full text-xs">Open Dynasty Studio</button>
-                </div>`;
-            }
             if (view === 'courses') {
-                return `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <a href="/feed/finacademy/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-2 transition">
-                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Component #003</span>
-                        <h3 class="text-sm font-bold text-white">FinAcademy Curriculum</h3>
-                        <p class="text-xs text-slate-400">Twelve labs: sovereign capital tracks plus migrated Replit builder modules, hosted at finacademy.mhbojt.institute.</p>
-                    </a>
-                    <button type="button" onclick="switchAcademyView('dynasty')" class="text-left bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-2 transition">
-                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Engine</span>
-                        <h3 class="text-sm font-bold text-white">Action Track Calculator</h3>
-                        <p class="text-xs text-slate-400">Sweat $50/Hr, Mentor $1M, Sponsor $100k, Referral $50k — the same numbers the academy teaches.</p>
-                    </button>
+                return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    <div class="lg:col-span-7 space-y-6">
+                        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-2">
+                                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Sovereign Capital Track</h2>
+                                <span class="text-[10px] text-slate-400">Original Crystal Dynasty lessons</span>
+                            </div>
+                            <div id="capitalTrack" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                        </section>
+                        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                            <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-2">
+                                <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Replit Builder Track</h2>
+                                <span class="text-[10px] text-slate-400">Restored from the academy labs</span>
+                            </div>
+                            <div id="replitTrack" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                        </section>
+                    </div>
+                    <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                            <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Active Lab</h2>
+                            <span id="labProgress" class="text-[10px] font-mono text-amber-400">0 / 12 complete</span>
+                        </div>
+                        <div id="labStage" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+                            <p class="text-xs text-slate-400">Select a training module.</p>
+                        </div>
+                        <button type="button" id="completeLabBtn" onclick="completeActiveLab()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-full text-xs">Mark Lab Complete</button>
+                        <a href="/feed/finacademy/" class="block text-[11px] text-amber-400 hover:text-amber-300">Open FinAcademy host ↗</a>
+                    </div>
                 </div>`;
             }
             if (view === 'citadel') {
-                return `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <a href="/feed/st-bernard/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-2 transition">
-                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Component #001</span>
-                        <h3 class="text-sm font-bold text-white">St. Bernard 48-Acre Citadel</h3>
-                        <p class="text-xs text-slate-400">Smart Living campus and modular steel housing that FinAcademy credits against the $10M liability.</p>
-                    </a>
-                    <a href="/feed/national-guard/" class="bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 space-y-2 transition">
-                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">Component #002</span>
-                        <h3 class="text-sm font-bold text-white">Jackson Barracks Gate</h3>
-                        <p class="text-xs text-slate-400">National Guard pipeline converting service hours into Tri-Parish housing equity.</p>
-                    </a>
+                return `<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Campus Footprint</div><div class="text-lg font-mono font-extrabold text-amber-400">48 Acres</div></div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Priority Reservations</div><div class="text-lg font-mono font-extrabold text-sky-400">First 200</div></div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Gateway Deposit</div><div class="text-lg font-mono font-extrabold text-emerald-400">$100</div></div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Sweat Equity Rate</div><div class="text-lg font-mono font-extrabold text-amber-400">$50 / Hr</div></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-3">
+                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Component #001 · St. Bernard Citadel</h3>
+                        <div class="aspect-video overflow-hidden rounded-xl border border-slate-800 bg-black">
+                            <iframe class="w-full h-full" src="/feed/st-bernard/" title="St. Bernard Smart Living Campus"></iframe>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Component #002 · Jackson Barracks</h3>
+                        <div class="aspect-video overflow-hidden rounded-xl border border-slate-800 bg-black">
+                            <iframe class="w-full h-full" src="/feed/national-guard/" title="National Guard Campaign"></iframe>
+                        </div>
+                    </div>
                 </div>`;
             }
             if (view === 'blueprint') {
                 return `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    ${[['WHAT','Unified MHBOJT Platform','Sidebar + Crystal Dynasty calculator + NotebookLM Medium Selector + Stripe $100 gateway.'],
-                       ['WHEN','Immediate intake','Run the numbers, complete a lab, then lock the reservation.'],
-                       ['WHERE','mhbojt.com and institute hosts','Homepage engine here. FinAcademy labs at /feed/finacademy/.'],
-                       ['WHY','One chrome for every domain','Candidates should not relearn navigation between calculator and academy.'],
-                       ['WHO','SL / NB candidates','Selfless Leaders, Nation Builders, Guardsmen, sponsors, referrals.'],
-                       ['HOW','switchAcademyView','Sidebar paints the pane. Dynasty keeps the calculator mounted so state survives.']].map((card) =>
+                    ${[['WHAT','Asset Recovery & Modular Build','48-acre Smart Living citadel plus the Crystal Dynasty ledger.'],
+                       ['WHEN','Immediate Execution Phase','Run numbers, complete labs, lock the $100 reservation.'],
+                       ['WHERE','mhbojt.com · finacademy.mhbojt.institute','Homepage engine and academy labs share this sidebar.'],
+                       ['WHY','Systemic Rationality','Hours and mentees must hit a physical campus and a live calculator.'],
+                       ['WHO','Nation Builders & Candidates','Guardsmen, Tri-Parish families, SL / NB candidates.'],
+                       ['HOW','Sweat Equity & Stripe Funnel','$50/Hr credits compound after the $100 gateway.']].map((card) =>
                         `<div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2"><span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${card[0]}</span><h3 class="text-sm font-bold text-white">${card[1]}</h3><p class="text-xs text-slate-400">${card[2]}</p></div>`
                     ).join('')}
                 </div>
@@ -544,13 +588,16 @@
                     <div class="mermaid">
 graph TD
     A[Candidate Arrives] --> B[Sidebar switchAcademyView]
-    B --> C[Dynasty Calculator]
-    B --> D[FinAcademy Courses]
-    C --> E[$10M Ledger]
-    D --> E
-    E --> F[$100 Stripe Reservation]
-    click C "#dynasty" "Stay on Dynasty"
-    click D "/feed/finacademy/" "Open FinAcademy"
+    B --> C[Briefings NotebookLM]
+    B --> D[Dynasty Calculator]
+    B --> E[Courses 12 Labs]
+    B --> F[The Citadel]
+    D --> G[$10M Ledger]
+    E --> G
+    G --> H[$100 Stripe Reservation]
+    click D "#dynasty" "Stay on Dynasty"
+    click E "#courses" "Open Courses"
+    click F "/feed/st-bernard/" "Open St. Bernard"
                     </div>
                 </div>`;
             }
@@ -558,49 +605,127 @@ graph TD
                 return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 text-xs text-slate-300">
                     <ol class="space-y-2 list-decimal list-inside">
                         <li>Open <button type="button" onclick="switchAcademyView('profile')" class="text-amber-400 underline">Profile</button> and lock Food Logic / Shelter Intent.</li>
-                        <li>Run the calculator on <button type="button" onclick="switchAcademyView('dynasty')" class="text-amber-400 underline">Dynasty</button> and switch the NotebookLM Medium Selector.</li>
-                        <li>Walk campus via <button type="button" onclick="switchAcademyView('citadel')" class="text-amber-400 underline">The Citadel</button> and labs via <button type="button" onclick="switchAcademyView('courses')" class="text-amber-400 underline">Courses</button>.</li>
+                        <li>Play dual-host Action Track discussions on <button type="button" onclick="switchAcademyView('briefings')" class="text-amber-400 underline">Briefings</button> and switch the NotebookLM Medium Selector.</li>
+                        <li>Move Dynasty sliders, then complete a lab in <button type="button" onclick="switchAcademyView('courses')" class="text-amber-400 underline">Courses</button>.</li>
+                        <li>Inspect campus via <button type="button" onclick="switchAcademyView('citadel')" class="text-amber-400 underline">The Citadel</button>.</li>
                         <li>Reserve with the Stripe $100 button in the header.</li>
                     </ol>
+                    <button type="button" onclick="playDualHostDiscussion('sweat')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-full text-xs">▶ Play Sweat Brief</button>
                 </div>`;
             }
             if (view === 'dashboard') {
                 const liability = document.getElementById('liabilityDisplay')?.textContent || '$10,000,000';
                 const topVal = document.getElementById('topValDisplay')?.textContent || '$0';
                 const sweat = document.getElementById('valSweatHrs')?.textContent || '0 Hrs';
+                const mentor = document.getElementById('valMentor')?.textContent || '0';
+                const done = loadProgress().length;
                 return `<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Liability</div><div class="text-lg font-mono font-extrabold text-rose-400">${liability}</div></div>
                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">1,000-Yr Value</div><div class="text-lg font-mono font-extrabold text-amber-400">${topVal}</div></div>
                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Sweat</div><div class="text-lg font-mono font-extrabold text-sky-400">${sweat}</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Gateway</div><div class="text-lg font-mono font-extrabold text-emerald-400">$100</div></div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Labs</div><div class="text-lg font-mono font-extrabold text-amber-400">${done} / 12</div></div>
                 </div>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">${typeof notebookReportHtml === 'function' ? notebookReportHtml() : ''}</div>`;
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">${typeof notebookReportHtml === 'function' ? notebookReportHtml() : `<div class="text-xs text-slate-400">Mentors: ${mentor}</div>`}</div>
+                <button type="button" onclick="switchAcademyView('dynasty')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Adjust Calculator</button>`;
             }
             if (view === 'factory') {
                 return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
                     <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Course Factory</h2>
-                    <p class="text-xs text-slate-400">Compose the next feed module. Preview stays local until a GitHub PR ships it.</p>
-                    <input id="factoryTitle" placeholder="Module title" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    <p class="text-xs text-slate-400">Compose the next feed module the same way the Replit labs were authored: title, track, verification.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <input id="factoryTitle" placeholder="Module title" class="bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                        <select id="factoryTrack" class="bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                            <option value="capital">Sovereign Capital</option>
+                            <option value="replit">Replit Builder</option>
+                            <option value="citadel">Citadel Field</option>
+                        </select>
+                    </div>
                     <textarea id="factoryVerify" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">Credits only after the production artifact is visible.</textarea>
                     <button type="button" onclick="previewFactoryModule()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Preview Module Card</button>
                     <div id="factoryPreview" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-400">Factory output appears here.</div>
                 </div>`;
             }
             if (view === 'profile') {
+                const food = document.getElementById('foodLogic')?.value || 'Selfless Leader (SL)';
+                const shelter = document.getElementById('shelterIntent')?.value || 'Nation Builder (NB)';
                 return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 max-w-xl">
                     <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Candidate Profile</h2>
-                    <p class="text-xs text-slate-400">Same diagnostic pair as Module 1 on the Dynasty calculator.</p>
-                    <button type="button" onclick="switchAcademyView('dynasty'); document.getElementById('module1')?.scrollIntoView({behavior:'smooth'});" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Edit on Dynasty Module 1</button>
-                </div>`;
-            }
-            if (view === 'admin') {
-                return `<div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-6 space-y-3">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Admin Media Studio</h2>
-                    <p class="text-xs text-slate-400">Medium Selector, YouTube ingest, and the dual-host player stay mounted on Dynasty so admin changes hit the live studio.</p>
-                    <button type="button" onclick="switchAcademyView('dynasty'); toggleAdminPanel();" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Open Admin on Dynasty</button>
+                    <p class="text-xs text-slate-400">Original Dynasty Module 1 diagnostic pair. Saving writes through to the calculator.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[10px] uppercase text-slate-400 mb-1">Food Logic</label>
+                            <select id="profileFood" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                                <option>Selfless Leader (SL)</option>
+                                <option>Share (SIL)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase text-slate-400 mb-1">Shelter Intent</label>
+                            <select id="profileShelter" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                                <option>Nation Builder (NB)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" onclick="saveProfile()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Save Diagnostic Pair</button>
+                    <p id="profileStatus" class="text-[11px] text-slate-400">Current: ${food} · ${shelter}</p>
                 </div>`;
             }
             return '';
+        }
+
+        function renderTrack(elId, modules) {
+            const root = document.getElementById(elId);
+            if (!root) return;
+            root.innerHTML = modules.map((mod) => {
+                const done = isComplete(mod.id);
+                const active = activeLabId === mod.id;
+                return `<button type="button" data-lab="${mod.id}" onclick="openLab('${mod.id}')" class="text-left bg-slate-950 border ${active ? 'border-amber-400' : 'border-slate-800'} hover:border-amber-500/50 rounded-xl p-4 space-y-1 transition">
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${mod.code}</span>
+                        <span class="text-[9px] font-mono ${done ? 'text-emerald-400' : 'text-slate-500'}">${done ? 'COMPLETE' : mod.credit}</span>
+                    </div>
+                    <h3 class="text-sm font-bold text-white">${mod.title}</h3>
+                </button>`;
+            }).join('');
+        }
+        function renderTracks() {
+            renderTrack('capitalTrack', capitalModules);
+            renderTrack('replitTrack', replitModules);
+            const progress = document.getElementById('labProgress');
+            if (progress) progress.textContent = loadProgress().length + ' / 12 complete';
+        }
+        function openLab(id) {
+            const mod = allModules.find((item) => item.id === id);
+            if (!mod) return;
+            activeLabId = id;
+            const stage = document.getElementById('labStage');
+            if (!stage) {
+                if (currentView !== 'courses') switchAcademyView('courses');
+                return;
+            }
+            stage.innerHTML = `<span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${mod.code}</span>
+                <h3 class="text-sm font-bold text-white">${mod.title}</h3>
+                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Objective.</span> ${mod.objective}</p>
+                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Lab.</span> ${mod.lab}</p>
+                <p class="text-xs text-slate-300"><span class="text-amber-400 font-semibold">Verify.</span> ${mod.verify}</p>`;
+            renderTracks();
+        }
+        function completeActiveLab() {
+            if (!activeLabId) { openLab('rep-01'); return; }
+            const ids = loadProgress();
+            if (ids.indexOf(activeLabId) === -1) ids.push(activeLabId);
+            saveProgress(ids);
+            renderTracks();
+        }
+        function saveProfile() {
+            const food = document.getElementById('profileFood')?.value;
+            const shelter = document.getElementById('profileShelter')?.value;
+            const foodLogic = document.getElementById('foodLogic');
+            const shelterIntent = document.getElementById('shelterIntent');
+            if (food && foodLogic) foodLogic.value = food;
+            if (shelter && shelterIntent) shelterIntent.value = shelter;
+            const status = document.getElementById('profileStatus');
+            if (status) status.textContent = 'Saved: ' + (food || foodLogic?.value) + ' · ' + (shelter || shelterIntent?.value);
         }
 
         function switchAcademyView(view) {
@@ -612,11 +737,11 @@ graph TD
             if (label) label.textContent = item.label;
             const dynastyPane = document.getElementById('dynastyPane');
             const platformView = document.getElementById('platformView');
-            const showDynasty = item.id === 'dynasty';
-            if (dynastyPane) dynastyPane.classList.toggle('hidden', !showDynasty);
+            const showEngine = item.id === 'dynasty' || item.id === 'briefings' || item.id === 'admin';
+            if (dynastyPane) dynastyPane.classList.toggle('hidden', !showEngine);
             if (platformView) {
-                platformView.classList.toggle('hidden', showDynasty);
-                if (!showDynasty) platformView.innerHTML = platformViewHtml(item.id);
+                platformView.classList.toggle('hidden', showEngine);
+                if (!showEngine) platformView.innerHTML = platformViewHtml(item.id);
             }
             renderAcademyNav();
             history.replaceState(null, '', '#' + item.id);
@@ -629,7 +754,26 @@ graph TD
                 const node = document.querySelector('#platformView .mermaid');
                 if (node) mermaid.run({ nodes: [node] });
             }
-            if (showDynasty && typeof calculateEngine === 'function') {
+            if (item.id === 'courses') {
+                renderTracks();
+                openLab(activeLabId || 'rep-01');
+            }
+            if (item.id === 'profile') {
+                const food = document.getElementById('profileFood');
+                const shelter = document.getElementById('profileShelter');
+                if (food && document.getElementById('foodLogic')) food.value = document.getElementById('foodLogic').value;
+                if (shelter && document.getElementById('shelterIntent')) shelter.value = document.getElementById('shelterIntent').value;
+            }
+            if (item.id === 'admin') {
+                document.getElementById('adminPanel')?.classList.remove('hidden');
+                document.getElementById('adminPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                document.getElementById('adminPanel')?.classList.add('hidden');
+            }
+            if (item.id === 'briefings') {
+                document.getElementById('mediaContainer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            if (showEngine && typeof calculateEngine === 'function') {
                 try { calculateEngine(); } catch (err) {}
             }
         }
@@ -637,8 +781,10 @@ graph TD
         function previewFactoryModule() {
             const title = document.getElementById('factoryTitle')?.value.trim() || 'Untitled module';
             const verify = document.getElementById('factoryVerify')?.value.trim() || 'Verify on production.';
+            const track = document.getElementById('factoryTrack');
+            const trackLabel = track?.options[track.selectedIndex]?.text || 'Track';
             const preview = document.getElementById('factoryPreview');
-            if (preview) preview.innerHTML = `<h3 class="text-sm font-bold text-white">${title}</h3><p class="text-xs text-slate-400 mt-1">${verify}</p>`;
+            if (preview) preview.innerHTML = `<span class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${trackLabel}</span><h3 class="text-sm font-bold text-white mt-1">${title}</h3><p class="text-xs text-slate-400 mt-1">${verify}</p>`;
         }
 
         let state = {
@@ -1270,6 +1416,11 @@ graph TD
             window.open(stripePaymentLink, '_blank');
             toggleModal();
         }
+
+        window.addEventListener('hashchange', function () {
+            const view = (location.hash || '#dynasty').replace('#', '');
+            if (view && view !== currentView) switchAcademyView(view);
+        });
 
         window.onload = function () {
             renderAcademyNav();

@@ -1059,12 +1059,25 @@
             const played = audio.play();
             if (played && typeof played.catch === 'function') {
                 played.catch(function () {
-                    if (token === explainerToken) paintStationExplainer(null);
+                    if (token === explainerToken) releaseStationExplainer(stationId);
                 });
             }
             audio.onended = function () {
-                if (token === explainerToken) paintStationExplainer(null);
+                if (token === explainerToken) releaseStationExplainer(stationId);
             };
+        }
+
+        function releaseStationExplainer(stationId) {
+            document.querySelectorAll('[data-explainer]').forEach(function (btn) {
+                btn.setAttribute('data-state', 'idle');
+                btn.className = EXPLAINER_IDLE_CLASS;
+                btn.textContent = '▶ Play Audio Explainer';
+            });
+            document.querySelectorAll('[data-explainer-live]').forEach(function (el) {
+                const id = el.getAttribute('data-explainer-live');
+                const station = STATION_EXPLAINERS[id];
+                el.textContent = (id === stationId && station) ? station.statusLine : '';
+            });
         }
 
         function playStationExplainer(stationId) {
@@ -1092,7 +1105,7 @@
                         || voices.find(function (item) { return /^en/i.test(item.lang); });
                     if (voice) utter.voice = voice;
                     utter.onend = function () {
-                        if (token === explainerToken) paintStationExplainer(null);
+                        if (token === explainerToken) releaseStationExplainer(stationId);
                     };
                     utter.onerror = function () {
                         if (token !== explainerToken) return;

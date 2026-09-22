@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM: Crystal Dynasty Engine · NotebookLM Plugin</title>
-    <meta name="mhbojt-build" content="notebooklm-11-mediums-20260921">
+    <meta name="mhbojt-build" content="targeted-marketing-20260922">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -41,6 +41,37 @@
             <h1 class="text-xl font-extrabold tracking-wider text-amber-400">DRAH GOSSSM: CRYSTAL DYNASTY ENGINE</h1>
             <p class="text-[11px] text-slate-400 tracking-wide">1,000-YEAR UNIVERSAL PROTOCOL | MHBOJT FRANCHISE INTEGRATION</p>
         </div>
+
+        <section id="targetAudiences" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
+            <div class="flex flex-wrap justify-between items-start gap-3 border-b border-slate-800 pb-3">
+                <div>
+                    <div class="text-[9px] uppercase tracking-widest text-amber-400">Direct Target Marketing</div>
+                    <h2 class="text-sm font-bold tracking-wider text-amber-400 uppercase">Three Intake Corridors</h2>
+                    <p class="text-[11px] text-slate-400 mt-1">Jackson Barracks National Guardsmen, Tri-Parish Residents, and the Laotian Diaspora — each greeted as Selfless Leader (SL) or Nation Builder (NB) with a preferred impact track.</p>
+                </div>
+                <button type="button" onclick="openOnboarding()" class="text-[11px] text-amber-400 hover:text-amber-300">Edit onboarding ↗</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <article data-audience="guardsmen" class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-2">
+                    <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">Jackson Barracks</span>
+                    <h3 class="text-sm font-bold text-white">National Guardsmen</h3>
+                    <p class="text-xs text-slate-400">Convert dual-duty and disaster-response hours into $50/Hr equity, then reserve on the 48-acre citadel. Toggle NotebookLM Video, Quiz, or Data Table for the pipeline brief.</p>
+                    <a href="/feed/national-guard/" class="text-[11px] text-amber-400 hover:text-amber-300">Open Component #002 ↗</a>
+                </article>
+                <article data-audience="triparish" class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-2">
+                    <span class="text-[10px] font-bold text-sky-400 uppercase tracking-widest">Tri-Parish</span>
+                    <h3 class="text-sm font-bold text-white">Residents &amp; Recovery Families</h3>
+                    <p class="text-xs text-slate-400">St. Bernard, Orleans, and Plaquemines keep labor housed locally. Slide Decks and Reports show the $10M ledger and $100 gateway.</p>
+                    <a href="/feed/st-bernard/" class="text-[11px] text-amber-400 hover:text-amber-300">Open Component #001 ↗</a>
+                </article>
+                <article data-audience="diaspora" class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-2">
+                    <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Laotian Diaspora</span>
+                    <h3 class="text-sm font-bold text-white">Nation Building Homecoming</h3>
+                    <p class="text-xs text-slate-400">Concentrate surplus into parish shelter and mentorship — not speculation. Audio Overview (default) plus Reports speak the SL/NB need, goals, and objectives.</p>
+                    <a href="#notebookPluginTray" class="text-[11px] text-amber-400 hover:text-amber-300">Open NotebookLM brief ↓</a>
+                </article>
+            </div>
+        </section>
 
         <!-- Engine Wrapper Card -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
@@ -391,35 +422,51 @@
     </main>
 
     <div id="onboardingGate" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden items-center justify-center z-[60] p-4">
-        <div class="bg-slate-900 border border-amber-500/50 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5">
+        <div class="bg-slate-900 border border-amber-500/50 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
             <div class="text-[9px] uppercase tracking-widest text-amber-400">Introductory Onboarding Gate</div>
             <h2 class="text-2xl font-extrabold text-white leading-tight">Are you a Selfless Leader (SL) or Nation Builder (NB)?</h2>
+            <p id="onboardLiveGreeting" class="text-sm text-amber-200 bg-slate-950 border border-amber-500/30 rounded-xl p-3 leading-relaxed">Welcome, Selfless Leader. You convert personal surplus into parish-level shelter. St. Bernard, Orleans, and Plaquemines keep recovery labor housed locally on the 48-acre citadel. Your preferred impact is referring — $50k per converted introduction with a Stripe receipt.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-3 text-sm cursor-pointer">
-                    <input type="radio" name="onboardRole" value="Selfless Leader (SL)" class="accent-amber-400" checked>
+                    <input type="radio" name="onboardRole" value="Selfless Leader (SL)" class="accent-amber-400" checked onchange="previewOnboardingGreeting()">
                     <span>Selfless Leader (SL)</span>
                 </label>
                 <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-3 text-sm cursor-pointer">
-                    <input type="radio" name="onboardRole" value="Nation Builder (NB)" class="accent-amber-400">
+                    <input type="radio" name="onboardRole" value="Nation Builder (NB)" class="accent-amber-400" onchange="previewOnboardingGreeting()">
                     <span>Nation Builder (NB)</span>
                 </label>
             </div>
-            <p class="text-sm text-slate-300">Do you like to help others and victims by referring, sponsoring, mentoring, or learning the trade yourself to uplift your community?</p>
+            <p class="text-xs font-bold text-amber-400 uppercase tracking-widest">Which corridor are you walking?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <label class="flex items-start gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
+                    <input type="radio" name="onboardAudience" value="guardsmen" class="accent-amber-400 mt-0.5" onchange="previewOnboardingGreeting()">
+                    <span>Jackson Barracks National Guardsmen</span>
+                </label>
+                <label class="flex items-start gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
+                    <input type="radio" name="onboardAudience" value="triparish" class="accent-amber-400 mt-0.5" checked onchange="previewOnboardingGreeting()">
+                    <span>Tri-Parish Residents</span>
+                </label>
+                <label class="flex items-start gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
+                    <input type="radio" name="onboardAudience" value="diaspora" class="accent-amber-400 mt-0.5" onchange="previewOnboardingGreeting()">
+                    <span>Laotian Diaspora</span>
+                </label>
+            </div>
+            <p class="text-sm text-slate-300">How do you prefer to help — referring, sponsoring, mentoring, or learning the trade yourself?</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
-                    <input type="radio" name="onboardHelp" value="referring" class="accent-amber-400" checked>
+                    <input type="radio" name="onboardHelp" value="referring" class="accent-amber-400" checked onchange="previewOnboardingGreeting()">
                     <span>Referring ($50k)</span>
                 </label>
                 <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
-                    <input type="radio" name="onboardHelp" value="sponsoring" class="accent-amber-400">
+                    <input type="radio" name="onboardHelp" value="sponsoring" class="accent-amber-400" onchange="previewOnboardingGreeting()">
                     <span>Sponsoring ($100k)</span>
                 </label>
                 <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
-                    <input type="radio" name="onboardHelp" value="mentoring" class="accent-amber-400">
+                    <input type="radio" name="onboardHelp" value="mentoring" class="accent-amber-400" onchange="previewOnboardingGreeting()">
                     <span>Mentoring ($1M)</span>
                 </label>
                 <label class="flex items-center gap-2 bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-lg px-3 py-2 text-xs cursor-pointer">
-                    <input type="radio" name="onboardHelp" value="learning the trade" class="accent-amber-400">
+                    <input type="radio" name="onboardHelp" value="learning the trade" class="accent-amber-400" onchange="previewOnboardingGreeting()">
                     <span>Learning the trade ($50/Hr)</span>
                 </label>
             </div>
@@ -447,10 +494,10 @@
                 <div>
                     <label class="block text-xs uppercase tracking-wider text-slate-400 mb-1">Candidate Classification / Location</label>
                     <select id="candidateType" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-amber-400">
+                        <option>Jackson Barracks National Guardsman</option>
+                        <option selected>Tri-Parish Resident</option>
+                        <option>Laotian Diaspora</option>
                         <option>SL/NB Candidate (SVSUIC Campus - St. Bernard)</option>
-                        <option>National Guardsman / MHBOJT Applicant</option>
-                        <option>Tri-Parish Disaster Recovery Family</option>
-                        <option>Scattered Lot Interest (Meraux / Chalmette)</option>
                     </select>
                 </div>
                 <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-lg shadow-md transition mt-2">
@@ -767,7 +814,7 @@
         const notebookSlides = [
             { title: 'Crystal Dynasty Protocol', body: 'A 1,000-year compounding engine that converts verified MHBOJT action into sovereign capital and neutralizing the $10M apprentice liability.' },
             { title: 'Action Track Ledger', body: 'Sweat equity at $50/Hr, Mentor at $1M per candidate, Sponsor at $100k, and Referral at $50k. Each track is a different path to the same neutralization.' },
-            { title: 'Munger-to-DRAH Translation', body: 'Wretched excess, bureaucracy, diversification, and agency collapse into one physical campus: hours and mentees must hit St. Bernard and the live calculator.' },
+            { title: 'Three Intake Corridors', body: 'Jackson Barracks National Guardsmen, Tri-Parish Residents, and the Laotian Diaspora each enter as SL or NB, then pick referring, sponsoring, mentoring, or learning the trade.' },
             { title: 'Sentinel Perpetuity', body: 'The Exit & Perpetuity fund is the hand-off: franchise placement, affordable housing, and a ledger that compounds after the apprentice graduates.' }
         ];
 
@@ -789,7 +836,10 @@
             const sponsor = document.getElementById('valSponsor')?.textContent || '0';
             const referral = document.getElementById('valReferral')?.textContent || '0';
             const topVal = document.getElementById('topValDisplay')?.textContent || '$0';
+            const saved = loadOnboarding();
+            const greeting = saved ? composeGreeting(saved) : 'Select SL or NB in the onboarding gate to personalize this report.';
             return `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+                <div class="bg-slate-950 border border-slate-800 rounded-lg p-3"><div class="text-[9px] uppercase tracking-widest text-slate-400">Targeted briefing</div><p class="text-[11px] text-slate-300 mt-1">${greeting}</p></div>
                 <div class="bg-slate-950 border border-slate-800 rounded-lg p-3"><div class="text-[9px] uppercase tracking-widest text-slate-400">Knowledge base</div><div class="text-sm font-bold text-amber-400">${source.label}</div><p class="text-[11px] text-slate-400 mt-1">${source.query}</p></div>
                 <div class="bg-slate-950 border border-slate-800 rounded-lg p-3"><div class="text-[9px] uppercase tracking-widest text-slate-400">Franchise Liability</div><div class="text-lg font-mono font-extrabold text-rose-400">${liability}</div></div>
                 <div class="bg-slate-950 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 space-y-1"><div>Sweat: <span class="text-amber-400 font-mono">${sweat}</span></div><div>Mentors: <span class="text-amber-400 font-mono">${mentor}</span></div></div>
@@ -814,7 +864,7 @@
         }
 
         const flashcards = [
-            { front: 'Sweat Equity', back: '$50 / Hr. 10,000 verified hours neutralize $10M.' },
+            { front: 'Sweat Equity', back: '$50 / Hr. 200,000 Hours neutralize $10,000,000.' },
             { front: 'Mentor Track', back: '$1M per completed mentee. Ten mentees neutralize.' },
             { front: 'Sponsor Track', back: '$100k per underwritten candidate.' },
             { front: 'Referral Track', back: '$50k per converted introduction with a Stripe receipt.' },
@@ -828,8 +878,68 @@
             { prompt: 'Gateway reservation?', choices: ['$10', '$100', '$1,000'], answer: '$100' }
         ];
 
+        const audienceCopy = {
+            guardsmen: {
+                label: 'Jackson Barracks National Guardsman',
+                line: 'The Jackson Barracks pipeline converts dual-duty hours into Tri-Parish shelter so service does not leak talent after the mission.'
+            },
+            triparish: {
+                label: 'Tri-Parish Resident',
+                line: 'St. Bernard, Orleans, and Plaquemines keep recovery labor housed locally on the 48-acre citadel.'
+            },
+            diaspora: {
+                label: 'Laotian Diaspora',
+                line: 'The Laotian diaspora concentrates surplus into parish-level Nation Building — modular shelter, mentorship, and a 1,000-year ledger.'
+            }
+        };
+        const helpCopy = {
+            referring: { line: 'Your preferred impact is referring — $50k per converted introduction with a Stripe receipt.' },
+            sponsoring: { line: 'Your preferred impact is sponsoring — $100k underwrites the next candidate reservation.' },
+            mentoring: { line: 'Your preferred impact is mentoring — $1M per completed mentee on Action Track #2.' },
+            'learning the trade': { line: 'Your preferred impact is learning the trade — $50/Hr sweat, 200,000 Hours to neutralize $10,000,000.' }
+        };
+        function readOnboardingDraft() {
+            return {
+                role: document.querySelector('input[name="onboardRole"]:checked')?.value || 'Selfless Leader (SL)',
+                help: document.querySelector('input[name="onboardHelp"]:checked')?.value || 'learning the trade',
+                audience: document.querySelector('input[name="onboardAudience"]:checked')?.value || 'triparish'
+            };
+        }
+        function composeGreeting(state) {
+            const isSL = (state.role || '').indexOf('Selfless') === 0;
+            const opener = isSL
+                ? 'Welcome, Selfless Leader. You convert personal surplus into parish-level shelter.'
+                : 'Welcome, Nation Builder. You stand the 1,000-year compounding map so housing stays in the community.';
+            const aud = audienceCopy[state.audience] || audienceCopy.triparish;
+            const help = helpCopy[state.help] || helpCopy['learning the trade'];
+            return opener + ' ' + aud.line + ' ' + help.line;
+        }
+        function previewOnboardingGreeting() {
+            const live = document.getElementById('onboardLiveGreeting');
+            if (live) live.textContent = composeGreeting(readOnboardingDraft());
+        }
+        function applyAudienceMarketing(audience) {
+            document.querySelectorAll('[data-audience]').forEach((el) => {
+                const active = el.getAttribute('data-audience') === audience;
+                el.classList.toggle('border-amber-500/60', active);
+                el.classList.toggle('border-slate-800', !active);
+            });
+            const candidateType = document.getElementById('candidateType');
+            const map = audienceCopy[audience];
+            if (candidateType && map) candidateType.value = map.label;
+        }
         function openOnboarding() {
             const gate = document.getElementById('onboardingGate');
+            const saved = loadOnboarding();
+            if (saved) {
+                const role = document.querySelector('input[name="onboardRole"][value="' + saved.role + '"]');
+                const help = document.querySelector('input[name="onboardHelp"][value="' + saved.help + '"]');
+                const audience = document.querySelector('input[name="onboardAudience"][value="' + (saved.audience || 'triparish') + '"]');
+                if (role) role.checked = true;
+                if (help) help.checked = true;
+                if (audience) audience.checked = true;
+            }
+            previewOnboardingGreeting();
             gate.classList.remove('hidden');
             gate.classList.add('flex');
         }
@@ -843,14 +953,15 @@
             const text = document.getElementById('onboardingBannerText');
             if (!state) { banner.classList.add('hidden'); return; }
             banner.classList.remove('hidden');
-            text.textContent = 'Welcome, ' + state.role + ' · uplifting the community by ' + state.help + '.';
+            text.textContent = composeGreeting(state);
             const food = document.getElementById('foodLogic');
+            const shelter = document.getElementById('shelterIntent');
             if (food && state.role.indexOf('Selfless') === 0) food.value = 'Selfless Leader (SL)';
+            if (shelter) shelter.value = 'Nation Builder (NB)';
+            applyAudienceMarketing(state.audience || 'triparish');
         }
         function completeOnboarding() {
-            const role = document.querySelector('input[name="onboardRole"]:checked')?.value || 'Selfless Leader (SL)';
-            const help = document.querySelector('input[name="onboardHelp"]:checked')?.value || 'learning the trade';
-            const state = { role, help, at: Date.now() };
+            const state = Object.assign(readOnboardingDraft(), { at: Date.now() });
             try { localStorage.setItem('mhbojt-onboarding', JSON.stringify(state)); } catch (err) {}
             paintOnboardingBanner(state);
             hideOnboarding();
@@ -1043,7 +1154,7 @@ graph TD
                     html: `<div class="overflow-x-auto"><table class="w-full text-left font-mono text-[11px]">
                         <thead class="text-slate-400 border-b border-slate-800"><tr><th class="py-2 px-2">Track</th><th class="py-2 px-2">Rate</th><th class="py-2 px-2">To neutralize $10M</th></tr></thead>
                         <tbody class="text-slate-300 divide-y divide-slate-900">
-                            <tr><td class="py-2 px-2">Sweat</td><td class="py-2 px-2 text-amber-400">$50/Hr</td><td class="py-2 px-2">10,000 hrs</td></tr>
+                            <tr><td class="py-2 px-2">Sweat</td><td class="py-2 px-2 text-amber-400">$50/Hr</td><td class="py-2 px-2">200,000 Hours</td></tr>
                             <tr><td class="py-2 px-2">Mentor</td><td class="py-2 px-2 text-amber-400">$1M</td><td class="py-2 px-2">10 mentees</td></tr>
                             <tr><td class="py-2 px-2">Sponsor</td><td class="py-2 px-2 text-sky-400">$100k</td><td class="py-2 px-2">100 candidates</td></tr>
                             <tr><td class="py-2 px-2">Referral</td><td class="py-2 px-2 text-emerald-400">$50k</td><td class="py-2 px-2">200 conversions</td></tr>

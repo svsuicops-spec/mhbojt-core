@@ -118,6 +118,8 @@
                                 </select>
                             </div>
                         </div>
+                        <button type="button" data-explainer="diagnostic" data-state="idle" onclick="playStationExplainer('diagnostic')" class="w-full bg-slate-900 border border-amber-500/40 hover:border-amber-400 hover:bg-slate-800 text-amber-300 font-semibold py-2 px-3 rounded-lg text-[11px] tracking-wide transition text-left">▶ Play Audio Explainer</button>
+                        <p id="explainerLive-diagnostic" data-explainer-live="diagnostic" class="text-[10px] text-emerald-400 font-mono min-h-[0.875rem]" aria-live="polite"></p>
                     </div>
 
                     <!-- Module 2: MHBOJT Action Tracks -->
@@ -126,10 +128,10 @@
                         <div class="space-y-3">
                             <div>
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
-                                    <span>Upfront Sweat Equity ($50/Hr Eqv)</span>
+                                    <span>Upfront Sweat Equity ($50/Hr, max 200,000 Hrs)</span>
                                     <span id="valSweatHrs" class="text-amber-400 font-mono">0 Hrs</span>
                                 </div>
-                                <input type="range" id="inputSweat" min="0" max="10000" step="100" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
+                                <input type="range" id="inputSweat" min="0" max="200000" step="1000" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
                             </div>
                             <div>
                                 <div class="flex justify-between text-[10px] text-slate-400 mb-1">
@@ -153,6 +155,8 @@
                                 <input type="range" id="inputReferral" min="0" max="200" value="0" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
                             </div>
                         </div>
+                        <button type="button" data-explainer="tracks" data-state="idle" onclick="playStationExplainer('tracks')" class="w-full bg-slate-900 border border-amber-500/40 hover:border-amber-400 hover:bg-slate-800 text-amber-300 font-semibold py-2 px-3 rounded-lg text-[11px] tracking-wide transition text-left">▶ Play Audio Explainer</button>
+                        <p id="explainerLive-tracks" data-explainer-live="tracks" class="text-[10px] text-emerald-400 font-mono min-h-[0.875rem]" aria-live="polite"></p>
                     </div>
 
                     <!-- Module 3: The Physics of Wealth -->
@@ -185,10 +189,12 @@
                             </div>
                             <input type="range" id="inputHorizon" min="10" max="1000" step="10" value="1000" oninput="calculateEngine()" class="w-full accent-amber-400 bg-slate-900 cursor-pointer">
                         </div>
+                        <button type="button" data-explainer="physics" data-state="idle" onclick="playStationExplainer('physics')" class="w-full bg-slate-900 border border-amber-500/40 hover:border-amber-400 hover:bg-slate-800 text-amber-300 font-semibold py-2 px-3 rounded-lg text-[11px] tracking-wide transition text-left">▶ Play Audio Explainer</button>
+                        <p id="explainerLive-physics" data-explainer-live="physics" class="text-[10px] text-emerald-400 font-mono min-h-[0.875rem]" aria-live="polite"></p>
                     </div>
 
                     <!-- Module 4: Environment & Fees -->
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 shadow-md">
+                    <div id="module4" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 shadow-md">
                         <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">4. ENVIRONMENT & FEES</h3>
                         <div class="grid grid-cols-2 gap-2">
                             <button type="button" id="btnTax" onclick="toggleToggle('tax')" class="bg-slate-900 border border-slate-800 text-slate-300 py-2 px-3 rounded text-xs font-semibold text-center transition">Tax: OFF (20%)</button>
@@ -209,6 +215,8 @@
                                 <input type="number" id="volR2" value="15" oninput="calculateEngine()" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-white font-mono">
                             </div>
                         </div>
+                        <button type="button" data-explainer="environment" data-state="idle" onclick="playStationExplainer('environment')" class="w-full bg-slate-900 border border-amber-500/40 hover:border-amber-400 hover:bg-slate-800 text-amber-300 font-semibold py-2 px-3 rounded-lg text-[11px] tracking-wide transition text-left">▶ Play Audio Explainer</button>
+                        <p id="explainerLive-environment" data-explainer-live="environment" class="text-[10px] text-emerald-400 font-mono min-h-[0.875rem]" aria-live="polite"></p>
                     </div>
 
                 </div>
@@ -273,17 +281,18 @@
                             <span class="text-rose-400">&#9632; Extreme Bear (R2)</span>
                             <span id="topValDisplay" class="text-amber-400 font-bold text-base font-mono">$0</span>
                         </div>
+                        <p id="formulaCaption" class="text-[10px] text-slate-500 -mt-2">Investor.gov monthly compounding · n = 12 · end-of-month deposits · 1,000-year horizon · $10,000,000 liability</p>
 
                         <!-- SVG Chart Canvas with Grid & Y-Axis Labels -->
                         <div id="chartCanvasContainer" class="h-72 w-full bg-slate-900 border border-slate-800 rounded-lg relative flex items-end p-4 overflow-hidden font-mono cursor-crosshair">
                             
                             <!-- Y-Axis Price Ticks -->
-                            <div class="absolute left-2 top-2 bottom-8 flex flex-col justify-between text-[9px] text-slate-500 pointer-events-none">
-                                <span>$100T+</span>
-                                <span>$10B</span>
-                                <span>$1M</span>
-                                <span>$10K</span>
-                                <span>$0</span>
+                            <div class="absolute left-1 top-2 bottom-8 flex flex-col justify-between text-[9px] text-slate-500 pointer-events-none w-14">
+                                <span id="yTick0">$100T+</span>
+                                <span id="yTick1">$10B</span>
+                                <span id="yTick2">$1M</span>
+                                <span id="yTick3">$10K</span>
+                                <span id="yTick4">$0</span>
                             </div>
 
                             <!-- SVG Curves & Grid Lines -->
@@ -318,9 +327,9 @@
                             <!-- X Axis Labels -->
                             <div class="absolute bottom-1 left-14 right-4 flex justify-between text-[9px] text-slate-500 font-mono">
                                 <span>Yr 0</span>
-                                <span>250</span>
-                                <span>500</span>
-                                <span>750</span>
+                                <span id="xTick1">250</span>
+                                <span id="xTick2">500</span>
+                                <span id="xTick3">750</span>
                                 <span id="xAxisMaxLabel">1,000 Yr</span>
                             </div>
                         </div>
@@ -334,7 +343,7 @@
                     <div id="yearlyDataTableContainer" class="bg-slate-950 border border-slate-800 rounded-xl p-4 hidden space-y-3 shadow-2xl">
                         <div class="flex justify-between items-center border-b border-slate-800 pb-2">
                             <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider">DRAH 1,000-YEAR YEARLY DATA TABLE</h3>
-                            <span class="text-[10px] text-slate-400">Milestone Projections</span>
+                            <span class="text-[10px] text-slate-400">Investor.gov monthly milestones</span>
                         </div>
                         <div class="max-h-96 overflow-y-auto pr-2">
                             <table class="w-full text-left font-mono text-[11px]">
@@ -628,154 +637,487 @@
             calculateEngine();
         }
 
-        function calculateCompoundFutureValue(principal, monthlyContrib, annualRate, years, taxOn, inflationOn, feeMode) {
-            let months = Math.max(1, years * 12);
-            let netRate = annualRate;
+        const FRANCHISE_LIABILITY = 10000000;
+        const SWEAT_RATE = 50;
+        const SWEAT_HOUR_CAP = 200000;
+        const MENTOR_RATE = 1000000;
+        const SPONSOR_RATE = 100000;
+        const REFERRAL_RATE = 50000;
+        const MONTHS_PER_YEAR = 12;
+        const SCALE_NAMES = [
+            'Million', 'Billion', 'Trillion', 'Quadrillion', 'Quintillion', 'Sextillion',
+            'Septillion', 'Octillion', 'Nonillion', 'Decillion', 'Undecillion', 'Duodecillion',
+            'Tredecillion', 'Quattuordecillion', 'Quindecillion', 'Sexdecillion', 'Septendecillion',
+            'Octodecillion', 'Novemdecillion', 'Vigintillion'
+        ];
 
-            if (feeMode === 'pe') netRate -= 2.0;
-            else if (feeMode === 'pass') netRate -= 0.01;
-            else if (feeMode === 'drah') netRate -= 0.0;
-
-            if (inflationOn) netRate -= 3.0;
-
-            let monthlyRate = Math.max(0, netRate) / 100 / 12;
-            let balance = principal;
-
-            for (let m = 1; m <= months; m++) {
-                let interestEarned = balance * monthlyRate;
-                if (taxOn) {
-                    interestEarned *= 0.80;
-                }
-                balance = balance + interestEarned + monthlyContrib;
-            }
-            return Math.max(0, balance);
+        function actionTrackOffset(sweatHrs, mentor, sponsor, referral) {
+            const hours = Math.min(SWEAT_HOUR_CAP, Math.max(0, Number(sweatHrs) || 0));
+            const offset = (hours * SWEAT_RATE)
+                + (Math.max(0, Number(mentor) || 0) * MENTOR_RATE)
+                + (Math.max(0, Number(sponsor) || 0) * SPONSOR_RATE)
+                + (Math.max(0, Number(referral) || 0) * REFERRAL_RATE);
+            return {
+                hours: hours,
+                offset: offset,
+                remainingLiability: Math.max(0, FRANCHISE_LIABILITY - offset),
+                hoursRemaining: Math.max(0, SWEAT_HOUR_CAP - hours)
+            };
         }
 
-        function formatMassiveCurrency(value) {
-            if (value >= 1e33) return "$" + (value / 1e33).toFixed(2) + " Decillion";
-            if (value >= 1e30) return "$" + (value / 1e30).toFixed(2) + " Nonillion";
-            if (value >= 1e27) return "$" + (value / 1e27).toFixed(2) + " Octillion";
-            if (value >= 1e24) return "$" + (value / 1e24).toFixed(2) + " Septillion";
-            if (value >= 1e21) return "$" + (value / 1e21).toFixed(2) + " Sextillion";
-            if (value >= 1e18) return "$" + (value / 1e18).toFixed(2) + " Quintillion";
-            if (value >= 1e15) return "$" + (value / 1e15).toFixed(2) + " Quadrillion";
-            if (value >= 1e12) return "$" + (value / 1e12).toFixed(2) + " Trillion";
-            if (value >= 1e9)  return "$" + (value / 1e9).toFixed(2) + " Billion";
-            if (value >= 1e6)  return "$" + (value / 1e6).toFixed(2) + " Million";
-            return "$" + Math.round(value).toLocaleString();
+        function netAnnualRate(annualRate, taxOn, inflationOn, feeMode) {
+            let netRate = Number(annualRate) || 0;
+            if (feeMode === 'pe') netRate -= 2;
+            else if (feeMode === 'pass') netRate -= 0.01;
+            if (inflationOn) netRate -= 3;
+            if (netRate < 0) netRate = 0;
+            if (taxOn) netRate *= 0.8;
+            return netRate;
+        }
+
+        function log10Sum(a, b) {
+            if (!Number.isFinite(a)) return b;
+            if (!Number.isFinite(b)) return a;
+            const hi = Math.max(a, b);
+            const lo = Math.min(a, b);
+            if (hi - lo > 16) return hi;
+            return hi + Math.log10(1 + Math.pow(10, lo - hi));
+        }
+
+        // Investor.gov monthly compounding, ordinary annuity (deposit at month end):
+        // FV = P*(1 + r/n)^(n*t) + PMT*[((1 + r/n)^(n*t) - 1) / (r/n)]
+        // n = 12. A zero rate degenerates to FV = P + PMT*n*t.
+        // Returns the exact floating-point value when it fits, plus log10 so
+        // 1,000-year paths still plot after the dollar figure leaves IEEE range.
+        function investorGovFutureValue(principal, monthlyPmt, annualRatePercent, years, principalLog10) {
+            const PMT = Number.isFinite(monthlyPmt) ? monthlyPmt : 0;
+            const t = Math.max(0, Number.isFinite(years) ? years : 0);
+            const periods = MONTHS_PER_YEAR * t;
+            const nominal = Number.isFinite(annualRatePercent) ? annualRatePercent : 0;
+
+            function pack(fv, log10) {
+                if (!Number.isFinite(fv) || fv <= 0) {
+                    if (Number.isFinite(log10) && log10 > 0) return { fv: Infinity, log10: log10 };
+                    return { fv: 0, log10: -Infinity };
+                }
+                return { fv: fv, log10: Number.isFinite(log10) ? log10 : Math.log10(fv) };
+            }
+
+            if (periods === 0) {
+                if (Number.isFinite(principal)) return pack(Math.max(0, principal), principal > 0 ? Math.log10(principal) : -Infinity);
+                return pack(Infinity, principalLog10);
+            }
+
+            if (!(nominal > 0)) {
+                const base = Number.isFinite(principal) ? principal : 0;
+                return pack(base + (PMT * periods), -Infinity);
+            }
+
+            const i = (nominal / 100) / MONTHS_PER_YEAR;
+            const log10Growth = periods * (Math.log1p(i) / Math.LN10);
+            const growth = log10Growth < 307 ? Math.exp(periods * Math.log1p(i)) : Infinity;
+
+            if (Number.isFinite(principal) && Number.isFinite(growth)) {
+                const fvRaw = (principal * growth) + (PMT * ((growth - 1) / i));
+                if (Number.isFinite(fvRaw)) return pack(fvRaw, fvRaw > 0 ? Math.log10(fvRaw) : -Infinity);
+            }
+
+            let log10Base = -Infinity;
+            if (Number.isFinite(principal)) {
+                const base = principal + (PMT / i);
+                log10Base = base > 0 ? Math.log10(base) : -Infinity;
+            } else if (Number.isFinite(principalLog10)) {
+                const pmtLog = PMT > 0 ? Math.log10(PMT / i) : -Infinity;
+                log10Base = log10Sum(principalLog10, pmtLog);
+            } else if (PMT > 0) {
+                log10Base = Math.log10(PMT / i);
+            }
+            if (!Number.isFinite(log10Base)) return pack(0, -Infinity);
+            const log10 = log10Base + log10Growth;
+            const fv = log10 < 307 ? Math.pow(10, log10) : Infinity;
+            return pack(fv, log10);
+        }
+
+        function projectFutureValue(inputs, annualRate, years) {
+            const netRate = netAnnualRate(annualRate, state.taxOn, state.inflationOn, state.feeMode);
+            const cash = Number.isFinite(inputs.monthly) ? inputs.monthly : 0;
+            const ongoing = Math.max(0, inputs.ongoingSweat || 0);
+            const remainingHrs = Math.max(0, inputs.hoursRemaining || 0);
+            const totalMonths = Math.max(0, years) * MONTHS_PER_YEAR;
+            if (!(ongoing > 0) || !(remainingHrs > 0) || totalMonths === 0) {
+                return investorGovFutureValue(inputs.principal, cash, netRate, years);
+            }
+            const sweatMonths = Math.min(totalMonths, remainingHrs / ongoing);
+            const phase1 = investorGovFutureValue(inputs.principal, cash + (ongoing * SWEAT_RATE), netRate, sweatMonths / MONTHS_PER_YEAR);
+            const restMonths = totalMonths - sweatMonths;
+            if (restMonths <= 1e-9) return phase1;
+            return investorGovFutureValue(phase1.fv, cash, netRate, restMonths / MONTHS_PER_YEAR, phase1.log10);
+        }
+
+        function formatDollars(value) {
+            if (!Number.isFinite(value)) return '$0';
+            const sign = value < 0 ? '-' : '';
+            const abs = Math.abs(value);
+            const cents = Math.round(abs * 100) / 100;
+            const hasCents = Math.abs(cents - Math.round(cents)) >= 0.005;
+            const body = hasCents
+                ? cents.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                : Math.round(cents).toLocaleString();
+            return sign + '$' + body;
+        }
+
+        function formatMassiveCurrency(value, log10Hint) {
+            const log10v = (Number.isFinite(value) && value > 0) ? Math.log10(value) : log10Hint;
+            if (!Number.isFinite(log10v) || log10v < 0) {
+                if (Number.isFinite(value)) return formatDollars(value);
+                return 'Unbounded';
+            }
+            if (log10v < 6 && Number.isFinite(value)) return formatDollars(value);
+            const exp = Math.floor(log10v + 1e-12);
+            if (exp >= 6 && exp < 6 + (SCALE_NAMES.length * 3)) {
+                const idx = Math.floor((exp - 6) / 3);
+                const baseExp = 6 + (3 * idx);
+                const scaled = Math.pow(10, log10v - baseExp);
+                return '$' + scaled.toFixed(2) + ' ' + SCALE_NAMES[idx];
+            }
+            const mantissa = Math.pow(10, log10v - exp);
+            return '$' + mantissa.toFixed(2) + 'e' + exp;
+        }
+
+        function formatProjection(result) {
+            if (!result) return '$0';
+            return formatMassiveCurrency(result.fv, result.log10);
+        }
+
+        function formatAxisTick(log10v) {
+            if (!Number.isFinite(log10v)) return '$0';
+            if (log10v < 0) return formatDollars(Math.pow(10, log10v));
+            if (log10v < 3) return formatDollars(Math.pow(10, log10v));
+            if (log10v < 6) return '$' + (Math.pow(10, log10v) / 1e3).toFixed(log10v >= 4 ? 0 : 1) + 'K';
+            if (log10v < 9) return '$' + (Math.pow(10, log10v - 6)).toFixed(log10v >= 7 ? 0 : 1) + 'M';
+            if (log10v < 12) return '$' + (Math.pow(10, log10v - 9)).toFixed(log10v >= 10 ? 0 : 1) + 'B';
+            const exp = Math.floor(log10v + 1e-12);
+            const mantissa = Math.pow(10, log10v - exp);
+            return '$' + mantissa.toFixed(1) + 'e' + exp;
+        }
+
+        function formatHorizonTick(years) {
+            if (years >= 100) return Math.round(years).toLocaleString();
+            if (Math.abs(years - Math.round(years)) < 1e-6) return String(Math.round(years));
+            return years.toFixed(1);
+        }
+
+        function milestoneYears(horizon) {
+            const h = Math.max(1, Math.round(horizon));
+            const marks = new Set([0, h]);
+            let step = 1;
+            if (h > 100) step = 25;
+            else if (h > 50) step = 10;
+            else if (h > 20) step = 5;
+            for (let yr = step; yr < h; yr += step) marks.add(yr);
+            return Array.from(marks).sort(function (a, b) { return a - b; });
+        }
+
+        function contributionsAtYear(inputs, years) {
+            const months = Math.max(0, years) * MONTHS_PER_YEAR;
+            const cash = (Number.isFinite(inputs.monthly) ? inputs.monthly : 0) * months;
+            const ongoing = Math.max(0, inputs.ongoingSweat || 0);
+            const remaining = Math.max(0, inputs.hoursRemaining || 0);
+            const sweatMonths = ongoing > 0 ? Math.min(months, remaining / ongoing) : 0;
+            const principal = Number.isFinite(inputs.principal) ? inputs.principal : 0;
+            return principal + cash + (sweatMonths * ongoing * SWEAT_RATE);
+        }
+
+        function readEngineInputs() {
+            const seed = Math.max(0, parseFloat(document.getElementById('inputSeed').value) || 0);
+            const monthly = parseFloat(document.getElementById('inputMonthly').value);
+            const sweatHrs = parseFloat(document.getElementById('inputSweat').value) || 0;
+            const mentor = Math.max(0, parseFloat(document.getElementById('inputMentor').value) || 0);
+            const sponsor = Math.max(0, parseFloat(document.getElementById('inputSponsor').value) || 0);
+            const referral = Math.max(0, parseFloat(document.getElementById('inputReferral').value) || 0);
+            const baseRate = parseFloat(document.getElementById('inputRate').value) || 0;
+            const horizon = Math.min(1000, Math.max(1, parseInt(document.getElementById('inputHorizon').value, 10) || 1000));
+            const ongoingSweat = Math.max(0, parseFloat(document.getElementById('inputOngoingSweat').value) || 0);
+            const volR1 = parseFloat(document.getElementById('volR1').value) || 0;
+            const volR2 = parseFloat(document.getElementById('volR2').value) || 0;
+            const ledger = actionTrackOffset(sweatHrs, mentor, sponsor, referral);
+            return {
+                seed: seed,
+                monthly: Number.isFinite(monthly) ? monthly : 0,
+                sweatHrs: ledger.hours,
+                mentor: mentor,
+                sponsor: sponsor,
+                referral: referral,
+                baseRate: baseRate,
+                horizon: horizon,
+                ongoingSweat: ongoingSweat,
+                volR1: volR1,
+                volR2: volR2,
+                actionOffset: ledger.offset,
+                remainingLiability: ledger.remainingLiability,
+                hoursRemaining: ledger.hoursRemaining,
+                principal: seed + ledger.offset
+            };
+        }
+
+        function renderScenarioChart(inputs) {
+            const specs = [
+                { id: 'pathExtBull', rate: inputs.baseRate + inputs.volR2 },
+                { id: 'pathModBull', rate: inputs.baseRate + inputs.volR1 },
+                { id: 'pathBase', rate: inputs.baseRate },
+                { id: 'pathModBear', rate: inputs.baseRate - inputs.volR1 },
+                { id: 'pathExtBear', rate: inputs.baseRate - inputs.volR2 }
+            ];
+            const samples = 72;
+            let logMin = Infinity;
+            let logMax = -Infinity;
+            const series = specs.map(function (spec) {
+                const logs = [];
+                for (let i = 0; i <= samples; i++) {
+                    const year = (inputs.horizon * i) / samples;
+                    const projected = projectFutureValue(inputs, spec.rate, year);
+                    logs.push(projected.log10);
+                    if (Number.isFinite(projected.log10)) {
+                        if (projected.log10 < logMin) logMin = projected.log10;
+                        if (projected.log10 > logMax) logMax = projected.log10;
+                    }
+                }
+                return { id: spec.id, logs: logs };
+            });
+            if (!Number.isFinite(logMin) || !Number.isFinite(logMax)) {
+                logMin = 0;
+                logMax = 1;
+            }
+            if (logMax - logMin < 0.25) {
+                const mid = (logMax + logMin) / 2;
+                logMin = mid - 0.125;
+                logMax = mid + 0.125;
+            }
+            const pad = (logMax - logMin) * 0.06;
+            logMin -= pad;
+            logMax += pad;
+
+            series.forEach(function (spec) {
+                const path = document.getElementById(spec.id);
+                if (!path) return;
+                let d = '';
+                spec.logs.forEach(function (log10v, i) {
+                    const x = (i / samples) * 600;
+                    const t = Number.isFinite(log10v) ? (log10v - logMin) / (logMax - logMin) : 0;
+                    const y = 190 - (Math.min(1, Math.max(0, t)) * 180);
+                    d += (i === 0 ? 'M' : 'L') + x.toFixed(2) + ' ' + y.toFixed(2) + ' ';
+                });
+                path.setAttribute('d', d.trim());
+            });
+
+            for (let tick = 0; tick < 5; tick++) {
+                const el = document.getElementById('yTick' + tick);
+                if (!el) continue;
+                const log10v = logMax - ((logMax - logMin) * tick / 4);
+                el.textContent = formatAxisTick(log10v);
+            }
+            [0.25, 0.5, 0.75].forEach(function (fraction, index) {
+                const el = document.getElementById('xTick' + (index + 1));
+                if (el) el.textContent = formatHorizonTick(inputs.horizon * fraction);
+            });
+            const xMax = document.getElementById('xAxisMaxLabel');
+            if (xMax) xMax.textContent = formatHorizonTick(inputs.horizon) + ' Yr';
         }
 
         function calculateEngine() {
-            const seed = parseFloat(document.getElementById('inputSeed').value) || 0;
-            const monthly = parseFloat(document.getElementById('inputMonthly').value) || 0;
-            const sweatHrs = parseFloat(document.getElementById('inputSweat').value) || 0;
-            const mentor = parseFloat(document.getElementById('inputMentor').value) || 0;
-            const sponsor = parseFloat(document.getElementById('inputSponsor').value) || 0;
-            const referral = parseFloat(document.getElementById('inputReferral').value) || 0;
-            const baseRate = parseFloat(document.getElementById('inputRate').value) || 0;
-            const horizon = parseInt(document.getElementById('inputHorizon').value) || 1000;
-            const ongoingSweat = parseFloat(document.getElementById('inputOngoingSweat').value) || 0;
-            
-            const volR1 = parseFloat(document.getElementById('volR1').value) || 5;
-            const volR2 = parseFloat(document.getElementById('volR2').value) || 15;
+            const inputs = readEngineInputs();
 
-            document.getElementById('valSweatHrs').textContent = sweatHrs.toLocaleString() + " Hrs";
-            document.getElementById('valMentor').textContent = mentor;
-            document.getElementById('valSponsor').textContent = sponsor;
-            document.getElementById('valReferral').textContent = referral;
-            document.getElementById('valHorizon').textContent = horizon;
-            document.getElementById('xAxisMaxLabel').textContent = horizon + " Yr";
-            document.getElementById('tipHeaderLabel').textContent = horizon + " Yr Valuation";
+            document.getElementById('valSweatHrs').textContent = inputs.sweatHrs.toLocaleString() + ' / ' + SWEAT_HOUR_CAP.toLocaleString() + ' Hrs';
+            document.getElementById('valMentor').textContent = inputs.mentor;
+            document.getElementById('valSponsor').textContent = inputs.sponsor;
+            document.getElementById('valReferral').textContent = inputs.referral;
+            document.getElementById('valHorizon').textContent = inputs.horizon;
+            document.getElementById('tipHeaderLabel').textContent = inputs.horizon + ' Yr Valuation';
 
-            const trackContributions = (sweatHrs * 50) + (mentor * 1000000) + (sponsor * 100000) + (referral * 50000);
-            const totalInitial = seed + trackContributions;
-            const totalMonthlyContrib = monthly + (ongoingSweat * 50);
+            const caption = document.getElementById('formulaCaption');
+            if (caption) {
+                caption.textContent = 'Investor.gov monthly compounding · n = 12 · end-of-month deposits · ' + inputs.horizon.toLocaleString() + '-year horizon · $10,000,000 liability';
+            }
 
-            let liabilityDisplay = document.getElementById('liabilityDisplay');
-            let liabilitySubText = document.getElementById('liabilitySubText');
-            let rawLiability = 10000000 - totalInitial;
-
-            if (rawLiability <= 0 || sweatHrs >= 10000 || mentor >= 10 || sponsor >= 100 || referral >= 200) {
-                liabilityDisplay.textContent = "$0 (Neutralized)";
-                liabilityDisplay.className = "text-3xl font-mono font-extrabold text-emerald-400";
-                liabilitySubText.textContent = "Franchise Secured. Principal: $" + totalInitial.toLocaleString() + " | Monthly Compound: $" + totalMonthlyContrib.toLocaleString();
-                liabilitySubText.className = "text-[11px] text-emerald-400 font-medium";
+            const liabilityDisplay = document.getElementById('liabilityDisplay');
+            const liabilitySubText = document.getElementById('liabilitySubText');
+            if (inputs.remainingLiability <= 0) {
+                liabilityDisplay.textContent = '$0 (Neutralized)';
+                liabilityDisplay.className = 'text-3xl font-mono font-extrabold text-emerald-400';
+                liabilitySubText.textContent = 'Franchise secured. Action offset ' + formatDollars(inputs.actionOffset) + ' · Principal ' + formatDollars(inputs.principal);
+                liabilitySubText.className = 'text-[11px] text-emerald-400 font-medium';
             } else {
-                liabilityDisplay.textContent = "$" + rawLiability.toLocaleString();
-                liabilityDisplay.className = "text-3xl font-mono font-extrabold text-rose-500";
-                liabilitySubText.textContent = "Execute Action Tracks to neutralize liability.";
-                liabilitySubText.className = "text-[11px] text-amber-400 font-medium";
+                liabilityDisplay.textContent = formatDollars(inputs.remainingLiability);
+                liabilityDisplay.className = 'text-3xl font-mono font-extrabold text-rose-500';
+                liabilitySubText.textContent = 'Action offset ' + formatDollars(inputs.actionOffset) + ' of $10,000,000. Sweat cap 200,000 Hrs at $50/Hr.';
+                liabilitySubText.className = 'text-[11px] text-amber-400 font-medium';
             }
 
-            let baseVal = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate, horizon, state.taxOn, state.inflationOn, state.feeMode);
-            let modBull = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR1, horizon, state.taxOn, state.inflationOn, state.feeMode);
-            let extBull = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR2, horizon, state.taxOn, state.inflationOn, state.feeMode);
-            let modBear = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR1, horizon, state.taxOn, state.inflationOn, state.feeMode);
-            let extBear = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR2, horizon, state.taxOn, state.inflationOn, state.feeMode);
+            const baseVal = projectFutureValue(inputs, inputs.baseRate, inputs.horizon);
+            const modBull = projectFutureValue(inputs, inputs.baseRate + inputs.volR1, inputs.horizon);
+            const extBull = projectFutureValue(inputs, inputs.baseRate + inputs.volR2, inputs.horizon);
+            const modBear = projectFutureValue(inputs, inputs.baseRate - inputs.volR1, inputs.horizon);
+            const extBear = projectFutureValue(inputs, inputs.baseRate - inputs.volR2, inputs.horizon);
 
-            document.getElementById('topValDisplay').textContent = formatMassiveCurrency(baseVal);
-            document.getElementById('tipBullR2').textContent = formatMassiveCurrency(extBull);
-            document.getElementById('tipBullR1').textContent = formatMassiveCurrency(modBull);
-            document.getElementById('tipBase').textContent = formatMassiveCurrency(baseVal);
-            document.getElementById('tipBearR1').textContent = formatMassiveCurrency(modBear);
-            document.getElementById('tipBearR2').textContent = formatMassiveCurrency(extBear);
+            document.getElementById('topValDisplay').textContent = formatProjection(baseVal);
+            document.getElementById('tipBullR2').textContent = formatProjection(extBull);
+            document.getElementById('tipBullR1').textContent = formatProjection(modBull);
+            document.getElementById('tipBase').textContent = formatProjection(baseVal);
+            document.getElementById('tipBearR1').textContent = formatProjection(modBear);
+            document.getElementById('tipBearR2').textContent = formatProjection(extBear);
+            renderScenarioChart(inputs);
 
-            let tableBody = document.getElementById('dataTableBody');
+            const tableBody = document.getElementById('dataTableBody');
             tableBody.innerHTML = '';
-            let stepSize = horizon > 100 ? 25 : (horizon > 50 ? 10 : 1);
-            for (let yr = 1; yr <= horizon; yr += (yr < 10 ? 1 : stepSize)) {
-                let contribAtYr = totalInitial + (totalMonthlyContrib * 12 * yr);
-                let valAtYr = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate, yr, state.taxOn, state.inflationOn, state.feeMode);
-                let bullAtYr = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR2, yr, state.taxOn, state.inflationOn, state.feeMode);
-                let bearAtYr = calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR2, yr, state.taxOn, state.inflationOn, state.feeMode);
-
-                let row = document.createElement('tr');
-                row.className = "hover:bg-slate-900/50 transition";
-                row.innerHTML = `
-                    <td class="py-2 px-2 text-slate-400">Year ${yr}</td>
-                    <td class="py-2 px-2 text-slate-300">$${Math.round(contribAtYr).toLocaleString()}</td>
-                    <td class="py-2 px-2 text-sky-400">${formatMassiveCurrency(valAtYr)}</td>
-                    <td class="py-2 px-2 text-emerald-400">${formatMassiveCurrency(bullAtYr)}</td>
-                    <td class="py-2 px-2 text-rose-400">${formatMassiveCurrency(bearAtYr)}</td>
-                `;
+            milestoneYears(inputs.horizon).forEach(function (yr) {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-900/50 transition';
+                row.innerHTML = ''
+                    + '<td class="py-2 px-2 text-slate-400">Year ' + yr + '</td>'
+                    + '<td class="py-2 px-2 text-slate-300">' + formatDollars(contributionsAtYear(inputs, yr)) + '</td>'
+                    + '<td class="py-2 px-2 text-sky-400">' + formatProjection(projectFutureValue(inputs, inputs.baseRate, yr)) + '</td>'
+                    + '<td class="py-2 px-2 text-emerald-400">' + formatProjection(projectFutureValue(inputs, inputs.baseRate + inputs.volR2, yr)) + '</td>'
+                    + '<td class="py-2 px-2 text-rose-400">' + formatProjection(projectFutureValue(inputs, inputs.baseRate - inputs.volR2, yr)) + '</td>';
                 tableBody.appendChild(row);
-            }
+            });
         }
 
-        document.getElementById('chartCanvasContainer').addEventListener('mousemove', function(e) {
+        document.getElementById('chartCanvasContainer').addEventListener('mousemove', function (e) {
             const rect = this.getBoundingClientRect();
-            const xPos = e.clientX - rect.left;
-            const containerWidth = rect.width;
-            const percentage = Math.max(0, Math.min(1, xPos / containerWidth));
-            
-            const horizon = parseInt(document.getElementById('inputHorizon').value) || 1000;
-            const targetYear = Math.max(1, Math.round(percentage * horizon));
+            const percentage = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+            const inputs = readEngineInputs();
+            const targetYear = Math.max(0, Math.round(percentage * inputs.horizon));
 
             document.getElementById('cursorLine').setAttribute('x1', percentage * 600);
             document.getElementById('cursorLine').setAttribute('x2', percentage * 600);
-            document.getElementById('tipHeaderLabel').textContent = `Year ${targetYear} Valuation`;
-
-            const seed = parseFloat(document.getElementById('inputSeed').value) || 0;
-            const monthly = parseFloat(document.getElementById('inputMonthly').value) || 0;
-            const sweatHrs = parseFloat(document.getElementById('inputSweat').value) || 0;
-            const mentor = parseFloat(document.getElementById('inputMentor').value) || 0;
-            const sponsor = parseFloat(document.getElementById('inputSponsor').value) || 0;
-            const referral = parseFloat(document.getElementById('inputReferral').value) || 0;
-            const baseRate = parseFloat(document.getElementById('inputRate').value) || 0;
-            const ongoingSweat = parseFloat(document.getElementById('inputOngoingSweat').value) || 0;
-            const volR1 = parseFloat(document.getElementById('volR1').value) || 5;
-            const volR2 = parseFloat(document.getElementById('volR2').value) || 15;
-
-            const trackContributions = (sweatHrs * 50) + (mentor * 1000000) + (sponsor * 100000) + (referral * 50000);
-            const totalInitial = seed + trackContributions;
-            const totalMonthlyContrib = monthly + (ongoingSweat * 50);
-
-            document.getElementById('tipBullR2').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR2, targetYear, state.taxOn, state.inflationOn, state.feeMode));
-            document.getElementById('tipBullR1').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate + volR1, targetYear, state.taxOn, state.inflationOn, state.feeMode));
-            document.getElementById('tipBase').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate, targetYear, state.taxOn, state.inflationOn, state.feeMode));
-            document.getElementById('tipBearR1').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR1, targetYear, state.taxOn, state.inflationOn, state.feeMode));
-            document.getElementById('tipBearR2').textContent = formatMassiveCurrency(calculateCompoundFutureValue(totalInitial, totalMonthlyContrib, baseRate - volR2, targetYear, state.taxOn, state.inflationOn, state.feeMode));
+            document.getElementById('tipHeaderLabel').textContent = 'Year ' + targetYear + ' Valuation';
+            document.getElementById('tipBullR2').textContent = formatProjection(projectFutureValue(inputs, inputs.baseRate + inputs.volR2, targetYear));
+            document.getElementById('tipBullR1').textContent = formatProjection(projectFutureValue(inputs, inputs.baseRate + inputs.volR1, targetYear));
+            document.getElementById('tipBase').textContent = formatProjection(projectFutureValue(inputs, inputs.baseRate, targetYear));
+            document.getElementById('tipBearR1').textContent = formatProjection(projectFutureValue(inputs, inputs.baseRate - inputs.volR1, targetYear));
+            document.getElementById('tipBearR2').textContent = formatProjection(projectFutureValue(inputs, inputs.baseRate - inputs.volR2, targetYear));
         });
+
+        const STATION_EXPLAINERS = {
+            diagnostic: {
+                title: 'Diagnostic Profile',
+                statusLine: 'Playing Diagnostic Profile briefing.',
+                script: 'Station one, Diagnostic Profile. Food Logic is Selfless Leader or Share. Shelter Intent locks Nation Builder. This station names who is compounding. It does not, by itself, reduce the ten million dollar franchise liability.'
+            },
+            tracks: {
+                title: 'Action Tracks',
+                statusLine: 'Playing Action Tracks briefing: sweat $50 per hour up to 200,000 hours, mentors $1 million, sponsors $100,000, referrals $50,000.',
+                script: 'Station two, Action Tracks. These offsets neutralize the ten million dollar apprentice liability. Sweat equity credits fifty dollars an hour, up to two hundred thousand hours, which is exactly ten million dollars. Each mentor credits one million dollars. Each sponsor credits one hundred thousand dollars. Each referral credits fifty thousand dollars. Remaining liability is ten million minus that sum, and it never drops below zero. Credits above ten million still compound as principal.'
+            },
+            physics: {
+                title: 'Physics of Wealth',
+                statusLine: 'Playing Physics of Wealth briefing: Investor.gov monthly compounding, horizon to 1,000 years.',
+                script: 'Station three, the Physics of Wealth. Cash seed plus Action Track credits are the starting principal. Monthly cash, and ongoing sweat at fifty dollars an hour until the two hundred thousand hour cap is used up, are deposited at the end of each month. Future value equals principal times the quantity one plus r over twelve, raised to twelve times the years, plus the monthly deposit times the ordinary annuity factor. That is the Investor dot gov monthly compounding formula. The horizon runs up to one thousand years.'
+            },
+            environment: {
+                title: 'Environment and Fees',
+                statusLine: 'Playing Environment and Fees briefing: tax, inflation, and fee modes on the net rate.',
+                script: 'Station four, Environment and Fees. Tax on keeps eighty percent of each period of interest, which multiplies the net rate by zero point eight. Inflation on subtracts three percentage points before that. Private equity subtracts two points, the pass-through fee subtracts one basis point, and DRAH zero leaves the base rate unchanged. Volatility R one and R two draw the moderate and extreme bull and bear paths.'
+            }
+        };
+        const STATION_AUDIO = {
+            diagnostic: 'drah-dual-host-overview.mp3',
+            tracks: 'drah-dual-host-overview.mp3',
+            physics: 'drah-overview.mp3',
+            environment: 'drah-overview.mp3'
+        };
+        const EXPLAINER_IDLE_CLASS = 'w-full bg-slate-900 border border-amber-500/40 hover:border-amber-400 hover:bg-slate-800 text-amber-300 font-semibold py-2 px-3 rounded-lg text-[11px] tracking-wide transition text-left';
+        const EXPLAINER_PLAY_CLASS = 'w-full bg-emerald-500 border border-emerald-300 text-slate-950 font-bold py-2 px-3 rounded-lg text-[11px] tracking-wide transition text-left';
+        let explainerToken = 0;
+
+        function paintStationExplainer(activeId) {
+            document.querySelectorAll('[data-explainer]').forEach(function (btn) {
+                const playing = btn.getAttribute('data-explainer') === activeId;
+                btn.setAttribute('data-state', playing ? 'playing' : 'idle');
+                btn.className = playing ? EXPLAINER_PLAY_CLASS : EXPLAINER_IDLE_CLASS;
+                btn.textContent = '▶ Play Audio Explainer';
+            });
+            document.querySelectorAll('[data-explainer-live]').forEach(function (el) {
+                const id = el.getAttribute('data-explainer-live');
+                const station = STATION_EXPLAINERS[id];
+                el.textContent = (id === activeId && station) ? station.statusLine : '';
+            });
+        }
+
+        function playStationAudioFile(stationId, token) {
+            const src = STATION_AUDIO[stationId];
+            if (!src) return;
+            let audio = document.getElementById('stationAudio-' + stationId);
+            if (!audio) {
+                audio = document.createElement('audio');
+                audio.id = 'stationAudio-' + stationId;
+                audio.preload = 'auto';
+                document.body.appendChild(audio);
+            }
+            audio.src = src;
+            audio.currentTime = 0;
+            const played = audio.play();
+            if (played && typeof played.catch === 'function') {
+                played.catch(function () {
+                    if (token === explainerToken) releaseStationExplainer(stationId);
+                });
+            }
+            audio.onended = function () {
+                if (token === explainerToken) releaseStationExplainer(stationId);
+            };
+        }
+
+        function releaseStationExplainer(stationId) {
+            document.querySelectorAll('[data-explainer]').forEach(function (btn) {
+                btn.setAttribute('data-state', 'idle');
+                btn.className = EXPLAINER_IDLE_CLASS;
+                btn.textContent = '▶ Play Audio Explainer';
+            });
+            document.querySelectorAll('[data-explainer-live]').forEach(function (el) {
+                const id = el.getAttribute('data-explainer-live');
+                const station = STATION_EXPLAINERS[id];
+                el.textContent = (id === stationId && station) ? station.statusLine : '';
+            });
+        }
+
+        function playStationExplainer(stationId) {
+            const station = STATION_EXPLAINERS[stationId];
+            if (!station) return;
+            const token = ++explainerToken;
+            ['dualHostAudio', 'briefingDualHostAudio'].forEach(function (id) {
+                const node = document.getElementById(id);
+                if (node && !node.paused) node.pause();
+            });
+            document.querySelectorAll('audio[id^="stationAudio-"]').forEach(function (node) {
+                node.pause();
+            });
+            paintStationExplainer(stationId);
+
+            if (window.speechSynthesis && typeof SpeechSynthesisUtterance === 'function') {
+                window.speechSynthesis.cancel();
+                window.setTimeout(function () {
+                    if (token !== explainerToken) return;
+                    const utter = new SpeechSynthesisUtterance(station.script);
+                    utter.lang = 'en-US';
+                    utter.rate = 1;
+                    const voices = window.speechSynthesis.getVoices() || [];
+                    const voice = voices.find(function (item) { return /^en(-|_)US/i.test(item.lang); })
+                        || voices.find(function (item) { return /^en/i.test(item.lang); });
+                    if (voice) utter.voice = voice;
+                    utter.onend = function () {
+                        if (token === explainerToken) releaseStationExplainer(stationId);
+                    };
+                    utter.onerror = function () {
+                        if (token !== explainerToken) return;
+                        playStationAudioFile(stationId, token);
+                    };
+                    window.speechSynthesis.resume();
+                    window.speechSynthesis.speak(utter);
+                }, 60);
+                return;
+            }
+            playStationAudioFile(stationId, token);
+        }
 
         function handleCheckout(event) {
             event.preventDefault();

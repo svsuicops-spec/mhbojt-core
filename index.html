@@ -24,9 +24,13 @@
                 <a href="#notebookPluginTray" class="text-[11px] text-amber-400 hover:text-amber-300">NotebookLM</a>
                 <a href="/drah_crystal_dynasty1.html" class="text-[11px] text-amber-400 hover:text-amber-300">Plugin ↗</a>
             </div>
-            <button onclick="toggleModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 text-xs">
-                Secure $100 Reservation
-            </button>
+            <div class="flex flex-wrap items-center justify-end gap-2">
+                <button type="button" data-marketing="mission" onclick="openMarketingBrief('mission')" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold px-3 py-2 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 text-xs">🌍 What Is This Site For?</button>
+                <button type="button" data-marketing="happen" onclick="openMarketingBrief('happen')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-3 py-2 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 text-xs">🚀 How We Make It Happen</button>
+                <button onclick="toggleModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition transform hover:-translate-y-0.5 text-xs">
+                    Secure $100 Reservation
+                </button>
+            </div>
         </div>
     </header>
 
@@ -41,10 +45,14 @@
     <main class="flex-grow max-w-7xl mx-auto px-6 py-6 space-y-6 w-full">
         
         <!-- Header Banner -->
-        <div class="text-center space-y-1">
+        <div class="text-center space-y-3">
             <div class="text-amber-400 text-xs font-semibold uppercase tracking-widest">~ Run Your Own Numbers</div>
             <h1 class="text-xl font-extrabold tracking-wider text-amber-400">DRAH GOSSSM: CRYSTAL DYNASTY ENGINE</h1>
             <p class="text-[11px] text-slate-400 tracking-wide">1,000-YEAR UNIVERSAL PROTOCOL | MHBOJT FRANCHISE INTEGRATION</p>
+            <div class="flex flex-wrap justify-center gap-3 pt-1">
+                <button type="button" data-marketing="mission" onclick="openMarketingBrief('mission')" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold px-5 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 text-sm sm:text-base">🌍 What Is This Site For?</button>
+                <button type="button" data-marketing="happen" onclick="openMarketingBrief('happen')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-5 py-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 text-sm sm:text-base">🚀 How We Make It Happen</button>
+            </div>
         </div>
 
         <section id="targetAudiences" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
@@ -696,6 +704,61 @@
         </div>
     </div>
 
+    <!-- Global mission briefings -->
+    <div id="missionModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-[70] p-4" onclick="if (event.target === this) closeMarketingBrief()" role="dialog" aria-modal="true" aria-labelledby="missionModalTitle">
+        <div class="bg-slate-900 border border-sky-500/40 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button type="button" onclick="closeMarketingBrief()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold" aria-label="Close">&times;</button>
+            <div class="text-[10px] uppercase tracking-widest text-sky-400 mb-2">Global briefing</div>
+            <h2 id="missionModalTitle" class="text-2xl font-extrabold text-white mb-3">🌍 What Is This Site For?</h2>
+            <p class="text-slate-300 text-sm leading-relaxed mb-4">This site is the public gateway to a housing and wealth protocol. The mission is the same for a first-day apprentice and an elder who never swings a hammer: shelter, a trade, and a ledger that does not ask your age or your background before it lets you in.</p>
+            <div class="space-y-3">
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+                    <h3 class="text-sm font-bold text-white">1 billion affordable homes</h3>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">The global need is a billion homes people can actually afford. Crystal Dynasty maps that need onto modular shelter, parish citadels, and a franchise ledger — housing that stays in the community instead of a one-cycle raffle.</p>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+                    <h3 class="text-sm font-bold text-white">Bypass lifetime college debt</h3>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Apprentices learn the trade on the job. Verified sweat equity credits $50 an hour, up to 200,000 hours, instead of borrowing for a credential that never compounds. Training is the path. Debt is not the tuition.</p>
+                </article>
+                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+                    <h3 class="text-sm font-bold text-white">Sovereign wealth for any age or background</h3>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">A Guardsman, a Tri-Parish family, a member of the diaspora, an 80-year-old grandparent, or a new apprentice enters the same protocol. Referring, sponsoring, mentoring, and learning the trade are all doors to sovereign wealth.</p>
+                </article>
+            </div>
+            <button type="button" onclick="closeMarketingBrief(); openMarketingBrief('happen')" class="mt-5 w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-3 rounded-lg text-sm">See how we make it happen</button>
+        </div>
+    </div>
+    <div id="happenModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-[70] p-4" onclick="if (event.target === this) closeMarketingBrief()" role="dialog" aria-modal="true" aria-labelledby="happenModalTitle">
+        <div class="bg-slate-900 border border-emerald-500/40 rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button type="button" onclick="closeMarketingBrief()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold" aria-label="Close">&times;</button>
+            <div class="text-[10px] uppercase tracking-widest text-emerald-400 mb-2">RWA ledger</div>
+            <h2 id="happenModalTitle" class="text-2xl font-extrabold text-white mb-3">🚀 How We Make It Happen</h2>
+            <p class="text-slate-300 text-sm leading-relaxed mb-4">A 200+ component real-world-asset tokenization ledger records every verified action — reservation, sweat, referral, sponsorship, mentorship, and shelter — as a claim on tangible assets. Training, support, and funding travel with the same record, so a $100 seat can scale into a $100,000,000 enterprise.</p>
+            <ol class="space-y-3">
+                <li class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+                    <h3 class="text-sm font-bold text-amber-400">1. Reserve the seat — $100</h3>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">The gateway is a $100 reservation. It locks a place on the citadel ledger before anyone has to already be wealthy.</p>
+                </li>
+                <li class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+                    <h3 class="text-sm font-bold text-amber-400">2. Contribute the way you can</h3>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">An apprentice earns $50 an hour of verified sweat equity. An 80-year-old grandparent can refer at $50,000 or sponsor at $100,000 without picking up a hammer. Mentors credit $1,000,000 when they walk someone through. Each track writes to the same RWA ledger.</p>
+                </li>
+                <li class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+                    <h3 class="text-sm font-bold text-amber-400">3. Training, support, and funding</h3>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">MHBOJT and FinAcademy train the trade. Selfless Leaders and Nation Builders supply the support corridor. Sponsors, reservations, and the compounding engine supply the funding. The $10,000,000 apprentice liability is neutralized on that ledger, not by a loan.</p>
+                </li>
+                <li class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+                    <h3 class="text-sm font-bold text-amber-400">4. Scale to a $100,000,000 enterprise</h3>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">The same components that start at $100 are how an operator manages a $100,000,000 enterprise: more homes, more apprentices, more sponsors, and a tokenized record of the real assets underneath.</p>
+                </li>
+            </ol>
+            <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button type="button" onclick="closeMarketingBrief(); toggleModal();" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3 rounded-lg text-sm">Reserve a $100 seat</button>
+                <button type="button" onclick="closeMarketingBrief(); document.getElementById('dynasty')?.scrollIntoView({behavior:'smooth'});" class="bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold py-3 rounded-lg text-sm border border-slate-700">Open the calculator</button>
+            </div>
+        </div>
+    </div>
+
     <!-- $100 Reservation Modal -->
     <div id="reservationModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
@@ -840,6 +903,33 @@
             const modal = document.getElementById('reservationModal');
             modal.classList.toggle('hidden');
         }
+
+        function openMarketingBrief(which) {
+            const mission = document.getElementById('missionModal');
+            const happen = document.getElementById('happenModal');
+            [mission, happen].forEach(function (modal) {
+                if (!modal) return;
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+            const target = which === 'happen' ? happen : mission;
+            if (!target) return;
+            target.classList.remove('hidden');
+            target.classList.add('flex');
+        }
+
+        function closeMarketingBrief() {
+            ['missionModal', 'happenModal'].forEach(function (id) {
+                const modal = document.getElementById(id);
+                if (!modal) return;
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') closeMarketingBrief();
+        });
 
         function toggleDataTable() {
             const tableContainer = document.getElementById('yearlyDataTableContainer');

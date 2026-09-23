@@ -1,0 +1,388 @@
+{
+  "version": "2026-09-23",
+  "title": "Sovereign case studies",
+  "note": "Versioned briefing catalog. Pages fetch this file when they load and when a visitor refreshes. It is not a live news wire.",
+  "cases": [
+    {
+      "id": "lky-sovereign-wealth",
+      "kicker": "Case study · Singapore sovereign wealth",
+      "title": "Lee Kuan Yew's sovereign wealth model",
+      "place": "Singapore",
+      "summary": "A long-horizon national balance sheet: compulsory household savings, a commercial holding company, and a separate reserve manager. The Crystal Dynasty protocol studies this architecture. It does not speak for Singapore's institutions.",
+      "disclaimer": "Historical case study only. No affiliation, endorsement, or claim that Temasek, GIC, CPF, or the Government of Singapore operates this ledger.",
+      "audio": {
+        "lead": "Lee Kuan Yew's government treated surplus as a multi-generational trust. Household savings, commercial assets, and foreign reserves were split across institutions with different jobs.",
+        "beats": [
+          "The Central Provident Fund, created in 1955, is the compulsory savings pillar for housing, retirement, and medical needs.",
+          "Temasek Holdings, incorporated in 1974, commercially manages investments previously held by the Singapore government. It is owned by the Minister for Finance.",
+          "GIC, established in 1981, manages foreign reserves on a long horizon and reports rolling real returns rather than a single promotional fund size.",
+          "The Housing and Development Board, formed in 1960, is the housing expression of that savings model. This site borrows the discipline, not the seal."
+        ]
+      },
+      "slides": [
+        {
+          "title": "Surplus before speculation",
+          "body": "The model starts with public thrift and household savings, then gives professional managers a mandate longer than one election or one market cycle."
+        },
+        {
+          "title": "Three different jobs",
+          "body": "CPF serves the household. Temasek (1974) holds and manages commercial investments. GIC (1981) stewards foreign reserves. Policy, commerce, and reserves are not the same desk."
+        },
+        {
+          "title": "Housing is part of the balance sheet",
+          "body": "HDB, from 1960, turned savings into shelter. A sovereign wealth story that ignores housing misses how families actually joined the national ledger."
+        },
+        {
+          "title": "What this protocol copies",
+          "body": "Separate the household track, the real-asset track, and the long reserve. Publish the rules. Do not pretend an external fund is endorsing the copy."
+        }
+      ],
+      "interactive": {
+        "lead": "Walk the four institutions. Each section is a different stewardship job inside one national design.",
+        "sections": [
+          {
+            "heading": "Household savings",
+            "body": "CPF (1955) is compulsory contributions with defined uses: housing, retirement, and healthcare. The individual account is visible. The state does not treat it as discretionary spending money."
+          },
+          {
+            "heading": "Commercial portfolio",
+            "body": "Temasek (1974) was created so government-linked investments could be owned and managed on commercial terms, under the Minister for Finance, rather than left inside ministries."
+          },
+          {
+            "heading": "Foreign reserves",
+            "body": "GIC (1981) invests reserves for the long term. Public communication emphasizes multi-decade real returns. This briefing does not invent an assets-under-management figure."
+          },
+          {
+            "heading": "Transferable lesson",
+            "body": "MHBOJT uses the split: sweat and referral credits for the household, modular shelter as the real asset, and a 1,000-year compounding map as the reserve view. Singapore's institutions are the case, not the operator."
+          }
+        ]
+      },
+      "datatable": {
+        "columns": ["Institution", "Established", "Stewardship job"],
+        "rows": [
+          ["Central Provident Fund", "1955", "Compulsory household savings for housing, retirement, and healthcare"],
+          ["Housing and Development Board", "1960", "Public housing as the shelter expression of national savings"],
+          ["Temasek Holdings", "1974", "Commercial owner of investments previously held by the government"],
+          ["GIC", "1981", "Long-horizon manager of Singapore's foreign reserves"]
+        ]
+      },
+      "video": {
+        "lead": "Use the Video Overview when you want the cinematic cut. This case is a reading of public institutional history, not a film produced by those institutions.",
+        "cue": "Pair it with the Charlie Munger archive already on the NotebookLM selector when you need a second long-horizon voice beside the Singapore case."
+      },
+      "mindmap": [
+        {
+          "label": "Sovereign wealth model",
+          "children": ["Fiscal surplus", "Professional mandate", "Intergenerational horizon"]
+        },
+        {
+          "label": "Household",
+          "children": ["CPF 1955", "HDB 1960"]
+        },
+        {
+          "label": "State balance sheet",
+          "children": ["Temasek 1974", "GIC 1981"]
+        },
+        {
+          "label": "Protocol copy",
+          "children": ["Action Tracks", "Modular shelter", "1,000-year map"]
+        }
+      ],
+      "reports": {
+        "lead": "Findings a Selfless Leader can use without over-claiming the source.",
+        "findings": [
+          "The model separates household savings, commercial assets, and foreign reserves.",
+          "Dates that matter in public record: CPF 1955, HDB 1960, Temasek 1974, GIC 1981.",
+          "Lee Kuan Yew (Prime Minister 1959–1990) is the political context of the build-out, not a brand on this site.",
+          "No portfolio mark is republished here. GIC's own reporting stresses long-horizon real returns."
+        ]
+      },
+      "flashcards": [
+        {"front": "What is Temasek's job in this case?", "back": "Commercial stewardship, from 1974, of investments previously held by the Singapore government."},
+        {"front": "What is GIC's job?", "back": "Long-horizon management of foreign reserves, established in 1981."},
+        {"front": "Does this site operate CPF or Temasek?", "back": "No. The card is a case study the protocol studies."}
+      ],
+      "quiz": [
+        {
+          "prompt": "Which institution was established in 1981 to manage Singapore's foreign reserves?",
+          "choices": ["Temasek Holdings", "GIC", "HDB", "CPF"],
+          "answer": "GIC"
+        },
+        {
+          "prompt": "How should a visitor read this card?",
+          "choices": ["As an endorsement by the Government of Singapore", "As a case study of institutional design", "As a claim that Temasek runs the MHBOJT ledger", "As a live fund-size quote"],
+          "answer": "As a case study of institutional design"
+        }
+      ],
+      "infographic": [
+        {"label": "CPF", "value": "1955"},
+        {"label": "HDB", "value": "1960"},
+        {"label": "Temasek", "value": "1974"},
+        {"label": "GIC", "value": "1981"}
+      ],
+      "artifact": {
+        "icon": "🏦",
+        "title": "Sovereign split icon",
+        "body": "Three desks, one horizon: household savings, commercial assets, foreign reserves."
+      }
+    },
+    {
+      "id": "regional-resilient-housing",
+      "kicker": "Field case · Tri-Parish shelter",
+      "title": "Regional resilient housing",
+      "place": "St. Bernard, Orleans, and Plaquemines",
+      "summary": "The institute's own housing case: a 48-acre Smart Living campus in St. Bernard Parish, a National Guard pipeline at Jackson Barracks, and modular shelter credited through sweat equity.",
+      "disclaimer": "Field case published by this platform. Component #001 and #002 are program briefs, not a scraped municipal award or a completed census of built homes.",
+      "audio": {
+        "lead": "Resilient housing here means the shelter stays in the parish that trains the people. Hours, lots, and reservations are recorded before anyone talks about a token.",
+        "beats": [
+          "Component #001 is the 48-acre St. Bernard Smart Living campus.",
+          "Component #002 is the Jackson Barracks National Guard pipeline into Tri-Parish placement.",
+          "The geography is St. Bernard, Orleans, and Plaquemines.",
+          "Sweat equity is logged at $50 an hour. The gateway reservation is $100. Neither figure is a promise of a finished house."
+        ]
+      },
+      "slides": [
+        {
+          "title": "Shelter is the real asset",
+          "body": "The regional case is modular housing and campus land, not a paper yield. The feed names the yards before the ledger names the credits."
+        },
+        {
+          "title": "Two published components",
+          "body": "Component #001: St. Bernard 48-acre campus. Component #002: Jackson Barracks and the Tri-Parish housing campaign."
+        },
+        {
+          "title": "Who the brief is for",
+          "body": "Selfless Leaders, Nation Builders, Guardsmen, recovery households, and sponsors. Incoming candidates read the 5W1H, then run Action Tracks."
+        },
+        {
+          "title": "What is still a brief",
+          "body": "Priority language on the campus page is the first 200 reservations. This card does not claim those homes are already delivered."
+        }
+      ],
+      "interactive": {
+        "lead": "Move from the parish map to the credit rule. Each section is a gate, not a slogan.",
+        "sections": [
+          {
+            "heading": "Campus",
+            "body": "The 48-acre Smart Living campus is Component #001, anchored in the Chalmette / Meraux area of St. Bernard Parish. Open that feed for the 5W1H and the map."
+          },
+          {
+            "heading": "Guard pipeline",
+            "body": "Jackson Barracks is Component #002. Service and training hours are the story; the campaign routes them toward Tri-Parish housing equity at the published $50/hr sweat rate."
+          },
+          {
+            "heading": "Tri-Parish households",
+            "body": "St. Bernard, Orleans, and Plaquemines are the recovery geography named on the Guard feed, including scattered lots in Meraux and Chalmette."
+          },
+          {
+            "heading": "Gateway",
+            "body": "The $100 reservation is the published Stripe gateway. It admits a candidate to the pipeline. It does not, by itself, neutralize the $10,000,000 franchise liability."
+          }
+        ]
+      },
+      "datatable": {
+        "columns": ["Corridor", "Component", "Published marker"],
+        "rows": [
+          ["St. Bernard Smart Living campus", "#001", "48 acres · first 200 reservations"],
+          ["Jackson Barracks pipeline", "#002", "Guard hours into Tri-Parish placement"],
+          ["Tri-Parish geography", "Field", "St. Bernard, Orleans, Plaquemines"],
+          ["Sweat equity", "Action Track", "$50 per hour"],
+          ["Reservation gateway", "Stripe", "$100"]
+        ]
+      },
+      "video": {
+        "lead": "The Video Overview can cut to the St. Bernard site feed or the National Guard campaign. Those are on-site pages, not external live cameras.",
+        "cue": "In the NotebookLM selector choose Video Overview, then St. Bernard Site Feed or National Guard Campaign."
+      },
+      "mindmap": [
+        {
+          "label": "Regional shelter",
+          "children": ["Modular build", "Campus land", "Recovery households"]
+        },
+        {
+          "label": "Component #001",
+          "children": ["48 acres", "St. Bernard Parish"]
+        },
+        {
+          "label": "Component #002",
+          "children": ["Jackson Barracks", "Tri-Parish placement"]
+        },
+        {
+          "label": "Intake",
+          "children": ["$50/hr sweat", "$100 reservation"]
+        }
+      ],
+      "reports": {
+        "lead": "Operational findings from the published component briefs.",
+        "findings": [
+          "Housing resilience is defined here as parish-anchored shelter plus a training pipeline.",
+          "Two components are live in the feed: the campus and the Guard campaign.",
+          "Sweat is priced at $50/hr. The reservation gateway is $100.",
+          "Delivery claims stop at what those pages actually publish."
+        ]
+      },
+      "flashcards": [
+        {"front": "What is Component #001?", "back": "The 48-acre St. Bernard Smart Living campus."},
+        {"front": "What is Component #002?", "back": "The Jackson Barracks National Guard and Tri-Parish housing campaign."},
+        {"front": "What does the $100 reservation do?", "back": "It is the gateway deposit. It does not by itself clear the $10M liability."}
+      ],
+      "quiz": [
+        {
+          "prompt": "Which component is the 48-acre campus?",
+          "choices": ["#002 National Guard", "#001 St. Bernard", "#003 FinAcademy", "The Stripe receipt"],
+          "answer": "#001 St. Bernard"
+        },
+        {
+          "prompt": "Which parishes does the Guard brief name?",
+          "choices": ["Only Orleans", "St. Bernard, Orleans, and Plaquemines", "Baton Rouge and Lafayette", "Singapore"],
+          "answer": "St. Bernard, Orleans, and Plaquemines"
+        }
+      ],
+      "infographic": [
+        {"label": "Campus", "value": "48 acres"},
+        {"label": "Reservations", "value": "First 200"},
+        {"label": "Sweat", "value": "$50/hr"},
+        {"label": "Gateway", "value": "$100"}
+      ],
+      "artifact": {
+        "icon": "🏠",
+        "title": "Parish shelter icon",
+        "body": "Campus, Guard pipeline, and Tri-Parish lots on one intake."
+      },
+      "related": [
+        {"href": "/feed/st-bernard/", "label": "Open Component #001"},
+        {"href": "/feed/national-guard/", "label": "Open Component #002"}
+      ]
+    },
+    {
+      "id": "rwa-tokenization",
+      "kicker": "Protocol case · RWA ledger",
+      "title": "RWA tokenization",
+      "place": "MHBOJT component ledger",
+      "summary": "Real-world asset tokenization on this platform means a ledger of shelter, sweat, and sponsorship. An 80-year-old's referral and an apprentice's hours are entries on the same 200+ component map.",
+      "disclaimer": "Design case for this ledger. Not an offer of a security, not a live token price, and not a promise that a $100 reservation becomes a $100,000,000 enterprise.",
+      "audio": {
+        "lead": "DIFY — Do It For You / Perpetuity — is how someone who will never swing a hammer still appears on the ledger: wisdom, referrals, and sponsorship beside the apprentice who builds the module.",
+        "beats": [
+          "The published scale path runs from a $100 reservation through training, support, and funding toward a $100,000,000 enterprise. That is an operating range, not a return.",
+          "Sweat equity is $50 an hour, capped at 200,000 hours against the $10,000,000 franchise liability.",
+          "Mentors credit $1,000,000, sponsors $100,000, referrals $50,000.",
+          "The 200+ figure is the component map used across the site, not 200 issued tokens."
+        ]
+      },
+      "slides": [
+        {
+          "title": "Token means a ledger entry",
+          "body": "Here a real-world asset token is a recorded claim on work or shelter: hours, a mentor seat, a sponsor, a referral, a reservation. It is not a ticker."
+        },
+        {
+          "title": "DIFY",
+          "body": "Do It For You / Perpetuity lets a grandparent contribute wisdom and referrals, or an apprentice contribute modular-housing hours, on one 1,000-year map."
+        },
+        {
+          "title": "Action Track math",
+          "body": "$10,000,000 is neutralized by 200,000 hours at $50, or by 10 mentors, 100 sponsors, or 200 referrals. The calculator is the audit."
+        },
+        {
+          "title": "Scale path",
+          "body": "The published path starts at the $100 reservation and describes growth toward a $100,000,000 enterprise through training, support, and funding."
+        }
+      ],
+      "interactive": {
+        "lead": "Open a track, read the credit, then jump to the Crystal Dynasty sliders to run it.",
+        "sections": [
+          {
+            "heading": "Sweat",
+            "body": "$50 per hour. The liability cap used on this site is 200,000 hours, because 200,000 × $50 = $10,000,000. Ongoing hours only credit while the cap still has room."
+          },
+          {
+            "heading": "Mentors, sponsors, referrals",
+            "body": "Mentor $1,000,000 (10 clear the liability). Sponsor $100,000 (100). Referral $50,000 (200). These are Action Track offsets, not interest."
+          },
+          {
+            "heading": "DIFY seats",
+            "body": "The 80-year-old path is referral and sponsorship. The apprentice path is logged hours on modular housing. Both are meant to be visible on the same component ledger."
+          },
+          {
+            "heading": "What the token is not",
+            "body": "This catalog does not quote a market price, a chain, or a yield. The 200+ count is the enterprise component map. The $100 to $100,000,000 line is the stated scale path."
+          }
+        ]
+      },
+      "datatable": {
+        "columns": ["Track", "Credit", "Count to offset $10M"],
+        "rows": [
+          ["Sweat equity", "$50 / hour", "200,000 hours"],
+          ["Mentor", "$1,000,000", "10"],
+          ["Sponsor", "$100,000", "100"],
+          ["Referral", "$50,000", "200"],
+          ["Reservation gateway", "$100", "Not a liability offset"]
+        ]
+      },
+      "video": {
+        "lead": "The Video Overview for this case is the institute's own dual-host brief plus the cinematic source already wired in the selector.",
+        "cue": "Switch to Video Overview after this card links. The Munger archive is the long-horizon external voice; the feed pages are the local proof."
+      },
+      "mindmap": [
+        {
+          "label": "RWA ledger",
+          "children": ["Shelter", "Sweat", "Sponsorship"]
+        },
+        {
+          "label": "DIFY",
+          "children": ["Grandparent referral", "Apprentice hours"]
+        },
+        {
+          "label": "Offsets",
+          "children": ["$50/hr", "$1M mentor", "$100k sponsor", "$50k referral"]
+        },
+        {
+          "label": "Scale path",
+          "children": ["$100 reservation", "Training and funding", "$100,000,000 enterprise range"]
+        }
+      ],
+      "reports": {
+        "lead": "Ledger findings a visitor can check against the calculator.",
+        "findings": [
+          "RWA on this site is a component ledger for real work and real shelter.",
+          "Liability math is integer-clean: $10,000,000 / $50 = 200,000 hours.",
+          "DIFY is the perpetuity seat for people who contribute wisdom, referrals, or labor.",
+          "No token price is streamed because this catalog does not have one."
+        ]
+      },
+      "flashcards": [
+        {"front": "What does RWA mean on this site?", "back": "A ledger entry for shelter, sweat, or sponsorship — not a live token price."},
+        {"front": "How many sweat hours offset $10,000,000 at $50/hr?", "back": "200,000 hours."},
+        {"front": "What is DIFY?", "back": "Do It For You / Perpetuity: referrals and wisdom or apprentice labor on one legacy map."}
+      ],
+      "quiz": [
+        {
+          "prompt": "How many $50 hours offset the $10,000,000 liability?",
+          "choices": ["10,000", "50,000", "200,000", "1,000,000"],
+          "answer": "200,000"
+        },
+        {
+          "prompt": "What is the $100 Stripe charge in this case?",
+          "choices": ["A token price", "A liability offset of $10M", "The reservation gateway", "A dividend"],
+          "answer": "The reservation gateway"
+        }
+      ],
+      "infographic": [
+        {"label": "Sweat", "value": "$50/hr"},
+        {"label": "Hour cap", "value": "200,000"},
+        {"label": "Liability", "value": "$10M"},
+        {"label": "Gateway", "value": "$100"}
+      ],
+      "artifact": {
+        "icon": "💠",
+        "title": "Component ledger icon",
+        "body": "One map for a referral, a sponsor, and an hour on a modular house."
+      },
+      "related": [
+        {"href": "/#dynasty", "label": "Open the Crystal Dynasty engine"}
+      ]
+    }
+  ]
+}

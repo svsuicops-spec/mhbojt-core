@@ -1,4 +1,19 @@
 {
+  "headers": [
+    {
+      "source": "/feed/sovereign-cases.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=60" }
+      ]
+    },
+    {
+      "source": "/feed/briefing-stream.js",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ],
   "routes": [
     {
       "src": "/",

@@ -8,6 +8,12 @@
       ]
     },
     {
+      "source": "/feed/admin-studio.js",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
       "source": "/feed/briefing-stream.js",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" }

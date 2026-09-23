@@ -70,7 +70,7 @@
             { id: 'dashboard', label: 'Dashboard', sub: 'Progress and liability KPIs' },
             { id: 'factory', label: 'Course Factory', sub: 'Compose the next feed module' },
             { id: 'profile', label: 'Profile', sub: 'SL / NB diagnostic pair' },
-            { id: 'admin', label: 'Admin Panel', sub: 'Media studio controls' }
+            { id: 'admin', label: 'Admin Panel', sub: 'NotebookLM drop and M4A converter' }
         ];
 
         const capitalModules = [
@@ -487,7 +487,8 @@ graph TD
                     <input type="text" id="ytUrlInput" placeholder="Paste YouTube URL" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-400">
                     <button type="button" onclick="loadStudioYouTube()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded text-xs">Extract & Embed into Video Overview</button>
                     <p class="text-[11px] text-slate-500">Admin stays on-page. No separate login in this static feed.</p>
-                </div>`;
+                </div>
+                <div data-admin-studio></div>`;
             }
         };
 
@@ -500,6 +501,7 @@ graph TD
             if (label) label.textContent = item.label;
             document.getElementById('academyView').innerHTML = academyViews[item.id]();
             if (window.MHBOJT && typeof window.MHBOJT.mount === 'function') window.MHBOJT.mount(document.getElementById('academyView'));
+            if (window.MHBOJT_ADMIN && typeof window.MHBOJT_ADMIN.mount === 'function') window.MHBOJT_ADMIN.mount(document.getElementById('academyView'));
             renderAcademyNav();
             history.replaceState(null, '', '#' + item.id);
             if (window.matchMedia('(max-width: 1023px)').matches) {
@@ -762,12 +764,21 @@ graph TD
                 }
             };
             const briefingFrame = (window.MHBOJT && typeof window.MHBOJT.frameFor === 'function') ? window.MHBOJT.frameFor(medium) : null;
-            const frame = briefingFrame || frames[medium] || frames.audio;
+            const adminAudio = !briefingFrame && medium === 'audio' && window.MHBOJT_ADMIN && typeof window.MHBOJT_ADMIN.audioFrame === 'function' ? window.MHBOJT_ADMIN.audioFrame() : null;
+            const frame = briefingFrame || adminAudio || frames[medium] || frames.audio;
             const briefingLabel = window.MHBOJT && typeof window.MHBOJT.linkedLabel === 'function' && window.MHBOJT.linkedLabel();
             if (briefingLabel && badge) badge.textContent = briefingLabel;
             if (caption) caption.textContent = frame.caption;
             if (badge) badge.textContent = frame.badge;
             container.innerHTML = frame.html;
+            const stagedDrop = !briefingFrame && window.MHBOJT_ADMIN && typeof window.MHBOJT_ADMIN.activeDrop === 'function' && window.MHBOJT_ADMIN.activeDrop();
+            if (stagedDrop && stagedDrop.medium === medium) {
+                if (caption) caption.textContent = stagedDrop.caption;
+                const dropBanner = document.createElement('div');
+                dropBanner.className = 'mb-2 text-[11px] text-amber-200';
+                dropBanner.textContent = stagedDrop.banner;
+                container.prepend(dropBanner);
+            }
             if (medium === 'slides') { notebookSlideIndex = 0; renderNotebookSlide(); }
             if (medium === 'mindmap' && window.mermaid) {
                 const node = container.querySelector('.mermaid');
@@ -786,6 +797,13 @@ graph TD
                 ? 'https://www.mhbojt.com/feed/briefing-stream.js'
                 : '/feed/briefing-stream.js';
             document.body.appendChild(s);
+        })();
+        (function () {
+            var admin = document.createElement('script');
+            admin.src = (location.hostname || '').indexOf('finacademy.') === 0
+                ? 'https://www.mhbojt.com/feed/admin-studio.js'
+                : '/feed/admin-studio.js';
+            document.body.appendChild(admin);
         })();
     </script>
 

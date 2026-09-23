@@ -22,6 +22,7 @@
                 <a href="#quiz" class="text-[11px] text-amber-400 hover:text-amber-300">Quiz</a>
                 <a href="#dynasty" class="text-[11px] text-amber-400 hover:text-amber-300">Dynasty</a>
                 <a href="#notebookPluginTray" class="text-[11px] text-amber-400 hover:text-amber-300">NotebookLM</a>
+                <a href="#admin" class="text-[11px] text-amber-400 hover:text-amber-300">Admin</a>
                 <a href="/drah_crystal_dynasty1.html" class="text-[11px] text-amber-400 hover:text-amber-300">Plugin ↗</a>
             </div>
             <div class="flex flex-wrap items-center justify-end gap-2">
@@ -655,6 +656,10 @@
             </div>
 
         </div>
+
+        <section id="admin" class="scroll-mt-24">
+            <div data-admin-studio></div>
+        </section>
     </main>
 
     <div id="onboardingGate" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden items-center justify-center z-[60] p-4">
@@ -1765,12 +1770,21 @@ graph TD
                 }
             };
             const briefingFrame = (window.MHBOJT && typeof window.MHBOJT.frameFor === 'function') ? window.MHBOJT.frameFor(medium) : null;
-            const frame = briefingFrame || frames[medium] || frames.audio;
+            const adminAudio = !briefingFrame && medium === 'audio' && window.MHBOJT_ADMIN && typeof window.MHBOJT_ADMIN.audioFrame === 'function' ? window.MHBOJT_ADMIN.audioFrame() : null;
+            const frame = briefingFrame || adminAudio || frames[medium] || frames.audio;
             const briefingLabel = window.MHBOJT && typeof window.MHBOJT.linkedLabel === 'function' && window.MHBOJT.linkedLabel();
             if (briefingLabel && badge) badge.textContent = briefingLabel;
             if (caption) caption.textContent = frame.caption;
             if (mediumBadge) mediumBadge.textContent = frame.badge;
             container.innerHTML = frame.html;
+            const stagedDrop = !briefingFrame && window.MHBOJT_ADMIN && typeof window.MHBOJT_ADMIN.activeDrop === 'function' && window.MHBOJT_ADMIN.activeDrop();
+            if (stagedDrop && stagedDrop.medium === medium) {
+                if (caption) caption.textContent = stagedDrop.caption;
+                const dropBanner = document.createElement('div');
+                dropBanner.className = 'mb-2 text-[11px] text-amber-200';
+                dropBanner.textContent = stagedDrop.banner;
+                container.prepend(dropBanner);
+            }
             if (medium === 'slides') { notebookSlideIndex = 0; renderNotebookSlide(); }
             if (medium === 'mindmap' && window.mermaid) {
                 const node = container.querySelector('.mermaid');
@@ -1788,5 +1802,6 @@ graph TD
         };
     </script>
     <script src="/feed/briefing-stream.js"></script>
+    <script src="/feed/admin-studio.js"></script>
 </body>
 </html>

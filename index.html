@@ -1482,8 +1482,7 @@
             const classification = document.getElementById('candidateType').value;
 
             console.log("Processing Reservation:", { name, email, classification });
-            window.open(stripePaymentLink, '_blank');
-            toggleModal();
+            window.location.href = stripePaymentLink;
         }
 
         const notebookSources = {

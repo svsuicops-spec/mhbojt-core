@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hybrid Learning Hub | Briefings</title>
-    <meta name="mhbojt-build" content="dual-pane-hub-20260929">
+    <meta name="mhbojt-build" content="journey-sl-nb-20260929">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -39,9 +39,28 @@
                     <p id="viewSubhead" class="text-[11px] text-zinc-500 truncate">Daily briefings · 14 modules</p>
                 </div>
             </div>
-            <span id="activeViewLabel" class="hidden sm:inline text-[11px] text-zinc-500 shrink-0">Briefings</span>
+            <div class="flex items-center gap-2 shrink-0">
+                <button type="button" onclick="openJourney()" class="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-3 py-1.5 rounded-lg text-[10px] md:text-xs">Journey to SL/NB</button>
+                <span id="activeViewLabel" class="hidden sm:inline text-[11px] text-zinc-500">Briefings</span>
+            </div>
         </header>
         <main id="academyView" class="flex-1 overflow-y-auto px-4 md:px-8 py-5"></main>
+    </div>
+
+    <div id="journeyModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden items-center justify-center z-[80] p-4" onclick="if (event.target === this) closeJourney()" role="dialog" aria-modal="true" aria-labelledby="journeyTitle">
+        <div class="bg-zinc-900 border border-amber-500/40 rounded-2xl max-w-3xl w-full p-5 md:p-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <button type="button" onclick="closeJourney()" class="absolute top-3 right-4 text-zinc-400 hover:text-white text-2xl font-bold" aria-label="Close">&times;</button>
+            <div class="text-[10px] uppercase tracking-widest text-amber-400">Interactive briefing</div>
+            <h2 id="journeyTitle" class="text-xl md:text-2xl font-extrabold text-white mt-1">Journey to SL/NB</h2>
+            <p class="text-xs text-zinc-400 mt-1 mb-4">National Guardsmen · Tri-Parish Homebuyers · Laotian Diaspora. Neutralize $10M to $0 at $50/Hr, then reserve.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4" id="journeyCorridors"></div>
+            <div id="journeySlide" class="space-y-4"></div>
+            <div class="flex justify-between items-center gap-3 mt-5">
+                <button type="button" onclick="stepJourney(-1)" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-bold px-4 py-2 rounded-lg text-xs">← Back</button>
+                <span id="journeyStepLabel" class="text-[10px] font-mono text-amber-400">1 / 4</span>
+                <button type="button" onclick="stepJourney(1)" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-bold px-4 py-2 rounded-lg text-xs">Next →</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -356,7 +375,7 @@
 
         const academyViews = {
             briefings() {
-                return briefingModulesHtml();
+                return journeyBriefingHtml() + briefingModulesHtml();
             },
             courses() {
                 return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -825,9 +844,122 @@ graph TD
             }
         }
 
+        function journeyBriefingHtml() {
+            return `<section id="journeySlNb" class="max-w-3xl mx-auto mb-6 bg-zinc-900 border border-amber-500/40 rounded-2xl p-5 space-y-4">
+                    <div class="flex flex-wrap justify-between items-end gap-2">
+                        <div>
+                            <div class="text-[9px] uppercase tracking-widest text-amber-400">Journey to SL/NB</div>
+                            <h2 class="text-sm font-bold text-white">Guardsmen · Tri-Parish Homebuyers · Laotian Diaspora</h2>
+                            <p class="text-[11px] text-zinc-400 mt-1">Drive the $10,000,000 franchise liability to $0 at $50/Hr, then open Crystal Dynasty and reserve $100.</p>
+                        </div>
+                        <button type="button" onclick="openJourney()" class="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-4 py-2 rounded-lg text-xs">Start the journey →</button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-zinc-950 border border-rose-500/30 rounded-xl p-3"><div class="text-[9px] uppercase text-zinc-500">Liability</div><div class="text-sm font-mono font-extrabold text-rose-400">$10M → $0</div></div>
+                        <div class="bg-zinc-950 border border-sky-500/30 rounded-xl p-3"><div class="text-[9px] uppercase text-zinc-500">Apprentice</div><div class="text-sm font-mono font-extrabold text-sky-400">$50 / Hr</div></div>
+                        <div class="bg-zinc-950 border border-amber-500/30 rounded-xl p-3"><div class="text-[9px] uppercase text-zinc-500">Gateway</div><div class="text-sm font-mono font-extrabold text-amber-400">$100</div></div>
+                    </div>
+                </section>`;
+        }
+
+        let journeyCorridor = 'guardsmen';
+        let journeySlide = 0;
+        const journeyCorridors = {
+            guardsmen: {
+                label: 'National Guardsmen',
+                kicker: 'Jackson Barracks · Component #002',
+                body: 'Dual-duty and disaster-response hours convert into $50/Hr equity on the Tri-Parish citadel. Service does not leak talent after the mission.'
+            },
+            triparish: {
+                label: 'Tri-Parish Homebuyers',
+                kicker: 'St. Bernard · Orleans · Plaquemines',
+                body: 'Recovery families keep labor housed locally. The $10M ledger and $100 gateway are how a parish homebuyer enters as SL or NB without a college-debt ticket.'
+            },
+            diaspora: {
+                label: 'Laotian Diaspora',
+                kicker: 'Nation Building homecoming',
+                body: 'Wisdom, referrals, and apprentice labor write onto one 1,000-year ledger. Surplus concentrates into parish shelter — not speculation.'
+            }
+        };
+
+        function openJourney(corridor) {
+            if (corridor && journeyCorridors[corridor]) journeyCorridor = corridor;
+            journeySlide = 0;
+            paintJourney();
+            const modal = document.getElementById('journeyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeJourney() {
+            const modal = document.getElementById('journeyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        function stepJourney(delta) {
+            journeySlide = Math.max(0, Math.min(3, journeySlide + delta));
+            paintJourney();
+        }
+        function setJourneyCorridor(id) {
+            journeyCorridor = id;
+            paintJourney();
+        }
+        function paintJourney() {
+            const corr = journeyCorridors[journeyCorridor];
+            const label = document.getElementById('journeyStepLabel');
+            if (label) label.textContent = (journeySlide + 1) + ' / 4';
+            const corridors = document.getElementById('journeyCorridors');
+            if (corridors) {
+                corridors.innerHTML = Object.keys(journeyCorridors).map((id) => {
+                    const item = journeyCorridors[id];
+                    const on = id === journeyCorridor;
+                    return `<button type="button" onclick="setJourneyCorridor('${id}')" class="text-left rounded-xl p-3 border ${on ? 'border-amber-400 bg-amber-500/15' : 'border-zinc-800 bg-zinc-950 hover:border-amber-500/40'}">
+                        <div class="text-[9px] uppercase tracking-widest ${on ? 'text-amber-400' : 'text-zinc-500'}">${item.kicker}</div>
+                        <div class="text-xs font-bold text-white mt-1">${item.label}</div>
+                    </button>`;
+                }).join('');
+            }
+            const engine = (typeof dynastyEngineUrl === 'function') ? dynastyEngineUrl() : '/drah_crystal_dynasty1.html';
+            const slides = [
+                `<article class="bg-zinc-950 border border-zinc-800 rounded-xl p-5 space-y-3">
+                    <h3 class="text-sm font-bold text-amber-400">1. Walk in as SL or NB</h3>
+                    <p class="text-sm text-zinc-200">${corr.body}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-3"><div class="text-[10px] uppercase text-amber-400">Selfless Leader (SL)</div><p class="text-xs text-zinc-400 mt-1">Convert personal surplus into parish-level shelter.</p></div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-3"><div class="text-[10px] uppercase text-sky-400">Nation Builder (NB)</div><p class="text-xs text-zinc-400 mt-1">Stand the 1,000-year map so housing stays in the community.</p></div>
+                    </div>
+                </article>`,
+                `<article class="bg-zinc-950 border border-rose-500/30 rounded-xl p-5 space-y-3">
+                    <h3 class="text-sm font-bold text-rose-400">2. Drive $10,000,000 → $0</h3>
+                    <p class="text-sm text-zinc-200">Every ${corr.label.toLowerCase()} apprentice starts with a $10,000,000 franchise liability. Sweat, mentors, sponsors, and referrals write it down to zero on Crystal Dynasty.</p>
+                    <div class="flex items-center justify-between gap-3 font-mono text-lg font-extrabold"><span class="text-rose-400">$10M</span><span class="text-zinc-500 text-xs tracking-widest">NEUTRALIZE</span><span class="text-emerald-400">$0</span></div>
+                    <div class="h-2 rounded-full bg-zinc-800 overflow-hidden"><div class="h-full w-2/3 bg-gradient-to-r from-rose-500 to-emerald-400"></div></div>
+                </article>`,
+                `<article class="bg-zinc-950 border border-sky-500/30 rounded-xl p-5 space-y-3">
+                    <h3 class="text-sm font-bold text-sky-400">3. $50/Hr apprentice model</h3>
+                    <p class="text-sm text-zinc-200">Verified MHBOJT labor credits <strong class="text-white">$50 per hour</strong>. $10,000,000 ÷ $50 = <strong class="text-white">200,000 Hours</strong> to neutralize through sweat alone. Mentors ($1M), sponsors ($100k), and referrals ($50k) accelerate the same ledger.</p>
+                    <p class="text-[11px] text-zinc-500">The $100 reservation admits a candidate. It does not clear the $10M liability.</p>
+                </article>`,
+                `<article class="bg-zinc-950 border border-amber-500/40 rounded-xl p-5 space-y-4">
+                    <h3 class="text-sm font-bold text-amber-400">4. Calculator + $100 funnel</h3>
+                    <p class="text-sm text-zinc-200">Open Crystal Dynasty and move the Action Track sliders until remaining liability hits $0. Then lock the ${corr.label} seat on Stripe.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <a href="${engine}" class="block text-center bg-amber-500 hover:bg-amber-400 text-zinc-950 font-extrabold py-3 rounded-lg text-sm">Open Crystal Dynasty Calculator</a>
+                        <a href="${STRIPE}" class="block text-center bg-zinc-800 hover:bg-zinc-700 border border-amber-500/40 text-amber-300 font-bold py-3 rounded-lg text-sm">Secure $100 Reservation</a>
+                    </div>
+                </article>`
+            ];
+            const slide = document.getElementById('journeySlide');
+            if (slide) slide.innerHTML = slides[journeySlide];
+        }
+
         renderAcademyNav();
         const initial = (location.hash || '#briefings').replace('#', '');
-        switchAcademyView(initial);
+        if (initial === 'journey') {
+            switchAcademyView('briefings');
+            openJourney();
+        } else {
+            switchAcademyView(initial);
+        }
     </script>
     <script>
         (function () {

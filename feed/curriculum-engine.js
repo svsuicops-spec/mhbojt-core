@@ -153,6 +153,7 @@
         }
         return '<div class="bg-zinc-950 border border-amber-500/30 rounded-xl p-4 space-y-2">' +
             '<div class="text-[10px] uppercase tracking-widest text-amber-400">Industry Standard</div>' +
+            (media.title ? '<h4 class="text-sm font-bold text-white">' + esc(media.title) + '</h4>' : '') +
             '<p class="text-xs text-zinc-300">Open Crystal Dynasty and run Action Tracks until remaining liability is $0. $50/Hr sweat · 200,000 Hours · $10M ledger.</p>' +
             '<a href="' + esc(abs(media.href || '/drah_crystal_dynasty1.html')) + '" class="inline-block bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-4 py-2 rounded-lg text-xs">Open Crystal Dynasty Calculator</a>' +
             '</div>';

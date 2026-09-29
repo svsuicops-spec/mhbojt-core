@@ -18,6 +18,19 @@
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" }
       ]
+    },
+    {
+      "source": "/curriculum-data.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=60" }
+      ]
+    },
+    {
+      "source": "/feed/curriculum-engine.js",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
     }
   ],
   "routes": [

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hybrid Learning Hub | Briefings</title>
-    <meta name="mhbojt-build" content="journey-sl-nb-20260929">
+    <meta name="mhbojt-build" content="curriculum-factory-20260929">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -79,7 +79,7 @@
             { id: 'blueprint', label: 'Blueprint', sub: '5W1H + architecture flow' },
             { id: 'walkthrough', label: 'Walkthrough', sub: 'Select · Lab · Verify · Reserve' },
             { id: 'dashboard', label: 'Dashboard', sub: 'Progress and liability KPIs' },
-            { id: 'factory', label: 'Course Factory', sub: 'Compose the next feed module' },
+            { id: 'factory', label: 'Course Factory', sub: 'JSON ingest → briefing, media, quiz, Stripe' },
             { id: 'profile', label: 'Profile', sub: 'SL / NB diagnostic pair' },
             { id: 'admin', label: 'Admin Panel', sub: 'NotebookLM drop and M4A converter' }
         ];
@@ -499,21 +499,7 @@ graph TD
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">${notebookReportHtml()}</div>`;
             },
             factory() {
-                return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Course Factory</h2>
-                    <p class="text-xs text-slate-400">Compose the next feed module the same way the Replit labs were migrated: title, track, and verification rule.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <input id="factoryTitle" placeholder="Module title" class="bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
-                        <select id="factoryTrack" class="bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
-                            <option value="capital">Sovereign Capital</option>
-                            <option value="replit">Replit Builder</option>
-                            <option value="citadel">Citadel Field</option>
-                        </select>
-                    </div>
-                    <textarea id="factoryVerify" rows="3" placeholder="Verification rule" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">Credits only after the production artifact is visible.</textarea>
-                    <button type="button" onclick="previewFactoryModule()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Preview Module Card</button>
-                    <div id="factoryPreview" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-400">Factory output appears here. Nothing ships until GitHub + Vercel.</div>
-                </div>`;
+                return `<div data-curriculum-factory class="space-y-4"></div>`;
             },
             profile() {
                 return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4 max-w-xl">
@@ -560,6 +546,7 @@ graph TD
             document.getElementById('academyView').innerHTML = academyViews[item.id]();
             if (window.MHBOJT && typeof window.MHBOJT.mount === 'function') window.MHBOJT.mount(document.getElementById('academyView'));
             if (window.MHBOJT_ADMIN && typeof window.MHBOJT_ADMIN.mount === 'function') window.MHBOJT_ADMIN.mount(document.getElementById('academyView'));
+            if (window.MHBOJT_CURRICULUM && typeof window.MHBOJT_CURRICULUM.mount === 'function') window.MHBOJT_CURRICULUM.mount(document.getElementById('academyView'));
             renderAcademyNav();
             history.replaceState(null, '', '#' + item.id);
             if (window.matchMedia('(max-width: 767px)').matches) {
@@ -680,16 +667,6 @@ graph TD
             profileState.shelter = document.getElementById('profileShelter')?.value || profileState.shelter;
             const status = document.getElementById('profileStatus');
             if (status) status.textContent = 'Saved: ' + profileState.food + ' · ' + profileState.shelter;
-        }
-
-        function previewFactoryModule() {
-            const title = document.getElementById('factoryTitle')?.value.trim() || 'Untitled module';
-            const track = document.getElementById('factoryTrack')?.value || 'capital';
-            const verify = document.getElementById('factoryVerify')?.value.trim() || 'Verify on production.';
-            document.getElementById('factoryPreview').innerHTML = `<div class="text-[9px] text-amber-400 font-bold uppercase tracking-wider">${track}</div>
-                <h3 class="text-sm font-bold text-white mt-1">${title}</h3>
-                <p class="text-xs text-slate-400 mt-1">${verify}</p>
-                <p class="text-[10px] text-slate-500 mt-2">Preview only. Ship via GitHub PR to feed/finacademy/.</p>`;
         }
 
         function pauseOverviewAudio() {
@@ -975,6 +952,13 @@ graph TD
                 ? 'https://www.mhbojt.com/feed/admin-studio.js'
                 : '/feed/admin-studio.js';
             document.body.appendChild(admin);
+        })();
+        (function () {
+            var factory = document.createElement('script');
+            factory.src = (location.hostname || '').indexOf('finacademy.') === 0
+                ? 'https://www.mhbojt.com/feed/curriculum-engine.js'
+                : '/feed/curriculum-engine.js';
+            document.body.appendChild(factory);
         })();
     </script>
 

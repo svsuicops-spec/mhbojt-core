@@ -1,0 +1,49 @@
+{
+  "version": "2026-09-29",
+  "title": "MHBOJT modular curriculum",
+  "stripe": "https://buy.stripe.com/8x228rcRfa087yu9P4cIE02",
+  "note": "Layout is HTML. Doctrine is JSON. Course Factory fetches this file and renders a briefing card, media player, quiz, and Stripe hook for every published subject.",
+  "categories": [
+    { "id": "youtube", "label": "YouTube / TikTok integration" },
+    { "id": "tiktok", "label": "YouTube / TikTok integration" },
+    { "id": "notebooklm", "label": "NotebookLM notes" },
+    { "id": "industry", "label": "Industry Standard" }
+  ],
+  "subjects": [
+    {
+      "id": "homes-in-hours",
+      "title": "HOMES IN HOURS?!",
+      "category": "youtube",
+      "prompt": "Modular / 3D-printed construction speed is the physical proof behind the $50/Hr sweat track.",
+      "body": "Financial by Design featured video. Watch, then answer the module quiz. Credits still require verification on the live ledger.",
+      "media": { "type": "youtube", "id": "wCzS2FZoB-I", "title": "HOMES IN HOURS?!" },
+      "quiz": [
+        { "prompt": "What is the MHBOJT sweat-equity conversion rate?", "choices": ["$15 / Hr", "$25 / Hr", "$50 / Hr", "$100 / Hr"], "answer": "$50 / Hr" },
+        { "prompt": "How many verified sweat hours neutralize $10,000,000 at $50 per hour?", "choices": ["2,000 Hours", "10,000 Hours", "20,000 Hours", "200,000 Hours"], "answer": "200,000 Hours" }
+      ]
+    },
+    {
+      "id": "sweat-equity-industry",
+      "title": "Sweat Equity — Industry Standard $50/Hr",
+      "category": "industry",
+      "prompt": "Industry Standard apprentice model: signed hours, timesheet, Dynasty slider.",
+      "body": "Verified MHBOJT labor credits $50 per hour. $10,000,000 ÷ $50 = 200,000 Hours to neutralize through sweat alone. Mentors, sponsors, and referrals accelerate the same ledger.",
+      "media": { "type": "industry", "title": "Crystal Dynasty Action Track #1", "href": "/drah_crystal_dynasty1.html" },
+      "quiz": [
+        { "prompt": "What franchise liability must an apprentice neutralize?", "choices": ["$100,000", "$1,000,000", "$10,000,000", "$100,000,000"], "answer": "$10,000,000" },
+        { "prompt": "What is the Stripe gateway reservation?", "choices": ["$10", "$50", "$100", "$1,000"], "answer": "$100" }
+      ]
+    },
+    {
+      "id": "notebooklm-dynasty-brief",
+      "title": "NotebookLM Dual-Host Dynasty Brief",
+      "category": "notebooklm",
+      "prompt": "Audio Overview default. Crystal Dynasty + Sentinel Perpetuity sources.",
+      "body": "Host A argues the financial upside of sequenced Action Tracks. Host B answers with the operational rigor required to earn each credit.",
+      "media": { "type": "audio", "src": "/drah-dual-host-overview.mp3", "title": "NotebookLM Dual-Host Overview" },
+      "quiz": [
+        { "prompt": "Does the $100 reservation neutralize the $10M liability?", "choices": ["Yes, in full", "Yes, at $50/Hr", "No. It admits a candidate only", "Only for mentors"], "answer": "No. It admits a candidate only" }
+      ]
+    }
+  ]
+}

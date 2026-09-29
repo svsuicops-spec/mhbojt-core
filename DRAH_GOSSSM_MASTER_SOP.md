@@ -180,7 +180,7 @@ Do not embed 100 subject bodies in the dual-pane HTML. The right pane is a list 
 
 ## 4. Admin Panel feature registry
 
-Admin is a **registry**, not a single form. Each module has an id, a pane, a data contract, and a publish rule. The static hub currently implements Course Factory preview and Admin Media Studio. The registry below is the target map.
+Admin is a **registry**, not a single form. Each module has an id, a pane, a data contract, and a publish rule. The static hub currently implements Course Factory (`curriculum-data.json` + `feed/curriculum-engine.js`) and Admin Media Studio. The registry below is the target map.
 
 | id | Module | Job | Data | Publish rule |
 | --- | --- | --- | --- | --- |
@@ -188,7 +188,7 @@ Admin is a **registry**, not a single form. Each module has an id, a pane, a dat
 | `users` | **Users** | Candidate records: Clerk sync id, SL/NB pair, tier, corridor, sweat hours, Stripe receipt | `users` / `user_profiles` | Sync on sign-in (`POST /api/users/sync`). Hours credit only after Citadel verify. |
 | `courses` | **Courses** | CAP/REP labs and published JSON subjects as course rows | `courses` / `modules` / `lessons` + `feed/subjects/` | Visible on hub Courses only when `status=published`. |
 | `curriculum-factory` | **Curriculum Factory** | Ingest source URLs through SEARCH → VALIDATE → TRANSCRIBE → SYNTHESIZE → AUDIT | `curriculum_jobs` / `curriculum_modules` | Does **not** publish on job complete. Admin approve writes subject JSON. |
-| `course-factory` | **Course Factory** | Compose the next feed module: title, track, verification rule | Hub `#factory` preview today; later writes a draft subject | Preview is local. Ship only via GitHub + Vercel (or approve API). |
+| `course-factory` | **Course Factory** | Ingest a subject title + category and auto-build briefing, media, quiz, Stripe hook | `curriculum-data.json` + `localStorage` drafts (`mhbojt-curriculum-drafts`) | Drafts stay local. Ship by committing JSON (or approve API). |
 | `token-bridge` | **Token Bridge** | Map sweat / mentor / sponsor / referral credits onto the Dynasty ledger and RWA hand-off | Ledger events; Stripe receipt id required for referrals | No credit without receipt or signed timesheet. Gateway $100 is not neutralization. |
 | `seed-connect` | **Seed Connect** | Bind intake corridors and Seed / monthly contribution tracks to subject unlocks | Onboarding `mhbojt-onboarding` + corridor flags | Unlock is eligibility, not a paid bypass of the $10M liability. |
 
@@ -218,7 +218,7 @@ Approve is a separate admin action. Rejected jobs never appear in `feed/subjects
 
 ### 4.5 Course Factory
 
-Hub pane `#factory`: title, track (`capital` / `replit` / `citadel`), verification rule, **Preview Module Card**. Preview is not production. Production is a subject JSON commit or an approved factory job.
+Hub pane `#factory` mounts `[data-curriculum-factory]` from `/feed/curriculum-engine.js`. The engine fetches `/curriculum-data.json` and renders a briefing card, embedded media player, interactive quiz, and Stripe checkout hook for every subject. Ingest UI: subject title prompt, category dropdown (YouTube/TikTok integration, NotebookLM notes, Industry Standard), optional media URL, **Build module**. Drafts persist in `localStorage` (`mhbojt-curriculum-drafts`) until JSON is exported into `curriculum-data.json` and committed. Production is a subject JSON commit or an approved Curriculum Factory job.
 
 GOSSSM fields on a generated course: Goal, Objective, Strategy, System, Scale, Milestone. Depth options (Hybrid LMS): 5-minute deep dive vs 30-minute masterclass.
 
@@ -251,7 +251,7 @@ flowchart TB
         SC[Seed Connect]
     end
     CF -->|approve| JSON[feed/subjects JSON]
-    XF -->|preview then commit| JSON
+    XF -->|ingest then commit JSON| JSON
     JSON --> CO
     US --> SC
     SC --> JSON

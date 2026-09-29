@@ -3,53 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial by Design LMS | HOMES IN HOURS?! - FinAcademy</title>
-    <meta name="mhbojt-build" content="finacademy-root-14-20260929">
+    <title>Hybrid Learning Hub | Briefings</title>
+    <meta name="mhbojt-build" content="dual-pane-hub-20260929">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });</script>
+    <style>body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }</style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+<body class="h-screen overflow-hidden bg-zinc-950 text-zinc-100 antialiased flex">
 
-    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
-        <div class="px-4 md:px-6 py-3 flex flex-wrap justify-between items-center gap-2">
-            <div class="flex items-center space-x-3">
-                <button type="button" onclick="toggleAcademySidebar()" class="lg:hidden bg-slate-800 border border-slate-700 text-amber-400 text-[10px] font-bold px-2 py-1 rounded">☰ Menu</button>
-                <a href="/" class="text-xs font-bold tracking-wider text-amber-400 hover:text-amber-300 transition">FINANCIAL BY DESIGN LMS</a>
-                <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">HOMES IN HOURS?!</span>
-            </div>
-            <div class="flex items-center space-x-3">
-                <span id="activeViewLabel" class="hidden sm:inline text-[11px] text-slate-400">Briefings</span>
-                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg shadow-lg transition text-xs">
-                    Secure $100 Reservation
-                </a>
-            </div>
+    <aside id="academySidebar" class="hidden md:flex w-72 h-screen shrink-0 flex-col bg-zinc-950 border-r border-zinc-800 z-40">
+        <div class="px-5 pt-6 pb-4 border-b border-zinc-800">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.28em] text-amber-400">The Academy</div>
+            <div class="text-base font-bold text-white mt-1">Hybrid Learning Hub</div>
+            <p class="text-[11px] text-zinc-500 mt-1">Split-screen briefing feed</p>
         </div>
-    </header>
+        <nav id="academyNav" class="flex-1 overflow-y-auto p-3 space-y-1"></nav>
+        <div class="p-4 border-t border-zinc-800 space-y-2">
+            <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" class="block text-center bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-4 py-2.5 rounded-lg text-xs">
+                Secure $100 Reservation
+            </a>
+            <p class="text-[10px] text-zinc-600 text-center">mhbojt.site · Dual-pane feed</p>
+        </div>
+    </aside>
 
-    <div class="flex flex-1 min-h-0">
-        <aside id="academySidebar" class="hidden lg:flex w-64 shrink-0 flex-col bg-slate-900 border-r border-slate-800 sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto z-40">
-            <div class="px-4 pt-5 pb-3 border-b border-slate-800">
-                <div class="text-[9px] uppercase tracking-widest text-amber-400">Extracted Sidebar</div>
-                <div class="text-sm font-bold text-white">FinAcademy Nav</div>
-                <p class="text-[10px] text-slate-400 mt-1">finacademy.mhbojt.institute</p>
-            </div>
-            <nav id="academyNav" class="p-3 space-y-1"></nav>
-        </aside>
-
-        <div class="flex-1 flex flex-col min-w-0">
-            <main class="flex-grow px-4 md:px-8 py-6 space-y-6 w-full max-w-6xl mx-auto">
-                <div>
-                    <span class="text-amber-400 text-[10px] font-semibold uppercase tracking-widest">~ Financial by Design · finacademy.mhbojt.institute</span>
-                    <h1 id="viewHeading" class="text-2xl font-extrabold tracking-wider text-amber-400">BRIEFINGS</h1>
-                    <p id="viewSubhead" class="text-xs text-slate-400">Sidebar feed · briefing modules 1–14 · HOMES IN HOURS?! LMS.</p>
+    <div class="flex-1 min-w-0 h-screen flex flex-col bg-zinc-950">
+        <header class="shrink-0 flex items-center justify-between gap-3 px-4 md:px-6 py-3 border-b border-zinc-800">
+            <div class="flex items-center gap-3 min-w-0">
+                <button type="button" onclick="toggleAcademySidebar()" class="md:hidden bg-zinc-900 border border-zinc-700 text-amber-400 text-[10px] font-bold px-2 py-1 rounded">☰ Menu</button>
+                <div class="min-w-0">
+                    <h1 id="viewHeading" class="text-lg md:text-xl font-bold tracking-wide text-amber-400 truncate">BRIEFINGS</h1>
+                    <p id="viewSubhead" class="text-[11px] text-zinc-500 truncate">Daily briefings · 14 modules</p>
                 </div>
-                <div id="academyView" class="space-y-6"></div>
-            </main>
-            <footer class="bg-slate-900 border-t border-slate-800 py-4 text-center text-xs text-slate-400">
-                <p>&copy; 2026 SVSUIC Enterprise & MHBOJT Institute. Financial by Design LMS · HOMES IN HOURS?! · finacademy.mhbojt.institute</p>
-            </footer>
-        </div>
+            </div>
+            <span id="activeViewLabel" class="hidden sm:inline text-[11px] text-zinc-500 shrink-0">Briefings</span>
+        </header>
+        <main id="academyView" class="flex-1 overflow-y-auto px-4 md:px-8 py-5"></main>
     </div>
 
     <script>
@@ -61,7 +53,7 @@
         let profileState = { food: 'Selfless Leader (SL)', shelter: 'Nation Builder (NB)' };
 
         const academyNav = [
-            { id: 'briefings', label: 'Briefings', sub: 'Modules 1–14 + HOMES IN HOURS?! LMS' },
+            { id: 'briefings', label: 'Briefings', sub: 'Daily briefings · 14 modules' },
             { id: 'courses', label: 'Courses', sub: '12 migrated training labs' },
             { id: 'citadel', label: 'The Citadel', sub: 'St. Bernard + Jackson Barracks' },
             { id: 'dynasty', label: 'Dynasty', sub: 'Crystal Dynasty engine' },
@@ -150,35 +142,28 @@
         ];
 
         function briefingModulesHtml() {
-            return `<section id="briefingModules" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-                    <div class="flex flex-wrap justify-between items-end gap-2 border-b border-slate-800 pb-3">
-                        <div>
-                            <div class="text-[9px] uppercase tracking-widest text-amber-400">Authentic FinAcademy Feed</div>
-                            <h2 class="text-sm font-bold tracking-wider text-amber-400 uppercase">Briefing Modules 1–14</h2>
-                            <p class="text-[11px] text-slate-400 mt-1">Numbered doctrine cards for incoming SL / NB candidates. Click a module to open the matching academy view or campus feed.</p>
-                        </div>
-                        <span class="text-[10px] font-mono text-amber-400">14 / 14 published</span>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3">
-                        ${briefingModules.map((mod) => {
+            return `<section id="briefingModules" class="max-w-3xl mx-auto space-y-3 pb-8" data-testid="list-briefings">
+                    ${briefingModules.map((mod) => {
                             const href = mod.n === 7 ? platformUrl('/feed/st-bernard/')
                                 : mod.n === 8 ? platformUrl('/feed/national-guard/')
                                 : mod.n === 13 ? dynastyEngineUrl()
                                 : null;
-                            const view = mod.n <= 6 ? 'courses' : mod.n === 10 ? 'briefings' : mod.n === 11 ? 'admin' : mod.n === 12 ? 'walkthrough' : mod.n === 14 ? 'citadel' : null;
+                            const view = mod.n <= 6 ? 'courses' : mod.n === 10 ? 'admin' : mod.n === 11 ? 'admin' : mod.n === 12 ? 'walkthrough' : mod.n === 14 ? 'citadel' : null;
                             const open = href
                                 ? `href="${href}"`
                                 : `href="#${view || 'briefings'}" onclick="switchAcademyView('${view || 'briefings'}'); return false;"`;
-                            return `<a ${open} class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-xl p-4 space-y-2 transition block">
-                                <div class="flex justify-between items-center gap-2">
-                                    <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${mod.code}</span>
-                                    <span class="text-[9px] font-mono text-slate-500">Module ${mod.n}</span>
+                            return `<a ${open} data-testid="card-briefing-${mod.n}" class="flex gap-4 bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/50 rounded-xl p-4 transition block">
+                                <div class="w-10 h-10 shrink-0 rounded-full bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-xs font-black text-amber-400">${mod.n}</div>
+                                <div class="min-w-0 flex-1 space-y-1">
+                                    <div class="flex justify-between items-center gap-2">
+                                        <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${mod.code}</span>
+                                        <span class="text-[9px] font-mono text-zinc-500">Module ${mod.n} / 14</span>
+                                    </div>
+                                    <h3 class="text-sm font-bold text-white">${mod.title}</h3>
+                                    <p class="text-xs text-zinc-400 leading-relaxed">${mod.body}</p>
                                 </div>
-                                <h3 class="text-sm font-bold text-white">${mod.title}</h3>
-                                <p class="text-xs text-slate-400">${mod.body}</p>
                             </a>`;
                         }).join('')}
-                    </div>
                 </section>`;
         }
 
@@ -371,7 +356,7 @@
 
         const academyViews = {
             briefings() {
-                return classicBriefingsHtml() + briefingModulesHtml() + lmsFeedHtml();
+                return briefingModulesHtml();
             },
             courses() {
                 return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -558,7 +543,7 @@ graph TD
             if (window.MHBOJT_ADMIN && typeof window.MHBOJT_ADMIN.mount === 'function') window.MHBOJT_ADMIN.mount(document.getElementById('academyView'));
             renderAcademyNav();
             history.replaceState(null, '', '#' + item.id);
-            if (window.matchMedia('(max-width: 1023px)').matches) {
+            if (window.matchMedia('(max-width: 767px)').matches) {
                 const side = document.getElementById('academySidebar');
                 side.classList.add('hidden');
                 side.classList.remove('flex', 'fixed', 'inset-y-0', 'left-0');

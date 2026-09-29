@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial by Design LMS | HOMES IN HOURS?! - FinAcademy</title>
-    <meta name="mhbojt-build" content="quiz-sweat-200000-20260921">
+    <meta name="mhbojt-build" content="finacademy-root-14-20260929">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });</script>
@@ -42,7 +42,7 @@
                 <div>
                     <span class="text-amber-400 text-[10px] font-semibold uppercase tracking-widest">~ Financial by Design · finacademy.mhbojt.institute</span>
                     <h1 id="viewHeading" class="text-2xl font-extrabold tracking-wider text-amber-400">BRIEFINGS</h1>
-                    <p id="viewSubhead" class="text-xs text-slate-400">30,000-foot SL/NB briefings, Crystal Dynasty bridge, then HOMES IN HOURS?! LMS.</p>
+                    <p id="viewSubhead" class="text-xs text-slate-400">Sidebar feed · briefing modules 1–14 · HOMES IN HOURS?! LMS.</p>
                 </div>
                 <div id="academyView" class="space-y-6"></div>
             </main>
@@ -61,7 +61,7 @@
         let profileState = { food: 'Selfless Leader (SL)', shelter: 'Nation Builder (NB)' };
 
         const academyNav = [
-            { id: 'briefings', label: 'Briefings', sub: '30,000-foot SL/NB briefings + HOMES IN HOURS?! LMS' },
+            { id: 'briefings', label: 'Briefings', sub: 'Modules 1–14 + HOMES IN HOURS?! LMS' },
             { id: 'courses', label: 'Courses', sub: '12 migrated training labs' },
             { id: 'citadel', label: 'The Citadel', sub: 'St. Bernard + Jackson Barracks' },
             { id: 'dynasty', label: 'Dynasty', sub: 'Crystal Dynasty engine' },
@@ -126,6 +126,60 @@
                 return 'https://www.mhbojt.com' + path;
             }
             return path;
+        }
+
+        function dynastyEngineUrl() {
+            return platformUrl('/drah_crystal_dynasty1.html');
+        }
+
+        const briefingModules = [
+            { n: 1, code: 'BRF-01', title: 'Diagnostic Profile', body: 'Lock Food Logic as Selfless Leader (SL) or Share (SIL) and Shelter Intent as Nation Builder (NB) before any capital credits.' },
+            { n: 2, code: 'BRF-02', title: 'Sweat Equity', body: '$50 per hour. 200,000 Hours neutralize the $10,000,000 apprentice liability.' },
+            { n: 3, code: 'BRF-03', title: 'Mentor Pipeline', body: '$1M per completed mentee. Ten mentees clear the franchise ledger.' },
+            { n: 4, code: 'BRF-04', title: 'Sponsor Underwriting', body: '$100k per underwritten candidate. You stay on the hook until they execute.' },
+            { n: 5, code: 'BRF-05', title: 'Referral Compounding', body: '$50k per converted introduction with a Stripe receipt. Name-drops do not credit.' },
+            { n: 6, code: 'BRF-06', title: 'Physics of Wealth', body: 'Seed, monthly contribution, and a 1,000-year compounding map on Crystal Dynasty.' },
+            { n: 7, code: 'BRF-07', title: 'St. Bernard Citadel', body: '48-acre Smart Living campus — Component #001. Hours only credit when executed or verified here.' },
+            { n: 8, code: 'BRF-08', title: 'Jackson Barracks Pipeline', body: 'National Guardsmen convert dual-duty hours into Tri-Parish housing equity — Component #002.' },
+            { n: 9, code: 'BRF-09', title: 'Laotian Diaspora / DIFY', body: 'Nation Building homecoming: wisdom, referrals, and apprentice labor on one 1,000-year ledger.' },
+            { n: 10, code: 'BRF-10', title: 'HOMES IN HOURS?! LMS', body: 'Financial by Design video feed, interactive quiz cards, and SUBMIT & CALCULATE SCORE.' },
+            { n: 11, code: 'BRF-11', title: 'NotebookLM Studio', body: '11-item Medium Selector. Audio Overview is the default. Toggle slides, reports, tables, and quizzes.' },
+            { n: 12, code: 'BRF-12', title: 'Stripe $100 Gateway', body: 'Locked reservation checkout. The deposit admits a candidate; it does not neutralize the $10M liability.' },
+            { n: 13, code: 'BRF-13', title: 'Crystal Dynasty Engine', body: 'Action Track sliders and the live $10M ledger. Open the engine page — this homepage is the academy feed.' },
+            { n: 14, code: 'BRF-14', title: 'Sentinel Perpetuity', body: '200+ enterprise components and the franchise hand-off. The ledger outlives any single apprentice.' }
+        ];
+
+        function briefingModulesHtml() {
+            return `<section id="briefingModules" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <div class="flex flex-wrap justify-between items-end gap-2 border-b border-slate-800 pb-3">
+                        <div>
+                            <div class="text-[9px] uppercase tracking-widest text-amber-400">Authentic FinAcademy Feed</div>
+                            <h2 class="text-sm font-bold tracking-wider text-amber-400 uppercase">Briefing Modules 1–14</h2>
+                            <p class="text-[11px] text-slate-400 mt-1">Numbered doctrine cards for incoming SL / NB candidates. Click a module to open the matching academy view or campus feed.</p>
+                        </div>
+                        <span class="text-[10px] font-mono text-amber-400">14 / 14 published</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3">
+                        ${briefingModules.map((mod) => {
+                            const href = mod.n === 7 ? platformUrl('/feed/st-bernard/')
+                                : mod.n === 8 ? platformUrl('/feed/national-guard/')
+                                : mod.n === 13 ? dynastyEngineUrl()
+                                : null;
+                            const view = mod.n <= 6 ? 'courses' : mod.n === 10 ? 'briefings' : mod.n === 11 ? 'admin' : mod.n === 12 ? 'walkthrough' : mod.n === 14 ? 'citadel' : null;
+                            const open = href
+                                ? `href="${href}"`
+                                : `href="#${view || 'briefings'}" onclick="switchAcademyView('${view || 'briefings'}'); return false;"`;
+                            return `<a ${open} class="bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-xl p-4 space-y-2 transition block">
+                                <div class="flex justify-between items-center gap-2">
+                                    <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${mod.code}</span>
+                                    <span class="text-[9px] font-mono text-slate-500">Module ${mod.n}</span>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">${mod.title}</h3>
+                                <p class="text-xs text-slate-400">${mod.body}</p>
+                            </a>`;
+                        }).join('')}
+                    </div>
+                </section>`;
         }
 
         function loadProgress() {
@@ -257,7 +311,7 @@
                         <p class="text-xs text-slate-300">The briefings name the need, goals, and objectives. Crystal Dynasty converts them into Action Tracks against the $10M franchise liability.</p>
                         <div class="flex flex-wrap gap-3 pt-1">
                             <button type="button" onclick="switchAcademyView('dynasty')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Open Crystal Dynasty Engine →</button>
-                            <a href="${platformUrl('/#dynasty')}" class="bg-slate-900 border border-amber-500/40 hover:border-amber-400 text-amber-400 font-bold px-4 py-2 rounded-lg text-xs">Homepage #dynasty ↗</a>
+                            <a href="${dynastyEngineUrl()}" class="bg-slate-900 border border-amber-500/40 hover:border-amber-400 text-amber-400 font-bold px-4 py-2 rounded-lg text-xs">Open Crystal Dynasty Engine ↗</a>
                         </div>
                     </div>
                 </section>`;
@@ -317,7 +371,7 @@
 
         const academyViews = {
             briefings() {
-                return classicBriefingsHtml() + lmsFeedHtml();
+                return classicBriefingsHtml() + briefingModulesHtml() + lmsFeedHtml();
             },
             courses() {
                 return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -368,12 +422,12 @@
                 </div>`;
             },
             dynasty() {
-                const src = platformUrl('/#dynasty');
+                const src = dynastyEngineUrl();
                 return `<div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
                     <div class="flex flex-wrap justify-between items-center gap-2">
                         <div>
                             <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Crystal Dynasty Engine</h2>
-                            <p class="text-xs text-slate-400">Live $10M liability ledger, Action Track sliders, and 1,000-year compounding. Briefings above the engine stay on the homepage feed.</p>
+                            <p class="text-xs text-slate-400">Live $10M liability ledger. This homepage is the FinAcademy feed — the calculator lives on the engine page.</p>
                         </div>
                         <a href="${src}" target="_blank" class="text-[11px] text-amber-400 hover:text-amber-300">Open full engine ↗</a>
                     </div>
@@ -405,7 +459,7 @@ graph TD
     E --> F[$100 Reservation]
     F --> G[Crystal Dynasty Engine]
     click C "#academyNav" "Stay on sidebar"
-    click G "${platformUrl('/')}" "Open Crystal Dynasty Engine"
+    click G "${dynastyEngineUrl()}" "Open Crystal Dynasty Engine"
                         </div>
                     </div>
                 </div>`;

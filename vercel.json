@@ -32,6 +32,26 @@
       "dest": "/feed/finacademy/index.html"
     },
     {
+      "src": "/feed",
+      "has": [
+        {
+          "type": "host",
+          "value": "finacademy.mhbojt.institute"
+        }
+      ],
+      "dest": "/feed/finacademy/index.html"
+    },
+    {
+      "src": "/feed/",
+      "has": [
+        {
+          "type": "host",
+          "value": "finacademy.mhbojt.institute"
+        }
+      ],
+      "dest": "/feed/finacademy/index.html"
+    },
+    {
       "src": "/(.*)",
       "has": [
         {

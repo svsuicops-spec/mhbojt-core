@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hybrid Learning Hub | Briefings</title>
-    <meta name="mhbojt-build" content="curriculum-factory-20260929">
+    <meta name="mhbojt-build" content="clean-academy-feed-20261001">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
         </div>
         <nav id="academyNav" class="flex-1 overflow-y-auto p-3 space-y-1"></nav>
         <div class="p-4 border-t border-zinc-800 space-y-2">
-            <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" class="block text-center bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-4 py-2.5 rounded-lg text-xs">
+            <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" rel="noopener noreferrer" class="block text-center bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-4 py-2.5 rounded-lg text-xs shadow-lg">
                 Secure $100 Reservation
             </a>
             <p class="text-[10px] text-zinc-600 text-center">mhbojt.site · Dual-pane feed</p>
@@ -40,27 +40,11 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-                <button type="button" onclick="openJourney()" class="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-3 py-1.5 rounded-lg text-[10px] md:text-xs">Journey to SL/NB</button>
+                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" rel="noopener noreferrer" class="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-[10px] md:text-xs shadow-lg">Secure $100 Reservation</a>
                 <span id="activeViewLabel" class="hidden sm:inline text-[11px] text-zinc-500">Briefings</span>
             </div>
         </header>
         <main id="academyView" class="flex-1 overflow-y-auto px-4 md:px-8 py-5"></main>
-    </div>
-
-    <div id="journeyModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden items-center justify-center z-[80] p-4" onclick="if (event.target === this) closeJourney()" role="dialog" aria-modal="true" aria-labelledby="journeyTitle">
-        <div class="bg-zinc-900 border border-amber-500/40 rounded-2xl max-w-3xl w-full p-5 md:p-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
-            <button type="button" onclick="closeJourney()" class="absolute top-3 right-4 text-zinc-400 hover:text-white text-2xl font-bold" aria-label="Close">&times;</button>
-            <div class="text-[10px] uppercase tracking-widest text-amber-400">Interactive briefing</div>
-            <h2 id="journeyTitle" class="text-xl md:text-2xl font-extrabold text-white mt-1">Journey to SL/NB</h2>
-            <p class="text-xs text-zinc-400 mt-1 mb-4">National Guardsmen · Tri-Parish Homebuyers · Laotian Diaspora. Neutralize $10M to $0 at $50/Hr, then reserve.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4" id="journeyCorridors"></div>
-            <div id="journeySlide" class="space-y-4"></div>
-            <div class="flex justify-between items-center gap-3 mt-5">
-                <button type="button" onclick="stepJourney(-1)" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-bold px-4 py-2 rounded-lg text-xs">← Back</button>
-                <span id="journeyStepLabel" class="text-[10px] font-mono text-amber-400">1 / 4</span>
-                <button type="button" onclick="stepJourney(1)" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-bold px-4 py-2 rounded-lg text-xs">Next →</button>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -78,7 +62,6 @@
             { id: 'dynasty', label: 'Dynasty', sub: 'Crystal Dynasty engine' },
             { id: 'blueprint', label: 'Blueprint', sub: '5W1H + architecture flow' },
             { id: 'walkthrough', label: 'Walkthrough', sub: 'Select · Lab · Verify · Reserve' },
-            { id: 'dashboard', label: 'Dashboard', sub: 'Progress and liability KPIs' },
             { id: 'factory', label: 'Course Factory', sub: 'JSON ingest → briefing, media, quiz, Stripe' },
             { id: 'profile', label: 'Profile', sub: 'SL / NB diagnostic pair' },
             { id: 'admin', label: 'Admin Panel', sub: 'NotebookLM drop and M4A converter' }
@@ -118,19 +101,6 @@
             stbernard: { label: 'St. Bernard Site Feed', type: 'feed', src: '/feed/st-bernard/', title: 'St. Bernard Smart Living Campus · Component #001', note: '48-acre campus site feed' },
             nationalguard: { label: 'National Guard Campaign', type: 'feed', src: '/feed/national-guard/', title: 'National Guard Housing Campaign · Component #002', note: 'Guardsmen housing campaign feed' }
         };
-
-        const quizQuestions = [
-            { prompt: 'What is the MHBOJT sweat-equity conversion rate?', choices: ['$15 / Hr', '$25 / Hr', '$50 / Hr', '$100 / Hr'], answer: '$50 / Hr' },
-            { prompt: 'What franchise liability must an apprentice neutralize?', choices: ['$100,000', '$1,000,000', '$10,000,000', '$100,000,000'], answer: '$10,000,000' },
-            { prompt: 'How much capital does one completed mentee credit?', choices: ['$50k', '$100k', '$1M', '$10M'], answer: '$1M' },
-            { prompt: 'How much does one sponsor candidate credit?', choices: ['$10k', '$50k', '$100k', '$1M'], answer: '$100k' },
-            { prompt: 'How much does one converted referral credit?', choices: ['$5k', '$25k', '$50k', '$100k'], answer: '$50k' },
-            { prompt: 'How large is the St. Bernard Smart Living campus?', choices: ['4.8 acres', '12 acres', '48 acres', '480 acres'], answer: '48 acres' },
-            { prompt: 'What is the Stripe gateway reservation?', choices: ['$10', '$50', '$100', '$1,000'], answer: '$100' },
-            { prompt: 'How many verified sweat hours fully neutralize the $10,000,000 apprentice liability at $50 per hour?', choices: ['2,000 Hours', '10,000 Hours', '20,000 Hours', '200,000 Hours'], answer: '200,000 Hours' },
-            { prompt: 'Food Logic in Module 1 is which diagnostic pair?', choices: ['Buyer / Seller', 'Selfless Leader (SL) / Share (SIL)', 'Debt / Equity', 'Bull / Bear'], answer: 'Selfless Leader (SL) / Share (SIL)' },
-            { prompt: 'Shelter Intent in Module 1 is locked to which classification?', choices: ['Landlord', 'Nation Builder (NB)', 'Speculator', 'Tenant'], answer: 'Nation Builder (NB)' }
-        ];
 
         function platformUrl(path) {
             if ((location.hostname || '').indexOf('finacademy.') === 0) {
@@ -251,131 +221,9 @@
             </div>`;
         }
 
-        function classicBriefingsHtml() {
-            return `<section id="classicBriefings" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
-                    <div class="flex flex-wrap justify-between items-start gap-3 border-b border-slate-800 pb-3">
-                        <div>
-                            <div class="text-[9px] uppercase tracking-widest text-amber-400">Legacy Feed · Restored Briefings</div>
-                            <h2 class="text-sm font-bold tracking-wider text-amber-400 uppercase">30,000-Foot Strategic Briefings</h2>
-                            <p class="text-[11px] text-slate-400 mt-1 max-w-2xl">Long-horizon community wealth and resilience doctrine for incoming Selfless Leaders (SL) and Nation Builders (NB), restored from the classic 5W1H feed.</p>
-                        </div>
-                        <div class="flex flex-wrap gap-3 text-[11px]">
-                            <a href="${platformUrl('/feed/st-bernard/')}" class="text-amber-400 hover:text-amber-300">#001 Campus ↗</a>
-                            <a href="${platformUrl('/feed/national-guard/')}" class="text-amber-400 hover:text-amber-300">#002 Guard ↗</a>
-                            <a href="${platformUrl('/drah_crystal_dynasty1.html')}" class="text-amber-400 hover:text-amber-300">NotebookLM ↗</a>
-                        </div>
-                    </div>
-                    <div id="sovereignBriefingFeed" data-briefing-ingest class="scroll-mt-24"></div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <article class="bg-slate-950 border border-amber-500/30 rounded-xl p-5 space-y-3">
-                            <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">Selfless Leader (SL)</span>
-                            <h3 class="text-sm font-bold text-white">Need · Goals · Objectives</h3>
-                            <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside">
-                                <li><span class="text-slate-200 font-semibold">Need:</span> convert surplus time into parish-level shelter instead of paper speculation.</li>
-                                <li><span class="text-slate-200 font-semibold">Goal:</span> neutralize the $10M apprentice liability through $50/Hr sweat, $1M mentors, and verified labs.</li>
-                                <li><span class="text-slate-200 font-semibold">Objective:</span> lock Food Logic as SL, finish this brief, then run Crystal Dynasty Action Tracks.</li>
-                            </ul>
-                        </article>
-                        <article class="bg-slate-950 border border-sky-500/30 rounded-xl p-5 space-y-3">
-                            <span class="text-[10px] font-bold text-sky-400 uppercase tracking-widest">Nation Builder (NB)</span>
-                            <h3 class="text-sm font-bold text-white">Need · Goals · Objectives</h3>
-                            <ul class="text-xs text-slate-400 space-y-2 list-disc list-inside">
-                                <li><span class="text-slate-200 font-semibold">Need:</span> a 1,000-year compounding map so housing and franchise capital stay inside the community.</li>
-                                <li><span class="text-slate-200 font-semibold">Goal:</span> stand the St. Bernard citadel and Jackson Barracks pipeline as living resilience proof.</li>
-                                <li><span class="text-slate-200 font-semibold">Objective:</span> lock Shelter Intent as NB, complete FinAcademy labs, then reserve with the $100 gateway.</li>
-                            </ul>
-                        </article>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        ${[['WHAT','Community Wealth Protocol','Restored Briefings Feed framing MHBOJT as long-horizon community wealth: modular shelter, sweat equity, and a franchise ledger.'],
-                           ['WHEN','1,000-Year Horizon, Immediate Intake','Candidates enter now. Compounding is modeled to 1,000 years so SL/NB decisions outlive a single grant cycle.'],
-                           ['WHERE','Citadel + Institute','St. Bernard 48 acres, Jackson Barracks, and this academy host — one map from brief to calculator.'],
-                           ['WHY','Resilience Before Speculation','Housing crises become unfixable when talent leaves the parish. Briefings keep SL/NB on tangible assets.'],
-                           ['WHO','Incoming SL & NB Candidates','Selfless Leaders, Nation Builders, Guardsmen, sponsors, and referral partners on the $10M training contract.'],
-                           ['HOW','Brief → NotebookLM → Dynasty','Read 5W1H, listen to the dual-host overview, then open Crystal Dynasty and neutralize remaining liability.']].map((card) =>
-                            `<article class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-2"><span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">${card[0]}</span><h3 class="text-sm font-bold text-white">${card[1]}</h3><p class="text-xs text-slate-400">${card[2]}</p></article>`
-                        ).join('')}
-                    </div>
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3">
-                        <div class="flex flex-wrap justify-between items-center gap-2">
-                            <div>
-                                <h3 class="text-xs font-bold text-amber-400 uppercase tracking-widest">NotebookLM Dual-Host Brief</h3>
-                                <p class="text-[11px] text-slate-400">Crystal Dynasty + Sentinel Perpetuity sources. Audio Overview is the default output.</p>
-                            </div>
-                            <a href="${platformUrl('/drah_crystal_dynasty1.html')}" class="text-[11px] text-amber-400 hover:text-amber-300">Open 11-medium suite ↗</a>
-                        </div>
-                        <audio id="briefingDualHostAudio" src="${AUDIO_SRC}" controls preload="metadata" class="w-full accent-amber-400">
-                            <source src="${AUDIO_SRC}" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                    <div id="dynastyBridge" class="bg-amber-500/10 border border-amber-500/40 rounded-xl p-5 space-y-2">
-                        <div class="text-[9px] uppercase tracking-widest text-amber-400">Dynasty Integration Line</div>
-                        <h3 class="text-sm font-bold text-white">From the 30,000-foot brief → run your own numbers</h3>
-                        <p class="text-xs text-slate-300">The briefings name the need, goals, and objectives. Crystal Dynasty converts them into Action Tracks against the $10M franchise liability.</p>
-                        <div class="flex flex-wrap gap-3 pt-1">
-                            <button type="button" onclick="switchAcademyView('dynasty')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Open Crystal Dynasty Engine →</button>
-                            <a href="${dynastyEngineUrl()}" class="bg-slate-900 border border-amber-500/40 hover:border-amber-400 text-amber-400 font-bold px-4 py-2 rounded-lg text-xs">Open Crystal Dynasty Engine ↗</a>
-                        </div>
-                    </div>
-                </section>`;
-        }
-
-        function lmsFeedHtml() {
-            const cards = quizQuestions.map((q, i) => `
-                <article class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-quiz="${i}">
-                    <div class="flex justify-between items-start gap-2">
-                        <h3 class="text-sm font-bold text-white">${i + 1}. ${q.prompt}</h3>
-                        <span class="text-[9px] font-mono text-slate-500 shrink-0">Q${String(i + 1).padStart(2, '0')}</span>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        ${q.choices.map((choice) => `
-                            <label class="flex items-center gap-2 bg-slate-900 border border-slate-800 hover:border-amber-500/40 rounded-lg px-3 py-2 text-xs text-slate-300 cursor-pointer">
-                                <input type="radio" name="quiz-${i}" value="${choice}" class="accent-amber-400">
-                                <span>${choice}</span>
-                            </label>
-                        `).join('')}
-                    </div>
-                </article>`).join('');
-            return `<article class="bg-slate-900 border border-amber-500/40 rounded-2xl p-5 shadow-xl space-y-4">
-                    <div class="flex flex-wrap justify-between items-center gap-2">
-                        <div>
-                            <div class="text-[9px] uppercase tracking-widest text-amber-400">Financial by Design · Main Feed</div>
-                            <h2 class="text-lg font-extrabold tracking-wider text-white">HOMES IN HOURS?!</h2>
-                            <p class="text-xs text-slate-400 mt-1">Legacy LMS video feed. Modular / 3D-printed construction speed is the physical proof behind the $50/Hr sweat track.</p>
-                        </div>
-                        <span class="text-[9px] font-mono text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">VIDEO FEED</span>
-                    </div>
-                    <div class="aspect-video w-full overflow-hidden rounded-xl border border-slate-800 bg-black">
-                        <iframe id="homesInHoursFrame" class="w-full h-full" src="https://www.youtube.com/embed/${videoSources.homes.id}?rel=0" title="HOMES IN HOURS?!" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <p class="text-[11px] text-slate-500">Watch the feed, then answer the module quiz. Credits still require verification on the live ledger.</p>
-                </article>
-                <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-800 pb-2">
-                        <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Interactive Quiz Cards</h2>
-                        <span class="text-[10px] text-slate-400">${quizQuestions.length} questions · Financial by Design LMS</span>
-                    </div>
-                    <div id="quizDeck" class="space-y-3">${cards}</div>
-                    <button type="button" id="submitQuizBtn" onclick="calculateQuizScore()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold tracking-widest px-4 py-3 rounded-lg text-sm shadow-lg">SUBMIT &amp; CALCULATE SCORE</button>
-                    <div id="quizScore" class="hidden bg-slate-950 border border-amber-500/40 rounded-xl p-4 text-center space-y-1">
-                        <div class="text-[9px] uppercase tracking-widest text-slate-400">LMS Score</div>
-                        <div id="quizScoreValue" class="text-3xl font-mono font-extrabold text-amber-400">0 / ${quizQuestions.length}</div>
-                        <p id="quizScoreNote" class="text-xs text-slate-400"></p>
-                    </div>
-                </section>
-                ${mediaStudioHtml()}
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Dual-Host Academy Brief</h2>
-                    <p class="text-xs text-slate-400">Host A argues the financial upside of sequenced Action Tracks. Host B answers with the operational rigor required to earn each credit.</p>
-                    <button type="button" onclick="playAcademyBrief()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-full text-xs">▶ Play Curriculum Brief</button>
-                    <p id="academyBriefCaption" class="hidden text-[11px] text-slate-300 leading-relaxed"></p>
-                </div>`;
-        }
-
         const academyViews = {
             briefings() {
-                return journeyBriefingHtml() + briefingModulesHtml();
+                return `<div class="max-w-3xl mx-auto space-y-6">${mediaStudioHtml()}${briefingModulesHtml()}</div>`;
             },
             courses() {
                 return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -479,24 +327,8 @@ graph TD
                     </ol>
                     <button type="button" onclick="playAcademyBrief()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-full text-xs">▶ Play Curriculum Brief</button>
                     <p id="academyBriefCaption" class="hidden text-[11px] text-slate-300 leading-relaxed"></p>
-                    <a href="${STRIPE}" class="inline-block bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-lg text-xs">Secure $100 Reservation</a>
+                    <a href="${STRIPE}" target="_blank" rel="noopener noreferrer" class="inline-block bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-lg text-xs">Secure $100 Reservation</a>
                 </div>`;
-            },
-            dashboard() {
-                const done = loadProgress().length;
-                const capitalDone = capitalModules.filter((mod) => isComplete(mod.id)).length;
-                const replitDone = replitModules.filter((mod) => isComplete(mod.id)).length;
-                return `<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Labs Complete</div><div class="text-lg font-mono font-extrabold text-amber-400">${done} / 12</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Sweat Equity Rate</div><div class="text-lg font-mono font-extrabold text-sky-400">$50 / Hr</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Liability Target</div><div class="text-lg font-mono font-extrabold text-rose-400">$10M</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center"><div class="text-[9px] uppercase tracking-widest text-slate-400">Gateway Deposit</div><div class="text-lg font-mono font-extrabold text-emerald-400">$100</div></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5"><div class="text-[10px] uppercase tracking-widest text-slate-400">Sovereign Capital</div><div class="text-xl font-mono text-amber-400">${capitalDone} / 6</div></div>
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5"><div class="text-[10px] uppercase tracking-widest text-slate-400">Replit Builder</div><div class="text-xl font-mono text-amber-400">${replitDone} / 6</div></div>
-                </div>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">${notebookReportHtml()}</div>`;
             },
             factory() {
                 return `<div data-curriculum-factory class="space-y-4"></div>`;
@@ -621,35 +453,9 @@ graph TD
             renderTracks();
         }
 
-        function calculateQuizScore() {
-            let correct = 0;
-            let answered = 0;
-            quizQuestions.forEach((q, i) => {
-                const picked = document.querySelector('input[name="quiz-' + i + '"]:checked');
-                if (picked) answered += 1;
-                if (picked && picked.value === q.answer) correct += 1;
-            });
-            const total = quizQuestions.length;
-            const pct = Math.round((correct / total) * 100);
-            const box = document.getElementById('quizScore');
-            const value = document.getElementById('quizScoreValue');
-            const note = document.getElementById('quizScoreNote');
-            if (box) box.classList.remove('hidden');
-            if (value) value.textContent = correct + ' / ' + total + ' · ' + pct + '%';
-            if (note) {
-                note.textContent = answered < total
-                    ? 'Answered ' + answered + ' of ' + total + '. Unanswered cards count as incorrect.'
-                    : (pct === 100
-                        ? 'Perfect. Reserve the $100 gateway and run the Dynasty sliders.'
-                        : 'Review the Action Track ledger, then resubmit.');
-            }
-            try { localStorage.setItem('finacademy-lms-score', JSON.stringify({ correct, total, pct, at: Date.now() })); } catch (err) {}
-            box?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
         function playAcademyBrief() {
             const caption = document.getElementById('academyBriefCaption');
-            const text = "Host A: The extracted sidebar is the academy operating system. Briefings, Courses, The Citadel, Dynasty, Blueprint, Walkthrough, Dashboard, Course Factory, Profile, and Admin Panel all render through switchAcademyView. Host B: Only if the candidate actually switches views and verifies. A sidebar click is not a completed lab.";
+            const text = "Host A: The extracted sidebar is the academy operating system. Briefings, Courses, The Citadel, Dynasty, Blueprint, Walkthrough, Course Factory, Profile, and Admin Panel all render through switchAcademyView. Host B: Only if the candidate actually switches views and verifies. A sidebar click is not a completed lab.";
             if (caption) {
                 caption.textContent = text;
                 caption.classList.remove('hidden');
@@ -821,122 +627,9 @@ graph TD
             }
         }
 
-        function journeyBriefingHtml() {
-            return `<section id="journeySlNb" class="max-w-3xl mx-auto mb-6 bg-zinc-900 border border-amber-500/40 rounded-2xl p-5 space-y-4">
-                    <div class="flex flex-wrap justify-between items-end gap-2">
-                        <div>
-                            <div class="text-[9px] uppercase tracking-widest text-amber-400">Journey to SL/NB</div>
-                            <h2 class="text-sm font-bold text-white">Guardsmen · Tri-Parish Homebuyers · Laotian Diaspora</h2>
-                            <p class="text-[11px] text-zinc-400 mt-1">Drive the $10,000,000 franchise liability to $0 at $50/Hr, then open Crystal Dynasty and reserve $100.</p>
-                        </div>
-                        <button type="button" onclick="openJourney()" class="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold px-4 py-2 rounded-lg text-xs">Start the journey →</button>
-                    </div>
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        <div class="bg-zinc-950 border border-rose-500/30 rounded-xl p-3"><div class="text-[9px] uppercase text-zinc-500">Liability</div><div class="text-sm font-mono font-extrabold text-rose-400">$10M → $0</div></div>
-                        <div class="bg-zinc-950 border border-sky-500/30 rounded-xl p-3"><div class="text-[9px] uppercase text-zinc-500">Apprentice</div><div class="text-sm font-mono font-extrabold text-sky-400">$50 / Hr</div></div>
-                        <div class="bg-zinc-950 border border-amber-500/30 rounded-xl p-3"><div class="text-[9px] uppercase text-zinc-500">Gateway</div><div class="text-sm font-mono font-extrabold text-amber-400">$100</div></div>
-                    </div>
-                </section>`;
-        }
-
-        let journeyCorridor = 'guardsmen';
-        let journeySlide = 0;
-        const journeyCorridors = {
-            guardsmen: {
-                label: 'National Guardsmen',
-                kicker: 'Jackson Barracks · Component #002',
-                body: 'Dual-duty and disaster-response hours convert into $50/Hr equity on the Tri-Parish citadel. Service does not leak talent after the mission.'
-            },
-            triparish: {
-                label: 'Tri-Parish Homebuyers',
-                kicker: 'St. Bernard · Orleans · Plaquemines',
-                body: 'Recovery families keep labor housed locally. The $10M ledger and $100 gateway are how a parish homebuyer enters as SL or NB without a college-debt ticket.'
-            },
-            diaspora: {
-                label: 'Laotian Diaspora',
-                kicker: 'Nation Building homecoming',
-                body: 'Wisdom, referrals, and apprentice labor write onto one 1,000-year ledger. Surplus concentrates into parish shelter — not speculation.'
-            }
-        };
-
-        function openJourney(corridor) {
-            if (corridor && journeyCorridors[corridor]) journeyCorridor = corridor;
-            journeySlide = 0;
-            paintJourney();
-            const modal = document.getElementById('journeyModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-        function closeJourney() {
-            const modal = document.getElementById('journeyModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-        function stepJourney(delta) {
-            journeySlide = Math.max(0, Math.min(3, journeySlide + delta));
-            paintJourney();
-        }
-        function setJourneyCorridor(id) {
-            journeyCorridor = id;
-            paintJourney();
-        }
-        function paintJourney() {
-            const corr = journeyCorridors[journeyCorridor];
-            const label = document.getElementById('journeyStepLabel');
-            if (label) label.textContent = (journeySlide + 1) + ' / 4';
-            const corridors = document.getElementById('journeyCorridors');
-            if (corridors) {
-                corridors.innerHTML = Object.keys(journeyCorridors).map((id) => {
-                    const item = journeyCorridors[id];
-                    const on = id === journeyCorridor;
-                    return `<button type="button" onclick="setJourneyCorridor('${id}')" class="text-left rounded-xl p-3 border ${on ? 'border-amber-400 bg-amber-500/15' : 'border-zinc-800 bg-zinc-950 hover:border-amber-500/40'}">
-                        <div class="text-[9px] uppercase tracking-widest ${on ? 'text-amber-400' : 'text-zinc-500'}">${item.kicker}</div>
-                        <div class="text-xs font-bold text-white mt-1">${item.label}</div>
-                    </button>`;
-                }).join('');
-            }
-            const engine = (typeof dynastyEngineUrl === 'function') ? dynastyEngineUrl() : '/drah_crystal_dynasty1.html';
-            const slides = [
-                `<article class="bg-zinc-950 border border-zinc-800 rounded-xl p-5 space-y-3">
-                    <h3 class="text-sm font-bold text-amber-400">1. Walk in as SL or NB</h3>
-                    <p class="text-sm text-zinc-200">${corr.body}</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-3"><div class="text-[10px] uppercase text-amber-400">Selfless Leader (SL)</div><p class="text-xs text-zinc-400 mt-1">Convert personal surplus into parish-level shelter.</p></div>
-                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-3"><div class="text-[10px] uppercase text-sky-400">Nation Builder (NB)</div><p class="text-xs text-zinc-400 mt-1">Stand the 1,000-year map so housing stays in the community.</p></div>
-                    </div>
-                </article>`,
-                `<article class="bg-zinc-950 border border-rose-500/30 rounded-xl p-5 space-y-3">
-                    <h3 class="text-sm font-bold text-rose-400">2. Drive $10,000,000 → $0</h3>
-                    <p class="text-sm text-zinc-200">Every ${corr.label.toLowerCase()} apprentice starts with a $10,000,000 franchise liability. Sweat, mentors, sponsors, and referrals write it down to zero on Crystal Dynasty.</p>
-                    <div class="flex items-center justify-between gap-3 font-mono text-lg font-extrabold"><span class="text-rose-400">$10M</span><span class="text-zinc-500 text-xs tracking-widest">NEUTRALIZE</span><span class="text-emerald-400">$0</span></div>
-                    <div class="h-2 rounded-full bg-zinc-800 overflow-hidden"><div class="h-full w-2/3 bg-gradient-to-r from-rose-500 to-emerald-400"></div></div>
-                </article>`,
-                `<article class="bg-zinc-950 border border-sky-500/30 rounded-xl p-5 space-y-3">
-                    <h3 class="text-sm font-bold text-sky-400">3. $50/Hr apprentice model</h3>
-                    <p class="text-sm text-zinc-200">Verified MHBOJT labor credits <strong class="text-white">$50 per hour</strong>. $10,000,000 ÷ $50 = <strong class="text-white">200,000 Hours</strong> to neutralize through sweat alone. Mentors ($1M), sponsors ($100k), and referrals ($50k) accelerate the same ledger.</p>
-                    <p class="text-[11px] text-zinc-500">The $100 reservation admits a candidate. It does not clear the $10M liability.</p>
-                </article>`,
-                `<article class="bg-zinc-950 border border-amber-500/40 rounded-xl p-5 space-y-4">
-                    <h3 class="text-sm font-bold text-amber-400">4. Calculator + $100 funnel</h3>
-                    <p class="text-sm text-zinc-200">Open Crystal Dynasty and move the Action Track sliders until remaining liability hits $0. Then lock the ${corr.label} seat on Stripe.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <a href="${engine}" class="block text-center bg-amber-500 hover:bg-amber-400 text-zinc-950 font-extrabold py-3 rounded-lg text-sm">Open Crystal Dynasty Calculator</a>
-                        <a href="${STRIPE}" class="block text-center bg-zinc-800 hover:bg-zinc-700 border border-amber-500/40 text-amber-300 font-bold py-3 rounded-lg text-sm">Secure $100 Reservation</a>
-                    </div>
-                </article>`
-            ];
-            const slide = document.getElementById('journeySlide');
-            if (slide) slide.innerHTML = slides[journeySlide];
-        }
-
         renderAcademyNav();
         const initial = (location.hash || '#briefings').replace('#', '');
-        if (initial === 'journey') {
-            switchAcademyView('briefings');
-            openJourney();
-        } else {
-            switchAcademyView(initial);
-        }
+        switchAcademyView(['dashboard', 'journey'].indexOf(initial) >= 0 ? 'briefings' : initial);
     </script>
     <script>
         (function () {

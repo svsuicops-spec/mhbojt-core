@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM | Multi-Modal Executive Presentation & Enterprise Hub</title>
-    <meta name="mhbojt-build" content="audio-ingest-20261007">
+    <meta name="mhbojt-build" content="lms-briefing-engine-20261007">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
@@ -140,6 +140,10 @@
 
         </section>
     </main>
+
+    <section id="briefingLms" class="container mx-auto px-4 pb-8 max-w-7xl">
+        <div data-lms-briefings></div>
+    </section>
 
     <footer class="bg-slate-900 border-t border-slate-800 text-center py-4 text-xs text-slate-500">
         DRAH GOSSSM Enterprise Infrastructure · Powered by SVSUIC &amp; MHBOJT · <a class="text-amber-400 hover:text-amber-300" href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" rel="noopener noreferrer">Secure Stripe reservation</a>
@@ -509,5 +513,6 @@
             loadAudioCatalog();
         });
     </script>
+    <script src="/feed/lms-briefings.js"></script>
 </body>
 </html>

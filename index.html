@@ -1,518 +1,287 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950">
+<html lang="en" class="bg-slate-950 text-slate-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRAH GOSSSM | Multi-Modal Executive Presentation & Enterprise Hub</title>
-    <meta name="mhbojt-build" content="lms-briefing-engine-20261007">
+    <title>DRAH GOSSSM & NexGen Alliance | Multi-Modal Presentation Engine</title>
+    <meta name="mhbojt-build" content="alliance-presentation-20261007">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+        .glass-panel { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }
+        .serif-font { font-family: "Playfair Display", Georgia, serif; }
+    </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             mermaid.initialize({ startOnLoad: false, theme: "dark", securityLevel: "loose" });
         });
     </script>
 </head>
-<body class="h-full text-slate-100 font-sans antialiased flex flex-col">
+<body class="min-h-screen flex bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden">
 
-    <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 flex justify-between items-center shadow-lg gap-3">
-        <div class="flex items-center space-x-3 min-w-0">
-            <a href="/" class="text-amber-400 font-extrabold tracking-wider text-sm uppercase hover:text-amber-300">DRAH GOSSSM Core Hub</a>
-            <span class="text-xs text-slate-400 border-l border-slate-700 pl-3 hidden sm:inline">Disaster Recovery &amp; Affordable Housing Global One-Stop-Shop</span>
+    <aside class="w-64 bg-slate-900 border-r border-slate-800 flex-col justify-between hidden lg:flex shrink-0 min-h-screen sticky top-0">
+        <div class="p-6 space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                <span class="text-amber-400 text-xl font-bold">🛡️</span>
+                <div>
+                    <p class="text-xs font-extrabold tracking-wider text-white">ALLIANCE PORTAL</p>
+                    <p class="text-[10px] text-amber-400 font-mono">NEXGEN x DRAH GOSSSM</p>
+                </div>
+            </div>
+            <nav id="allianceNav" class="space-y-1 text-xs font-medium">
+                <a href="#pitch" data-view="pitch" onclick="switchPresentationView('pitch'); return false;" class="nav-link flex items-center space-x-3 px-3 py-2 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/30 transition"><span>🤝</span><span>Alliance Pitch</span></a>
+                <a href="#dynasty" data-view="dynasty" onclick="switchPresentationView('dynasty'); return false;" class="nav-link flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-amber-400 transition"><span>💎</span><span>Crystal Dynasty Engine</span></a>
+                <a href="#media" data-view="media" onclick="switchPresentationView('media'); return false;" class="nav-link flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-amber-400 transition"><span>🎙️</span><span>NotebookLM 11-Suite</span></a>
+                <a href="#townhall" data-view="townhall" onclick="switchPresentationView('townhall'); return false;" class="nav-link flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-amber-400 transition"><span>🏛️</span><span>Multi-Critic Town Hall</span></a>
+                <a href="#factory" data-view="factory" onclick="switchPresentationView('factory'); return false;" class="nav-link flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-amber-400 transition"><span>🧠</span><span>Course Factory</span></a>
+                <a href="/feed/" class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-amber-400 transition"><span>📚</span><span>Academy feed</span></a>
+            </nav>
         </div>
-        <div class="flex items-center space-x-3 shrink-0">
-            <a href="/feed/" class="hidden sm:inline text-[11px] text-slate-400 hover:text-amber-400">Academy feed</a>
-            <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" rel="noopener noreferrer" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition shadow-md">
-                Secure $100 Reservation
-            </a>
+        <div class="p-4 border-t border-slate-800 text-[10px] text-slate-500 text-center">
+            mhbojt.vip active node
         </div>
-    </header>
+    </aside>
 
-    <main class="flex-grow container mx-auto px-4 py-6 max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-        <section class="lg:col-span-4 space-y-6">
-
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-                <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
-                    <h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Multi-Format Media Stage</h2>
-                    <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded">11 Formats</span>
-                </div>
-
-                <div class="space-y-3">
-                    <label for="mediaFormatSelect" class="text-[11px] text-slate-300 block font-medium">Select Presentation Medium:</label>
-                    <select id="mediaFormatSelect" onchange="switchMediaFormat()" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
-                        <option value="audio">Audio Overview (Dual-Author Podcast)</option>
-                        <option value="townhall">Town Hall Multi-Critic Panel</option>
-                        <option value="video">Video Cinematic Walkthrough</option>
-                        <option value="slides">Executive Slide Deck</option>
-                        <option value="mindmap">Interactive Mermaid Mind Map</option>
-                        <option value="reports">Strategy Reports &amp; Dossier</option>
-                        <option value="datatable">Data Table — Ledger Constants</option>
-                        <option value="flashcards">Flashcards</option>
-                        <option value="quiz">Execution Quiz</option>
-                        <option value="infographic">Infographic — Intake Tracks</option>
-                        <option value="artifact">Artifact Links</option>
-                    </select>
-                    <label for="audioTrackSelect" class="text-[11px] text-slate-300 block font-medium">Podcast or town hall track:</label>
-                    <select id="audioTrackSelect" onchange="selectAudioTrack()" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono"></select>
-                    <p id="audioTrackStatus" class="text-[10px] font-mono text-slate-500">Loading audio catalog…</p>
-                </div>
-                <p class="text-[10px] text-slate-400 leading-relaxed">New .mp3 and .m4a files in the repository root or assets/audio join this list from the audio manifest. No page edit is required.</p>
+    <div class="flex-grow flex flex-col min-h-screen">
+        <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 px-6 py-3 flex justify-between items-center gap-3">
+            <div class="flex items-center space-x-3 min-w-0">
+                <span class="text-xs font-bold text-amber-400 truncate">⚡ DRAH GOSSSM x NEXGEN GLOBAL GREEN HOUSING</span>
+                <span class="hidden md:inline text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/30 shrink-0">Strategic Alliance Presentation</span>
             </div>
-
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
-                <h3 class="text-xs font-bold text-slate-200 uppercase tracking-widest border-b border-slate-800 pb-2">Core Curriculum Tracks</h3>
-                <div id="trackList" class="space-y-2 text-xs">
-                    <button type="button" data-track="guardsmen" onclick="showTrack('guardsmen')" class="track-btn w-full text-left bg-slate-950 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl transition flex justify-between items-center text-amber-400 font-medium">
-                        <span>1. Guardsmen &amp; Tri-Parish Infrastructure</span>
-                        <span>→</span>
-                    </button>
-                    <button type="button" data-track="diaspora" onclick="showTrack('diaspora')" class="track-btn w-full text-left bg-slate-950 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl transition flex justify-between items-center text-slate-300">
-                        <span>2. Laotian Diaspora &amp; Global Training</span>
-                        <span>→</span>
-                    </button>
-                    <button type="button" data-track="nexgen" onclick="showTrack('nexgen')" class="track-btn w-full text-left bg-slate-950 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl transition flex justify-between items-center text-slate-300">
-                        <span>3. NexGen Green Housing Alliance (Leroy Jackson)</span>
-                        <span>→</span>
-                    </button>
-                </div>
-                <div id="trackDetail" class="text-[11px] text-slate-300 bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2"></div>
+            <div class="flex items-center space-x-3 shrink-0">
+                <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" rel="noopener noreferrer" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-1.5 rounded text-xs transition shadow-lg">
+                    $100 Priority Reservation
+                </a>
             </div>
+        </header>
 
-        </section>
+        <nav class="lg:hidden flex gap-2 overflow-x-auto px-4 py-2 border-b border-slate-800 bg-slate-900 text-[11px]" aria-label="Presentation views">
+            <button type="button" onclick="switchPresentationView('pitch')" class="shrink-0 px-3 py-1 rounded bg-slate-800 text-amber-400">Pitch</button>
+            <button type="button" onclick="switchPresentationView('dynasty')" class="shrink-0 px-3 py-1 rounded bg-slate-800 text-slate-300">Dynasty</button>
+            <button type="button" onclick="switchPresentationView('media')" class="shrink-0 px-3 py-1 rounded bg-slate-800 text-slate-300">11-Suite</button>
+            <button type="button" onclick="switchPresentationView('townhall')" class="shrink-0 px-3 py-1 rounded bg-slate-800 text-slate-300">Town Hall</button>
+            <button type="button" onclick="switchPresentationView('factory')" class="shrink-0 px-3 py-1 rounded bg-slate-800 text-slate-300">Factory</button>
+        </nav>
 
-        <section class="lg:col-span-8 space-y-6">
+        <main class="flex-grow p-6 lg:p-10 space-y-8 max-w-7xl mx-auto w-full" id="presentationStage"></main>
 
-            <div id="presentationStage" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3 gap-3">
-                    <h2 id="stageTitle" class="text-xs font-bold text-amber-400 uppercase tracking-widest">Live Audio Overview: Dual-Author Podcast</h2>
-                    <span class="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded shrink-0">Broadcast Ready</span>
-                </div>
-
-                <div id="stageContent" class="space-y-4 text-center bg-slate-950 p-6 rounded-xl border border-slate-800">
-                    <p class="text-xs text-slate-300">Listen to the synthesized dual-author podcast breaking down the 1,000-year universal protocol, sweat equity economics, and institutional capital stacking.</p>
-                    <audio controls class="w-full accent-amber-400 py-3" preload="metadata">
-                        <source src="/drah-dual-host-overview.mp3" type="audio/mpeg">
-                        <source src="/drah-dual-host-overview.m4a" type="audio/mp4">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <div class="text-[10px] text-slate-400 font-mono">Audio Source: .mp3 / .m4a dual-author overview</div>
-                </div>
-            </div>
-
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
-                <div class="border-b border-slate-800 pb-3">
-                    <span class="text-amber-400 text-[10px] font-bold uppercase tracking-widest">Autonomous Learning &amp; Validation Suite</span>
-                    <h2 class="text-sm font-bold text-white uppercase tracking-wider">Interactive Briefing Ingest &amp; Execution Tools</h2>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2">
-                        <div class="text-xs font-bold text-amber-400 flex items-center justify-between">
-                            <span>Execution Quiz</span>
-                            <span id="quizScore" class="text-[9px] text-slate-400">Not started</span>
-                        </div>
-                        <p class="text-[11px] text-slate-300">Test comprehension of the ledger constants: sweat, hours, liability, and the $100 gateway.</p>
-                        <button type="button" onclick="openQuiz()" class="w-full mt-2 bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/30 font-semibold py-2 rounded text-xs transition">
-                            Start Quiz Module
-                        </button>
-                    </div>
-
-                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2">
-                        <div class="text-xs font-bold text-amber-400 flex items-center justify-between">
-                            <span>Project Essay &amp; Notes</span>
-                            <span class="text-[9px] text-slate-400">This browser</span>
-                        </div>
-                        <p class="text-[11px] text-slate-300">Save field notes and strategic observations on this device.</p>
-                        <button type="button" onclick="openNotes()" class="w-full mt-2 bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/30 font-semibold py-2 rounded text-xs transition">
-                            Open Notes Workspace
-                        </button>
-                    </div>
-                </div>
-
-                <div id="notesPanel" class="hidden bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
-                    <label for="noteDraft" class="text-[11px] text-slate-300 block">Field note</label>
-                    <textarea id="noteDraft" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Community feedback, site observation, or follow-up."></textarea>
-                    <button type="button" onclick="saveNote()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded text-xs">Save note</button>
-                    <ul id="noteList" class="space-y-2 text-[11px] text-slate-300"></ul>
-                </div>
-            </div>
-
-        </section>
-    </main>
-
-    <section id="briefingLms" class="container mx-auto px-4 pb-8 max-w-7xl">
-        <div data-lms-briefings></div>
-    </section>
-
-    <footer class="bg-slate-900 border-t border-slate-800 text-center py-4 text-xs text-slate-500">
-        DRAH GOSSSM Enterprise Infrastructure · Powered by SVSUIC &amp; MHBOJT · <a class="text-amber-400 hover:text-amber-300" href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" rel="noopener noreferrer">Secure Stripe reservation</a>
-    </footer>
+        <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+            <p>© 2026 DRAH GOSSSM &amp; NexGen Global Green Housing Alliance. Deployed via Vercel Edge on mhbojt.vip</p>
+        </footer>
+    </div>
 
     <script>
-        var audioCatalog = {
-            source: "embedded fallback",
-            tracks: [
-                {
-                    id: "drah-dual-host-overview",
-                    label: "Drah Dual Host Overview",
-                    role: "podcast",
-                    sources: [
-                        { src: "/drah-dual-host-overview.mp3", type: "audio/mpeg" },
-                        { src: "/drah-dual-host-overview.m4a", type: "audio/mp4" }
-                    ]
-                },
-                {
-                    id: "drah-overview",
-                    label: "Drah Overview",
-                    role: "podcast",
-                    sources: [
-                        { src: "/drah-overview.mp3", type: "audio/mpeg" }
-                    ]
-                }
-            ]
-        };
-        var selectedTrackId = "drah-dual-host-overview";
-        var NOTES_KEY = "mhbojt-presentation-notes";
-        var STAGE = "space-y-4 bg-slate-950 p-6 rounded-xl border border-slate-800";
+        var AUDIO_MP3 = "/drah-dual-host-overview.mp3";
+        var AUDIO_M4A = "/drah-dual-host-overview.m4a";
+        var STRIPE = "https://buy.stripe.com/8x228rcRfa087yu9P4cIE02";
+        var currentView = "pitch";
         var quizItems = [
             { prompt: "What is the MHBOJT sweat-equity conversion rate?", choices: ["$15 / Hr", "$25 / Hr", "$50 / Hr", "$100 / Hr"], answer: "$50 / Hr" },
             { prompt: "How many verified sweat hours neutralize $10,000,000 at $50 per hour?", choices: ["2,000 Hours", "10,000 Hours", "20,000 Hours", "200,000 Hours"], answer: "200,000 Hours" },
             { prompt: "What franchise liability must an apprentice neutralize?", choices: ["$100,000", "$1,000,000", "$10,000,000", "$100,000,000"], answer: "$10,000,000" },
-            { prompt: "What does the $100 Stripe reservation do?", choices: ["Neutralizes the $10M liability", "Credits 2,000 sweat hours", "Admits a candidate only", "Pays the mentor pipeline"], answer: "Admits a candidate only" }
+            { prompt: "What does the $100 reservation do?", choices: ["Neutralizes the $10M liability", "Credits 2,000 sweat hours", "Admits a candidate only", "Pays the mentor pipeline"], answer: "Admits a candidate only" }
         ];
-        var flashIndex = 0;
-        var flashFace = "front";
-        var flashCards = [
-            { front: "Sweat equity", back: "$50 per verified hour. 200,000 hours neutralize $10,000,000." },
-            { front: "Mentor credit", back: "$1,000,000 per completed mentee. Ten mentees clear the franchise ledger." },
-            { front: "Gateway", back: "The $100 reservation admits a candidate. It does not neutralize the liability." }
-        ];
-        var tracks = {
-            guardsmen: {
-                body: "Jackson Barracks National Guardsmen and Tri-Parish residents share the infrastructure track. Hours credit when they are executed on the campus or the barracks pipeline.",
-                links: [
-                    { href: "/feed/national-guard/", label: "Component #002 · National Guard" },
-                    { href: "/feed/st-bernard/", label: "Component #001 · St. Bernard campus" }
-                ]
-            },
-            diaspora: {
-                body: "The Laotian diaspora concentrates surplus into parish-level Nation Building: modular shelter, mentorship, and a 1,000-year ledger.",
-                links: [
-                    { href: "/feed/#briefings", label: "Academy briefings" },
-                    { href: "/drah_crystal_dynasty1.html", label: "Crystal Dynasty engine" }
-                ]
-            },
-            nexgen: {
-                body: "NexGen Green Housing Alliance (Leroy Jackson) sits on the housing-supply track beside the St. Bernard Smart Living campus.",
-                links: [
-                    { href: "/feed/st-bernard/", label: "Open the 48-acre campus brief" }
-                ]
-            }
-        };
 
-        function trackById(id) {
-            var tracks = audioCatalog.tracks || [];
-            for (var i = 0; i < tracks.length; i++) {
-                if (tracks[i].id === id) return tracks[i];
-            }
-            return null;
-        }
-
-        function activeTrack() {
-            var chosen = trackById(selectedTrackId);
-            if (chosen) return chosen;
-            return (audioCatalog.tracks && audioCatalog.tracks[0]) || null;
-        }
-
-        function audioBlock(caption) {
-            var track = activeTrack();
-            var sources = track ? track.sources : [];
-            var sourceHtml = sources.map(function (source) {
-                return '<source src="' + source.src + '" type="' + source.type + '">';
-            }).join("");
-            var kinds = sources.map(function (source) {
-                return "." + source.src.split(".").pop();
-            }).join(" / ");
-            var name = track ? track.label : "Audio";
-            return '<p class="text-xs text-slate-300">' + caption + '</p>' +
-                '<audio controls class="w-full accent-amber-400 py-3" preload="metadata">' +
-                sourceHtml +
+        function audioPlayer(caption) {
+            return '<div class="p-6 bg-slate-950 rounded-xl border border-amber-500/30 text-center space-y-3">' +
+                '<span class="text-2xl">🎙️</span>' +
+                '<div class="text-xs font-bold text-white">' + caption + '</div>' +
+                '<p class="text-[11px] text-slate-400">Broadcasting the dual-author discussion on scaling green housing and perpetual municipal trusts.</p>' +
+                '<audio controls class="w-full accent-amber-400 pt-2" preload="metadata">' +
+                '<source src="' + AUDIO_MP3 + '" type="audio/mpeg">' +
+                '<source src="' + AUDIO_M4A + '" type="audio/mp4">' +
                 'Your browser does not support the audio element.</audio>' +
-                '<div class="text-[10px] text-slate-400 font-mono">Audio Source: ' + name + ' (' + kinds + ')</div>';
+                '<div class="text-[10px] text-slate-500 font-mono">.mp3 / .m4a · ' + AUDIO_MP3 + '</div></div>';
         }
 
-        function quizMarkup() {
-            return quizItems.map(function (item, i) {
-                var choices = item.choices.map(function (choice) {
-                    return '<label class="flex items-start gap-2 text-[11px] text-slate-300"><input type="radio" name="exec-q-' + i + '" value="' + choice.replace(/"/g, "&quot;") + '" class="accent-amber-400 mt-0.5"> <span>' + choice + '</span></label>';
-                }).join("");
-                return '<fieldset class="space-y-1"><legend class="text-xs text-white font-semibold mb-1">' + (i + 1) + '. ' + item.prompt + '</legend>' + choices + '</fieldset>';
-            }).join("") + '<button type="button" onclick="gradeQuiz()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded text-xs">Submit answers</button><p id="quizResult" class="text-[11px] text-slate-300"></p>';
+        function mediaSuite(intro) {
+            return '<div class="glass-panel p-6 rounded-2xl space-y-4 shadow-2xl">' +
+                '<div class="flex justify-between items-center border-b border-slate-800 pb-3 gap-3">' +
+                '<h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">🎙️ NotebookLM 11-Format Output Suite</h2>' +
+                '<span class="text-[10px] bg-sky-500/10 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded font-mono">Alliance Media Feed</span></div>' +
+                (intro || '') +
+                '<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">' +
+                '<div class="md:col-span-8"><label class="sr-only" for="presentationMediumSelect">Presentation medium</label>' +
+                '<select id="presentationMediumSelect" onchange="renderPresentationMedium()" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">' +
+                '<option value="audio">1. Audio Overview (Dual-Host Podcast: NexGen x DRAH)</option>' +
+                '<option value="slides">2. Slide Deck & Architecture Framework</option>' +
+                '<option value="video">3. Video Overview & Campaign Feeds</option>' +
+                '<option value="mindmap">4. Interactive Mind Map</option>' +
+                '<option value="reports">5. Comprehensive Strategy Reports</option>' +
+                '<option value="flashcards">6. Flashcards & Core Concepts</option>' +
+                '<option value="quiz">7. Execution Quiz & Assessment</option>' +
+                '<option value="infographic">8. Infographic Summary</option>' +
+                '<option value="artifact">9. Create Artifact Icon</option>' +
+                '<option value="table">10. Data Table & Financial Projections</option>' +
+                '<option value="interactive">11. Interactive Alliance Report</option>' +
+                '</select></div>' +
+                '<div class="md:col-span-4"><button type="button" onclick="renderPresentationMedium()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-2 rounded text-xs transition shadow-md">Load Selected Medium</button></div></div>' +
+                '<div id="presentationMediaContainer" class="pt-2"></div></div>';
         }
 
-        function renderFormat(format) {
-            if (format === "audio") {
-                return { title: "Live Audio Overview: Dual-Author Podcast", align: "text-center", html: audioBlock("Listen to the synthesized dual-author podcast breaking down the 1,000-year universal protocol and capital structures.") };
-            }
-            if (format === "townhall") {
-                return {
-                    title: "Town Hall Multi-Critic Panel Discussion",
-                    align: "text-left",
-                    html: '<div class="space-y-3">' +
-                        '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-amber-400">Critic A (Financial Underwriter):</strong> "How does the 20% factory markup hold up against regional appraisal variances?"</div>' +
-                        '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-emerald-400">Critic B (Community Leader):</strong> "The transitional counseling pipeline ensures zero speculative vacancy before groundbreaking."</div>' +
-                        audioBlock("The repository dual-host overview plays with this panel.") +
-                        '</div>'
-                };
-            }
-            if (format === "video") {
-                return {
-                    title: "Cinematic Walkthrough & Video Overview",
-                    align: "text-left",
-                    html: '<p class="text-xs text-slate-300">HOMES IN HOURS?! — the Financial by Design briefing already published in the academy catalog.</p>' +
-                        '<div class="aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800"><iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/wCzS2FZoB-I" title="HOMES IN HOURS?!" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
-                };
-            }
-            if (format === "slides") {
-                return {
-                    title: "Executive Slide Deck Architecture",
-                    align: "text-left",
-                    html: '<div class="space-y-3 text-xs">' +
-                        '<div><div class="text-amber-400 font-bold">Slide 1: The Closed-Loop Capital Architecture</div><p class="text-slate-300 mt-1">1. Counselor Pipeline (Demand) → 2. Baltimore Factory (Supply) → 3. M&amp;T Bank Takeout (Capital).</p></div>' +
-                        '<div><div class="text-amber-400 font-bold">Slide 2: Structural Lender Protection</div><p class="text-slate-300 mt-1">Factory-controlled 20% equity cushion embedded at completion.</p></div>' +
-                        '<div><div class="text-amber-400 font-bold">Slide 3: Ledger Constants</div><p class="text-slate-300 mt-1">Sweat $50 / Hr · 200,000 Hours · Mentor $1,000,000 · Sponsor $100,000 · Referral $50,000. The $100 reservation admits a candidate and does not neutralize the $10,000,000 liability.</p></div>' +
-                        '</div>'
-                };
-            }
-            if (format === "mindmap") {
-                return {
-                    title: "Interactive Mermaid Mind Map",
-                    align: "text-left",
-                    html: '<div class="overflow-x-auto"><pre class="mermaid">graph TD\nA["DRAH GOSSSM Hub"] --> B["Section 8 Counselor Pipeline"]\nA --> C["Baltimore Manufacturing 1,200 Units"]\nB --> D["M&amp;T Bank $350M Takeout"]\nC --> E["mhbojt.vip Commercial Gateway"]\nA --> F["Crystal Dynasty Ledger"]</pre></div>'
-                };
-            }
-            if (format === "reports") {
-                return {
-                    title: "Comprehensive Strategy Dossier & Reports",
-                    align: "text-left",
-                    html: '<span class="text-amber-400 font-bold block text-xs">Executive summary</span>' +
-                        '<p class="text-xs text-slate-300">Counseling demand, manufactured supply, and a lender takeout are one loop. Credits still require a verified hour, mentee, sponsor, or converted referral on the Crystal Dynasty ledger. The $100 gateway admits; it does not clear $10,000,000.</p>' +
-                        '<a href="/drah_crystal_dynasty1.html" class="inline-block text-[11px] text-amber-400 hover:text-amber-300">Open the ledger engine</a>'
-                };
-            }
-            if (format === "datatable") {
-                return {
-                    title: "Data Table — Ledger Constants",
-                    align: "text-left",
-                    html: '<table class="w-full text-xs text-left"><thead><tr class="text-amber-400"><th class="py-1 pr-3">Track</th><th class="py-1">Credit</th></tr></thead><tbody class="text-slate-300">' +
-                        '<tr><td class="py-1 pr-3">Sweat equity</td><td>$50 / Hr · 200,000 Hours</td></tr>' +
-                        '<tr><td class="py-1 pr-3">Mentor</td><td>$1,000,000 / completed mentee</td></tr>' +
-                        '<tr><td class="py-1 pr-3">Sponsor</td><td>$100,000 / candidate</td></tr>' +
-                        '<tr><td class="py-1 pr-3">Referral</td><td>$50,000 / converted introduction</td></tr>' +
-                        '<tr><td class="py-1 pr-3">Gateway</td><td>$100 admission · does not neutralize</td></tr>' +
-                        '<tr><td class="py-1 pr-3">Liability</td><td>$10,000,000</td></tr></tbody></table>'
-                };
-            }
-            if (format === "flashcards") {
-                return { title: "Flashcards", align: "text-left", html: '<button type="button" id="flashCard" onclick="flipFlash()" class="w-full text-left bg-slate-900 border border-slate-800 rounded-xl p-5 min-h-[7rem]"><div class="text-[10px] text-amber-400 uppercase tracking-widest" id="flashKicker">Front</div><div id="flashBody" class="text-sm text-white mt-2"></div></button><div class="flex justify-between text-[11px]"><button type="button" onclick="stepFlash(-1)" class="text-amber-400">Prev</button><span id="flashCount" class="text-slate-400"></span><button type="button" onclick="stepFlash(1)" class="text-amber-400">Next</button></div>' };
-            }
-            if (format === "quiz") {
-                return { title: "Execution Quiz", align: "text-left", html: quizMarkup() };
-            }
-            if (format === "infographic") {
-                return {
-                    title: "Infographic — Intake Tracks",
-                    align: "text-left",
-                    html: '<div class="space-y-2 text-xs">' +
-                        '<div class="bg-amber-500/15 border border-amber-500/40 rounded-lg px-3 py-2"><span class="text-amber-400 font-bold">01</span> Guardsmen &amp; Tri-Parish infrastructure</div>' +
-                        '<div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2"><span class="text-emerald-400 font-bold">02</span> Laotian diaspora &amp; global training</div>' +
-                        '<div class="bg-sky-500/10 border border-sky-500/30 rounded-lg px-3 py-2"><span class="text-sky-400 font-bold">03</span> NexGen Green Housing Alliance</div>' +
-                        '</div>'
-                };
-            }
-            return {
-                title: "Artifact Links",
-                align: "text-left",
-                html: '<ul class="text-xs space-y-2 text-amber-400">' +
-                    (audioCatalog.tracks || []).map(function (track) {
-                        return track.sources.map(function (source) {
-                            return '<li><a class="hover:text-amber-300" href="' + source.src + '">' + track.label + ' (.' + source.src.split(".").pop() + ')</a></li>';
-                        }).join("");
-                    }).join("") +
-                    '<li><a class="hover:text-amber-300" href="/drah_crystal_dynasty1.html">Crystal Dynasty engine</a></li>' +
-                    '<li><a class="hover:text-amber-300" href="/feed/st-bernard/">St. Bernard campus</a></li>' +
-                    '<li><a class="hover:text-amber-300" href="/feed/national-guard/">National Guard campaign</a></li>' +
-                    '<li><a class="hover:text-amber-300" href="/feed/">Academy feed</a></li></ul>'
-            };
+        function pitchHtml() {
+            return '<div class="space-y-6">' +
+                '<div class="text-center space-y-3 max-w-3xl mx-auto">' +
+                '<span class="text-amber-400 text-xs font-semibold uppercase tracking-widest">~ Strategic Partnership Briefing for Leroy Jackson</span>' +
+                '<h1 class="serif-font text-3xl md:text-4xl font-extrabold text-white">SCALING SOVEREIGN WEALTH &amp; GREEN HOUSING</h1>' +
+                '<p class="text-xs text-slate-400 leading-relaxed">Marrying NexGen Global Green Housing\'s Section 8 homeownership model with the DRAH GOSSSM Crystal Dynasty Engine to deliver pre-qualified buyer pipelines and perpetual generational wealth.</p></div>' +
+                '<div class="grid grid-cols-1 md:grid-cols-3 gap-6">' +
+                '<div class="glass-panel p-6 rounded-2xl space-y-3 shadow-xl"><span class="text-amber-400 text-xs font-mono font-bold">PILLAR 01</span><h3 class="text-sm font-bold text-white uppercase">Pre-Qualified Buyer Pipeline</h3><p class="text-xs text-slate-400">Integrating NexGen\'s voucher-to-ownership pathways with our SL/NB digital LMS onboarding and $100 priority reservation gate.</p></div>' +
+                '<div class="glass-panel p-6 rounded-2xl space-y-3 shadow-xl"><span class="text-amber-400 text-xs font-mono font-bold">PILLAR 02</span><h3 class="text-sm font-bold text-white uppercase">Factory-Controlled Construction</h3><p class="text-xs text-slate-400">Synchronizing steel-frame manufacturing plants with MHBOJT job training and sweat equity ($50/hr apprentice programs).</p></div>' +
+                '<div class="glass-panel p-6 rounded-2xl space-y-3 shadow-xl"><span class="text-amber-400 text-xs font-mono font-bold">PILLAR 03</span><h3 class="text-sm font-bold text-white uppercase">Perpetual Legacy &amp; RWA Ledgers</h3><p class="text-xs text-slate-400">Neutralizing $10,000,000 liability hurdles down to $0 through community action tracks and sovereign municipal trusts.</p></div></div>' +
+                mediaSuite('') + '</div>';
         }
 
-        function paintFlash() {
-            var card = flashCards[flashIndex];
-            var body = document.getElementById("flashBody");
-            var kicker = document.getElementById("flashKicker");
-            var count = document.getElementById("flashCount");
-            if (!body) return;
-            kicker.textContent = flashFace === "front" ? "Front · tap to flip" : "Back · tap to flip";
-            body.textContent = flashFace === "front" ? card.front : card.back;
-            count.textContent = (flashIndex + 1) + " / " + flashCards.length;
-        }
-
-        function flipFlash() {
-            flashFace = flashFace === "front" ? "back" : "front";
-            paintFlash();
-        }
-
-        function stepFlash(dir) {
-            flashIndex = (flashIndex + dir + flashCards.length) % flashCards.length;
-            flashFace = "front";
-            paintFlash();
-        }
-
-        function renderAudioTrackSelect() {
-            var select = document.getElementById("audioTrackSelect");
-            if (!select) return;
-            var groups = { podcast: [], townhall: [] };
-            (audioCatalog.tracks || []).forEach(function (track) {
-                (track.role === "townhall" ? groups.townhall : groups.podcast).push(track);
+        function markNav(viewName) {
+            document.querySelectorAll(".nav-link").forEach(function (link) {
+                var on = link.getAttribute("data-view") === viewName;
+                link.className = "nav-link flex items-center space-x-3 px-3 py-2 rounded-lg transition " +
+                    (on ? "bg-amber-500/10 text-amber-400 border border-amber-500/30" : "text-slate-300 hover:bg-slate-800 hover:text-amber-400 border border-transparent");
             });
-            function options(list) {
-                if (!list.length) return '<option value="" disabled>None in the catalog yet</option>';
-                return list.map(function (track) {
-                    return '<option value="' + track.id + '">' + track.label + '</option>';
-                }).join("");
+        }
+
+        function switchPresentationView(viewName) {
+            var stage = document.getElementById("presentationStage");
+            if (!stage) return;
+            currentView = viewName || "pitch";
+            markNav(currentView);
+            if (currentView === "pitch") {
+                stage.innerHTML = pitchHtml();
+                renderPresentationMedium();
+            } else if (currentView === "dynasty") {
+                stage.innerHTML = '<h2 class="serif-font text-2xl font-bold text-amber-400 mb-2">💎 Crystal Dynasty Calculator Engine</h2>' +
+                    '<p class="text-xs text-slate-300 mb-4">Multi-century compounding models, $50/hr sweat equity tracks, and $10,000,000 liability neutralization. The live engine is the calculator.</p>' +
+                    '<div class="glass-panel rounded-xl overflow-hidden"><iframe title="Crystal Dynasty Engine" src="/drah_crystal_dynasty1.html" class="w-full bg-slate-950" style="height:78vh"></iframe></div>';
+            } else if (currentView === "media") {
+                stage.innerHTML = '<h2 class="serif-font text-2xl font-bold text-amber-400 mb-2">🎙️ NotebookLM 11-Format Suite</h2>' +
+                    '<p class="text-xs text-slate-300 mb-4">Access the multimedia assets for the alliance presentation. The selector loads each format in place.</p>' +
+                    mediaSuite('');
+                renderPresentationMedium();
+            } else if (currentView === "townhall") {
+                stage.innerHTML = '<h2 class="serif-font text-2xl font-bold text-amber-400 mb-2">🏛️ Multi-Critic Town Hall Simulation</h2>' +
+                    '<p class="text-xs text-slate-300 mb-4">Simulated debate panel reviewing underwriting, RWA tokenization, and sovereign trust structures.</p>' +
+                    '<div class="space-y-3">' +
+                    '<div class="glass-panel p-4 rounded-xl text-xs"><strong class="text-amber-400">Critic A (Financial Underwriter):</strong> How does the voucher-to-ownership pipeline stay inside the $100 gate without pretending the reservation clears the $10,000,000 liability?</div>' +
+                    '<div class="glass-panel p-4 rounded-xl text-xs"><strong class="text-emerald-400">Critic B (Community Leader):</strong> Steel-frame plants only count if MHBOJT apprentices log $50/hr on a signed timesheet.</div>' +
+                    '<div class="glass-panel p-4 rounded-xl text-xs"><strong class="text-sky-400">Critic C (Trust Steward):</strong> Perpetual municipal trusts hold the ledger. Speculation is not a pillar.</div>' +
+                    audioPlayer("Town hall bed · NexGen x DRAH") + '</div>';
+            } else if (currentView === "factory") {
+                stage.innerHTML = '<h2 class="serif-font text-2xl font-bold text-amber-400 mb-2">🧠 Course Factory Ingestion Engine</h2>' +
+                    '<p class="text-xs text-slate-300 mb-4">The academy factory turns a subject into a briefing card, a media player, a quiz, and the $100 Stripe hook. Layout stays in HTML. Doctrine stays in JSON.</p>' +
+                    '<div class="glass-panel p-6 rounded-xl space-y-3 text-xs text-slate-300">' +
+                    '<p>Open the live Course Factory on the academy feed. New subjects are published from <span class="font-mono text-amber-400">curriculum-data.json</span>.</p>' +
+                    '<a href="/feed/#factory" class="inline-block bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded text-xs">Open Course Factory</a> ' +
+                    '<a href="/feed/#admin" class="inline-block bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded text-xs">Open Admin · Add Briefing</a></div>';
             }
-            select.innerHTML =
-                '<optgroup label="Podcast variations">' + options(groups.podcast) + '</optgroup>' +
-                '<optgroup label="Town hall tracks">' + options(groups.townhall) + '</optgroup>';
-            if (selectedTrackId && trackById(selectedTrackId)) select.value = selectedTrackId;
-            else if (groups.podcast[0]) select.value = groups.podcast[0].id;
-            else if (groups.townhall[0]) select.value = groups.townhall[0].id;
-            selectedTrackId = select.value;
-            var status = document.getElementById("audioTrackStatus");
-            if (status) status.textContent = (audioCatalog.tracks || []).length + " tracks · " + (audioCatalog.source || "catalog");
+            if (history.replaceState) history.replaceState(null, "", "#" + currentView);
         }
 
-        function selectAudioTrack() {
-            var select = document.getElementById("audioTrackSelect");
-            var track = trackById(select.value);
-            if (!track) return;
-            selectedTrackId = track.id;
-            var medium = document.getElementById("mediaFormatSelect");
-            medium.value = track.role === "townhall" ? "townhall" : "audio";
-            switchMediaFormat();
+        function quizHtml() {
+            return '<div class="p-6 bg-slate-950 rounded-xl border border-slate-800 text-left space-y-3">' +
+                quizItems.map(function (item, i) {
+                    return '<fieldset class="space-y-1"><legend class="text-xs text-white font-semibold">' + (i + 1) + ". " + item.prompt + "</legend>" +
+                        item.choices.map(function (choice) {
+                            return '<label class="flex gap-2 text-[11px] text-slate-300"><input type="radio" name="alliance-q-' + i + '" value="' + choice.replace(/"/g, "&quot;") + '" class="accent-amber-400"> <span>' + choice + "</span></label>";
+                        }).join("") + "</fieldset>";
+                }).join("") +
+                '<button type="button" onclick="gradeAllianceQuiz()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded text-xs">Submit answers</button>' +
+                '<p id="allianceQuizResult" class="text-[11px] text-slate-300"></p></div>';
         }
 
-        function applyAudioCatalog(data) {
-            if (!data || !data.tracks || !data.tracks.length) return;
-            audioCatalog = data;
-            renderAudioTrackSelect();
-            var format = document.getElementById("mediaFormatSelect").value;
-            if (format === "audio" || format === "townhall" || format === "artifact") switchMediaFormat();
-        }
-
-        function loadAudioCatalog() {
-            renderAudioTrackSelect();
-            fetch("/assets/audio/manifest.json", { cache: "no-store" })
-                .then(function (res) {
-                    if (!res.ok) throw new Error("HTTP " + res.status);
-                    return res.json();
-                })
-                .then(function (data) {
-                    data.source = "live manifest";
-                    applyAudioCatalog(data);
-                })
-                .catch(function () {
-                    audioCatalog.source = "embedded fallback";
-                    renderAudioTrackSelect();
-                });
-        }
-
-        function switchMediaFormat() {
-            var format = document.getElementById("mediaFormatSelect").value;
-            var spec = renderFormat(format);
-            var stageTitle = document.getElementById("stageTitle");
-            var stageContent = document.getElementById("stageContent");
-            stageTitle.textContent = spec.title;
-            stageContent.className = STAGE + " " + spec.align;
-            stageContent.innerHTML = spec.html;
-            if (format === "mindmap") {
-                var nodes = stageContent.querySelectorAll(".mermaid");
-                if (nodes.length && window.mermaid) mermaid.run({ nodes: nodes });
-            }
-            if (format === "flashcards") paintFlash();
-        }
-
-        function showTrack(id) {
-            var track = tracks[id];
-            document.querySelectorAll(".track-btn").forEach(function (btn) {
-                var on = btn.getAttribute("data-track") === id;
-                btn.classList.toggle("text-amber-400", on);
-                btn.classList.toggle("font-medium", on);
-                btn.classList.toggle("text-slate-300", !on);
-                btn.classList.toggle("border-amber-500/40", on);
-            });
-            var links = track.links.map(function (link) {
-                return '<a class="text-amber-400 hover:text-amber-300 block" href="' + link.href + '">' + link.label + ' →</a>';
-            }).join("");
-            document.getElementById("trackDetail").innerHTML = '<p>' + track.body + '</p>' + links;
-        }
-
-        function openQuiz() {
-            document.getElementById("notesPanel").classList.add("hidden");
-            document.getElementById("mediaFormatSelect").value = "quiz";
-            switchMediaFormat();
-            document.getElementById("presentationStage").scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }
-
-        function gradeQuiz() {
-            var root = document.getElementById("stageContent");
+        function gradeAllianceQuiz() {
             var correct = 0;
             quizItems.forEach(function (item, i) {
-                var picked = root.querySelector('input[name="exec-q-' + i + '"]:checked');
+                var picked = document.querySelector('input[name="alliance-q-' + i + '"]:checked');
                 if (picked && picked.value === item.answer) correct += 1;
             });
-            var line = correct + " / " + quizItems.length + " correct";
-            var result = root.querySelector("#quizResult");
-            if (result) result.textContent = line;
-            document.getElementById("quizScore").textContent = line;
+            var node = document.getElementById("allianceQuizResult");
+            if (node) node.textContent = correct + " / " + quizItems.length + " correct";
         }
 
-        function loadNotes() {
-            try { return JSON.parse(localStorage.getItem(NOTES_KEY) || "[]"); }
-            catch (err) { return []; }
-        }
-
-        function renderNotes() {
-            var list = document.getElementById("noteList");
-            var notes = loadNotes();
-            list.innerHTML = notes.length ? notes.map(function (note) {
-                return '<li class="border border-slate-800 rounded-lg p-2"><div class="text-[10px] text-slate-500">' + note.at + '</div><div>' + note.text.replace(/[&<>]/g, function (ch) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[ch]; }) + '</div></li>';
-            }).join("") : '<li class="text-slate-500">No notes saved in this browser yet.</li>';
-        }
-
-        function openNotes() {
-            var panel = document.getElementById("notesPanel");
-            panel.classList.remove("hidden");
-            renderNotes();
-        }
-
-        function saveNote() {
-            var draft = document.getElementById("noteDraft");
-            var text = (draft.value || "").trim();
-            if (!text) return;
-            var notes = loadNotes();
-            notes.unshift({ text: text, at: new Date().toLocaleString() });
-            localStorage.setItem(NOTES_KEY, JSON.stringify(notes.slice(0, 20)));
-            draft.value = "";
-            renderNotes();
+        function renderPresentationMedium() {
+            var selector = document.getElementById("presentationMediumSelect");
+            var val = selector ? selector.value : "audio";
+            var container = document.getElementById("presentationMediaContainer");
+            if (!container) return;
+            if (val === "audio") {
+                container.innerHTML = audioPlayer("Dual-Host Audio Briefing Active");
+            } else if (val === "video") {
+                container.innerHTML = '<div class="aspect-video bg-slate-900 rounded-lg overflow-hidden border border-slate-800"><iframe class="w-full h-full" src="https://www.youtube.com/embed/995GMihMXXY" title="Alliance video overview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+            } else if (val === "slides") {
+                container.innerHTML = '<div class="p-6 bg-slate-950 rounded-xl border border-slate-800 text-left space-y-3 text-xs">' +
+                    '<div><div class="text-amber-400 font-bold">Slide 1 · Buyer pipeline</div><p class="text-slate-300 mt-1">Voucher-to-ownership pathways meet SL/NB onboarding and the $100 priority reservation.</p></div>' +
+                    '<div><div class="text-amber-400 font-bold">Slide 2 · Factory construction</div><p class="text-slate-300 mt-1">Steel-frame plants synchronized with MHBOJT training at $50/hr.</p></div>' +
+                    '<div><div class="text-amber-400 font-bold">Slide 3 · Legacy ledger</div><p class="text-slate-300 mt-1">$10,000,000 apprentice liability is neutralized by verified action tracks, not by the reservation.</p></div></div>';
+            } else if (val === "mindmap") {
+                container.innerHTML = '<div class="p-4 bg-slate-950 rounded-xl border border-slate-800 overflow-x-auto"><pre class="mermaid">graph TD\nA["NexGen x DRAH GOSSSM"] --> B["Pre-Qualified Buyer Pipeline"]\nA --> C["Factory-Controlled Construction"]\nA --> D["Perpetual Legacy and RWA"]\nB --> E["$100 Priority Reservation"]\nC --> F["$50/hr Sweat Equity"]\nD --> G["$10M Liability Neutralization"]</pre></div>';
+                var nodes = container.querySelectorAll(".mermaid");
+                if (nodes.length && window.mermaid) mermaid.run({ nodes: nodes });
+            } else if (val === "reports") {
+                container.innerHTML = '<div class="p-6 bg-slate-950 rounded-xl border border-slate-800 text-left text-xs text-slate-300 space-y-2"><span class="text-amber-400 font-bold block">Alliance strategy report</span><p>NexGen Global Green Housing supplies the Section 8 homeownership path. DRAH GOSSSM supplies the Crystal Dynasty ledger: sweat at $50/hr, a $100 gate, and a $10,000,000 liability that only verified tracks can clear.</p><a class="text-amber-400" href="/drah_crystal_dynasty1.html">Open the ledger engine</a></div>';
+            } else if (val === "flashcards") {
+                container.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">' +
+                    '<div class="p-4 bg-slate-950 rounded-xl border border-slate-800"><div class="text-amber-400 font-bold">Pipeline</div><p class="text-slate-300 mt-2">Pre-qualified buyers enter through SL/NB onboarding and the $100 reservation.</p></div>' +
+                    '<div class="p-4 bg-slate-950 rounded-xl border border-slate-800"><div class="text-amber-400 font-bold">Factory</div><p class="text-slate-300 mt-2">Steel-frame construction paired with $50/hr apprentice hours.</p></div>' +
+                    '<div class="p-4 bg-slate-950 rounded-xl border border-slate-800"><div class="text-amber-400 font-bold">Ledger</div><p class="text-slate-300 mt-2">200,000 hours at $50 neutralize $10,000,000. The reservation only admits.</p></div></div>';
+            } else if (val === "quiz") {
+                container.innerHTML = quizHtml();
+            } else if (val === "infographic") {
+                container.innerHTML = '<div class="space-y-2 text-xs">' +
+                    '<div class="bg-amber-500/15 border border-amber-500/40 rounded-lg px-3 py-3"><span class="text-amber-400 font-bold">01</span> Pre-qualified buyer pipeline</div>' +
+                    '<div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-3"><span class="text-emerald-400 font-bold">02</span> Factory-controlled construction · $50/hr</div>' +
+                    '<div class="bg-sky-500/10 border border-sky-500/30 rounded-lg px-3 py-3"><span class="text-sky-400 font-bold">03</span> Perpetual legacy · $10,000,000 ledger</div></div>';
+            } else if (val === "artifact") {
+                container.innerHTML = '<ul class="p-6 bg-slate-950 rounded-xl border border-slate-800 text-xs space-y-2 text-amber-400">' +
+                    '<li><a class="hover:text-amber-300" href="' + AUDIO_MP3 + '">Dual-host overview (.mp3)</a></li>' +
+                    '<li><a class="hover:text-amber-300" href="' + AUDIO_M4A + '">Dual-host overview (.m4a)</a></li>' +
+                    '<li><a class="hover:text-amber-300" href="/drah_crystal_dynasty1.html">Crystal Dynasty engine</a></li>' +
+                    '<li><a class="hover:text-amber-300" href="/feed/">Academy feed</a></li>' +
+                    '<li><a class="hover:text-amber-300" href="' + STRIPE + '" target="_blank" rel="noopener noreferrer">$100 priority reservation</a></li></ul>';
+            } else if (val === "table") {
+                container.innerHTML = '<div class="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">' +
+                    '<table class="w-full text-xs text-left"><thead><tr class="text-amber-400"><th class="py-1 pr-3">Track</th><th>Amount</th></tr></thead><tbody class="text-slate-300">' +
+                    '<tr><td class="py-1 pr-3">Sweat equity</td><td>$50 / Hr</td></tr>' +
+                    '<tr><td class="py-1 pr-3">Hours to neutralize</td><td>200,000 Hours</td></tr>' +
+                    '<tr><td class="py-1 pr-3">Apprentice liability</td><td>$10,000,000</td></tr>' +
+                    '<tr><td class="py-1 pr-3">Mentor</td><td>$1,000,000</td></tr>' +
+                    '<tr><td class="py-1 pr-3">Sponsor</td><td>$100,000</td></tr>' +
+                    '<tr><td class="py-1 pr-3">Referral</td><td>$50,000</td></tr>' +
+                    '<tr><td class="py-1 pr-3">Priority reservation</td><td>$100</td></tr></tbody></table>' +
+                    '<canvas id="allianceChart" height="120"></canvas></div>';
+                if (window.Chart) {
+                    new Chart(document.getElementById("allianceChart"), {
+                        type: "bar",
+                        data: {
+                            labels: ["Reservation", "Sweat / Hr", "Referral", "Sponsor"],
+                            datasets: [{ label: "USD", data: [100, 50, 50000, 100000], backgroundColor: "#f59e0b" }]
+                        },
+                        options: { plugins: { legend: { labels: { color: "#e2e8f0" } } }, scales: { x: { ticks: { color: "#94a3b8" } }, y: { ticks: { color: "#94a3b8" } } } }
+                    });
+                }
+            } else if (val === "interactive") {
+                container.innerHTML = '<div class="p-6 bg-slate-950 rounded-xl border border-emerald-500/30 text-left text-xs text-slate-300 space-y-3">' +
+                    '<div class="text-white font-bold">Interactive alliance report</div>' +
+                    '<p>Walk the three pillars through the published feeds, then run the Crystal Dynasty sliders.</p>' +
+                    '<div class="flex flex-wrap gap-3 text-amber-400">' +
+                    '<a class="hover:text-amber-300" href="/feed/st-bernard/">St. Bernard campus</a>' +
+                    '<a class="hover:text-amber-300" href="/feed/national-guard/">National Guard pipeline</a>' +
+                    '<a class="hover:text-amber-300" href="/drah_crystal_dynasty1.html">Dynasty engine</a>' +
+                    '<button type="button" class="hover:text-amber-300" onclick="switchPresentationView(\'townhall\')">Open the town hall</button></div></div>';
+            } else {
+                container.innerHTML = audioPlayer("Dual-Host Audio Briefing Active");
+            }
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            showTrack("guardsmen");
-            loadAudioCatalog();
+            var view = (location.hash || "#pitch").replace("#", "");
+            if (["pitch", "dynasty", "media", "townhall", "factory"].indexOf(view) === -1) view = "pitch";
+            switchPresentationView(view);
         });
     </script>
-    <script src="/feed/lms-briefings.js"></script>
 </body>
 </html>

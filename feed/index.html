@@ -225,7 +225,7 @@
 
         const academyViews = {
             briefings() {
-                return `<div class="max-w-3xl mx-auto space-y-6">${mediaStudioHtml()}${briefingModulesHtml()}</div>`;
+                return `<div class="max-w-6xl mx-auto space-y-6">${mediaStudioHtml()}<div data-lms-briefings></div>${briefingModulesHtml()}</div>`;
             },
             courses() {
                 return `<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -366,6 +366,7 @@ graph TD
                     <button type="button" onclick="loadStudioYouTube()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded text-xs">Extract & Embed into Video Overview</button>
                     <p class="text-[11px] text-slate-500">Admin stays on-page. No separate login in this static feed.</p>
                 </div>
+                <div data-lms-briefings></div>
                 <div data-admin-studio></div>`;
             }
         };
@@ -381,6 +382,7 @@ graph TD
             if (window.MHBOJT && typeof window.MHBOJT.mount === 'function') window.MHBOJT.mount(document.getElementById('academyView'));
             if (window.MHBOJT_ADMIN && typeof window.MHBOJT_ADMIN.mount === 'function') window.MHBOJT_ADMIN.mount(document.getElementById('academyView'));
             if (window.MHBOJT_CURRICULUM && typeof window.MHBOJT_CURRICULUM.mount === 'function') window.MHBOJT_CURRICULUM.mount(document.getElementById('academyView'));
+            if (window.MHBOJT_LMS && typeof window.MHBOJT_LMS.mount === 'function') window.MHBOJT_LMS.mount(document.getElementById('academyView'));
             renderAcademyNav();
             history.replaceState(null, '', '#' + item.id);
             if (window.matchMedia('(max-width: 767px)').matches) {
@@ -647,6 +649,13 @@ graph TD
                 ? 'https://www.mhbojt.com/feed/admin-studio.js'
                 : '/feed/admin-studio.js';
             document.body.appendChild(admin);
+        })();
+        (function () {
+            var lms = document.createElement('script');
+            lms.src = (location.hostname || '').indexOf('finacademy.') === 0
+                ? 'https://www.mhbojt.com/feed/lms-briefings.js'
+                : '/feed/lms-briefings.js';
+            document.body.appendChild(lms);
         })();
         (function () {
             var factory = document.createElement('script');

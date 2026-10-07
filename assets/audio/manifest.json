@@ -1,0 +1,32 @@
+{
+  "version": "186fe38e5b49",
+  "rule": "Root *.mp3 and *.m4a, plus everything under assets/audio. Same basename pairs into one player. townhall / town-hall / critic names are town hall tracks.",
+  "tracks": [
+    {
+      "id": "drah-dual-host-overview",
+      "label": "Drah Dual Host Overview",
+      "role": "podcast",
+      "sources": [
+        {
+          "src": "/drah-dual-host-overview.mp3",
+          "type": "audio/mpeg"
+        },
+        {
+          "src": "/drah-dual-host-overview.m4a",
+          "type": "audio/mp4"
+        }
+      ]
+    },
+    {
+      "id": "drah-overview",
+      "label": "Drah Overview",
+      "role": "podcast",
+      "sources": [
+        {
+          "src": "/drah-overview.mp3",
+          "type": "audio/mpeg"
+        }
+      ]
+    }
+  ]
+}

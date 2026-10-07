@@ -1,0 +1,34 @@
+name: Ingest audio
+
+on:
+  push:
+    paths:
+      - '**.mp3'
+      - '**.m4a'
+      - 'scripts/audio-catalog.js'
+      - 'scripts/ingest-audio.mjs'
+      - '.github/workflows/audio-ingest.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/ingest-audio.mjs
+      - name: Commit the audio manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/audio/manifest.json
+          if git diff --cached --quiet; then
+            echo "Audio manifest already matches the repository."
+          else
+            git commit -m "Refresh the audio manifest from repository tracks."
+            git push
+          fi

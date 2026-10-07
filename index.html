@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM | Multi-Modal Executive Presentation & Enterprise Hub</title>
-    <meta name="mhbojt-build" content="root-executive-presentation-20261006">
+    <meta name="mhbojt-build" content="audio-ingest-20261007">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
@@ -53,8 +53,11 @@
                         <option value="infographic">Infographic — Intake Tracks</option>
                         <option value="artifact">Artifact Links</option>
                     </select>
+                    <label for="audioTrackSelect" class="text-[11px] text-slate-300 block font-medium">Podcast or town hall track:</label>
+                    <select id="audioTrackSelect" onchange="selectAudioTrack()" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono"></select>
+                    <p id="audioTrackStatus" class="text-[10px] font-mono text-slate-500">Loading audio catalog…</p>
                 </div>
-                <p class="text-[10px] text-slate-400 leading-relaxed">Instantly reconfigures the presentation stage to match the audience's preferred learning modality.</p>
+                <p class="text-[10px] text-slate-400 leading-relaxed">New .mp3 and .m4a files in the repository root or assets/audio join this list from the audio manifest. No page edit is required.</p>
             </div>
 
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
@@ -143,8 +146,29 @@
     </footer>
 
     <script>
-        var AUDIO_MP3 = "/drah-dual-host-overview.mp3";
-        var AUDIO_M4A = "/drah-dual-host-overview.m4a";
+        var audioCatalog = {
+            source: "embedded fallback",
+            tracks: [
+                {
+                    id: "drah-dual-host-overview",
+                    label: "Drah Dual Host Overview",
+                    role: "podcast",
+                    sources: [
+                        { src: "/drah-dual-host-overview.mp3", type: "audio/mpeg" },
+                        { src: "/drah-dual-host-overview.m4a", type: "audio/mp4" }
+                    ]
+                },
+                {
+                    id: "drah-overview",
+                    label: "Drah Overview",
+                    role: "podcast",
+                    sources: [
+                        { src: "/drah-overview.mp3", type: "audio/mpeg" }
+                    ]
+                }
+            ]
+        };
+        var selectedTrackId = "drah-dual-host-overview";
         var NOTES_KEY = "mhbojt-presentation-notes";
         var STAGE = "space-y-4 bg-slate-950 p-6 rounded-xl border border-slate-800";
         var quizItems = [
@@ -183,13 +207,35 @@
             }
         };
 
+        function trackById(id) {
+            var tracks = audioCatalog.tracks || [];
+            for (var i = 0; i < tracks.length; i++) {
+                if (tracks[i].id === id) return tracks[i];
+            }
+            return null;
+        }
+
+        function activeTrack() {
+            var chosen = trackById(selectedTrackId);
+            if (chosen) return chosen;
+            return (audioCatalog.tracks && audioCatalog.tracks[0]) || null;
+        }
+
         function audioBlock(caption) {
+            var track = activeTrack();
+            var sources = track ? track.sources : [];
+            var sourceHtml = sources.map(function (source) {
+                return '<source src="' + source.src + '" type="' + source.type + '">';
+            }).join("");
+            var kinds = sources.map(function (source) {
+                return "." + source.src.split(".").pop();
+            }).join(" / ");
+            var name = track ? track.label : "Audio";
             return '<p class="text-xs text-slate-300">' + caption + '</p>' +
                 '<audio controls class="w-full accent-amber-400 py-3" preload="metadata">' +
-                '<source src="' + AUDIO_MP3 + '" type="audio/mpeg">' +
-                '<source src="' + AUDIO_M4A + '" type="audio/mp4">' +
+                sourceHtml +
                 'Your browser does not support the audio element.</audio>' +
-                '<div class="text-[10px] text-slate-400 font-mono">Audio Source: .mp3 / .m4a dual-author overview</div>';
+                '<div class="text-[10px] text-slate-400 font-mono">Audio Source: ' + name + ' (' + kinds + ')</div>';
         }
 
         function quizMarkup() {
@@ -285,8 +331,11 @@
                 title: "Artifact Links",
                 align: "text-left",
                 html: '<ul class="text-xs space-y-2 text-amber-400">' +
-                    '<li><a class="hover:text-amber-300" href="' + AUDIO_MP3 + '">Dual-host audio overview (.mp3)</a></li>' +
-                    '<li><a class="hover:text-amber-300" href="' + AUDIO_M4A + '">Dual-host audio overview (.m4a)</a></li>' +
+                    (audioCatalog.tracks || []).map(function (track) {
+                        return track.sources.map(function (source) {
+                            return '<li><a class="hover:text-amber-300" href="' + source.src + '">' + track.label + ' (.' + source.src.split(".").pop() + ')</a></li>';
+                        }).join("");
+                    }).join("") +
                     '<li><a class="hover:text-amber-300" href="/drah_crystal_dynasty1.html">Crystal Dynasty engine</a></li>' +
                     '<li><a class="hover:text-amber-300" href="/feed/st-bernard/">St. Bernard campus</a></li>' +
                     '<li><a class="hover:text-amber-300" href="/feed/national-guard/">National Guard campaign</a></li>' +
@@ -314,6 +363,65 @@
             flashIndex = (flashIndex + dir + flashCards.length) % flashCards.length;
             flashFace = "front";
             paintFlash();
+        }
+
+        function renderAudioTrackSelect() {
+            var select = document.getElementById("audioTrackSelect");
+            if (!select) return;
+            var groups = { podcast: [], townhall: [] };
+            (audioCatalog.tracks || []).forEach(function (track) {
+                (track.role === "townhall" ? groups.townhall : groups.podcast).push(track);
+            });
+            function options(list) {
+                if (!list.length) return '<option value="" disabled>None in the catalog yet</option>';
+                return list.map(function (track) {
+                    return '<option value="' + track.id + '">' + track.label + '</option>';
+                }).join("");
+            }
+            select.innerHTML =
+                '<optgroup label="Podcast variations">' + options(groups.podcast) + '</optgroup>' +
+                '<optgroup label="Town hall tracks">' + options(groups.townhall) + '</optgroup>';
+            if (selectedTrackId && trackById(selectedTrackId)) select.value = selectedTrackId;
+            else if (groups.podcast[0]) select.value = groups.podcast[0].id;
+            else if (groups.townhall[0]) select.value = groups.townhall[0].id;
+            selectedTrackId = select.value;
+            var status = document.getElementById("audioTrackStatus");
+            if (status) status.textContent = (audioCatalog.tracks || []).length + " tracks · " + (audioCatalog.source || "catalog");
+        }
+
+        function selectAudioTrack() {
+            var select = document.getElementById("audioTrackSelect");
+            var track = trackById(select.value);
+            if (!track) return;
+            selectedTrackId = track.id;
+            var medium = document.getElementById("mediaFormatSelect");
+            medium.value = track.role === "townhall" ? "townhall" : "audio";
+            switchMediaFormat();
+        }
+
+        function applyAudioCatalog(data) {
+            if (!data || !data.tracks || !data.tracks.length) return;
+            audioCatalog = data;
+            renderAudioTrackSelect();
+            var format = document.getElementById("mediaFormatSelect").value;
+            if (format === "audio" || format === "townhall" || format === "artifact") switchMediaFormat();
+        }
+
+        function loadAudioCatalog() {
+            renderAudioTrackSelect();
+            fetch("/assets/audio/manifest.json", { cache: "no-store" })
+                .then(function (res) {
+                    if (!res.ok) throw new Error("HTTP " + res.status);
+                    return res.json();
+                })
+                .then(function (data) {
+                    data.source = "live manifest";
+                    applyAudioCatalog(data);
+                })
+                .catch(function () {
+                    audioCatalog.source = "embedded fallback";
+                    renderAudioTrackSelect();
+                });
         }
 
         function switchMediaFormat() {
@@ -398,6 +506,7 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             showTrack("guardsmen");
+            loadAudioCatalog();
         });
     </script>
 </body>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRAH GOSSSM | Admin-Driven Briefing Engine</title>
-    <meta name="mhbojt-build" content="unified-briefing-engine-20261007">
-    <meta name="description" content="Add training briefings, play all 11 formats, and keep ingest, quiz, essay, and notes under every module.">
+    <title>DRAH GOSSSM | 11-Format Briefing Engine</title>
+    <meta name="mhbojt-build" content="unified-briefing-lms-20261008">
+    <meta name="description" content="Add briefings, choose any of the 11 formats, and keep ingest, quiz, essay, and notes under every module.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
@@ -19,7 +19,9 @@
             <p class="text-[11px] text-slate-400">Briefing engine</p>
         </div>
         <div class="flex items-center gap-3 shrink-0">
-            <a href="/feed/" class="hidden sm:inline text-[11px] text-slate-400 hover:text-amber-400">Academy feed</a>
+            <a href="/" class="hidden sm:inline text-[11px] text-slate-400 hover:text-amber-400">Root</a>
+            <a href="/feed/" class="hidden sm:inline text-[11px] text-slate-400 hover:text-amber-400">Feed</a>
+            <a href="/feed/academy/" class="hidden md:inline text-[11px] text-slate-400 hover:text-amber-400">Academy</a>
             <a href="#briefing-admin" class="hidden sm:inline text-[11px] text-slate-400 hover:text-amber-400">Add briefing</a>
             <a href="https://buy.stripe.com/8x228rcRfa087yu9P4cIE02" target="_blank" rel="noopener noreferrer" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition shadow-md">
                 Secure $100 Reservation
@@ -31,13 +33,14 @@
         <div>
             <p class="text-amber-400 text-[11px] font-semibold uppercase tracking-widest">Unified feed</p>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Training modules, eleven formats</h1>
-            <p class="text-xs text-slate-400 mt-2 max-w-3xl leading-relaxed">Add a briefing with a title, source URLs, and category tags. Each module opens on Audio Overview and can switch to the slide deck, video, mind map, reports, flashcards, quiz, infographic, artifacts, data table, or interactive report. Ingest, the execution quiz, the project essay, and comment notes stay under that module.</p>
+            <p class="text-xs text-slate-400 mt-2 max-w-3xl leading-relaxed">Add a briefing with a title, source URLs, and category tags. Shuffle the list or set how many modules to display. Each module opens on Audio Overview (.mp3 and .m4a) and can switch to the town hall, video, slide deck, mind map, strategy report, flashcards, execution quiz, infographic, artifact icons, or the data table and interactive report. Ingest, the execution quiz, the project essay, and comment notes stay under that module.</p>
+            <p class="text-[10px] font-mono text-slate-500 mt-2">mhbojt.com · mhbojt.vip · /feed</p>
         </div>
         <div data-lms-briefings></div>
     </main>
 
     <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
-        <p>© 2026 DRAH GOSSSM. Briefing engine for mhbojt.com, mhbojt.homes, mhbojt.institute, and mhbojt.site.</p>
+        <p>© 2026 DRAH GOSSSM. Briefing engine on mhbojt.com, mhbojt.vip, mhbojt.homes, mhbojt.institute, and mhbojt.site.</p>
     </footer>
     <script src="/feed/lms-briefings.js"></script>
 </body>

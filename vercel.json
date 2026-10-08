@@ -80,6 +80,10 @@
         }
       ],
       "dest": "/feed/finacademy/$1"
+    },
+    {
+      "src": "^/feed/?$",
+      "dest": "/index.html"
     }
   ]
 }

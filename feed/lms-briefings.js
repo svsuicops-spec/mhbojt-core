@@ -29,7 +29,51 @@
         { prompt: 'What does the $100 Stripe reservation do?', choices: ['Neutralizes the $10M liability', 'Credits 2,000 sweat hours', 'Admits a candidate only', 'Pays the mentor pipeline'], answer: 'Admits a candidate only' }
     ];
     var STRIPE = 'https://buy.stripe.com/8x228rcRfa087yu9P4cIE02';
+    var HIDDEN = 'mhbojt-lms-hidden-briefings';
+    var SWEAT_RATE = 50;
+    var STUDIO = {
+        studio_session_id: 'STUDIO-SESSION-88301',
+        candidate_ref: 'USER-DRAH-2026-7842',
+        reserve_deposit_status: { amount_usd: 100.00, sf_ledger_tx: '0x7a8c3...e42f', timestamp: '2026-10-10T11:27:45Z' },
+        geospatial_lock: { apn: '042-881-190-2', jurisdiction_pack: 'USA-CA-NEVADA-COUNTY-ZONE-R1', elevation_m: 762.5 },
+        architectural_genome: {
+            style_code: 'MOD-SCANDI-CRAFTSMAN-V3',
+            pod_footprint: ['POD-WET-CORE-01', 'POD-LIVING-02', 'POD-BED-01', 'POD-BED-02'],
+            exterior_palette: { cladding_primary: 'FIBER-CEMENT-MATTE-GRAPHITE', roof_type: 'STANDING-SEAM-SOLAR-READY', window_package: 'TRIPLE-PANE-ARGON-U0.18' },
+            interior_package: { finish_theme: 'SCANDI-OAK-ECO', mepc_grade: 'OFFGRID-HYBRID-LEVEL2', battery_kwh: 20.0 }
+        },
+        sweat_equity_pledge: { mhbojt_program_opt_in: true, committed_hours: 40, estimated_equity_credit_usd: 1200.00 }
+    };
     var state = { media: {}, flash: {} };
+
+    function usd(amount) {
+        var fixed = Math.abs(Number(amount) || 0).toFixed(2);
+        var parts = fixed.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return '$' + parts.join('.');
+    }
+
+    function studioBriefing() {
+        var pledge = STUDIO.sweat_equity_pledge;
+        return {
+            id: 'studio-88301',
+            title: 'Studio Session 88301 · Nevada County R1',
+            sourceUrl: '/feed/studio-session-88301.json',
+            sourceUrls: ['/feed/studio-session-88301.json', '/drah-dual-host-overview.mp3', '/drah-dual-host-overview.m4a'],
+            tags: ['Dynasty', 'Resilient housing'],
+            category: 'Dynasty',
+            createdAt: Date.parse(STUDIO.reserve_deposit_status.timestamp),
+            order: -1,
+            committedHours: pledge.committed_hours
+        };
+    }
+
+    function hiddenIds() {
+        try {
+            var ids = JSON.parse(localStorage.getItem(HIDDEN) || '[]');
+            return Array.isArray(ids) ? ids : [];
+        } catch (err) { return []; }
+    }
 
     function esc(value) {
         return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
@@ -47,11 +91,20 @@
     }
 
     function loadBriefings() {
+        var items;
         try {
             var saved = JSON.parse(localStorage.getItem(STORAGE) || 'null');
-            if (Array.isArray(saved) && saved.length) return saved;
-        } catch (err) { /* use seed */ }
-        return seedBriefings();
+            items = Array.isArray(saved) && saved.length ? saved : seedBriefings();
+        } catch (err) { items = seedBriefings(); }
+        var hidden = hiddenIds();
+        if (hidden.indexOf('studio-88301') === -1 && !items.some(function (item) { return item.id === 'studio-88301'; })) {
+            var studio = studioBriefing();
+            var minOrder = items.reduce(function (min, item) { return Math.min(min, item.order || 0); }, 0);
+            studio.order = minOrder - 1;
+            items = [studio].concat(items);
+            saveBriefings(items);
+        }
+        return items;
     }
 
     function saveBriefings(items) {
@@ -211,7 +264,119 @@
         return list;
     }
 
+    function studioFacts() {
+        var deposit = STUDIO.reserve_deposit_status;
+        var geo = STUDIO.geospatial_lock;
+        var genome = STUDIO.architectural_genome;
+        var interior = genome.interior_package;
+        var exterior = genome.exterior_palette;
+        var pledge = STUDIO.sweat_equity_pledge;
+        var publishedCredit = pledge.committed_hours * SWEAT_RATE;
+        return {
+            deposit: deposit,
+            geo: geo,
+            genome: genome,
+            interior: interior,
+            exterior: exterior,
+            pledge: pledge,
+            publishedCredit: publishedCredit,
+            pods: genome.pod_footprint.join(' · ')
+        };
+    }
+
+    function studioStage(item, format) {
+        var facts = studioFacts();
+        var sweatLine = facts.pledge.committed_hours + ' committed hours at the published $50 / Hr rate credit ' + usd(facts.publishedCredit) + ' once verified. The session file estimates ' + usd(facts.pledge.estimated_equity_credit_usd) + '.';
+        var admitLine = usd(facts.deposit.amount_usd) + ' recorded ' + facts.deposit.timestamp + ' under ledger reference ' + facts.deposit.sf_ledger_tx + '. The reservation admits ' + STUDIO.candidate_ref + '.';
+        if (format === 'audio') return audioMarkup(sourcesOf(item), item.title + ' — ' + admitLine);
+        if (format === 'townhall') {
+            return '<div class="space-y-3 text-left">' +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-amber-400">Critic A (Financial Underwriter):</strong> ' + esc(admitLine) + ' It does not clear $10,000,000.</div>' +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-emerald-400">Critic B (Community Leader):</strong> ' + esc(sweatLine) + '</div>' +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-sky-400">Critic C (Trust Steward):</strong> APN ' + esc(facts.geo.apn) + ' · ' + esc(facts.geo.jurisdiction_pack) + ' · ' + facts.geo.elevation_m + ' m. Style ' + esc(facts.genome.style_code) + '. This is the session record, not a title opinion.</div>' +
+                audioMarkup(sourcesOf(item), 'Town hall bed for ' + item.title + '.') +
+                '</div>';
+        }
+        if (format === 'video') return audioMarkup(sourcesOf(item), item.title + ' has no cinematic file. The audio overview plays instead.');
+        if (format === 'slides') {
+            return '<div class="space-y-3 text-xs text-left">' +
+                '<div><div class="text-amber-400 font-bold">Slide 1 · Admission</div><p class="text-slate-300 mt-1">' + esc(admitLine) + '</p></div>' +
+                '<div><div class="text-amber-400 font-bold">Slide 2 · Parcel</div><p class="text-slate-300 mt-1">APN ' + esc(facts.geo.apn) + ' · ' + esc(facts.geo.jurisdiction_pack) + ' · elevation ' + facts.geo.elevation_m + ' m.</p></div>' +
+                '<div><div class="text-amber-400 font-bold">Slide 3 · Genome</div><p class="text-slate-300 mt-1">' + esc(facts.genome.style_code) + ' · ' + esc(facts.pods) + '. Cladding ' + esc(facts.exterior.cladding_primary) + '. Roof ' + esc(facts.exterior.roof_type) + '. Windows ' + esc(facts.exterior.window_package) + '.</p></div>' +
+                '<div><div class="text-amber-400 font-bold">Slide 4 · Interior and sweat</div><p class="text-slate-300 mt-1">' + esc(facts.interior.finish_theme) + ' · ' + esc(facts.interior.mepc_grade) + ' · ' + facts.interior.battery_kwh + ' kWh. ' + esc(sweatLine) + '</p></div></div>';
+        }
+        if (format === 'mindmap') {
+            return '<div class="overflow-x-auto"><pre class="mermaid">graph TD\nA["Studio Session 88301"] --> B["APN ' + mermaidLabel(facts.geo.apn) + '"]\nA --> C["' + mermaidLabel(facts.genome.style_code) + '"]\nA --> D["40 hours at $50/Hr"]\nA --> E["$100 admission"]\nC --> F["' + mermaidLabel(facts.pods) + '"]</pre></div>';
+        }
+        if (format === 'reports') {
+            return '<span class="text-amber-400 font-bold block text-xs text-left">Session dossier · ' + esc(STUDIO.studio_session_id) + '</span>' +
+                '<p class="text-xs text-slate-300 text-left">' + esc(STUDIO.candidate_ref) + ' · ' + esc(admitLine) + ' Parcel ' + esc(facts.geo.apn) + ', ' + esc(facts.geo.jurisdiction_pack) + ', ' + facts.geo.elevation_m + ' m. ' + esc(facts.genome.style_code) + ' with ' + esc(facts.pods) + '. ' + esc(sweatLine) + '</p>';
+        }
+        if (format === 'flashcards') {
+            var cards = [
+                { front: 'Parcel', back: 'APN ' + facts.geo.apn + ' · ' + facts.geo.jurisdiction_pack + ' · ' + facts.geo.elevation_m + ' m.' },
+                { front: 'Genome', back: facts.genome.style_code + ' · ' + facts.exterior.cladding_primary + ' · ' + facts.interior.battery_kwh + ' kWh.' },
+                { front: 'Admission', back: usd(facts.deposit.amount_usd) + ' admits ' + STUDIO.candidate_ref + '. Ledger reference ' + facts.deposit.sf_ledger_tx + '.' },
+                { front: 'Sweat pledge', back: sweatLine }
+            ];
+            var flash = flashOf(item.id);
+            flash.count = cards.length;
+            if (flash.index >= cards.length) flash.index = 0;
+            var card = cards[flash.index];
+            var face = flash.face === 'back' ? card.back : card.front;
+            return '<button type="button" data-lms-action="flip" class="w-full text-left bg-slate-900 border border-slate-800 rounded-xl p-5 min-h-[7rem]"><div class="text-[10px] text-amber-400 uppercase tracking-widest">' + (flash.face === 'back' ? 'Back' : 'Front') + ' · tap to flip</div><div class="text-sm text-white mt-2">' + esc(face) + '</div></button>' +
+                '<div class="flex justify-between text-[11px]"><button type="button" data-lms-action="flash-prev" class="text-amber-400">Prev</button><span class="text-slate-400">' + (flash.index + 1) + ' / ' + cards.length + '</span><button type="button" data-lms-action="flash-next" class="text-amber-400">Next</button></div>';
+        }
+        if (format === 'infographic') {
+            return '<div class="space-y-2 text-xs text-left">' +
+                '<div class="bg-amber-500/15 border border-amber-500/40 rounded-lg px-3 py-2"><span class="text-amber-400 font-bold">01</span> ' + esc(usd(facts.deposit.amount_usd)) + ' admission · ' + esc(STUDIO.candidate_ref) + '</div>' +
+                '<div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2"><span class="text-emerald-400 font-bold">02</span> APN ' + esc(facts.geo.apn) + ' · ' + facts.geo.elevation_m + ' m</div>' +
+                '<div class="bg-sky-500/10 border border-sky-500/30 rounded-lg px-3 py-2"><span class="text-sky-400 font-bold">03</span> ' + esc(facts.genome.style_code) + ' · ' + facts.interior.battery_kwh + ' kWh</div>' +
+                '<div class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2"><span class="text-white font-bold">04</span> ' + facts.pledge.committed_hours + ' hours · published credit ' + esc(usd(facts.publishedCredit)) + '</div></div>';
+        }
+        if (format === 'ledger') {
+            var rows = [
+                ['Session', STUDIO.studio_session_id],
+                ['Candidate', STUDIO.candidate_ref],
+                ['Admission', usd(facts.deposit.amount_usd) + ' · ' + facts.deposit.timestamp],
+                ['Ledger reference', facts.deposit.sf_ledger_tx],
+                ['APN', facts.geo.apn],
+                ['Jurisdiction', facts.geo.jurisdiction_pack],
+                ['Elevation', facts.geo.elevation_m + ' m'],
+                ['Style', facts.genome.style_code],
+                ['Pods', facts.pods],
+                ['Cladding', facts.exterior.cladding_primary],
+                ['Roof', facts.exterior.roof_type],
+                ['Windows', facts.exterior.window_package],
+                ['Interior', facts.interior.finish_theme],
+                ['MEPC', facts.interior.mepc_grade],
+                ['Battery', facts.interior.battery_kwh + ' kWh'],
+                ['Committed hours', String(facts.pledge.committed_hours)],
+                ['Published credit', usd(facts.publishedCredit) + ' at $50 / Hr'],
+                ['Session estimate', usd(facts.pledge.estimated_equity_credit_usd)],
+                ['Program opt-in', facts.pledge.mhbojt_program_opt_in ? 'Yes' : 'No']
+            ].map(function (pair) {
+                return '<tr><td class="py-1 pr-3 text-amber-400 align-top">' + esc(pair[0]) + '</td><td>' + esc(pair[1]) + '</td></tr>';
+            }).join('');
+            return '<div class="space-y-4 text-xs text-left">' +
+                '<table class="w-full text-left"><tbody class="text-slate-300">' + rows + '</tbody></table>' +
+                '<div class="border-t border-slate-800 pt-3 space-y-2 text-slate-300">' +
+                '<div class="text-white font-bold">Interactive report · ' + esc(item.title) + '</div>' +
+                '<p>' + esc(admitLine) + '</p><p>' + esc(sweatLine) + '</p>' +
+                '<div class="flex flex-wrap gap-3 text-amber-400">' +
+                '<button type="button" data-lms-action="set-medium" data-medium="townhall" class="hover:text-amber-300">Open town hall</button>' +
+                '<button type="button" data-lms-action="set-medium" data-medium="mindmap" class="hover:text-amber-300">Open mind map</button>' +
+                '<a class="hover:text-amber-300" href="/feed/studio-session-88301.json">Session JSON</a>' +
+                '<a class="hover:text-amber-300" href="' + STRIPE + '" target="_blank" rel="noopener noreferrer">$100 reservation</a></div></div></div>';
+        }
+        return '';
+    }
+
     function stageHtml(item, format) {
+        if (item.id === 'studio-88301') {
+            var custom = studioStage(item, format);
+            if (custom) return custom;
+        }
         var title = item.title;
         var tags = tagsOf(item);
         var urls = sourcesOf(item).map(safeUrl).filter(Boolean);
@@ -286,6 +451,7 @@
                 { front: 'Sweat', back: '$50 per verified hour. 200,000 hours neutralize the apprentice liability.' }
             ];
             var flash = flashOf(item.id);
+            flash.count = cards.length;
             if (flash.index >= cards.length) flash.index = 0;
             var card = cards[flash.index];
             var face = flash.face === 'back' ? card.back : card.front;
@@ -370,6 +536,12 @@
             '<ul data-note-list class="space-y-2 text-[11px] text-slate-300">' + noteListHtml(item.id) + '</ul></div></div>';
     }
 
+    function sessionKicker(item) {
+        if (item.id !== 'studio-88301') return '';
+        var facts = studioFacts();
+        return '<p class="text-[11px] text-slate-400 mt-2">APN ' + esc(facts.geo.apn) + ' · ' + esc(usd(facts.deposit.amount_usd)) + ' admission · ' + facts.pledge.committed_hours + ' hour pledge</p>';
+    }
+
     function moduleHtml(item) {
         var format = mediumOf(item.id);
         var options = FORMATS.map(function (pair) {
@@ -380,7 +552,7 @@
         }).join('');
         return '<article id="module-' + esc(item.id) + '" data-module-id="' + esc(item.id) + '" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">' +
             '<div class="flex items-start justify-between gap-3">' +
-            '<div class="min-w-0"><h2 class="text-sm font-bold text-white">' + esc(item.title) + '</h2><div class="flex flex-wrap gap-1 mt-2">' + chips + '</div></div>' +
+            '<div class="min-w-0"><h2 class="text-sm font-bold text-white">' + esc(item.title) + '</h2>' + sessionKicker(item) + '<div class="flex flex-wrap gap-1 mt-2">' + chips + '</div></div>' +
             '<div class="flex items-center gap-1 shrink-0">' +
             '<button type="button" data-lms-action="up" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move up">↑</button>' +
             '<button type="button" data-lms-action="down" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move down">↓</button>' +
@@ -546,6 +718,11 @@
         }
         if (action === 'remove') {
             var removeId = button.getAttribute('data-id');
+            if (removeId === 'studio-88301') {
+                var hidden = hiddenIds();
+                if (hidden.indexOf(removeId) === -1) hidden.push(removeId);
+                localStorage.setItem(HIDDEN, JSON.stringify(hidden));
+            }
             saveBriefings(items.filter(function (item) { return item.id !== removeId; }));
             delete state.media[removeId];
             delete state.flash[removeId];
@@ -629,9 +806,10 @@
             var flashItem = byId(moduleId);
             if (!module || !flashItem) return;
             var flash = flashOf(flashItem.id);
+            var count = flash.count || 3;
             if (action === 'flip') flash.face = flash.face === 'front' ? 'back' : 'front';
             else {
-                flash.index = (flash.index + (action === 'flash-next' ? 1 : -1) + 3) % 3;
+                flash.index = (flash.index + (action === 'flash-next' ? 1 : -1) + count) % count;
                 flash.face = 'front';
             }
             paintStage(module, flashItem);

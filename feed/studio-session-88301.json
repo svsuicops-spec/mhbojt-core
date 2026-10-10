@@ -1,0 +1,33 @@
+{
+  "studio_session_id": "STUDIO-SESSION-88301",
+  "candidate_ref": "USER-DRAH-2026-7842",
+  "reserve_deposit_status": {
+    "amount_usd": 100.00,
+    "sf_ledger_tx": "0x7a8c3...e42f",
+    "timestamp": "2026-10-10T11:27:45Z"
+  },
+  "geospatial_lock": {
+    "apn": "042-881-190-2",
+    "jurisdiction_pack": "USA-CA-NEVADA-COUNTY-ZONE-R1",
+    "elevation_m": 762.5
+  },
+  "architectural_genome": {
+    "style_code": "MOD-SCANDI-CRAFTSMAN-V3",
+    "pod_footprint": ["POD-WET-CORE-01", "POD-LIVING-02", "POD-BED-01", "POD-BED-02"],
+    "exterior_palette": {
+      "cladding_primary": "FIBER-CEMENT-MATTE-GRAPHITE",
+      "roof_type": "STANDING-SEAM-SOLAR-READY",
+      "window_package": "TRIPLE-PANE-ARGON-U0.18"
+    },
+    "interior_package": {
+      "finish_theme": "SCANDI-OAK-ECO",
+      "mepc_grade": "OFFGRID-HYBRID-LEVEL2",
+      "battery_kwh": 20.0
+    }
+  },
+  "sweat_equity_pledge": {
+    "mhbojt_program_opt_in": true,
+    "committed_hours": 40,
+    "estimated_equity_credit_usd": 1200.00
+  }
+}

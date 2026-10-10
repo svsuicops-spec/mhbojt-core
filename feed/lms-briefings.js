@@ -1,27 +1,26 @@
-/* Briefing LMS merged with the 11-format presentation engine.
-   Authors add title, source URL, and subject category. Sort, filter, and
-   shuffle rules stay in this browser. Each briefing opens a viewer whose
-   medium dropdown renders Audio, Town Hall, Video, Slides, Mind Map,
-   Reports, Data Table, Flashcards, Quiz, Infographic, or Artifact Links.
-   Ingest URL, Execution Quiz, Project Essay, and Comment Notes sit under
-   the stage.
+/* Admin-driven briefing engine.
+   Authors add a title, one or more source URLs, and category tags.
+   Sort, filter, and shuffle stay in this browser.
+   Every module carries the 11-format stage (audio by default, mp3 and m4a)
+   and, under that stage, Ingest URL, Execution Quiz, Project Essay, and Comment Notes.
+   Shuffle and display count control how many modules are on screen.
 */
 (function () {
     var STORAGE = 'mhbojt-lms-briefings';
     var RULES = 'mhbojt-lms-briefing-rules';
     var CATEGORIES = ['Dynasty', 'Citadel', 'Guardsmen', 'Diaspora', 'Sovereign wealth', 'Resilient housing', 'RWA', 'General'];
     var FORMATS = [
-        ['audio', 'Audio Overview'],
-        ['townhall', 'Town Hall Multi-Critic'],
-        ['video', 'Video Cinematic'],
-        ['slides', 'Slide Deck'],
-        ['mindmap', 'Mind Map'],
-        ['reports', 'Strategy Reports'],
-        ['datatable', 'Data Table'],
-        ['flashcards', 'Flashcards'],
-        ['quiz', 'Execution Quiz'],
-        ['infographic', 'Infographic'],
-        ['artifact', 'Artifact Links']
+        ['audio', '1. Audio Overview'],
+        ['townhall', '2. Town Hall Multi-Critic'],
+        ['video', '3. Video Cinematic'],
+        ['slides', '4. Slide Deck'],
+        ['mindmap', '5. Mind Map'],
+        ['reports', '6. Strategy Reports'],
+        ['flashcards', '7. Flashcards'],
+        ['quiz', '8. Execution Quiz'],
+        ['infographic', '9. Infographic'],
+        ['artifact', '10. Artifact Icon'],
+        ['ledger', '11. Data Table & Interactive Report']
     ];
     var QUIZ = [
         { prompt: 'What is the MHBOJT sweat-equity conversion rate?', choices: ['$15 / Hr', '$25 / Hr', '$50 / Hr', '$100 / Hr'], answer: '$50 / Hr' },
@@ -29,7 +28,52 @@
         { prompt: 'What franchise liability must an apprentice neutralize?', choices: ['$100,000', '$1,000,000', '$10,000,000', '$100,000,000'], answer: '$10,000,000' },
         { prompt: 'What does the $100 Stripe reservation do?', choices: ['Neutralizes the $10M liability', 'Credits 2,000 sweat hours', 'Admits a candidate only', 'Pays the mentor pipeline'], answer: 'Admits a candidate only' }
     ];
-    var state = { selectedId: '', medium: 'audio', flashIndex: 0, flashFace: 'front' };
+    var STRIPE = 'https://buy.stripe.com/8x228rcRfa087yu9P4cIE02';
+    var HIDDEN = 'mhbojt-lms-hidden-briefings';
+    var SWEAT_RATE = 50;
+    var STUDIO = {
+        studio_session_id: 'STUDIO-SESSION-88301',
+        candidate_ref: 'USER-DRAH-2026-7842',
+        reserve_deposit_status: { amount_usd: 100.00, sf_ledger_tx: '0x7a8c3...e42f', timestamp: '2026-10-10T11:27:45Z' },
+        geospatial_lock: { apn: '042-881-190-2', jurisdiction_pack: 'USA-CA-NEVADA-COUNTY-ZONE-R1', elevation_m: 762.5 },
+        architectural_genome: {
+            style_code: 'MOD-SCANDI-CRAFTSMAN-V3',
+            pod_footprint: ['POD-WET-CORE-01', 'POD-LIVING-02', 'POD-BED-01', 'POD-BED-02'],
+            exterior_palette: { cladding_primary: 'FIBER-CEMENT-MATTE-GRAPHITE', roof_type: 'STANDING-SEAM-SOLAR-READY', window_package: 'TRIPLE-PANE-ARGON-U0.18' },
+            interior_package: { finish_theme: 'SCANDI-OAK-ECO', mepc_grade: 'OFFGRID-HYBRID-LEVEL2', battery_kwh: 20.0 }
+        },
+        sweat_equity_pledge: { mhbojt_program_opt_in: true, committed_hours: 40, estimated_equity_credit_usd: 1200.00 }
+    };
+    var state = { media: {}, flash: {} };
+
+    function usd(amount) {
+        var fixed = Math.abs(Number(amount) || 0).toFixed(2);
+        var parts = fixed.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return '$' + parts.join('.');
+    }
+
+    function studioBriefing() {
+        var pledge = STUDIO.sweat_equity_pledge;
+        return {
+            id: 'studio-88301',
+            title: 'Studio Session 88301 · Nevada County R1',
+            sourceUrl: '/feed/studio-session-88301.json',
+            sourceUrls: ['/feed/studio-session-88301.json', '/drah-dual-host-overview.mp3', '/drah-dual-host-overview.m4a'],
+            tags: ['Dynasty', 'Resilient housing'],
+            category: 'Dynasty',
+            createdAt: Date.parse(STUDIO.reserve_deposit_status.timestamp),
+            order: -1,
+            committedHours: pledge.committed_hours
+        };
+    }
+
+    function hiddenIds() {
+        try {
+            var ids = JSON.parse(localStorage.getItem(HIDDEN) || '[]');
+            return Array.isArray(ids) ? ids : [];
+        } catch (err) { return []; }
+    }
 
     function esc(value) {
         return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
@@ -39,19 +83,28 @@
 
     function seedBriefings() {
         return [
-            { id: 'dual-host', title: 'Dual-Author Dynasty Overview', sourceUrl: '/drah-dual-host-overview.mp3', category: 'Dynasty', createdAt: 1, order: 0 },
-            { id: 'homes-in-hours', title: 'HOMES IN HOURS?!', sourceUrl: 'https://www.youtube.com/watch?v=wCzS2FZoB-I', category: 'Citadel', createdAt: 2, order: 1 },
-            { id: 'st-bernard', title: 'St. Bernard Smart Living Campus', sourceUrl: '/feed/st-bernard/', category: 'Resilient housing', createdAt: 3, order: 2 },
-            { id: 'rwa-ledger', title: 'RWA Tokenization Ledger', sourceUrl: '/feed/sovereign-cases.json', category: 'RWA', createdAt: 4, order: 3 }
+            { id: 'dual-host', title: 'Dual-Author Dynasty Overview', sourceUrl: '/drah-dual-host-overview.mp3', sourceUrls: ['/drah-dual-host-overview.mp3', '/drah-dual-host-overview.m4a'], tags: ['Dynasty'], category: 'Dynasty', createdAt: 1, order: 0 },
+            { id: 'homes-in-hours', title: 'HOMES IN HOURS?!', sourceUrl: 'https://www.youtube.com/watch?v=wCzS2FZoB-I', sourceUrls: ['https://www.youtube.com/watch?v=wCzS2FZoB-I'], tags: ['Citadel'], category: 'Citadel', createdAt: 2, order: 1 },
+            { id: 'st-bernard', title: 'St. Bernard Smart Living Campus', sourceUrl: '/feed/st-bernard/', sourceUrls: ['/feed/st-bernard/'], tags: ['Resilient housing'], category: 'Resilient housing', createdAt: 3, order: 2 },
+            { id: 'rwa-ledger', title: 'RWA Tokenization Ledger', sourceUrl: '/feed/sovereign-cases.json', sourceUrls: ['/feed/sovereign-cases.json'], tags: ['RWA', 'Sovereign wealth'], category: 'RWA', createdAt: 4, order: 3 }
         ];
     }
 
     function loadBriefings() {
+        var items;
         try {
             var saved = JSON.parse(localStorage.getItem(STORAGE) || 'null');
-            if (Array.isArray(saved) && saved.length) return saved;
-        } catch (err) { /* use seed */ }
-        return seedBriefings();
+            items = Array.isArray(saved) && saved.length ? saved : seedBriefings();
+        } catch (err) { items = seedBriefings(); }
+        var hidden = hiddenIds();
+        if (hidden.indexOf('studio-88301') === -1 && !items.some(function (item) { return item.id === 'studio-88301'; })) {
+            var studio = studioBriefing();
+            var minOrder = items.reduce(function (min, item) { return Math.min(min, item.order || 0); }, 0);
+            studio.order = minOrder - 1;
+            items = [studio].concat(items);
+            saveBriefings(items);
+        }
+        return items;
     }
 
     function saveBriefings(items) {
@@ -59,13 +112,14 @@
     }
 
     function loadRules() {
-        var rules = { sort: 'manual', category: 'all', query: '' };
+        var rules = { sort: 'manual', category: 'all', query: '', displayCount: 'all' };
         try {
             var saved = JSON.parse(localStorage.getItem(RULES) || '{}');
             if (saved && typeof saved === 'object') {
                 if (saved.sort) rules.sort = saved.sort;
                 if (saved.category) rules.category = saved.category;
                 if (typeof saved.query === 'string') rules.query = saved.query;
+                if (saved.displayCount) rules.displayCount = String(saved.displayCount);
             }
         } catch (err) { /* defaults */ }
         return rules;
@@ -81,6 +135,57 @@
         return null;
     }
 
+    function tagsOf(item) {
+        if (item && Array.isArray(item.tags) && item.tags.length) {
+            return item.tags.filter(function (tag) { return String(tag || '').trim(); });
+        }
+        return item && item.category ? [item.category] : [];
+    }
+
+    function sourcesOf(item) {
+        if (item && Array.isArray(item.sourceUrls) && item.sourceUrls.length) {
+            return item.sourceUrls.filter(function (url) { return String(url || '').trim(); });
+        }
+        return item && item.sourceUrl ? [item.sourceUrl] : [];
+    }
+
+    function safeUrl(url) {
+        var value = String(url || '').trim();
+        if (/^https?:\/\//i.test(value) || /^\//.test(value)) return value;
+        return '';
+    }
+
+    function parseUrls(text) {
+        var seen = [];
+        String(text || '').split(/\n+/).forEach(function (line) {
+            var url = safeUrl(line);
+            if (url && seen.indexOf(url) === -1) seen.push(url);
+        });
+        return seen;
+    }
+
+    function parseTags(node) {
+        var tags = [];
+        node.querySelectorAll('[data-field="tag"]:checked').forEach(function (box) {
+            if (tags.indexOf(box.value) === -1) tags.push(box.value);
+        });
+        String((node.querySelector('[data-field="custom-tags"]') || {}).value || '').split(',').forEach(function (part) {
+            var tag = part.trim();
+            if (tag && tags.indexOf(tag) === -1) tags.push(tag);
+        });
+        return tags;
+    }
+
+    function knownTags(items) {
+        var tags = CATEGORIES.slice();
+        items.forEach(function (item) {
+            tagsOf(item).forEach(function (tag) {
+                if (tags.indexOf(tag) === -1) tags.push(tag);
+            });
+        });
+        return tags;
+    }
+
     function youtubeId(url) {
         var match = String(url || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/);
         return match ? match[1] : '';
@@ -90,27 +195,66 @@
         return /\.(mp3|m4a)(\?|#|$)/i.test(url || '');
     }
 
-    function audioSources(url) {
-        if (isAudio(url)) {
-            var type = /\.m4a(\?|#|$)/i.test(url) ? 'audio/mp4' : 'audio/mpeg';
-            var sources = '<source src="' + esc(url) + '" type="' + type + '">';
-            if (/\.mp3(\?|#|$)/i.test(url)) sources += '<source src="' + esc(url.replace(/\.mp3(\?|#|$)/i, '.m4a$1')) + '" type="audio/mp4">';
-            return sources;
-        }
-        return '<source src="/drah-dual-host-overview.mp3" type="audio/mpeg"><source src="/drah-dual-host-overview.m4a" type="audio/mp4">';
+    function isVideoFile(url) {
+        return /\.(mp4|webm)(\?|#|$)/i.test(url || '');
     }
 
-    function audioPlayer(url, caption) {
-        return '<p class="text-xs text-slate-300">' + esc(caption) + '</p>' +
-            '<audio controls class="w-full accent-amber-400 py-2" preload="metadata">' + audioSources(url) + '</audio>';
+    function firstUrl(urls, test) {
+        for (var i = 0; i < urls.length; i++) if (test(urls[i])) return urls[i];
+        return '';
+    }
+
+    function audioMarkup(urls, caption) {
+        var list = [];
+        urls.forEach(function (url) {
+            if (isAudio(url) && list.indexOf(url) === -1) list.push(url);
+        });
+        var fallback = !list.length;
+        if (fallback) {
+            list = ['/drah-dual-host-overview.mp3', '/drah-dual-host-overview.m4a'];
+        } else {
+            var extra = [];
+            list.forEach(function (url) {
+                var sibling = '';
+                if (/\.mp3(\?|#|$)/i.test(url)) sibling = url.replace(/\.mp3(\?|#|$)/i, '.m4a$1');
+                else if (/\.m4a(\?|#|$)/i.test(url)) sibling = url.replace(/\.m4a(\?|#|$)/i, '.mp3$1');
+                if (sibling && list.indexOf(sibling) === -1 && extra.indexOf(sibling) === -1) extra.push(sibling);
+            });
+            list = list.concat(extra);
+        }
+        var sources = list.map(function (url) {
+            var type = /\.m4a(\?|#|$)/i.test(url) ? 'audio/mp4' : 'audio/mpeg';
+            return '<source src="' + esc(url) + '" type="' + type + '">';
+        }).join('');
+        var kinds = [];
+        if (list.some(function (url) { return /\.mp3(\?|#|$)/i.test(url); })) kinds.push('.mp3');
+        if (list.some(function (url) { return /\.m4a(\?|#|$)/i.test(url); })) kinds.push('.m4a');
+        var note = fallback ? ' This module has no audio file yet, so the dual-author overview plays.' : '';
+        return '<p class="text-xs text-slate-300 text-left">' + esc(caption) + esc(note) + '</p>' +
+            '<audio controls class="w-full accent-amber-400 py-2" preload="metadata">' + sources + '</audio>' +
+            '<div class="text-[10px] font-mono text-slate-500">' + kinds.join(' / ') + '</div>';
+    }
+
+    function mermaidLabel(value) {
+        return String(value || 'Module').replace(/["[\]{}#;]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 72) || 'Module';
+    }
+
+    function mediumOf(id) {
+        return state.media[id] || 'audio';
+    }
+
+    function flashOf(id) {
+        if (!state.flash[id]) state.flash[id] = { index: 0, face: 'front' };
+        return state.flash[id];
     }
 
     function visibleBriefings(items, rules) {
         var query = (rules.query || '').trim().toLowerCase();
         var list = items.filter(function (item) {
-            if (rules.category !== 'all' && item.category !== rules.category) return false;
+            var tags = tagsOf(item);
+            if (rules.category !== 'all' && tags.indexOf(rules.category) === -1 && item.category !== rules.category) return false;
             if (!query) return true;
-            return (item.title + ' ' + item.category + ' ' + item.sourceUrl).toLowerCase().indexOf(query) !== -1;
+            return (item.title + ' ' + tags.join(' ') + ' ' + sourcesOf(item).join(' ')).toLowerCase().indexOf(query) !== -1;
         });
         list.sort(function (a, b) {
             if (rules.sort === 'title') return a.title.localeCompare(b.title);
@@ -120,84 +264,230 @@
         return list;
     }
 
-    function stageHtml(item, format) {
-        var title = item.title;
-        var category = item.category;
-        var url = item.sourceUrl;
-        if (format === 'audio') {
-            return audioPlayer(url, title + ' — dual-author overview for ' + category + '.');
-        }
+    function studioFacts() {
+        var deposit = STUDIO.reserve_deposit_status;
+        var geo = STUDIO.geospatial_lock;
+        var genome = STUDIO.architectural_genome;
+        var interior = genome.interior_package;
+        var exterior = genome.exterior_palette;
+        var pledge = STUDIO.sweat_equity_pledge;
+        var publishedCredit = pledge.committed_hours * SWEAT_RATE;
+        return {
+            deposit: deposit,
+            geo: geo,
+            genome: genome,
+            interior: interior,
+            exterior: exterior,
+            pledge: pledge,
+            publishedCredit: publishedCredit,
+            pods: genome.pod_footprint.join(' · ')
+        };
+    }
+
+    function studioStage(item, format) {
+        var facts = studioFacts();
+        var sweatLine = facts.pledge.committed_hours + ' committed hours at the published $50 / Hr rate credit ' + usd(facts.publishedCredit) + ' once verified. The session file estimates ' + usd(facts.pledge.estimated_equity_credit_usd) + '.';
+        var admitLine = usd(facts.deposit.amount_usd) + ' recorded ' + facts.deposit.timestamp + ' under ledger reference ' + facts.deposit.sf_ledger_tx + '. The reservation admits ' + STUDIO.candidate_ref + '.';
+        if (format === 'audio') return audioMarkup(sourcesOf(item), item.title + ' — ' + admitLine);
         if (format === 'townhall') {
             return '<div class="space-y-3 text-left">' +
-                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-amber-400">Critic A (Financial Underwriter):</strong> How does "' + esc(title) + '" hold a lender cushion before the unit is occupied?</div>' +
-                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-emerald-400">Critic B (Community Leader):</strong> ' + esc(category) + ' demand has to be counseled in before this source is treated as supply.</div>' +
-                audioPlayer(url, 'Town hall bed for ' + title + '.') +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-amber-400">Critic A (Financial Underwriter):</strong> ' + esc(admitLine) + ' It does not clear $10,000,000.</div>' +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-emerald-400">Critic B (Community Leader):</strong> ' + esc(sweatLine) + '</div>' +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-sky-400">Critic C (Trust Steward):</strong> APN ' + esc(facts.geo.apn) + ' · ' + esc(facts.geo.jurisdiction_pack) + ' · ' + facts.geo.elevation_m + ' m. Style ' + esc(facts.genome.style_code) + '. This is the session record, not a title opinion.</div>' +
+                audioMarkup(sourcesOf(item), 'Town hall bed for ' + item.title + '.') +
                 '</div>';
         }
-        if (format === 'video') {
-            var videoId = youtubeId(url);
-            if (videoId) {
-                return '<p class="text-xs text-slate-300 text-left">' + esc(title) + '</p><div class="aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800"><iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/' + esc(videoId) + '" title="' + esc(title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
-            }
-            if (/\.(mp4|webm)(\?|#|$)/i.test(url)) {
-                return '<video controls class="w-full rounded-xl border border-slate-800" src="' + esc(url) + '"></video>';
-            }
-            return audioPlayer(url, title + ' has no cinematic file. The overview plays instead. Open the source from Artifact Links.');
-        }
+        if (format === 'video') return audioMarkup(sourcesOf(item), item.title + ' has no cinematic file. The audio overview plays instead.');
         if (format === 'slides') {
             return '<div class="space-y-3 text-xs text-left">' +
-                '<div><div class="text-amber-400 font-bold">Slide 1 · ' + esc(title) + '</div><p class="text-slate-300 mt-1">Subject: ' + esc(category) + '.</p></div>' +
-                '<div><div class="text-amber-400 font-bold">Slide 2 · Source</div><p class="text-slate-300 mt-1 break-all">' + esc(url) + '</p></div>' +
-                '<div><div class="text-amber-400 font-bold">Slide 3 · Ledger</div><p class="text-slate-300 mt-1">Sweat $50 / Hr · 200,000 Hours · Mentor $1,000,000 · Sponsor $100,000 · Referral $50,000. The $100 reservation admits a candidate.</p></div></div>';
+                '<div><div class="text-amber-400 font-bold">Slide 1 · Admission</div><p class="text-slate-300 mt-1">' + esc(admitLine) + '</p></div>' +
+                '<div><div class="text-amber-400 font-bold">Slide 2 · Parcel</div><p class="text-slate-300 mt-1">APN ' + esc(facts.geo.apn) + ' · ' + esc(facts.geo.jurisdiction_pack) + ' · elevation ' + facts.geo.elevation_m + ' m.</p></div>' +
+                '<div><div class="text-amber-400 font-bold">Slide 3 · Genome</div><p class="text-slate-300 mt-1">' + esc(facts.genome.style_code) + ' · ' + esc(facts.pods) + '. Cladding ' + esc(facts.exterior.cladding_primary) + '. Roof ' + esc(facts.exterior.roof_type) + '. Windows ' + esc(facts.exterior.window_package) + '.</p></div>' +
+                '<div><div class="text-amber-400 font-bold">Slide 4 · Interior and sweat</div><p class="text-slate-300 mt-1">' + esc(facts.interior.finish_theme) + ' · ' + esc(facts.interior.mepc_grade) + ' · ' + facts.interior.battery_kwh + ' kWh. ' + esc(sweatLine) + '</p></div></div>';
         }
         if (format === 'mindmap') {
-            var safeTitle = title.replace(/"/g, "'");
-            var safeCategory = category.replace(/"/g, "'");
-            return '<div class="overflow-x-auto"><pre class="mermaid">graph TD\nA["' + safeTitle + '"] --> B["' + safeCategory + '"]\nA --> C["Source"]\nB --> D["Crystal Dynasty Ledger"]</pre></div>';
+            return '<div class="overflow-x-auto"><pre class="mermaid">graph TD\nA["Studio Session 88301"] --> B["APN ' + mermaidLabel(facts.geo.apn) + '"]\nA --> C["' + mermaidLabel(facts.genome.style_code) + '"]\nA --> D["40 hours at $50/Hr"]\nA --> E["$100 admission"]\nC --> F["' + mermaidLabel(facts.pods) + '"]</pre></div>';
         }
         if (format === 'reports') {
-            return '<span class="text-amber-400 font-bold block text-xs text-left">Strategy dossier · ' + esc(title) + '</span>' +
-                '<p class="text-xs text-slate-300 text-left">Category ' + esc(category) + '. Credits still require a verified hour, mentee, sponsor, or converted referral. The source is the evidence, not the credit.</p>';
-        }
-        if (format === 'datatable') {
-            return '<table class="w-full text-xs text-left"><tbody class="text-slate-300">' +
-                '<tr><td class="py-1 pr-3 text-amber-400">Title</td><td>' + esc(title) + '</td></tr>' +
-                '<tr><td class="py-1 pr-3 text-amber-400">Category</td><td>' + esc(category) + '</td></tr>' +
-                '<tr><td class="py-1 pr-3 text-amber-400">Source</td><td class="break-all">' + esc(url) + '</td></tr>' +
-                '<tr><td class="py-1 pr-3 text-amber-400">Sweat</td><td>$50 / Hr · 200,000 Hours</td></tr>' +
-                '<tr><td class="py-1 pr-3 text-amber-400">Gateway</td><td>$100 admission</td></tr></tbody></table>';
+            return '<span class="text-amber-400 font-bold block text-xs text-left">Session dossier · ' + esc(STUDIO.studio_session_id) + '</span>' +
+                '<p class="text-xs text-slate-300 text-left">' + esc(STUDIO.candidate_ref) + ' · ' + esc(admitLine) + ' Parcel ' + esc(facts.geo.apn) + ', ' + esc(facts.geo.jurisdiction_pack) + ', ' + facts.geo.elevation_m + ' m. ' + esc(facts.genome.style_code) + ' with ' + esc(facts.pods) + '. ' + esc(sweatLine) + '</p>';
         }
         if (format === 'flashcards') {
             var cards = [
-                { front: title, back: category + ' briefing. Source stays attached to this card.' },
+                { front: 'Parcel', back: 'APN ' + facts.geo.apn + ' · ' + facts.geo.jurisdiction_pack + ' · ' + facts.geo.elevation_m + ' m.' },
+                { front: 'Genome', back: facts.genome.style_code + ' · ' + facts.exterior.cladding_primary + ' · ' + facts.interior.battery_kwh + ' kWh.' },
+                { front: 'Admission', back: usd(facts.deposit.amount_usd) + ' admits ' + STUDIO.candidate_ref + '. Ledger reference ' + facts.deposit.sf_ledger_tx + '.' },
+                { front: 'Sweat pledge', back: sweatLine }
+            ];
+            var flash = flashOf(item.id);
+            flash.count = cards.length;
+            if (flash.index >= cards.length) flash.index = 0;
+            var card = cards[flash.index];
+            var face = flash.face === 'back' ? card.back : card.front;
+            return '<button type="button" data-lms-action="flip" class="w-full text-left bg-slate-900 border border-slate-800 rounded-xl p-5 min-h-[7rem]"><div class="text-[10px] text-amber-400 uppercase tracking-widest">' + (flash.face === 'back' ? 'Back' : 'Front') + ' · tap to flip</div><div class="text-sm text-white mt-2">' + esc(face) + '</div></button>' +
+                '<div class="flex justify-between text-[11px]"><button type="button" data-lms-action="flash-prev" class="text-amber-400">Prev</button><span class="text-slate-400">' + (flash.index + 1) + ' / ' + cards.length + '</span><button type="button" data-lms-action="flash-next" class="text-amber-400">Next</button></div>';
+        }
+        if (format === 'infographic') {
+            return '<div class="space-y-2 text-xs text-left">' +
+                '<div class="bg-amber-500/15 border border-amber-500/40 rounded-lg px-3 py-2"><span class="text-amber-400 font-bold">01</span> ' + esc(usd(facts.deposit.amount_usd)) + ' admission · ' + esc(STUDIO.candidate_ref) + '</div>' +
+                '<div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2"><span class="text-emerald-400 font-bold">02</span> APN ' + esc(facts.geo.apn) + ' · ' + facts.geo.elevation_m + ' m</div>' +
+                '<div class="bg-sky-500/10 border border-sky-500/30 rounded-lg px-3 py-2"><span class="text-sky-400 font-bold">03</span> ' + esc(facts.genome.style_code) + ' · ' + facts.interior.battery_kwh + ' kWh</div>' +
+                '<div class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2"><span class="text-white font-bold">04</span> ' + facts.pledge.committed_hours + ' hours · published credit ' + esc(usd(facts.publishedCredit)) + '</div></div>';
+        }
+        if (format === 'ledger') {
+            var rows = [
+                ['Session', STUDIO.studio_session_id],
+                ['Candidate', STUDIO.candidate_ref],
+                ['Admission', usd(facts.deposit.amount_usd) + ' · ' + facts.deposit.timestamp],
+                ['Ledger reference', facts.deposit.sf_ledger_tx],
+                ['APN', facts.geo.apn],
+                ['Jurisdiction', facts.geo.jurisdiction_pack],
+                ['Elevation', facts.geo.elevation_m + ' m'],
+                ['Style', facts.genome.style_code],
+                ['Pods', facts.pods],
+                ['Cladding', facts.exterior.cladding_primary],
+                ['Roof', facts.exterior.roof_type],
+                ['Windows', facts.exterior.window_package],
+                ['Interior', facts.interior.finish_theme],
+                ['MEPC', facts.interior.mepc_grade],
+                ['Battery', facts.interior.battery_kwh + ' kWh'],
+                ['Committed hours', String(facts.pledge.committed_hours)],
+                ['Published credit', usd(facts.publishedCredit) + ' at $50 / Hr'],
+                ['Session estimate', usd(facts.pledge.estimated_equity_credit_usd)],
+                ['Program opt-in', facts.pledge.mhbojt_program_opt_in ? 'Yes' : 'No']
+            ].map(function (pair) {
+                return '<tr><td class="py-1 pr-3 text-amber-400 align-top">' + esc(pair[0]) + '</td><td>' + esc(pair[1]) + '</td></tr>';
+            }).join('');
+            return '<div class="space-y-4 text-xs text-left">' +
+                '<table class="w-full text-left"><tbody class="text-slate-300">' + rows + '</tbody></table>' +
+                '<div class="border-t border-slate-800 pt-3 space-y-2 text-slate-300">' +
+                '<div class="text-white font-bold">Interactive report · ' + esc(item.title) + '</div>' +
+                '<p>' + esc(admitLine) + '</p><p>' + esc(sweatLine) + '</p>' +
+                '<div class="flex flex-wrap gap-3 text-amber-400">' +
+                '<button type="button" data-lms-action="set-medium" data-medium="townhall" class="hover:text-amber-300">Open town hall</button>' +
+                '<button type="button" data-lms-action="set-medium" data-medium="mindmap" class="hover:text-amber-300">Open mind map</button>' +
+                '<a class="hover:text-amber-300" href="/feed/studio-session-88301.json">Session JSON</a>' +
+                '<a class="hover:text-amber-300" href="' + STRIPE + '" target="_blank" rel="noopener noreferrer">$100 reservation</a></div></div></div>';
+        }
+        return '';
+    }
+
+    function stageHtml(item, format) {
+        if (item.id === 'studio-88301') {
+            var custom = studioStage(item, format);
+            if (custom) return custom;
+        }
+        var title = item.title;
+        var tags = tagsOf(item);
+        var urls = sourcesOf(item).map(safeUrl).filter(Boolean);
+        var tagLine = tags.join(' · ') || 'General';
+        if (format === 'audio') return audioMarkup(urls, title + ' — audio overview for ' + tagLine + '.');
+        if (format === 'townhall') {
+            return '<div class="space-y-3 text-left">' +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-amber-400">Critic A (Financial Underwriter):</strong> How does "' + esc(title) + '" hold a lender cushion before the unit is occupied? The $100 reservation admits a candidate. It does not clear $10,000,000.</div>' +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-emerald-400">Critic B (Community Leader):</strong> ' + esc(tagLine) + ' demand has to be counseled in before this source is treated as supply. Sweat equity stays $50 per verified hour.</div>' +
+                '<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs"><strong class="text-sky-400">Critic C (Trust Steward):</strong> 200,000 verified hours neutralize the apprentice liability. Speculation is not a credit.</div>' +
+                audioMarkup(urls, 'Town hall bed for ' + title + '.') +
+                '</div>';
+        }
+        if (format === 'video') {
+            var page = firstUrl(urls, youtubeId);
+            var file = firstUrl(urls, isVideoFile);
+            if (page) {
+                return '<p class="text-xs text-slate-300 text-left">' + esc(title) + '</p><div class="aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800"><iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/' + esc(youtubeId(page)) + '" title="' + esc(title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+            }
+            if (file) return '<video controls class="w-full rounded-xl border border-slate-800" src="' + esc(file) + '"></video>';
+            return audioMarkup(urls, title + ' has no video file. The audio overview plays instead.');
+        }
+        if (format === 'slides') {
+            return '<div class="space-y-3 text-xs text-left">' +
+                '<div><div class="text-amber-400 font-bold">Slide 1 · ' + esc(title) + '</div><p class="text-slate-300 mt-1">Tags: ' + esc(tagLine) + '.</p></div>' +
+                '<div><div class="text-amber-400 font-bold">Slide 2 · Sources</div><p class="text-slate-300 mt-1 break-all">' + esc(urls.join(' · ') || 'No source URL yet.') + '</p></div>' +
+                '<div><div class="text-amber-400 font-bold">Slide 3 · Ledger</div><p class="text-slate-300 mt-1">Sweat $50 / Hr · 200,000 Hours · Mentor $1,000,000 · Sponsor $100,000 · Referral $50,000. The $100 reservation admits a candidate.</p></div></div>';
+        }
+        if (format === 'mindmap') {
+            var lines = ['graph TD', 'A["' + mermaidLabel(title) + '"] --> B["' + mermaidLabel(tagLine) + '"]'];
+            urls.slice(0, 4).forEach(function (url, index) {
+                lines.push('A --> S' + index + '["' + mermaidLabel(url) + '"]');
+            });
+            lines.push('B --> L["Crystal Dynasty Ledger"]');
+            return '<div class="overflow-x-auto"><pre class="mermaid">' + lines.join('\n') + '</pre></div>';
+        }
+        if (format === 'reports') {
+            return '<span class="text-amber-400 font-bold block text-xs text-left">Strategy report · ' + esc(title) + '</span>' +
+                '<p class="text-xs text-slate-300 text-left">Tags: ' + esc(tagLine) + '. Credits still require a verified hour, mentee, sponsor, or converted referral. Source URLs are evidence. The $100 reservation admits a candidate and does not neutralize $10,000,000.</p>';
+        }
+        if (format === 'ledger') {
+            var rows = '<tr><td class="py-1 pr-3 text-amber-400">Title</td><td>' + esc(title) + '</td></tr>' +
+                '<tr><td class="py-1 pr-3 text-amber-400">Tags</td><td>' + esc(tagLine) + '</td></tr>';
+            urls.forEach(function (url, index) {
+                rows += '<tr><td class="py-1 pr-3 text-amber-400">Source ' + (index + 1) + '</td><td class="break-all">' + esc(url) + '</td></tr>';
+            });
+            rows += '<tr><td class="py-1 pr-3 text-amber-400">Sweat</td><td>$50 / Hr · 200,000 Hours</td></tr>' +
+                '<tr><td class="py-1 pr-3 text-amber-400">Liability</td><td>$10,000,000</td></tr>' +
+                '<tr><td class="py-1 pr-3 text-amber-400">Mentor / Sponsor / Referral</td><td>$1,000,000 / $100,000 / $50,000</td></tr>' +
+                '<tr><td class="py-1 pr-3 text-amber-400">Gateway</td><td>$100 admission</td></tr>';
+            var sourceLinks = urls.map(function (url) {
+                return '<a class="hover:text-amber-300 break-all" href="' + esc(url) + '">' + esc(url) + '</a>';
+            }).join(' · ');
+            return '<div class="space-y-4 text-xs text-left">' +
+                '<table class="w-full text-left"><tbody class="text-slate-300">' + rows + '</tbody></table>' +
+                '<div class="border-t border-slate-800 pt-3 space-y-2 text-slate-300">' +
+                '<div class="text-white font-bold">Interactive report · ' + esc(title) + '</div>' +
+                '<p>Tags: ' + esc(tagLine) + '.</p>' +
+                '<p class="break-all">Sources: ' + (sourceLinks || 'None yet.') + '</p>' +
+                '<p>Sweat equity is $50 / Hr. 200,000 verified hours neutralize the $10,000,000 apprentice liability. The $100 reservation only admits a candidate.</p>' +
+                '<div class="flex flex-wrap gap-3 text-amber-400">' +
+                '<button type="button" data-lms-action="set-medium" data-medium="townhall" class="hover:text-amber-300">Open town hall</button>' +
+                '<button type="button" data-lms-action="set-medium" data-medium="mindmap" class="hover:text-amber-300">Open mind map</button>' +
+                '<button type="button" data-lms-action="set-medium" data-medium="quiz" class="hover:text-amber-300">Open quiz</button>' +
+                '<a class="hover:text-amber-300" href="/drah_crystal_dynasty1.html">Dynasty engine</a>' +
+                '<a class="hover:text-amber-300" href="' + STRIPE + '" target="_blank" rel="noopener noreferrer">$100 reservation</a></div></div></div>';
+        }
+        if (format === 'flashcards') {
+            var cards = [
+                { front: title, back: tagLine + '. Sources stay attached to this module.' },
                 { front: 'Gateway', back: 'The $100 reservation admits a candidate. It does not neutralize $10,000,000.' },
                 { front: 'Sweat', back: '$50 per verified hour. 200,000 hours neutralize the apprentice liability.' }
             ];
-            state.flashCards = cards;
-            var card = cards[state.flashIndex] || cards[0];
-            var face = state.flashFace === 'back' ? card.back : card.front;
-            return '<button type="button" data-lms-action="flip" class="w-full text-left bg-slate-900 border border-slate-800 rounded-xl p-5 min-h-[7rem]"><div class="text-[10px] text-amber-400 uppercase tracking-widest">' + (state.flashFace === 'back' ? 'Back' : 'Front') + ' · tap to flip</div><div class="text-sm text-white mt-2">' + esc(face) + '</div></button>' +
-                '<div class="flex justify-between text-[11px]"><button type="button" data-lms-action="flash-prev" class="text-amber-400">Prev</button><span class="text-slate-400">' + (state.flashIndex + 1) + ' / ' + cards.length + '</span><button type="button" data-lms-action="flash-next" class="text-amber-400">Next</button></div>';
+            var flash = flashOf(item.id);
+            flash.count = cards.length;
+            if (flash.index >= cards.length) flash.index = 0;
+            var card = cards[flash.index];
+            var face = flash.face === 'back' ? card.back : card.front;
+            return '<button type="button" data-lms-action="flip" class="w-full text-left bg-slate-900 border border-slate-800 rounded-xl p-5 min-h-[7rem]"><div class="text-[10px] text-amber-400 uppercase tracking-widest">' + (flash.face === 'back' ? 'Back' : 'Front') + ' · tap to flip</div><div class="text-sm text-white mt-2">' + esc(face) + '</div></button>' +
+                '<div class="flex justify-between text-[11px]"><button type="button" data-lms-action="flash-prev" class="text-amber-400">Prev</button><span class="text-slate-400">' + (flash.index + 1) + ' / ' + cards.length + '</span><button type="button" data-lms-action="flash-next" class="text-amber-400">Next</button></div>';
         }
-        if (format === 'quiz') return quizBlock('stage');
+        if (format === 'quiz') return quizBlock(item.id, 'stage');
         if (format === 'infographic') {
             return '<div class="space-y-2 text-xs text-left">' +
                 '<div class="bg-amber-500/15 border border-amber-500/40 rounded-lg px-3 py-2"><span class="text-amber-400 font-bold">01</span> ' + esc(title) + '</div>' +
-                '<div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2"><span class="text-emerald-400 font-bold">02</span> ' + esc(category) + '</div>' +
+                '<div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2"><span class="text-emerald-400 font-bold">02</span> ' + esc(tagLine) + '</div>' +
                 '<div class="bg-sky-500/10 border border-sky-500/30 rounded-lg px-3 py-2"><span class="text-sky-400 font-bold">03</span> Ingest · Quiz · Essay · Notes</div></div>';
         }
-        return '<ul class="text-xs space-y-2 text-left text-amber-400">' +
-            '<li><a class="hover:text-amber-300 break-all" href="' + esc(url) + '">' + esc(title) + '</a></li>' +
-            '<li><a class="hover:text-amber-300" href="/drah-dual-host-overview.mp3">Dual-host overview (.mp3)</a></li>' +
-            '<li><a class="hover:text-amber-300" href="/drah-dual-host-overview.m4a">Dual-host overview (.m4a)</a></li>' +
-            '<li><a class="hover:text-amber-300" href="/drah_crystal_dynasty1.html">Crystal Dynasty engine</a></li>' +
-            '<li><a class="hover:text-amber-300" href="/feed/">Academy feed</a></li></ul>';
+        var tiles = [];
+        urls.forEach(function (url) {
+            var icon = isAudio(url) ? (/\.m4a(\?|#|$)/i.test(url) ? '🎵' : '🎙️') : (youtubeId(url) ? '🎬' : '🔗');
+            var label = isAudio(url) ? (/\.m4a(\?|#|$)/i.test(url) ? 'Audio .m4a' : 'Audio .mp3') : (youtubeId(url) ? 'Video source' : 'Source');
+            tiles.push(iconTile(url, icon, label, /^https?:/i.test(url)));
+        });
+        if (!firstUrl(urls, function (url) { return /\.mp3(\?|#|$)/i.test(url); })) tiles.push(iconTile('/drah-dual-host-overview.mp3', '🎙️', 'Overview .mp3', false));
+        if (!firstUrl(urls, function (url) { return /\.m4a(\?|#|$)/i.test(url); })) tiles.push(iconTile('/drah-dual-host-overview.m4a', '🎵', 'Overview .m4a', false));
+        tiles.push(iconTile('/drah_crystal_dynasty1.html', '💎', 'Dynasty engine', false));
+        tiles.push(iconTile('/feed/', '📚', 'Feed', false));
+        tiles.push(iconTile(STRIPE, '🛡️', '$100 reservation', true));
+        return '<div class="grid grid-cols-2 sm:grid-cols-3 gap-3">' + tiles.join('') + '</div>';
     }
 
-    function quizBlock(scope) {
+    function iconTile(href, icon, label, external) {
+        var attrs = external ? ' target="_blank" rel="noopener noreferrer"' : '';
+        return '<a class="flex flex-col items-center gap-2 bg-slate-900 border border-slate-800 rounded-xl p-4 text-center hover:border-amber-500/40" href="' + esc(href) + '"' + attrs + '><span class="text-2xl" aria-hidden="true">' + icon + '</span><span class="text-[11px] text-amber-300">' + esc(label) + '</span></a>';
+    }
+
+    function quizBlock(id, scope) {
         return QUIZ.map(function (item, i) {
             var choices = item.choices.map(function (choice) {
-                return '<label class="flex items-start gap-2 text-[11px] text-slate-300"><input type="radio" name="lms-' + scope + '-' + i + '" value="' + esc(choice) + '" class="accent-amber-400 mt-0.5"><span>' + esc(choice) + '</span></label>';
+                return '<label class="flex items-start gap-2 text-[11px] text-slate-300"><input type="radio" name="lms-' + esc(id) + '-' + scope + '-' + i + '" value="' + esc(choice) + '" class="accent-amber-400 mt-0.5"><span>' + esc(choice) + '</span></label>';
             }).join('');
             return '<fieldset class="space-y-1"><legend class="text-xs text-white font-semibold mb-1">' + (i + 1) + '. ' + esc(item.prompt) + '</legend>' + choices + '</fieldset>';
         }).join('') + '<button type="button" data-lms-action="grade" data-quiz-scope="' + scope + '" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded text-xs">Submit answers</button><p data-quiz-result="' + scope + '" class="text-[11px] text-slate-300"></p>';
@@ -212,106 +502,132 @@
         return localStorage.getItem('mhbojt-lms-essay-' + id) || '';
     }
 
-    function validationHtml(item) {
-        var notes = notesOf(item.id).map(function (note) {
+    function noteListHtml(id) {
+        var notes = notesOf(id).map(function (note) {
             return '<li class="border border-slate-800 rounded-lg p-2"><div class="text-[10px] text-slate-500">' + esc(note.at) + '</div><div>' + esc(note.text) + '</div></li>';
         }).join('');
-        return '<div class="grid grid-cols-1 gap-4">' +
+        return notes || '<li class="text-slate-500">No notes for this module yet.</li>';
+    }
+
+    function validationHtml(item) {
+        var urls = sourcesOf(item);
+        var extra = urls.slice(1).map(function (url) {
+            return '<li class="break-all"><a class="text-amber-400 hover:text-amber-300" href="' + esc(safeUrl(url)) + '">' + esc(url) + '</a></li>';
+        }).join('');
+        return '<div class="grid grid-cols-1 gap-4 border-t border-slate-800 pt-4">' +
             '<div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2">' +
             '<div class="text-xs font-bold text-amber-400">Ingest URL</div>' +
             '<div class="flex flex-col sm:flex-row gap-2">' +
-            '<input data-field="ingest" type="url" value="' + esc(item.sourceUrl) + '" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-400" placeholder="https://… or /path/audio.mp3">' +
-            '<button type="button" data-lms-action="ingest" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded text-xs">Ingest</button></div></div>' +
+            '<input data-field="ingest" type="url" value="' + esc(urls[0] || '') + '" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-400" placeholder="https://… or /path/audio.mp3">' +
+            '<button type="button" data-lms-action="ingest" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded text-xs">Ingest</button></div>' +
+            (extra ? '<ul class="text-[11px] space-y-1">' + extra + '</ul>' : '') + '</div>' +
             '<div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3" data-testid="section-execution-quiz">' +
-            '<div class="text-xs font-bold text-amber-400">Execution Quiz</div>' + quizBlock('suite') + '</div>' +
+            '<div class="text-xs font-bold text-amber-400">Execution Quiz</div>' + quizBlock(item.id, 'suite') + '</div>' +
             '<div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2" data-testid="section-project-essay">' +
             '<div class="text-xs font-bold text-amber-400">Project Essay</div>' +
-            '<p class="text-[11px] text-slate-400">Apply "' + esc(item.title) + '" to a Selfless Leader or Nation Builder in ' + esc(item.category) + '.</p>' +
+            '<p class="text-[11px] text-slate-400">Apply "' + esc(item.title) + '" to a Selfless Leader or Nation Builder. Tags: ' + esc(tagsOf(item).join(', ') || 'General') + '.</p>' +
             '<textarea data-field="essay" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Write your response…">' + esc(essayOf(item.id)) + '</textarea>' +
             '<button type="button" data-lms-action="save-essay" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded text-xs">Save essay</button>' +
             '<p data-essay-status class="text-[11px] text-slate-500"></p></div>' +
             '<div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2">' +
             '<div class="text-xs font-bold text-amber-400">Comment Notes</div>' +
-            '<textarea data-field="note" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Field note for this briefing"></textarea>' +
+            '<textarea data-field="note" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Field note for this module"></textarea>' +
             '<button type="button" data-lms-action="save-note" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded text-xs">Save note</button>' +
-            '<ul class="space-y-2 text-[11px] text-slate-300">' + (notes || '<li class="text-slate-500">No notes for this briefing yet.</li>') + '</ul></div></div>';
+            '<ul data-note-list class="space-y-2 text-[11px] text-slate-300">' + noteListHtml(item.id) + '</ul></div></div>';
     }
 
-    function viewerHtml(item) {
-        if (!item) {
-            return '<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-sm text-slate-400">Select a briefing to open the 11-format viewer, ingest URL, quiz, essay, and notes.</div>';
-        }
+    function sessionKicker(item) {
+        if (item.id !== 'studio-88301') return '';
+        var facts = studioFacts();
+        return '<p class="text-[11px] text-slate-400 mt-2">APN ' + esc(facts.geo.apn) + ' · ' + esc(usd(facts.deposit.amount_usd)) + ' admission · ' + facts.pledge.committed_hours + ' hour pledge</p>';
+    }
+
+    function moduleHtml(item) {
+        var format = mediumOf(item.id);
         var options = FORMATS.map(function (pair) {
-            return '<option value="' + pair[0] + '"' + (pair[0] === state.medium ? ' selected' : '') + '>' + pair[1] + '</option>';
+            return '<option value="' + pair[0] + '"' + (pair[0] === format ? ' selected' : '') + '>' + pair[1] + '</option>';
         }).join('');
-        return '<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">' +
-            '<button type="button" data-lms-action="close" class="text-[11px] text-slate-400 hover:text-amber-400">All briefings</button>' +
-            '<div><div class="text-[10px] uppercase tracking-widest text-amber-400">' + esc(item.category) + '</div>' +
-            '<h2 class="text-sm font-bold text-white">' + esc(item.title) + '</h2></div>' +
-            '<label class="text-[11px] text-slate-300 block" for="briefingMedium">Presentation medium</label>' +
-            '<select id="briefingMedium" data-lms-action="medium" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-amber-400">' + options + '</select>' +
-            '<div id="lmsStage" class="space-y-4 bg-slate-950 p-5 rounded-xl border border-slate-800">' + stageHtml(item, state.medium) + '</div>' +
-            validationHtml(item) + '</div>';
+        var chips = tagsOf(item).map(function (tag) {
+            return '<span class="text-[10px] uppercase tracking-wide text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded px-1.5 py-0.5">' + esc(tag) + '</span>';
+        }).join('');
+        return '<article id="module-' + esc(item.id) + '" data-module-id="' + esc(item.id) + '" class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">' +
+            '<div class="flex items-start justify-between gap-3">' +
+            '<div class="min-w-0"><h2 class="text-sm font-bold text-white">' + esc(item.title) + '</h2>' + sessionKicker(item) + '<div class="flex flex-wrap gap-1 mt-2">' + chips + '</div></div>' +
+            '<div class="flex items-center gap-1 shrink-0">' +
+            '<button type="button" data-lms-action="up" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move up">↑</button>' +
+            '<button type="button" data-lms-action="down" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move down">↓</button>' +
+            '<button type="button" data-lms-action="remove" data-id="' + esc(item.id) + '" class="text-[10px] text-slate-500 hover:text-amber-400 px-1">Remove</button></div></div>' +
+            '<label class="text-[11px] text-slate-300 block">Presentation medium</label>' +
+            '<select data-lms-action="medium" aria-label="Presentation medium for ' + esc(item.title) + '" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-amber-400">' + options + '</select>' +
+            '<div data-stage class="space-y-4 bg-slate-950 p-5 rounded-xl border border-slate-800">' + stageHtml(item, format) + '</div>' +
+            validationHtml(item) + '</article>';
     }
 
     function renderNode(node) {
         var items = loadBriefings();
         var rules = loadRules();
-        var shown = visibleBriefings(items, rules);
-        var selected = byId(state.selectedId);
-        var categoryOptions = '<option value="all">All categories</option>' + CATEGORIES.map(function (category) {
-            return '<option value="' + esc(category) + '"' + (rules.category === category ? ' selected' : '') + '>' + esc(category) + '</option>';
+        var matched = visibleBriefings(items, rules);
+        var displayLimit = parseInt(rules.displayCount, 10);
+        var shown = displayLimit > 0 ? matched.slice(0, displayLimit) : matched;
+        var tags = knownTags(items);
+        var categoryOptions = '<option value="all">All tags</option>' + tags.map(function (tag) {
+            return '<option value="' + esc(tag) + '"' + (rules.category === tag ? ' selected' : '') + '>' + esc(tag) + '</option>';
         }).join('');
-        var formCategories = CATEGORIES.map(function (category) {
-            return '<option value="' + esc(category) + '">' + esc(category) + '</option>';
+        var tagBoxes = CATEGORIES.map(function (tag) {
+            var checked = tag === 'General' ? ' checked' : '';
+            return '<label class="inline-flex items-center gap-1 text-[11px] text-slate-300 mr-3 mb-1"><input type="checkbox" data-field="tag" value="' + esc(tag) + '"' + checked + ' class="accent-amber-400"><span>' + esc(tag) + '</span></label>';
         }).join('');
-        var rows = shown.map(function (item) {
-            var active = item.id === state.selectedId ? ' border-amber-500/50' : '';
-            return '<li class="bg-slate-950 border border-slate-800' + active + ' rounded-lg px-3 py-2 flex gap-2 items-center" data-briefing-id="' + esc(item.id) + '">' +
-                '<button type="button" data-lms-action="open" data-id="' + esc(item.id) + '" class="flex-1 text-left"><div class="text-xs font-bold text-white">' + esc(item.title) + '</div><div class="text-[10px] text-slate-500">' + esc(item.category) + '</div></button>' +
-                '<button type="button" data-lms-action="up" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move up">↑</button>' +
-                '<button type="button" data-lms-action="down" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move down">↓</button></li>';
-        }).join('');
-        node.innerHTML = '<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">' +
-            '<section class="lg:col-span-4 space-y-4">' +
+        var modules = shown.map(moduleHtml).join('');
+        node.innerHTML = '<div class="space-y-6">' +
+            '<section id="briefing-admin" class="grid grid-cols-1 lg:grid-cols-2 gap-4">' +
             '<div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">' +
             '<h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Admin · Add Briefing</h2>' +
             '<label class="text-[10px] uppercase text-slate-400 block" for="bf-title">Title</label>' +
             '<input id="bf-title" data-field="title" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Briefing title">' +
-            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-url">Source URL</label>' +
-            '<input id="bf-url" data-field="url" type="url" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-400" placeholder="https://… or /audio.mp3">' +
-            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-category">Subject category</label>' +
-            '<select id="bf-category" data-field="category" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">' + formCategories + '</select>' +
+            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-urls">Source URLs</label>' +
+            '<textarea id="bf-urls" data-field="urls" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-400" placeholder="One URL per line&#10;/drah-dual-host-overview.mp3&#10;https://www.youtube.com/watch?v=…"></textarea>' +
+            '<label class="text-[10px] uppercase text-slate-400 block">Category tags</label>' +
+            '<div>' + tagBoxes + '</div>' +
+            '<input data-field="custom-tags" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Additional tags, comma separated">' +
             '<button type="button" data-lms-action="add" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">+ Add Briefing</button>' +
             '<p data-admin-status class="text-[11px] text-slate-500"></p></div>' +
             '<div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">' +
-            '<div class="flex items-center justify-between gap-2"><h3 class="text-xs font-bold text-slate-200 uppercase tracking-widest">Briefing rules</h3>' +
+            '<div class="flex items-center justify-between gap-2"><h3 class="text-xs font-bold text-slate-200 uppercase tracking-widest">Shuffle and display</h3>' +
             '<button type="button" data-lms-action="shuffle" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-1.5 rounded text-[10px]"' + (items.length < 2 ? ' disabled' : '') + '>Shuffle order</button></div>' +
             '<label class="text-[10px] uppercase text-slate-400 block">Sort</label>' +
             '<select data-field="sort" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">' +
             '<option value="manual"' + (rules.sort === 'manual' ? ' selected' : '') + '>Manual order</option>' +
             '<option value="title"' + (rules.sort === 'title' ? ' selected' : '') + '>Title A–Z</option>' +
             '<option value="newest"' + (rules.sort === 'newest' ? ' selected' : '') + '>Newest first</option></select>' +
-            '<label class="text-[10px] uppercase text-slate-400 block">Filter category</label>' +
+            '<label class="text-[10px] uppercase text-slate-400 block">Filter tag</label>' +
             '<select data-field="filter-category" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">' + categoryOptions + '</select>' +
             '<label class="text-[10px] uppercase text-slate-400 block">Filter text</label>' +
-            '<input data-field="filter-query" value="' + esc(rules.query) + '" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Title, category, or URL">' +
-            '<p class="text-[10px] font-mono text-slate-500">Showing ' + shown.length + ' of ' + items.length + ' · sort ' + esc(rules.sort) + '</p>' +
-            '<ol class="space-y-2" data-testid="list-briefings">' + (rows || '<li class="text-xs text-slate-500">No briefings match this filter.</li>') + '</ol></div></section>' +
-            '<section class="lg:col-span-8" data-lms-viewer>' + viewerHtml(selected) + '</section></div>';
+            '<input data-field="filter-query" value="' + esc(rules.query) + '" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Title, tag, or URL">' +
+            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-display">Display count</label>' +
+            '<select id="bf-display" data-field="display-count" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">' +
+            ['all', '1', '2', '3', '4', '6', '12'].map(function (count) {
+                var label = count === 'all' ? 'All modules' : 'Show ' + count;
+                return '<option value="' + count + '"' + (String(rules.displayCount) === count ? ' selected' : '') + '>' + label + '</option>';
+            }).join('') + '</select>' +
+            '<p data-rules-line class="text-[10px] font-mono text-slate-500">Showing ' + shown.length + ' of ' + matched.length + ' · sort ' + esc(rules.sort) + ' · display ' + (displayLimit > 0 ? displayLimit : 'all') + '</p></div></section>' +
+            '<div class="space-y-4" data-testid="list-briefings">' + (modules || '<p class="text-xs text-slate-500">No briefings match this filter.</p>') + '</div></div>';
         runMermaid(node);
     }
 
     function runMermaid(node) {
-        if (!window.mermaid) return;
+        if (!window.mermaid || !node) return;
         var diagrams = node.querySelectorAll('.mermaid');
-        if (diagrams.length) window.mermaid.run({ nodes: diagrams });
+        if (!diagrams.length) return;
+        try {
+            var pending = window.mermaid.run({ nodes: diagrams });
+            if (pending && typeof pending.catch === 'function') pending.catch(function () {});
+        } catch (err) { /* diagram text stays readable */ }
     }
 
-    function paintStage(node, item) {
-        var stage = node.querySelector('#lmsStage');
+    function paintStage(module, item) {
+        var stage = module.querySelector('[data-stage]');
         if (!stage || !item) return;
-        stage.innerHTML = stageHtml(item, state.medium);
+        stage.innerHTML = stageHtml(item, mediumOf(item.id));
         runMermaid(stage);
     }
 
@@ -331,6 +647,18 @@
         return el.closest('[data-lms-briefings]');
     }
 
+    function moduleOf(el) {
+        return el.closest('[data-module-id]');
+    }
+
+    function setMedium(module, item, format) {
+        state.media[item.id] = format;
+        state.flash[item.id] = { index: 0, face: 'front' };
+        var select = module.querySelector('[data-lms-action="medium"]');
+        if (select) select.value = format;
+        paintStage(module, item);
+    }
+
     function onClick(event) {
         var button = event.target.closest('[data-lms-action]');
         if (!button) return;
@@ -339,22 +667,38 @@
         var action = button.getAttribute('data-lms-action');
         var items = loadBriefings();
         var rules = loadRules();
+        var module = moduleOf(button);
+        var moduleId = module ? module.getAttribute('data-module-id') : '';
         if (action === 'add') {
             var title = (node.querySelector('[data-field="title"]').value || '').trim();
-            var sourceUrl = (node.querySelector('[data-field="url"]').value || '').trim();
-            var category = node.querySelector('[data-field="category"]').value;
+            var urls = parseUrls(node.querySelector('[data-field="urls"]').value || '');
+            var tags = parseTags(node);
             var status = node.querySelector('[data-admin-status]');
-            if (!title || !sourceUrl) {
-                if (status) status.textContent = 'Title and source URL are required.';
+            if (!title || !urls.length) {
+                if (status) status.textContent = 'Title and at least one source URL are required.';
                 return;
             }
+            if (!tags.length) {
+                if (status) status.textContent = 'Choose at least one category tag.';
+                return;
+            }
+            var created = {
+                id: 'b-' + Date.now().toString(36),
+                title: title,
+                sourceUrl: urls[0],
+                sourceUrls: urls,
+                tags: tags,
+                category: tags[0],
+                createdAt: Date.now(),
+                order: items.length
+            };
             var next = items.slice();
-            var created = { id: 'b-' + Date.now().toString(36), title: title, sourceUrl: sourceUrl, category: category, createdAt: Date.now(), order: next.length };
             next.push(created);
             saveBriefings(next);
-            state.selectedId = created.id;
-            state.medium = 'audio';
+            state.media[created.id] = 'audio';
             mount();
+            var card = document.getElementById('module-' + created.id);
+            if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
             return;
         }
         if (action === 'shuffle') {
@@ -372,16 +716,16 @@
             mount();
             return;
         }
-        if (action === 'open') {
-            state.selectedId = button.getAttribute('data-id');
-            state.medium = 'audio';
-            state.flashIndex = 0;
-            state.flashFace = 'front';
-            mount();
-            return;
-        }
-        if (action === 'close') {
-            state.selectedId = '';
+        if (action === 'remove') {
+            var removeId = button.getAttribute('data-id');
+            if (removeId === 'studio-88301') {
+                var hidden = hiddenIds();
+                if (hidden.indexOf(removeId) === -1) hidden.push(removeId);
+                localStorage.setItem(HIDDEN, JSON.stringify(hidden));
+            }
+            saveBriefings(items.filter(function (item) { return item.id !== removeId; }));
+            delete state.media[removeId];
+            delete state.flash[removeId];
             mount();
             return;
         }
@@ -400,80 +744,97 @@
             mount();
             return;
         }
+        if (action === 'set-medium') {
+            var itemForMedium = byId(moduleId);
+            if (!module || !itemForMedium) return;
+            setMedium(module, itemForMedium, button.getAttribute('data-medium') || 'audio');
+            return;
+        }
         if (action === 'ingest') {
-            var item = byId(state.selectedId);
-            var input = node.querySelector('[data-field="ingest"]');
+            var item = byId(moduleId);
+            var input = module ? module.querySelector('[data-field="ingest"]') : null;
             if (!item || !input) return;
-            var nextUrl = input.value.trim();
+            var nextUrl = safeUrl(input.value);
             if (!nextUrl) return;
+            var urls = sourcesOf(item).filter(function (url) { return url !== nextUrl; });
+            urls.unshift(nextUrl);
             item.sourceUrl = nextUrl;
+            item.sourceUrls = urls;
             saveBriefings(items.map(function (entry) { return entry.id === item.id ? item : entry; }));
-            paintStage(node, item);
+            paintStage(module, item);
+            var statusLine = module.querySelector('[data-essay-status]');
+            if (statusLine) statusLine.textContent = '';
+            input.value = nextUrl;
             return;
         }
         if (action === 'grade') {
+            if (!module) return;
             var scope = button.getAttribute('data-quiz-scope');
             var correct = 0;
-            QUIZ.forEach(function (question, index) {
-                var picked = node.querySelector('input[name="lms-' + scope + '-' + index + '"]:checked');
+            QUIZ.forEach(function (question, qIndex) {
+                var picked = module.querySelector('input[name="lms-' + moduleId + '-' + scope + '-' + qIndex + '"]:checked');
                 if (picked && picked.value === question.answer) correct += 1;
             });
-            var result = node.querySelector('[data-quiz-result="' + scope + '"]');
+            var result = module.querySelector('[data-quiz-result="' + scope + '"]');
             if (result) result.textContent = correct + ' / ' + QUIZ.length + ' correct';
             return;
         }
         if (action === 'save-essay') {
-            var essayItem = byId(state.selectedId);
-            var essay = node.querySelector('[data-field="essay"]');
+            var essayItem = byId(moduleId);
+            var essay = module ? module.querySelector('[data-field="essay"]') : null;
             if (!essayItem || !essay) return;
             localStorage.setItem('mhbojt-lms-essay-' + essayItem.id, essay.value);
-            var essayStatus = node.querySelector('[data-essay-status]');
-            if (essayStatus) essayStatus.textContent = 'Essay saved for this briefing.';
+            var essayStatus = module.querySelector('[data-essay-status]');
+            if (essayStatus) essayStatus.textContent = 'Essay saved for this module.';
             return;
         }
         if (action === 'save-note') {
-            var noteItem = byId(state.selectedId);
-            var noteField = node.querySelector('[data-field="note"]');
+            var noteItem = byId(moduleId);
+            var noteField = module ? module.querySelector('[data-field="note"]') : null;
             if (!noteItem || !noteField) return;
             var text = noteField.value.trim();
             if (!text) return;
             var notes = notesOf(noteItem.id);
             notes.unshift({ text: text, at: new Date().toLocaleString() });
             localStorage.setItem('mhbojt-lms-notes-' + noteItem.id, JSON.stringify(notes.slice(0, 20)));
-            mount();
+            noteField.value = '';
+            var list = module.querySelector('[data-note-list]');
+            if (list) list.innerHTML = noteListHtml(noteItem.id);
             return;
         }
-        if (action === 'flip') {
-            state.flashFace = state.flashFace === 'front' ? 'back' : 'front';
-            paintStage(node, byId(state.selectedId));
-            return;
-        }
-        if (action === 'flash-prev' || action === 'flash-next') {
-            var cards = state.flashCards || [];
-            if (!cards.length) return;
-            state.flashIndex = (state.flashIndex + (action === 'flash-next' ? 1 : -1) + cards.length) % cards.length;
-            state.flashFace = 'front';
-            paintStage(node, byId(state.selectedId));
+        if (action === 'flip' || action === 'flash-prev' || action === 'flash-next') {
+            var flashItem = byId(moduleId);
+            if (!module || !flashItem) return;
+            var flash = flashOf(flashItem.id);
+            var count = flash.count || 3;
+            if (action === 'flip') flash.face = flash.face === 'front' ? 'back' : 'front';
+            else {
+                flash.index = (flash.index + (action === 'flash-next' ? 1 : -1) + count) % count;
+                flash.face = 'front';
+            }
+            paintStage(module, flashItem);
         }
     }
 
     function onChange(event) {
         var field = event.target;
+        if (!field.getAttribute) return;
         var node = hostOf(field);
         if (!node) return;
         if (field.getAttribute('data-lms-action') === 'medium') {
-            state.medium = field.value;
-            state.flashIndex = 0;
-            state.flashFace = 'front';
-            paintStage(node, byId(state.selectedId));
+            var module = moduleOf(field);
+            var item = module ? byId(module.getAttribute('data-module-id')) : null;
+            if (!module || !item) return;
+            setMedium(module, item, field.value);
             return;
         }
         var name = field.getAttribute('data-field');
-        if (name !== 'sort' && name !== 'filter-category' && name !== 'filter-query') return;
+        if (name !== 'sort' && name !== 'filter-category' && name !== 'filter-query' && name !== 'display-count') return;
         var rules = loadRules();
         if (name === 'sort') rules.sort = field.value;
         if (name === 'filter-category') rules.category = field.value;
         if (name === 'filter-query') rules.query = field.value;
+        if (name === 'display-count') rules.displayCount = field.value;
         saveRules(rules);
         mount();
         if (name === 'filter-query') {
@@ -491,8 +852,16 @@
     document.addEventListener('input', function (event) {
         if (event.target.getAttribute && event.target.getAttribute('data-field') === 'filter-query') onChange(event);
     });
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' || !event.target.getAttribute || event.target.getAttribute('data-field') !== 'title') return;
+        var node = hostOf(event.target);
+        if (!node) return;
+        event.preventDefault();
+        var button = node.querySelector('[data-lms-action="add"]');
+        if (button) button.click();
+    });
 
-    window.MHBOJT_LMS = { mount: mount, seed: seedBriefings };
+    window.MHBOJT_LMS = { mount: mount, seed: seedBriefings, formats: FORMATS.map(function (pair) { return pair[0]; }) };
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { mount(); });
     else mount();

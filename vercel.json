@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/intake.js": {
+      "maxDuration": 60
+    }
+  },
   "headers": [
     {
       "source": "/feed/sovereign-cases.json",

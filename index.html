@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM | Multi-Modal Executive Presentation & Enterprise Hub</title>
-    <meta name="mhbojt-build" content="aegis-intro-tools-20261015">
+    <meta name="mhbojt-build" content="aegis-intake-api-20261015">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
@@ -167,7 +167,7 @@
                 <div id="aegisPathways" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
             </div>
 
-            <form id="aegisIntake" novalidate class="bg-slate-950 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-4" aria-labelledby="aegisIntakeTitle">
+            <form id="aegisIntake" novalidate onsubmit="handleIntake(event)" class="bg-slate-950 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-4" aria-labelledby="aegisIntakeTitle">
                 <div class="flex flex-wrap justify-between items-center gap-2">
                     <h3 id="aegisIntakeTitle" class="text-xs font-bold text-amber-400 uppercase tracking-widest">Intake · Jackson Barracks / Tri-Parish / Lao Diaspora</h3>
                     <ol id="aegisSteps" class="flex gap-2 text-[10px] font-mono" aria-label="Intake progress"></ol>
@@ -746,21 +746,32 @@
             return "";
         }
 
-        function submit() {
-            var record = {
-                at: new Date().toISOString(), corridor: state.corridor, role: state.role, lane: state.lane,
-                name: state.name.trim(), email: state.email.trim(), phone: state.phone.trim(), ref: state.ref.trim()
+        var intakeSaving = false;
+
+        function intakePayload() {
+            return {
+                corridor: state.corridor,
+                role: state.role,
+                lane: state.lane,
+                name: state.name.trim(),
+                email: state.email.trim(),
+                phone: state.phone.trim(),
+                ref: state.ref.trim()
             };
-            var all = readStore(KEY_INTAKE, []);
-            all.unshift(record);
-            try { localStorage.setItem(KEY_INTAKE, JSON.stringify(all.slice(0, 20))); } catch (err) {}
-            if (record.ref) { try { localStorage.setItem(KEY_REF, record.ref); } catch (err) {} }
-            var text = summaryLines().join("\n") + "\nSaved: " + record.at;
-            var mail = "mailto:" + INTAKE_EMAIL + "?subject=" + encodeURIComponent("DRAH AEGIS intake: " + record.name) + "&body=" + encodeURIComponent(text);
+        }
+
+        function showLogged(record) {
+            var ledger = record.incentiveEscrowLedger || {};
+            var text = summaryLines().join("\n") +
+                "\nState: " + record.state +
+                "\nRecord: " + record.id +
+                "\nReferral benefit: $" + Number(ledger.amountUsd || 0).toLocaleString("en-US") + " " + (ledger.unit || "") +
+                "\nLogged: " + record.loggedAt;
+            var mail = "mailto:" + INTAKE_EMAIL + "?subject=" + encodeURIComponent("DRAH AEGIS intake: " + record.applicant.name) + "&body=" + encodeURIComponent(text);
             var done = document.getElementById("aegisDone");
-            done.innerHTML = '<div class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Intake saved on this device</div>' +
+            done.innerHTML = '<div class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Intake logged · ' + esc(record.state) + '</div>' +
                 '<pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 whitespace-pre-wrap">' + esc(text) + "</pre>" +
-                '<p class="text-[11px] text-slate-400">Nothing has been sent yet. Email the intake to the team or copy it, then reserve your seat.</p>' +
+                '<p class="text-[11px] text-slate-400">The referral benefit is attached to this record. It credits on a qualified conversion with a Stripe receipt, not on this intake.</p>' +
                 '<div class="flex flex-wrap gap-2">' +
                 '<a href="' + esc(mail) + '" class="bg-slate-800 hover:bg-slate-700 border border-amber-500/40 text-amber-300 font-bold px-4 py-2 rounded-lg text-xs">Email intake</a>' +
                 '<button type="button" data-aegis="copy" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 font-bold px-4 py-2 rounded-lg text-xs">Copy intake</button>' +
@@ -770,6 +781,48 @@
             done.classList.remove("hidden");
             document.getElementById("aegisIntake").classList.add("hidden");
             done.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
+        function handleIntake(event) {
+            if (event && event.preventDefault) event.preventDefault();
+            if (intakeSaving) return false;
+            var problem = validate();
+            if (problem) { showError(problem); return false; }
+            showError("");
+            if (state.step < 3) { state.step += 1; renderPane(); return false; }
+            var next = document.querySelector('[data-aegis="next"]');
+            intakeSaving = true;
+            if (next) { next.disabled = true; next.textContent = "Saving…"; }
+            var payload = intakePayload();
+            fetch("/api/intake", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then(function (res) {
+                return res.json().then(function (data) {
+                    return { ok: res.ok, data: data };
+                });
+            }).then(function (result) {
+                intakeSaving = false;
+                if (!result.ok || !result.data || !result.data.record) {
+                    throw new Error((result.data && result.data.error) || "Intake was not logged.");
+                }
+                var record = result.data.record;
+                var stored = {
+                    at: record.loggedAt, corridor: payload.corridor, role: payload.role, lane: payload.lane,
+                    name: payload.name, email: payload.email, phone: payload.phone, ref: payload.ref, id: record.id, state: record.state
+                };
+                var all = readStore(KEY_INTAKE, []);
+                all.unshift(stored);
+                try { localStorage.setItem(KEY_INTAKE, JSON.stringify(all.slice(0, 20))); } catch (err) {}
+                if (payload.ref) { try { localStorage.setItem(KEY_REF, payload.ref); } catch (err) {} }
+                showLogged(record);
+            }).catch(function (err) {
+                intakeSaving = false;
+                if (next) { next.disabled = false; next.textContent = "Save intake"; }
+                showError(err.message || "Intake could not reach /api/intake.");
+            });
+            return false;
         }
 
         function startStep() { return state.corridor ? (state.role ? 3 : 2) : 1; }
@@ -789,12 +842,8 @@
             if (t.hasAttribute("data-corridor")) { pick("corridor", t.getAttribute("data-corridor")); return; }
             var action = t.getAttribute("data-aegis");
             if (action === "back") { state.step = Math.max(1, state.step - 1); showError(""); renderPane(); }
-            else if (action === "next") {
-                var problem = validate();
-                if (problem) { showError(problem); return; }
-                showError("");
-                if (state.step < 3) { state.step += 1; renderPane(); } else submit();
-            } else if (action === "copy") {
+            else if (action === "next") handleIntake();
+            else if (action === "copy") {
                 var text = document.getElementById("aegisDone").dataset.text || "";
                 if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { t.textContent = "Copied"; });
                 else window.prompt("Copy intake", text);
@@ -846,6 +895,7 @@
             markNav();
         }
 
+        window.handleIntake = handleIntake;
         window.AEGIS = {
             parseParams: parseParams,
             state: function () { return JSON.parse(JSON.stringify(state)); },

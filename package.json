@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "@google/genai": "^2.30.0"
+  }
+}

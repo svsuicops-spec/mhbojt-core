@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM | Multi-Modal Executive Presentation & Enterprise Hub</title>
-    <meta name="mhbojt-build" content="aegis-intake-api-20261015">
+    <meta name="mhbojt-build" content="rei-reasoning-agent-20261015">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
@@ -760,18 +760,53 @@
             };
         }
 
-        function showLogged(record) {
+        function money(amount) {
+            return "$" + Number(amount || 0).toLocaleString("en-US");
+        }
+
+        function measure(value) {
+            var number = Number(value);
+            if (!isFinite(number)) return "";
+            return (Math.round(number * 10) / 10).toLocaleString("en-US");
+        }
+
+        function showLogged(record, rei) {
             var ledger = record.incentiveEscrowLedger || {};
+            var stack = rei.capitalStack;
+            var engineering = rei.engineering;
+            var layerLines = stack.layers.map(function (layer) {
+                return layer.name + ": " + money(layer.amountUsd) + " — " + layer.note;
+            });
             var text = summaryLines().join("\n") +
                 "\nState: " + record.state +
                 "\nRecord: " + record.id +
-                "\nReferral benefit: $" + Number(ledger.amountUsd || 0).toLocaleString("en-US") + " " + (ledger.unit || "") +
-                "\nLogged: " + record.loggedAt;
+                "\nReferral benefit: " + money(ledger.amountUsd) + " " + (ledger.unit || "") +
+                "\nLogged: " + record.loggedAt +
+                "\n\nCapital stack\n" + stack.summary + "\n" + layerLines.join("\n") +
+                "\n\nEngineering response\nElevation BFE: " + measure(engineering.elevationBfeFt) + " ft\nWind load: " + measure(engineering.windLoadMph) + " mph\n" + engineering.basis +
+                "\nPlanning response from the REI agent. This is not a sealed survey or title opinion.";
+            var layersHtml = stack.layers.map(function (layer) {
+                return '<li class="flex justify-between gap-3 border-b border-slate-800 py-2 last:border-0">' +
+                    '<span class="min-w-0"><span class="block text-slate-100 font-semibold">' + esc(layer.name) + '</span>' +
+                    '<span class="block text-[11px] text-slate-400">' + esc(layer.note) + '</span></span>' +
+                    '<span class="text-amber-300 font-bold whitespace-nowrap">' + esc(money(layer.amountUsd)) + '</span></li>';
+            }).join("");
             var mail = "mailto:" + INTAKE_EMAIL + "?subject=" + encodeURIComponent("DRAH AEGIS intake: " + record.applicant.name) + "&body=" + encodeURIComponent(text);
             var done = document.getElementById("aegisDone");
             done.innerHTML = '<div class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Intake logged · ' + esc(record.state) + '</div>' +
                 '<pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 whitespace-pre-wrap">' + esc(text) + "</pre>" +
                 '<p class="text-[11px] text-slate-400">The referral benefit is attached to this record. It credits on a qualified conversion with a Stripe receipt, not on this intake.</p>' +
+                '<section class="border border-slate-800 rounded-lg p-3 space-y-2" aria-label="Capital stack">' +
+                '<div class="text-[10px] font-bold uppercase tracking-widest text-amber-400">Capital stack</div>' +
+                '<p class="text-[12px] text-slate-300">' + esc(stack.summary) + '</p>' +
+                '<ul>' + layersHtml + '</ul></section>' +
+                '<section class="border border-slate-800 rounded-lg p-3 space-y-2" aria-label="Engineering response">' +
+                '<div class="text-[10px] font-bold uppercase tracking-widest text-amber-400">Engineering response</div>' +
+                '<div class="grid grid-cols-2 gap-3">' +
+                '<div><div class="text-[10px] uppercase tracking-widest text-slate-500">Elevation BFE</div><div class="text-lg font-bold text-slate-100">' + esc(measure(engineering.elevationBfeFt)) + ' ft</div></div>' +
+                '<div><div class="text-[10px] uppercase tracking-widest text-slate-500">Wind load</div><div class="text-lg font-bold text-slate-100">' + esc(measure(engineering.windLoadMph)) + ' mph</div></div></div>' +
+                '<p class="text-[11px] text-slate-400">' + esc(engineering.basis) + '</p>' +
+                '<p class="text-[11px] text-slate-500">Planning response from the REI agent. This is not a sealed survey or title opinion.</p></section>' +
                 '<div class="flex flex-wrap gap-2">' +
                 '<a href="' + esc(mail) + '" class="bg-slate-800 hover:bg-slate-700 border border-amber-500/40 text-amber-300 font-bold px-4 py-2 rounded-lg text-xs">Email intake</a>' +
                 '<button type="button" data-aegis="copy" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 font-bold px-4 py-2 rounded-lg text-xs">Copy intake</button>' +
@@ -792,7 +827,7 @@
             if (state.step < 3) { state.step += 1; renderPane(); return false; }
             var next = document.querySelector('[data-aegis="next"]');
             intakeSaving = true;
-            if (next) { next.disabled = true; next.textContent = "Saving…"; }
+            if (next) { next.disabled = true; next.textContent = "Running REI…"; }
             var payload = intakePayload();
             fetch("/api/intake", {
                 method: "POST",
@@ -804,8 +839,9 @@
                 });
             }).then(function (result) {
                 intakeSaving = false;
-                if (!result.ok || !result.data || !result.data.record) {
-                    throw new Error((result.data && result.data.error) || "Intake was not logged.");
+                var rei = result.data && result.data.rei;
+                if (!result.ok || !result.data || !result.data.record || !rei || !rei.capitalStack || !rei.engineering) {
+                    throw new Error((result.data && result.data.error) || "The REI reasoning agent did not return a capital stack.");
                 }
                 var record = result.data.record;
                 var stored = {
@@ -816,7 +852,7 @@
                 all.unshift(stored);
                 try { localStorage.setItem(KEY_INTAKE, JSON.stringify(all.slice(0, 20))); } catch (err) {}
                 if (payload.ref) { try { localStorage.setItem(KEY_REF, payload.ref); } catch (err) {} }
-                showLogged(record);
+                showLogged(record, rei);
             }).catch(function (err) {
                 intakeSaving = false;
                 if (next) { next.disabled = false; next.textContent = "Save intake"; }

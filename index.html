@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAH GOSSSM | Multi-Modal Executive Presentation & Enterprise Hub</title>
-    <meta name="mhbojt-build" content="lms-briefing-engine-20261007">
+    <meta name="mhbojt-build" content="aegis-intro-tools-20261015">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
@@ -28,7 +28,15 @@
         </div>
     </header>
 
-    <main class="flex-grow container mx-auto px-4 py-6 max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <nav aria-label="Primary" class="bg-slate-900/95 border-b border-slate-800 sticky top-0 z-30 backdrop-blur">
+        <div class="container mx-auto max-w-7xl px-4 flex gap-1 overflow-x-auto whitespace-nowrap text-xs">
+            <a href="#hub" class="aegis-nav px-3 py-3 text-slate-300 hover:text-amber-400 border-b-2 border-transparent">Presentation Hub</a>
+            <a id="navAegis" href="#aegis" class="aegis-nav px-3 py-3 text-slate-300 hover:text-amber-400 border-b-2 border-transparent font-semibold">SL &amp; NB Intro Tools</a>
+            <a href="#briefingLms" class="aegis-nav px-3 py-3 text-slate-300 hover:text-amber-400 border-b-2 border-transparent">Briefing LMS</a>
+        </div>
+    </nav>
+
+    <main id="hub" class="flex-grow container mx-auto px-4 py-6 max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 scroll-mt-12">
 
         <section class="lg:col-span-4 space-y-6">
 
@@ -141,7 +149,42 @@
         </section>
     </main>
 
-    <section id="briefingLms" class="container mx-auto px-4 pb-8 max-w-7xl">
+    <section id="aegis" class="container mx-auto px-4 pb-8 max-w-7xl scroll-mt-12" aria-labelledby="aegisTitle">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-4 sm:p-6 shadow-2xl space-y-6">
+            <div class="flex flex-wrap justify-between items-start gap-3 border-b border-slate-800 pb-4">
+                <div class="min-w-0">
+                    <span class="text-amber-400 text-[10px] font-bold uppercase tracking-widest">DRAH AEGIS · aegis.mhbojt.site</span>
+                    <h2 id="aegisTitle" class="text-base sm:text-lg font-extrabold text-white uppercase tracking-wider">SL &amp; NB Intro Tools</h2>
+                    <p class="text-[11px] text-slate-400 mt-1 max-w-2xl">Pick a corridor and a deployment pathway, then complete the three-step intake. The $100 reservation admits a candidate. It does not neutralize the $10,000,000 liability.</p>
+                </div>
+                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded shrink-0">$50 / Hr · 200,000 Hours</span>
+            </div>
+
+            <div id="aegisContext" class="hidden bg-amber-500/10 border border-amber-500/40 rounded-xl p-3 text-[11px] text-amber-100 space-y-1" role="status"></div>
+
+            <div>
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-300 mb-2">Four deployment pathways</h3>
+                <div id="aegisPathways" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+            </div>
+
+            <form id="aegisIntake" novalidate class="bg-slate-950 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-4" aria-labelledby="aegisIntakeTitle">
+                <div class="flex flex-wrap justify-between items-center gap-2">
+                    <h3 id="aegisIntakeTitle" class="text-xs font-bold text-amber-400 uppercase tracking-widest">Intake · Jackson Barracks / Tri-Parish / Lao Diaspora</h3>
+                    <ol id="aegisSteps" class="flex gap-2 text-[10px] font-mono" aria-label="Intake progress"></ol>
+                </div>
+                <div id="aegisPane" class="space-y-3"></div>
+                <p id="aegisError" class="hidden text-[11px] text-rose-300" role="alert"></p>
+                <div class="flex justify-between items-center gap-3">
+                    <button type="button" data-aegis="back" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold px-4 py-2 rounded-lg text-xs">Back</button>
+                    <button type="button" data-aegis="next" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2 rounded-lg text-xs">Next</button>
+                </div>
+            </form>
+
+            <div id="aegisDone" class="hidden bg-slate-950 border border-emerald-500/40 rounded-xl p-4 sm:p-5 space-y-3" role="status"></div>
+        </div>
+    </section>
+
+    <section id="briefingLms" class="container mx-auto px-4 pb-8 max-w-7xl scroll-mt-12">
         <div data-lms-briefings></div>
     </section>
 
@@ -512,6 +555,306 @@
             showTrack("guardsmen");
             loadAudioCatalog();
         });
+    </script>
+    <script>
+    (function () {
+        var STRIPE = "https://buy.stripe.com/8x228rcRfa087yu9P4cIE02";
+        var INTAKE_EMAIL = "svsuic.ops@gmail.com";
+        var KEY_INTAKE = "mhbojt-aegis-intake";
+        var KEY_REF = "mhbojt-aegis-ref";
+
+        var CORRIDORS = [
+            { id: "jackson-barracks", label: "Jackson Barracks", who: "National Guardsmen", note: "Dual-duty hours convert into Tri-Parish housing equity.", aliases: ["jb", "jackson", "guard", "guardsmen", "ng", "nationalguard"] },
+            { id: "tri-parish", label: "Tri-Parish", who: "Homebuyers and recovery families", note: "St. Bernard, Orleans, and Plaquemines labor stays housed locally.", aliases: ["tp", "triparish", "stbernard", "parish"] },
+            { id: "lao-diaspora", label: "Lao Diaspora", who: "Laotian diaspora and Nation Builders", note: "Wisdom, referrals, and apprentice labor on one 1,000-year ledger.", aliases: ["lao", "laos", "laotian", "diaspora"] }
+        ];
+        var PATHWAYS = [
+            { id: "sweat", label: "SWEAT", credit: "$50 / Hr", body: "Signed hours on the campus ledger. 200,000 Hours neutralize $10,000,000.", aliases: ["hours", "labor", "apprentice"] },
+            { id: "refer", label: "REFER", credit: "$50,000 / conversion", body: "Qualified introduction with a Stripe receipt. Name-drops do not credit.", aliases: ["referral", "referrals", "referrer"] },
+            { id: "sponsor", label: "SPONSOR", credit: "$100,000 / candidate", body: "Underwrite a candidate. You stay on the hook until they execute.", aliases: ["sponsorship", "underwrite"] },
+            { id: "mentor", label: "MENTOR", credit: "$1,000,000 / mentee", body: "Walk a mentee through Action Track #2. Ten mentees clear the ledger.", aliases: ["mentorship", "mentee"] }
+        ];
+        var LANES = [
+            { id: "SL", label: "Selfless Leader (SL)" },
+            { id: "NB", label: "Nation Builder (NB)" }
+        ];
+
+        var state = { step: 1, corridor: "", role: "", lane: "SL", name: "", email: "", phone: "", ref: "" };
+
+        function esc(value) {
+            return String(value == null ? "" : value).replace(/[&<>"']/g, function (ch) {
+                return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch];
+            });
+        }
+        function norm(value) { return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, ""); }
+        function byId(list, id) {
+            for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+            return null;
+        }
+        function resolve(list, value) {
+            var key = norm(value);
+            if (!key) return "";
+            for (var i = 0; i < list.length; i++) {
+                if (norm(list[i].id) === key) return list[i].id;
+                for (var j = 0; j < list[i].aliases.length; j++) {
+                    if (norm(list[i].aliases[j]) === key) return list[i].id;
+                }
+            }
+            return "";
+        }
+
+        function parseParams(search) {
+            var params = new URLSearchParams(search || "");
+            var rawC = (params.get("c") || "").trim();
+            var rawRole = (params.get("role") || "").trim();
+            var rawRef = (params.get("ref") || "").trim();
+            var corridor = resolve(CORRIDORS, rawC);
+            var role = resolve(PATHWAYS, rawRole);
+            var ref = /^[A-Za-z0-9._-]{1,40}$/.test(rawRef) ? rawRef : "";
+            return {
+                corridor: corridor,
+                role: role,
+                ref: ref,
+                present: !!(rawC || rawRole || rawRef),
+                ignored: {
+                    c: rawC && !corridor ? rawC : "",
+                    role: rawRole && !role ? rawRole : "",
+                    ref: rawRef && !ref ? rawRef : ""
+                }
+            };
+        }
+
+        function readStore(key, fallback) {
+            try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (err) { return fallback; }
+        }
+
+        function renderContext(parsed) {
+            var box = document.getElementById("aegisContext");
+            if (!box) return;
+            var chips = [];
+            var corridor = byId(CORRIDORS, parsed.corridor);
+            var pathway = byId(PATHWAYS, parsed.role);
+            if (corridor) chips.push("Corridor: <strong>" + esc(corridor.label) + "</strong>");
+            if (pathway) chips.push("Pathway: <strong>" + esc(pathway.label) + "</strong>");
+            if (parsed.ref) chips.push("Referral code: <strong>" + esc(parsed.ref) + "</strong>");
+            var ignored = [];
+            if (parsed.ignored.c) ignored.push("c=" + parsed.ignored.c);
+            if (parsed.ignored.role) ignored.push("role=" + parsed.ignored.role);
+            if (parsed.ignored.ref) ignored.push("ref=" + parsed.ignored.ref);
+            if (!chips.length && !ignored.length) { box.classList.add("hidden"); return; }
+            var html = chips.length ? '<div class="font-semibold uppercase tracking-widest text-[10px] text-amber-400">Invitation link applied</div><div>' + chips.join(" · ") + "</div>" : "";
+            if (ignored.length) html += '<div class="text-amber-200/80">Ignored unrecognized values: ' + esc(ignored.join(", ")) + "</div>";
+            box.innerHTML = html;
+            box.classList.remove("hidden");
+        }
+
+        function renderPathways() {
+            var root = document.getElementById("aegisPathways");
+            root.innerHTML = PATHWAYS.map(function (p) {
+                var on = state.role === p.id;
+                return '<button type="button" data-pathway="' + p.id + '" aria-pressed="' + on + '" class="text-left rounded-xl border p-4 space-y-1 transition ' +
+                    (on ? "bg-amber-500/15 border-amber-400" : "bg-slate-950 border-slate-800 hover:border-amber-500/50") + '">' +
+                    '<div class="flex justify-between items-center gap-2"><span class="text-xs font-extrabold tracking-widest ' + (on ? "text-amber-400" : "text-white") + '">' + p.label + "</span>" +
+                    '<span class="text-[9px] font-mono text-slate-400">' + (on ? "Selected" : "Select") + "</span></div>" +
+                    '<div class="text-sm font-mono font-bold text-amber-400">' + esc(p.credit) + "</div>" +
+                    '<p class="text-[11px] text-slate-300 leading-relaxed">' + esc(p.body) + "</p></button>";
+            }).join("");
+        }
+
+        function renderSteps() {
+            var labels = ["Corridor", "Pathway", "Contact"];
+            document.getElementById("aegisSteps").innerHTML = labels.map(function (label, i) {
+                var n = i + 1;
+                var cls = n === state.step ? "bg-amber-500 text-slate-950 border-amber-400" : (n < state.step ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40" : "bg-slate-900 text-slate-400 border-slate-700");
+                return '<li class="px-2 py-1 rounded border ' + cls + '"' + (n === state.step ? ' aria-current="step"' : "") + ">" + n + " · " + label + "</li>";
+            }).join("");
+        }
+
+        function field(id, label, type, value, extra) {
+            return '<label class="block text-[11px] text-slate-300" for="' + id + '">' + label +
+                '<input id="' + id + '" data-field="' + id + '" type="' + type + '" value="' + esc(value) + '" ' + (extra || "") +
+                ' class="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"></label>';
+        }
+
+        function summaryLines() {
+            var corridor = byId(CORRIDORS, state.corridor);
+            var pathway = byId(PATHWAYS, state.role);
+            return [
+                "DRAH AEGIS intake",
+                "Corridor: " + (corridor ? corridor.label : "-"),
+                "Pathway: " + (pathway ? pathway.label + " (" + pathway.credit + ")" : "-"),
+                "Lane: " + state.lane,
+                "Name: " + state.name,
+                "Email: " + (state.email || "-"),
+                "Phone: " + (state.phone || "-"),
+                "Referral code: " + (state.ref || "-")
+            ];
+        }
+
+        function renderPane() {
+            var pane = document.getElementById("aegisPane");
+            if (state.step === 1) {
+                pane.innerHTML = '<p class="text-[11px] text-slate-400">Step 1 of 3. Which corridor are you entering through?</p><div class="grid grid-cols-1 md:grid-cols-3 gap-3">' +
+                    CORRIDORS.map(function (c) {
+                        var on = state.corridor === c.id;
+                        return '<button type="button" data-corridor="' + c.id + '" aria-pressed="' + on + '" class="text-left rounded-xl border p-3 space-y-1 transition ' +
+                            (on ? "bg-amber-500/15 border-amber-400" : "bg-slate-900 border-slate-800 hover:border-amber-500/50") + '">' +
+                            '<div class="text-xs font-bold text-white">' + esc(c.label) + '</div><div class="text-[10px] uppercase tracking-widest text-amber-400">' + esc(c.who) + '</div>' +
+                            '<p class="text-[11px] text-slate-300">' + esc(c.note) + "</p></button>";
+                    }).join("") + "</div>";
+            } else if (state.step === 2) {
+                pane.innerHTML = '<p class="text-[11px] text-slate-400">Step 2 of 3. Choose your deployment pathway and lane.</p><div class="grid grid-cols-2 md:grid-cols-4 gap-2">' +
+                    PATHWAYS.map(function (p) {
+                        var on = state.role === p.id;
+                        return '<button type="button" data-pathway="' + p.id + '" aria-pressed="' + on + '" class="rounded-lg border px-3 py-2 text-xs font-bold tracking-widest transition ' +
+                            (on ? "bg-amber-500 text-slate-950 border-amber-400" : "bg-slate-900 text-slate-200 border-slate-700 hover:border-amber-500/50") + '">' + p.label + "</button>";
+                    }).join("") + '</div><label class="block text-[11px] text-slate-300" for="aegisLane">Lane' +
+                    '<select id="aegisLane" data-field="lane" class="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">' +
+                    LANES.map(function (l) { return '<option value="' + l.id + '"' + (state.lane === l.id ? " selected" : "") + ">" + esc(l.label) + "</option>"; }).join("") + "</select></label>";
+            } else {
+                pane.innerHTML = '<p class="text-[11px] text-slate-400">Step 3 of 3. How do we reach you? Email or phone is required.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-3">' +
+                    field("aegisName", "Full name", "text", state.name, 'autocomplete="name" maxlength="80"') +
+                    field("aegisRef", "Referral code (optional)", "text", state.ref, 'maxlength="40" autocapitalize="off"') +
+                    field("aegisEmail", "Email", "email", state.email, 'autocomplete="email" maxlength="120"') +
+                    field("aegisPhone", "Phone", "tel", state.phone, 'autocomplete="tel" maxlength="30"') +
+                    '</div><pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 whitespace-pre-wrap" id="aegisReview">' + esc(summaryLines().join("\n")) + "</pre>";
+            }
+            var back = document.querySelector('[data-aegis="back"]');
+            var next = document.querySelector('[data-aegis="next"]');
+            back.classList.toggle("invisible", state.step === 1);
+            next.textContent = state.step === 3 ? "Save intake" : "Next";
+            renderSteps();
+        }
+
+        function showError(message) {
+            var el = document.getElementById("aegisError");
+            el.textContent = message || "";
+            el.classList.toggle("hidden", !message);
+        }
+
+        function validate() {
+            if (state.step === 1 && !state.corridor) return "Choose a corridor to continue.";
+            if (state.step === 2 && !state.role) return "Choose a deployment pathway to continue.";
+            if (state.step === 3) {
+                if (!state.name.trim()) return "Enter your name.";
+                var email = state.email.trim();
+                var phone = state.phone.trim();
+                if (!email && !phone) return "Enter an email or a phone number.";
+                if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "That email address does not look valid.";
+                if (state.ref && !/^[A-Za-z0-9._-]{1,40}$/.test(state.ref.trim())) return "Referral codes use letters, numbers, dot, dash, or underscore.";
+            }
+            return "";
+        }
+
+        function submit() {
+            var record = {
+                at: new Date().toISOString(), corridor: state.corridor, role: state.role, lane: state.lane,
+                name: state.name.trim(), email: state.email.trim(), phone: state.phone.trim(), ref: state.ref.trim()
+            };
+            var all = readStore(KEY_INTAKE, []);
+            all.unshift(record);
+            try { localStorage.setItem(KEY_INTAKE, JSON.stringify(all.slice(0, 20))); } catch (err) {}
+            if (record.ref) { try { localStorage.setItem(KEY_REF, record.ref); } catch (err) {} }
+            var text = summaryLines().join("\n") + "\nSaved: " + record.at;
+            var mail = "mailto:" + INTAKE_EMAIL + "?subject=" + encodeURIComponent("DRAH AEGIS intake: " + record.name) + "&body=" + encodeURIComponent(text);
+            var done = document.getElementById("aegisDone");
+            done.innerHTML = '<div class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Intake saved on this device</div>' +
+                '<pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-300 whitespace-pre-wrap">' + esc(text) + "</pre>" +
+                '<p class="text-[11px] text-slate-400">Nothing has been sent yet. Email the intake to the team or copy it, then reserve your seat.</p>' +
+                '<div class="flex flex-wrap gap-2">' +
+                '<a href="' + esc(mail) + '" class="bg-slate-800 hover:bg-slate-700 border border-amber-500/40 text-amber-300 font-bold px-4 py-2 rounded-lg text-xs">Email intake</a>' +
+                '<button type="button" data-aegis="copy" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 font-bold px-4 py-2 rounded-lg text-xs">Copy intake</button>' +
+                '<a href="' + STRIPE + '" target="_blank" rel="noopener noreferrer" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">Secure $100 Reservation</a>' +
+                '<button type="button" data-aegis="again" class="text-[11px] text-slate-400 hover:text-amber-400 underline px-2">Start another</button></div>';
+            done.dataset.text = text;
+            done.classList.remove("hidden");
+            document.getElementById("aegisIntake").classList.add("hidden");
+            done.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
+        function startStep() { return state.corridor ? (state.role ? 3 : 2) : 1; }
+
+        function repaintAll() { renderPathways(); renderPane(); }
+
+        function pick(key, value) {
+            state[key] = value;
+            showError("");
+            repaintAll();
+        }
+
+        function onClick(ev) {
+            var t = ev.target.closest("[data-pathway], [data-corridor], [data-aegis]");
+            if (!t) return;
+            if (t.hasAttribute("data-pathway")) { pick("role", t.getAttribute("data-pathway")); return; }
+            if (t.hasAttribute("data-corridor")) { pick("corridor", t.getAttribute("data-corridor")); return; }
+            var action = t.getAttribute("data-aegis");
+            if (action === "back") { state.step = Math.max(1, state.step - 1); showError(""); renderPane(); }
+            else if (action === "next") {
+                var problem = validate();
+                if (problem) { showError(problem); return; }
+                showError("");
+                if (state.step < 3) { state.step += 1; renderPane(); } else submit();
+            } else if (action === "copy") {
+                var text = document.getElementById("aegisDone").dataset.text || "";
+                if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { t.textContent = "Copied"; });
+                else window.prompt("Copy intake", text);
+            } else if (action === "again") {
+                state.step = startStep(); state.name = ""; state.email = ""; state.phone = "";
+                document.getElementById("aegisDone").classList.add("hidden");
+                document.getElementById("aegisIntake").classList.remove("hidden");
+                repaintAll();
+            }
+        }
+
+        function onInput(ev) {
+            var key = ev.target.getAttribute && ev.target.getAttribute("data-field");
+            if (!key) return;
+            var map = { aegisName: "name", aegisEmail: "email", aegisPhone: "phone", aegisRef: "ref", lane: "lane" };
+            state[map[key] || key] = ev.target.value;
+            var review = document.getElementById("aegisReview");
+            if (review) review.textContent = summaryLines().join("\n");
+        }
+
+        function markNav() {
+            var link = document.getElementById("navAegis");
+            var on = location.hash === "#aegis";
+            link.classList.toggle("text-amber-400", on);
+            link.classList.toggle("border-amber-400", on);
+            link.classList.toggle("border-transparent", !on);
+            if (on) link.setAttribute("aria-current", "page"); else link.removeAttribute("aria-current");
+        }
+
+        function init() {
+            var parsed = parseParams(location.search);
+            var onAegisHost = (location.hostname || "").indexOf("aegis.") === 0;
+            state.corridor = parsed.corridor;
+            state.role = parsed.role;
+            state.ref = parsed.ref || (typeof localStorage !== "undefined" ? (function () { try { return localStorage.getItem(KEY_REF) || ""; } catch (err) { return ""; } })() : "");
+            if (parsed.ref) { try { localStorage.setItem(KEY_REF, parsed.ref); } catch (err) {} }
+            state.step = startStep();
+            renderContext(parsed);
+            repaintAll();
+            var section = document.getElementById("aegis");
+            section.addEventListener("click", onClick);
+            section.addEventListener("input", onInput);
+            section.addEventListener("change", onInput);
+            window.addEventListener("hashchange", markNav);
+            if (parsed.present || onAegisHost) {
+                if (location.hash !== "#aegis") history.replaceState(null, "", location.pathname + location.search + "#aegis");
+                setTimeout(function () { section.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+            }
+            markNav();
+        }
+
+        window.AEGIS = {
+            parseParams: parseParams,
+            state: function () { return JSON.parse(JSON.stringify(state)); },
+            corridors: CORRIDORS.map(function (c) { return c.id; }),
+            pathways: PATHWAYS.map(function (p) { return p.id; })
+        };
+
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+    })();
     </script>
     <script src="/feed/lms-briefings.js"></script>
 </body>

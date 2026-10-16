@@ -1,9 +1,4 @@
-packages:
-  - artifacts/*
-  - lib/*
-  - lib/integrations/*
-  - scripts
-  - packages/*
+packages: []
 
 allowBuilds:
   '@clerk/shared': true

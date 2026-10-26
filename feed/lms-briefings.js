@@ -135,16 +135,14 @@
                 '</div>';
         }
         if (format === 'video') {
-            var summary = String(item.description || '').trim();
-            var summaryHtml = summary ? '<p class="text-xs text-slate-300 text-left leading-relaxed">' + esc(summary) + '</p>' : '';
             var videoId = youtubeId(url);
             if (videoId) {
-                return '<p class="text-xs text-slate-300 text-left">' + esc(title) + '</p>' + summaryHtml + '<div class="aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800"><iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/' + esc(videoId) + '" title="' + esc(title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+                return '<div class="aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800"><iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/' + esc(videoId) + '" title="' + esc(title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
             }
             if (/\.(mp4|webm)(\?|#|$)/i.test(url)) {
-                return summaryHtml + '<video controls class="w-full rounded-xl border border-slate-800" src="' + esc(url) + '"></video>';
+                return '<video controls class="w-full rounded-xl border border-slate-800" src="' + esc(url) + '"></video>';
             }
-            return summaryHtml + audioPlayer(url, title + ' has no cinematic file. The overview plays instead. Open the source from Artifact Links.');
+            return audioPlayer(url, title + ' has no cinematic file. The overview plays instead. Open the source from Artifact Links.');
         }
         if (format === 'slides') {
             return '<div class="space-y-3 text-xs text-left">' +

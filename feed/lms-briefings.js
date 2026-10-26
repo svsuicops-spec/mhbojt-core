@@ -1,5 +1,5 @@
 /* Briefing LMS merged with the 11-format presentation engine.
-   Authors add title, source URL, and subject category. Sort, filter, and
+   Authors add title, source URL, an optional executive-summary description, and subject category. Sort, filter, and
    shuffle rules stay in this browser. Each briefing opens a viewer whose
    medium dropdown renders Audio, Town Hall, Video, Slides, Mind Map,
    Reports, Data Table, Flashcards, Quiz, Infographic, or Artifact Links.
@@ -110,7 +110,7 @@
         var list = items.filter(function (item) {
             if (rules.category !== 'all' && item.category !== rules.category) return false;
             if (!query) return true;
-            return (item.title + ' ' + item.category + ' ' + item.sourceUrl).toLowerCase().indexOf(query) !== -1;
+            return (item.title + ' ' + item.category + ' ' + item.sourceUrl + ' ' + (item.description || '')).toLowerCase().indexOf(query) !== -1;
         });
         list.sort(function (a, b) {
             if (rules.sort === 'title') return a.title.localeCompare(b.title);
@@ -135,14 +135,16 @@
                 '</div>';
         }
         if (format === 'video') {
+            var summary = String(item.description || '').trim();
+            var summaryHtml = summary ? '<p class="text-xs text-slate-300 text-left leading-relaxed">' + esc(summary) + '</p>' : '';
             var videoId = youtubeId(url);
             if (videoId) {
-                return '<p class="text-xs text-slate-300 text-left">' + esc(title) + '</p><div class="aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800"><iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/' + esc(videoId) + '" title="' + esc(title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+                return '<p class="text-xs text-slate-300 text-left">' + esc(title) + '</p>' + summaryHtml + '<div class="aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800"><iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/' + esc(videoId) + '" title="' + esc(title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
             }
             if (/\.(mp4|webm)(\?|#|$)/i.test(url)) {
-                return '<video controls class="w-full rounded-xl border border-slate-800" src="' + esc(url) + '"></video>';
+                return summaryHtml + '<video controls class="w-full rounded-xl border border-slate-800" src="' + esc(url) + '"></video>';
             }
-            return audioPlayer(url, title + ' has no cinematic file. The overview plays instead. Open the source from Artifact Links.');
+            return summaryHtml + audioPlayer(url, title + ' has no cinematic file. The overview plays instead. Open the source from Artifact Links.');
         }
         if (format === 'slides') {
             return '<div class="space-y-3 text-xs text-left">' +
@@ -247,7 +249,9 @@
         return '<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">' +
             '<button type="button" data-lms-action="close" class="text-[11px] text-slate-400 hover:text-amber-400">All briefings</button>' +
             '<div><div class="text-[10px] uppercase tracking-widest text-amber-400">' + esc(item.category) + '</div>' +
-            '<h2 class="text-sm font-bold text-white">' + esc(item.title) + '</h2></div>' +
+            '<h2 class="text-sm font-bold text-white">' + esc(item.title) + '</h2>' +
+            (String(item.description || '').trim() ? '<p class="text-xs text-slate-300 leading-relaxed mt-2">' + esc(item.description) + '</p>' : '') +
+            '</div>' +
             '<label class="text-[11px] text-slate-300 block" for="briefingMedium">Presentation medium</label>' +
             '<select id="briefingMedium" data-lms-action="medium" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-amber-400">' + options + '</select>' +
             '<div id="lmsStage" class="space-y-4 bg-slate-950 p-5 rounded-xl border border-slate-800">' + stageHtml(item, state.medium) + '</div>' +
@@ -268,7 +272,9 @@
         var rows = shown.map(function (item) {
             var active = item.id === state.selectedId ? ' border-amber-500/50' : '';
             return '<li class="bg-slate-950 border border-slate-800' + active + ' rounded-lg px-3 py-2 flex gap-2 items-center" data-briefing-id="' + esc(item.id) + '">' +
-                '<button type="button" data-lms-action="open" data-id="' + esc(item.id) + '" class="flex-1 text-left"><div class="text-xs font-bold text-white">' + esc(item.title) + '</div><div class="text-[10px] text-slate-500">' + esc(item.category) + '</div></button>' +
+                '<button type="button" data-lms-action="open" data-id="' + esc(item.id) + '" class="flex-1 min-w-0 text-left"><div class="text-xs font-bold text-white">' + esc(item.title) + '</div><div class="text-[10px] text-slate-500">' + esc(item.category) + '</div>' +
+                (String(item.description || '').trim() ? '<div class="text-[10px] text-slate-400 truncate">' + esc(item.description) + '</div>' : '') +
+                '</button>' +
                 '<button type="button" data-lms-action="up" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move up">↑</button>' +
                 '<button type="button" data-lms-action="down" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move down">↓</button></li>';
         }).join('');
@@ -280,6 +286,8 @@
             '<input id="bf-title" data-field="title" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Briefing title">' +
             '<label class="text-[10px] uppercase text-slate-400 block" for="bf-url">Source URL</label>' +
             '<input id="bf-url" data-field="url" type="url" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-400" placeholder="https://… or /audio.mp3">' +
+            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-description">Description <span class="normal-case tracking-normal text-slate-500">optional</span></label>' +
+            '<textarea id="bf-description" data-field="description" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Executive summary for this title and video"></textarea>' +
             '<label class="text-[10px] uppercase text-slate-400 block" for="bf-category">Subject category</label>' +
             '<select id="bf-category" data-field="category" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">' + formCategories + '</select>' +
             '<button type="button" data-lms-action="add" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">+ Add Briefing</button>' +
@@ -295,7 +303,7 @@
             '<label class="text-[10px] uppercase text-slate-400 block">Filter category</label>' +
             '<select data-field="filter-category" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">' + categoryOptions + '</select>' +
             '<label class="text-[10px] uppercase text-slate-400 block">Filter text</label>' +
-            '<input data-field="filter-query" value="' + esc(rules.query) + '" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Title, category, or URL">' +
+            '<input data-field="filter-query" value="' + esc(rules.query) + '" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Title, description, category, or URL">' +
             '<p class="text-[10px] font-mono text-slate-500">Showing ' + shown.length + ' of ' + items.length + ' · sort ' + esc(rules.sort) + '</p>' +
             '<ol class="space-y-2" data-testid="list-briefings">' + (rows || '<li class="text-xs text-slate-500">No briefings match this filter.</li>') + '</ol></div></section>' +
             '<section class="lg:col-span-8" data-lms-viewer>' + viewerHtml(selected) + '</section></div>';
@@ -342,6 +350,7 @@
         if (action === 'add') {
             var title = (node.querySelector('[data-field="title"]').value || '').trim();
             var sourceUrl = (node.querySelector('[data-field="url"]').value || '').trim();
+            var description = ((node.querySelector('[data-field="description"]') || {}).value || '').trim();
             var category = node.querySelector('[data-field="category"]').value;
             var status = node.querySelector('[data-admin-status]');
             if (!title || !sourceUrl) {
@@ -349,11 +358,11 @@
                 return;
             }
             var next = items.slice();
-            var created = { id: 'b-' + Date.now().toString(36), title: title, sourceUrl: sourceUrl, category: category, createdAt: Date.now(), order: next.length };
+            var created = { id: 'b-' + Date.now().toString(36), title: title, sourceUrl: sourceUrl, description: description, category: category, createdAt: Date.now(), order: next.length };
             next.push(created);
             saveBriefings(next);
             state.selectedId = created.id;
-            state.medium = 'audio';
+            state.medium = (youtubeId(sourceUrl) || /\.(mp4|webm)(\?|#|$)/i.test(sourceUrl)) ? 'video' : 'audio';
             mount();
             return;
         }

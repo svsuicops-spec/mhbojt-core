@@ -1,10 +1,15 @@
 /* Briefing LMS merged with the 11-format presentation engine.
-   Authors add title, source URL, an optional executive-summary description, and subject category. Sort, filter, and
-   shuffle rules stay in this browser. Each briefing opens a viewer whose
-   medium dropdown renders Audio, Town Hall, Video, Slides, Mind Map,
-   Reports, Data Table, Flashcards, Quiz, Infographic, or Artifact Links.
-   Ingest URL, Execution Quiz, Project Essay, and Comment Notes sit under
-   the stage.
+   Admin · Micro-Briefing publishes title, video URL, duration, doctrine tags,
+   and an optional description into localStorage key mhbojt-lms-briefings.
+   Record shape:
+     id, title, videoUrl, sourceUrl (same address as videoUrl), duration,
+     doctrineTags (string[]), description (optional), category (derived from
+     the first known doctrine tag), createdAt, order.
+   Sort, filter, and shuffle rules stay in this browser. Each briefing opens
+   a viewer whose medium dropdown renders Audio, Town Hall, Video, Slides,
+   Mind Map, Reports, Data Table, Flashcards, Quiz, Infographic, or Artifact
+   Links. Ingest URL, Execution Quiz, Project Essay, and Comment Notes sit
+   under the stage.
 */
 (function () {
     var STORAGE = 'mhbojt-lms-briefings';
@@ -37,19 +42,76 @@
         });
     }
 
+    var TAG_CATEGORIES = {
+        'crystal dynasty': 'Dynasty',
+        dynasty: 'Dynasty',
+        citadel: 'Citadel',
+        guardsmen: 'Guardsmen',
+        diaspora: 'Diaspora',
+        'laotian diaspora': 'Diaspora',
+        'sovereign wealth': 'Sovereign wealth',
+        'sentinel perpetuity': 'Sovereign wealth',
+        'resilient housing': 'Resilient housing',
+        'tri-parish': 'Resilient housing',
+        rwa: 'RWA',
+        'rwa ledger': 'RWA',
+        general: 'General'
+    };
+
+    function parseTags(value) {
+        var parts = Array.isArray(value) ? value : String(value || '').split(',');
+        var seen = {};
+        var tags = [];
+        parts.forEach(function (part) {
+            var tag = String(part || '').trim();
+            var key = tag.toLowerCase();
+            if (!tag || seen[key]) return;
+            seen[key] = true;
+            tags.push(tag);
+        });
+        return tags;
+    }
+
+    function categoryFromTags(tags, fallback) {
+        for (var i = 0; i < tags.length; i++) {
+            var hit = TAG_CATEGORIES[String(tags[i]).toLowerCase()];
+            if (hit) return hit;
+        }
+        return CATEGORIES.indexOf(fallback) !== -1 ? fallback : 'General';
+    }
+
+    function normalizeBriefing(item, index) {
+        var source = item || {};
+        var videoUrl = String(source.videoUrl || source.sourceUrl || '').trim();
+        var tags = parseTags(source.doctrineTags);
+        if (!tags.length && source.category) tags = [source.category];
+        return {
+            id: source.id,
+            title: String(source.title || '').trim(),
+            videoUrl: videoUrl,
+            sourceUrl: videoUrl,
+            duration: String(source.duration || '').trim(),
+            doctrineTags: tags,
+            description: String(source.description || '').trim(),
+            category: categoryFromTags(tags, source.category),
+            createdAt: source.createdAt || 0,
+            order: typeof source.order === 'number' ? source.order : index
+        };
+    }
+
     function seedBriefings() {
         return [
-            { id: 'dual-host', title: 'Dual-Author Dynasty Overview', sourceUrl: '/drah-dual-host-overview.mp3', category: 'Dynasty', createdAt: 1, order: 0 },
-            { id: 'homes-in-hours', title: 'HOMES IN HOURS?!', sourceUrl: 'https://www.youtube.com/watch?v=wCzS2FZoB-I', category: 'Citadel', createdAt: 2, order: 1 },
-            { id: 'st-bernard', title: 'St. Bernard Smart Living Campus', sourceUrl: '/feed/st-bernard/', category: 'Resilient housing', createdAt: 3, order: 2 },
-            { id: 'rwa-ledger', title: 'RWA Tokenization Ledger', sourceUrl: '/feed/sovereign-cases.json', category: 'RWA', createdAt: 4, order: 3 }
-        ];
+            { id: 'dual-host', title: 'Dual-Author Dynasty Overview', sourceUrl: '/drah-dual-host-overview.mp3', doctrineTags: ['Crystal Dynasty'], category: 'Dynasty', createdAt: 1, order: 0 },
+            { id: 'homes-in-hours', title: 'HOMES IN HOURS?!', sourceUrl: 'https://www.youtube.com/watch?v=wCzS2FZoB-I', doctrineTags: ['Citadel'], category: 'Citadel', createdAt: 2, order: 1 },
+            { id: 'st-bernard', title: 'St. Bernard Smart Living Campus', sourceUrl: '/feed/st-bernard/', doctrineTags: ['Resilient housing'], category: 'Resilient housing', createdAt: 3, order: 2 },
+            { id: 'rwa-ledger', title: 'RWA Tokenization Ledger', sourceUrl: '/feed/sovereign-cases.json', doctrineTags: ['RWA ledger'], category: 'RWA', createdAt: 4, order: 3 }
+        ].map(normalizeBriefing);
     }
 
     function loadBriefings() {
         try {
             var saved = JSON.parse(localStorage.getItem(STORAGE) || 'null');
-            if (Array.isArray(saved) && saved.length) return saved;
+            if (Array.isArray(saved) && saved.length) return saved.map(normalizeBriefing);
         } catch (err) { /* use seed */ }
         return seedBriefings();
     }
@@ -110,7 +172,8 @@
         var list = items.filter(function (item) {
             if (rules.category !== 'all' && item.category !== rules.category) return false;
             if (!query) return true;
-            return (item.title + ' ' + item.category + ' ' + item.sourceUrl + ' ' + (item.description || '')).toLowerCase().indexOf(query) !== -1;
+            var tags = (item.doctrineTags || []).join(' ');
+            return (item.title + ' ' + item.category + ' ' + tags + ' ' + (item.duration || '') + ' ' + (item.videoUrl || item.sourceUrl) + ' ' + (item.description || '')).toLowerCase().indexOf(query) !== -1;
         });
         list.sort(function (a, b) {
             if (rules.sort === 'title') return a.title.localeCompare(b.title);
@@ -162,8 +225,10 @@
         if (format === 'datatable') {
             return '<table class="w-full text-xs text-left"><tbody class="text-slate-300">' +
                 '<tr><td class="py-1 pr-3 text-amber-400">Title</td><td>' + esc(title) + '</td></tr>' +
-                '<tr><td class="py-1 pr-3 text-amber-400">Category</td><td>' + esc(category) + '</td></tr>' +
-                '<tr><td class="py-1 pr-3 text-amber-400">Source</td><td class="break-all">' + esc(url) + '</td></tr>' +
+                '<tr><td class="py-1 pr-3 text-amber-400">Video URL</td><td class="break-all">' + esc(url) + '</td></tr>' +
+                (item.duration ? '<tr><td class="py-1 pr-3 text-amber-400">Duration</td><td>' + esc(item.duration) + '</td></tr>' : '') +
+                '<tr><td class="py-1 pr-3 text-amber-400">Doctrine tags</td><td>' + esc((item.doctrineTags || []).join(', ') || category) + '</td></tr>' +
+                (String(item.description || '').trim() ? '<tr><td class="py-1 pr-3 text-amber-400">Description</td><td>' + esc(item.description) + '</td></tr>' : '') +
                 '<tr><td class="py-1 pr-3 text-amber-400">Sweat</td><td>$50 / Hr · 200,000 Hours</td></tr>' +
                 '<tr><td class="py-1 pr-3 text-amber-400">Gateway</td><td>$100 admission</td></tr></tbody></table>';
         }
@@ -246,8 +311,9 @@
         }).join('');
         return '<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">' +
             '<button type="button" data-lms-action="close" class="text-[11px] text-slate-400 hover:text-amber-400">All briefings</button>' +
-            '<div><div class="text-[10px] uppercase tracking-widest text-amber-400">' + esc(item.category) + '</div>' +
+            '<div><div class="text-[10px] uppercase tracking-widest text-amber-400">' + esc((item.doctrineTags || []).join(' · ') || item.category) + '</div>' +
             '<h2 class="text-sm font-bold text-white">' + esc(item.title) + '</h2>' +
+            (item.duration ? '<p class="text-[10px] font-mono text-slate-500 mt-1">Duration ' + esc(item.duration) + '</p>' : '') +
             (String(item.description || '').trim() ? '<p class="text-xs text-slate-300 leading-relaxed mt-2">' + esc(item.description) + '</p>' : '') +
             '</div>' +
             '<label class="text-[11px] text-slate-300 block" for="briefingMedium">Presentation medium</label>' +
@@ -264,13 +330,10 @@
         var categoryOptions = '<option value="all">All categories</option>' + CATEGORIES.map(function (category) {
             return '<option value="' + esc(category) + '"' + (rules.category === category ? ' selected' : '') + '>' + esc(category) + '</option>';
         }).join('');
-        var formCategories = CATEGORIES.map(function (category) {
-            return '<option value="' + esc(category) + '">' + esc(category) + '</option>';
-        }).join('');
         var rows = shown.map(function (item) {
             var active = item.id === state.selectedId ? ' border-amber-500/50' : '';
             return '<li class="bg-slate-950 border border-slate-800' + active + ' rounded-lg px-3 py-2 flex gap-2 items-center" data-briefing-id="' + esc(item.id) + '">' +
-                '<button type="button" data-lms-action="open" data-id="' + esc(item.id) + '" class="flex-1 min-w-0 text-left"><div class="text-xs font-bold text-white">' + esc(item.title) + '</div><div class="text-[10px] text-slate-500">' + esc(item.category) + '</div>' +
+                '<button type="button" data-lms-action="open" data-id="' + esc(item.id) + '" class="flex-1 min-w-0 text-left"><div class="text-xs font-bold text-white">' + esc(item.title) + '</div><div class="text-[10px] text-slate-500">' + esc([item.duration, (item.doctrineTags || []).join(' · ') || item.category].filter(Boolean).join(' · ')) + '</div>' +
                 (String(item.description || '').trim() ? '<div class="text-[10px] text-slate-400 truncate">' + esc(item.description) + '</div>' : '') +
                 '</button>' +
                 '<button type="button" data-lms-action="up" data-id="' + esc(item.id) + '" class="text-[10px] text-amber-400 px-1" aria-label="Move up">↑</button>' +
@@ -279,16 +342,18 @@
         node.innerHTML = '<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">' +
             '<section class="lg:col-span-4 space-y-4">' +
             '<div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">' +
-            '<h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Admin · Add Briefing</h2>' +
+            '<h2 class="text-xs font-bold text-amber-400 uppercase tracking-widest">Admin · Micro-Briefing</h2>' +
             '<label class="text-[10px] uppercase text-slate-400 block" for="bf-title">Title</label>' +
             '<input id="bf-title" data-field="title" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Briefing title">' +
-            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-url">Source URL</label>' +
-            '<input id="bf-url" data-field="url" type="url" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-400" placeholder="https://… or /audio.mp3">' +
+            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-url">Video URL</label>' +
+            '<input id="bf-url" data-field="url" type="url" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-400" placeholder="https://… or /video.mp4">' +
+            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-duration">Duration</label>' +
+            '<input id="bf-duration" data-field="duration" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="6:30">' +
+            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-tags">Doctrine Tags</label>' +
+            '<input id="bf-tags" data-field="doctrine-tags" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Guardsmen, Tri-Parish, Crystal Dynasty">' +
             '<label class="text-[10px] uppercase text-slate-400 block" for="bf-description">Description <span class="normal-case tracking-normal text-slate-500">optional</span></label>' +
             '<textarea id="bf-description" data-field="description" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Executive summary for this title and video"></textarea>' +
-            '<label class="text-[10px] uppercase text-slate-400 block" for="bf-category">Subject category</label>' +
-            '<select id="bf-category" data-field="category" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">' + formCategories + '</select>' +
-            '<button type="button" data-lms-action="add" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">+ Add Briefing</button>' +
+            '<button type="button" data-lms-action="add" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">+ Publish Briefing</button>' +
             '<p data-admin-status class="text-[11px] text-slate-500"></p></div>' +
             '<div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">' +
             '<div class="flex items-center justify-between gap-2"><h3 class="text-xs font-bold text-slate-200 uppercase tracking-widest">Briefing rules</h3>' +
@@ -301,7 +366,7 @@
             '<label class="text-[10px] uppercase text-slate-400 block">Filter category</label>' +
             '<select data-field="filter-category" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">' + categoryOptions + '</select>' +
             '<label class="text-[10px] uppercase text-slate-400 block">Filter text</label>' +
-            '<input data-field="filter-query" value="' + esc(rules.query) + '" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Title, description, category, or URL">' +
+            '<input data-field="filter-query" value="' + esc(rules.query) + '" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400" placeholder="Title, description, duration, tags, or URL">' +
             '<p class="text-[10px] font-mono text-slate-500">Showing ' + shown.length + ' of ' + items.length + ' · sort ' + esc(rules.sort) + '</p>' +
             '<ol class="space-y-2" data-testid="list-briefings">' + (rows || '<li class="text-xs text-slate-500">No briefings match this filter.</li>') + '</ol></div></section>' +
             '<section class="lg:col-span-8" data-lms-viewer>' + viewerHtml(selected) + '</section></div>';
@@ -348,15 +413,26 @@
         if (action === 'add') {
             var title = (node.querySelector('[data-field="title"]').value || '').trim();
             var sourceUrl = (node.querySelector('[data-field="url"]').value || '').trim();
+            var duration = ((node.querySelector('[data-field="duration"]') || {}).value || '').trim();
+            var doctrineTags = parseTags(((node.querySelector('[data-field="doctrine-tags"]') || {}).value || ''));
             var description = ((node.querySelector('[data-field="description"]') || {}).value || '').trim();
-            var category = node.querySelector('[data-field="category"]').value;
             var status = node.querySelector('[data-admin-status]');
             if (!title || !sourceUrl) {
-                if (status) status.textContent = 'Title and source URL are required.';
+                if (status) status.textContent = 'Title and video URL are required.';
                 return;
             }
             var next = items.slice();
-            var created = { id: 'b-' + Date.now().toString(36), title: title, sourceUrl: sourceUrl, description: description, category: category, createdAt: Date.now(), order: next.length };
+            var created = normalizeBriefing({
+                id: 'b-' + Date.now().toString(36),
+                title: title,
+                videoUrl: sourceUrl,
+                sourceUrl: sourceUrl,
+                duration: duration,
+                doctrineTags: doctrineTags,
+                description: description,
+                createdAt: Date.now(),
+                order: next.length
+            }, next.length);
             next.push(created);
             saveBriefings(next);
             state.selectedId = created.id;
@@ -414,6 +490,7 @@
             var nextUrl = input.value.trim();
             if (!nextUrl) return;
             item.sourceUrl = nextUrl;
+            item.videoUrl = nextUrl;
             saveBriefings(items.map(function (entry) { return entry.id === item.id ? item : entry; }));
             paintStage(node, item);
             return;
@@ -499,7 +576,7 @@
         if (event.target.getAttribute && event.target.getAttribute('data-field') === 'filter-query') onChange(event);
     });
 
-    window.MHBOJT_LMS = { mount: mount, seed: seedBriefings };
+    window.MHBOJT_LMS = { mount: mount, seed: seedBriefings, normalize: normalizeBriefing };
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { mount(); });
     else mount();
